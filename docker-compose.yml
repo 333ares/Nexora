@@ -1,0 +1,54 @@
+name: Nexora
+
+services:
+  db:
+    container_name: nexora_db
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: nexora
+      MYSQL_USER: nexora_user
+      MYSQL_PASSWORD: 1234
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - nexora_network
+
+  backend:
+    container_name: nexora_laravel
+    image: php:8.3-apache
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/var/www/html
+    networks:
+      - nexora_network
+    command: >
+      bash -c "docker-php-ext-install pdo pdo_mysql && 
+      a2enmod rewrite &&
+      sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf &&
+      apache2-foreground"
+
+  frontend:
+    container_name: nexora_angular
+    image: node:20
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    networks:
+      - nexora_network
+    command: >
+     bash -c "npm install && npm start -- --host 0.0.0.0"
+
+volumes:
+  db_data:
+
+networks:
+  nexora_network:
+    driver: bridge
