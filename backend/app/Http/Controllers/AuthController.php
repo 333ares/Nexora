@@ -66,23 +66,33 @@ class AuthController extends Controller
                 'message' => 'error',
                 'errors' => $validator->errors()
             ], 400);
-            // Sino guardamos las credenciales en una variable
-        } else {
-            $credenciales = $request->only('email', 'password');
         }
 
-        // Probamos credenciales
-        if (Auth::attempt($credenciales)) {
-            // Si funcionan mostramos mensaje de éxito
-            return response()->json([
-                'message' => 'Inicio de sesión correcto'
-            ], 200);
-            // Si no de error
-        } else {
+        // Buscamos el usuario por email
+        $usuario = Usuario::where('email', $request->email)->first();
+
+        // Validamos credenciales
+        if (!$usuario || !Hash::check($request->password, $usuario->password)) {
             return response()->json([
                 'message' => 'error',
-                'errors' => $validator->errors()
+                'errors' => 'El correo o la contraseña no son correctos'
             ], 400);
         }
+
+        // Generamos token
+        $token = $usuario->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Inicio de sesión correcto',
+            'token' => $token,
+            'usuario' => $usuario
+        ], 200);
+    }
+
+    public function logoutUsuario(Request $request)
+    {
+        return response()->json([
+            'message' => 'Cierre de sesión correcto'
+        ], 200);
     }
 }
