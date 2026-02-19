@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('academia', function (Blueprint $table) {
             $table->id();
+<<<<<<< Daniel
             $table->date('fecha_publicacion');
             $table->string('URL');
             $table->string('titulo');
             $table->string('titulo-contenido');
             $table->string('descripcion');
+=======
+>>>>>>> main
             $table->timestamps();
         });
     }
