@@ -29,12 +29,11 @@ class AuthController extends Controller
             ], 400);
         }
 
-        // Creamos usuario
-        $usuario = Usuario::create($request->all(), [
-            'usuario',
-            'nombre',
-            'apellidos',
-            'email',
+        $usuario = Usuario::create([
+            'usuario' => $request->usuario,
+            'nombre' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
@@ -55,24 +54,30 @@ class AuthController extends Controller
 
     public function loginUsuario(Request $request)
     {
+        // Validamos que las credenciales sean correctas
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
+        // Si el validador falla, mosrtamos error
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'error',
                 'errors' => $validator->errors()
             ], 400);
+            // Sino guardamos las credenciales en una variable
         } else {
             $credenciales = $request->only('email', 'password');
         }
 
+        // Probamos credenciales
         if (Auth::attempt($credenciales)) {
+            // Si funcionan mostramos mensaje de éxito
             return response()->json([
                 'message' => 'Inicio de sesión correcto'
             ], 200);
+            // Si no de error
         } else {
             return response()->json([
                 'message' => 'error',
