@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('movimientos', function (Blueprint $table) {
             $table->id();
+            $table->enum('tipo', ['']);
+            $table->decimal('cantidad');
+            $table->string('categoria');
+            $table->date('fecha');
+            $table->string('descripcion');
             $table->timestamps();
         });
     }
