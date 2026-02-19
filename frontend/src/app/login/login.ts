@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 
@@ -7,7 +7,7 @@ import { NgClass } from '@angular/common';
   standalone: true,
   imports: [RouterLink, NgClass],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrls: ['./login.css'],
 })
 export class Login implements OnInit, OnDestroy {
 
@@ -22,24 +22,27 @@ export class Login implements OnInit, OnDestroy {
   ];
 
   currentIndex = 0;
-  private timer: any;
+  private carouselTimer: any;
+
+  // NgZone es necesario para que el setInterval dispare la detección
+  // de cambios de Angular correctamente
+  constructor(private zone: NgZone) {}
 
   ngOnInit() {
-    this.timer = setInterval(() => this.next(), 4000);
+    // Ejecutamos el timer DENTRO de la zona de Angular
+    this.zone.run(() => {
+      this.carouselTimer = setInterval(() => {
+        this.currentIndex = (this.currentIndex + 1) % this.quotes.length;
+      }, 3000);
+    });
   }
 
   ngOnDestroy() {
-    clearInterval(this.timer);
+    clearInterval(this.carouselTimer);
   }
 
-  next() {
-    this.currentIndex = (this.currentIndex + 1) % this.quotes.length;
-  }
-
-  goTo(i: number) {
-    this.currentIndex = i;
-    clearInterval(this.timer);
-    this.timer = setInterval(() => this.next(), 4000);
+  goTo(index: number) {
+    this.currentIndex = index;
   }
 
   togglePassword() {
