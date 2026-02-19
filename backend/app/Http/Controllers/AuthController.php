@@ -65,7 +65,6 @@ class AuthController extends Controller
                 'message' => 'error',
                 'errors' => $validator->errors()
             ], 400);
-
         } else {
             $credenciales = $request->only('email', 'password');
         }
@@ -74,7 +73,6 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Inicio de sesión correcto'
             ], 200);
-            
         } else {
             return response()->json([
                 'message' => 'error',
