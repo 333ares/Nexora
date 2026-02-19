@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('suscripcions', function (Blueprint $table) {
+        Schema::create('gasto_mensual', function (Blueprint $table) {
             $table->id();
+            $table->decimal('total', 15, 2);
+            $table->date('fecha');
+            $table->string('categoria');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('suscripcions');
+        Schema::dropIfExists('gasto_mensual');
     }
 };

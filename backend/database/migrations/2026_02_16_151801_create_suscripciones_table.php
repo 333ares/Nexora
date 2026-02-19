@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gasto_mensuals', function (Blueprint $table) {
+        Schema::create('suscripciones', function (Blueprint $table) {
             $table->id();
+            $table->date('fecha_inicio');
+            $table->date('fecha_final');
+            $table->string('tipo_suscripcion');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gasto_mensuals');
+        Schema::dropIfExists('suscripciones');
     }
 };
