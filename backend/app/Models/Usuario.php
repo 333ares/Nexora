@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Usuario extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -23,5 +23,13 @@ class User extends Authenticatable
         'estado',
         'rango',
         'rol'
+    ];
+
+    protected $attributes = [
+        'linkedin' => '-',
+        'balance_total' => 0.0,
+        'estado' => 'activo',
+        'rango' => '-',
+        'rol' => 'usuario'
     ];
 }
