@@ -29,6 +29,7 @@ class AuthController extends Controller
             ], 400);
         }
 
+        // Creamos usuario
         $usuario = Usuario::create([
             'usuario' => $request->usuario,
             'nombre' => $request->nombre,
@@ -82,6 +83,7 @@ class AuthController extends Controller
         // Generamos token
         $token = $usuario->createToken('auth_token')->plainTextToken;
 
+        // Mostramos mensaje de exito y pasamos el token y el usuario
         return response()->json([
             'message' => 'Inicio de sesión correcto',
             'token' => $token,
@@ -91,6 +93,13 @@ class AuthController extends Controller
 
     public function logoutUsuario(Request $request)
     {
+        // Cerramos sesión
+        Auth::logout();
+        
+        // Revocar todos los tokens Sanctum del usuario
+        $request->user()->tokens()->delete();
+
+        // Mostramos mensaje de exito
         return response()->json([
             'message' => 'Cierre de sesión correcto'
         ], 200);
