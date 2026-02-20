@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :host {
@@ -6,6 +8,7 @@
   justify-content: center;  /* centra horizontalmente */
   min-height: 100vh;        /* ocupa toda la altura de la pantalla */
   font-family: 'Nunito', sans-serif;
+  background: #6dbf6e;
 }
 
 /* Panel izquierdo → ahora es la foto */
@@ -73,7 +76,7 @@ input, textarea, select {
     font-size: 0.95rem;
     margin-bottom: 1rem;
     outline: none;
-    font-family: sans-serif;
+    font-family: 'Nunito', sans-serif;
     transition: border-color 0.2s;
 }
 
