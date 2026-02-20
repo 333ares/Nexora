@@ -1,1 +1,28 @@
-<a routerLink="/login">Volver al Login</a>
+<a href="/login">Volver al Login</a>
+
+<div class="card">
+    <h2>Regístrate</h2>
+        <form onsubmit="enviar(event)">
+            <div class="row">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" placeholder="Tu nombre" required>
+                </div>
+                <div class="field">
+                    <label>Apellidos</label>
+                    <input type="text" placeholder="Apellidos" required>
+                </div>
+            </div>
+
+            <label>Nombre de usuario</label>
+            <input type="text" placeholder="Tu nombre de usuario" required>
+
+            <label>Correo electrónico</label>
+            <input type="email" placeholder="nexora@example.com" required>
+
+            <label>Contraseña</label>
+            <input type="password" placeholder="Tu contraseña" required>
+
+            <button type="submit">Registrarse</button>
+        </form>
+</div>
