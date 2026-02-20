@@ -1,6 +1,25 @@
 <div class="card">
   <div class="right-panel">
-    <img src="https://i.postimg.cc/xT0w36S1/Fondo-citas.png" alt="foto">
+    <!-- <img src="https://i.postimg.cc/xT0w36S1/Fondo-citas.png" alt="foto"> -->
+    <div class="quotes-track" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+        @for (q of quotes; track q.text) {
+            <div class="quote-slide">
+            <p class="quote-text">{{ q.text }}</p>
+            <p class="quote-author">{{ q.author }}</p>
+            </div>
+        }
+    </div>
+    <div class="dots">
+    @for (q of quotes; track q.text; let i = $index) {
+    <button
+      class="dot"
+      [class.active]="currentIndex === i"
+      (click)="goTo(i)">
+    </button>
+  }
+</div>
+    
+
   </div>
   <div class="left-panel">
     <img src="https://i.postimg.cc/QxjpNn21/Logo-Nexora-pequeno.png" alt="Nexora logo" class="logo">
