@@ -34,7 +34,7 @@ export class Login implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    // 🔥 SOLO ejecutar el carrusel en navegador
+    
     if (isPlatformBrowser(this.platformId)) {
       this.intervalId = setInterval(() => {
         this.currentIndex =

@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #6dbf6e;
+  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
   font-family: 'Nunito', sans-serif;
   padding: 24px;
 }
@@ -34,14 +34,18 @@
 }
 
 /* Espaciado del logo superior */
-.logo { margin-bottom: 20px; }
+.logo {
+  margin-bottom: 20px;
+}
 
 /* Hace que la imagen del logo no tenga espacio extra */
-.logo img { display: block; }
+.logo img {
+  display: block;
+}
 
 /* Título principal del login */
 .title {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 800;
   color: #1a1a1a;
   margin-bottom: 8px;
@@ -49,11 +53,13 @@
 
 /* Subtítulo descriptivo debajo del título */
 .subtitle {
-  font-size: 13px;
+  font-size: 15px;
   color: #666;
   line-height: 1.55;
   margin-bottom: 28px;
-  max-width: 320px;
+  margin-top: 0px;
+  max-width: 360px;
+  text-align: justify;
 }
 
 /* El formulario ocupa todo el ancho disponible */
@@ -62,7 +68,10 @@ form {
 }
 
 /* Contenedor individual de cada campo del formulario */
-.form-group { margin-bottom: 16px; width: 100%; }
+.form-group {
+  margin-bottom: 16px;
+  width: 100%;
+}
 
 /* Estilo de las etiquetas (Email, Password, etc.) */
 .form-group label {
@@ -89,10 +98,14 @@ form {
 }
 
 /* Cambia el borde cuando el input está activo */
-.form-group input:focus { border-color: #4caf50; }
+.form-group input:focus {
+  border-color: #4caf50;
+}
 
 /* Color del texto placeholder */
-.form-group input::placeholder { color: #bbb; }
+.form-group input::placeholder {
+  color: #bbb;
+}
 
 /* Contenedor relativo para el input con icono (mostrar contraseña) */
 .input-wrapper {
@@ -126,13 +139,22 @@ form {
 }
 
 /* Contenedor del enlace "Forgot password" */
-.forgot { text-align: right; margin-top: 6px; }
+.forgot {
+  text-align: right;
+  margin-top: 6px;
+}
 
 /* Estilo del enlace de recuperar contraseña */
-.forgot a { font-size: 12px; color: #555; text-decoration: none; }
+.forgot a {
+  font-size: 12px;
+  color: #555;
+  text-decoration: none;
+}
 
 /* Subrayado al pasar el mouse */
-.forgot a:hover { text-decoration: underline; }
+.forgot a:hover {
+  text-decoration: underline;
+}
 
 /* Botón principal de login */
 .btn-login {
@@ -151,10 +173,14 @@ form {
 }
 
 /* Color más oscuro al pasar el mouse */
-.btn-login:hover { background: #43a047; }
+.btn-login:hover {
+  background: #43a047;
+}
 
 /* Efecto al hacer click */
-.btn-login:active { transform: scale(0.98); }
+.btn-login:active {
+  transform: scale(0.98);
+}
 
 /* Separador visual con líneas y texto en medio */
 .divider {
@@ -176,13 +202,23 @@ form {
 }
 
 /* Texto inferior de registro */
-.register { text-align: center; font-size: 13px; color: #666; }
+.register {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+}
 
 /* Enlace de registro */
-.register a { color: #222; font-weight: 700; text-decoration: none; }
+.register a {
+  color: #222;
+  font-weight: 700;
+  text-decoration: none;
+}
 
 /* Subrayado al pasar el mouse */
-.register a:hover { text-decoration: underline; }
+.register a:hover {
+  text-decoration: underline;
+}
 
 /* Panel derecho decorativo */
 .right-panel {
@@ -215,7 +251,10 @@ form {
 }
 
 /* Formas decorativas */
-.shape { position: absolute; border-radius: 24px; }
+.shape {
+  position: absolute;
+  border-radius: 24px;
+}
 
 /* Forma decorativa 1 */
 .shape-1 {
@@ -245,7 +284,9 @@ form {
 }
 
 /* Evita espacios extra en la imagen */
-.logo-center img { display: block; }
+.logo-center img {
+  display: block;
+}
 
 /* Tarjeta del carrusel de frases */
 .quote-card {
@@ -296,11 +337,12 @@ form {
   display: flex;
   gap: 6px;
   margin-top: 4px;
+  justify-content: center;
 }
 
 /* Indicador individual */
 .dot {
-  width: 22px;
+  width: 32px;
   height: 3px;
   background: rgba(255, 255, 255, 0.4);
   border-radius: 2px;
