@@ -1,6 +1,12 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
+import { NgClass, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -22,30 +28,34 @@ export class Login implements OnInit, OnDestroy {
   ];
 
   currentIndex = 0;
-  private carouselTimer: any;
+  private intervalId?: ReturnType<typeof setInterval>;
 
-  // NgZone es necesario para que el setInterval dispare la detección
-  // de cambios de Angular correctamente
-  constructor(private zone: NgZone) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  ngOnInit() {
-    // Ejecutamos el timer DENTRO de la zona de Angular
-    this.zone.run(() => {
-      this.carouselTimer = setInterval(() => {
-        this.currentIndex = (this.currentIndex + 1) % this.quotes.length;
+  ngOnInit(): void {
+
+    // 🔥 SOLO ejecutar el carrusel en navegador
+    if (isPlatformBrowser(this.platformId)) {
+      this.intervalId = setInterval(() => {
+        this.currentIndex =
+          this.currentIndex + 1 >= this.quotes.length
+            ? 0
+            : this.currentIndex + 1;
       }, 3000);
-    });
+    }
   }
 
-  ngOnDestroy() {
-    clearInterval(this.carouselTimer);
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
-  goTo(index: number) {
+  goTo(index: number): void {
     this.currentIndex = index;
   }
 
-  togglePassword() {
+  togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 }

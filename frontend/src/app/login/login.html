@@ -31,7 +31,8 @@
                     <!-- Input dinámico (muestra/oculta contraseña) -->
                     <input [type]="showPassword ? 'text' : 'password'" id="password" placeholder="Tu contraseña" />
 
-                    <button type="button" class="toggle-pass" (click)="togglePassword()">
+                    <button type="button" class="toggle-pass"
+                        (click)="togglePassword(); $event.stopPropagation(); $event.preventDefault()">
                         @if (!showPassword) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                             stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -83,7 +84,8 @@
         <!-- Carrusel de frases -->
         <div class="quote-card">
             <div class="quotes-track-wrapper">
-                <div class="quotes-track" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+                <div class="quotes-track" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'"
+                    [style.transition]="'transform 0.5s ease'">
                     @for (quote of quotes; track $index) {
                     <div class="quote-slide">
                         <p class="quote-text">{{ quote.text }}</p>
