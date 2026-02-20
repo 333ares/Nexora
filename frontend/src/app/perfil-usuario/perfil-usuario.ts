@@ -11,18 +11,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class PerfilUsuario {
 
-  user = {
-    nombre: 'Arn',
-    apellidos: 'Gómez',
-    username: 'arngomez',
-    email: 'arn@email.com'
-  };
+  showPassword = false;
 
-  transactions  = [
-    { tipo: 'ingreso', concepto: 'Ingreso nómina', cantidad: 2000 },
-    { tipo: 'gasto', concepto: 'Ocio', cantidad: 120 },
-    { tipo: 'gasto', concepto: 'Comida', cantidad: 80 }
-  ];
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
 
 
 
