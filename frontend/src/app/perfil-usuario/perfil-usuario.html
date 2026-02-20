@@ -1,1 +1,82 @@
-<a routerLink="/login">Volver al login </a>
+
+<div class="clscard">
+
+  <!-- ───────── PERFIL HEADER ───────── -->
+  <div class="profile-header">
+
+    <div class="avatar-section">
+      <div class="avatar">
+        <img src="assets/avatar-placeholder.png" alt="Foto perfil" />
+      </div>
+      <button class="btn-secondary">Cambiar foto</button>
+    </div>
+
+    <div class="user-info">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="user.nombre" />
+        </div>
+
+        <div class="form-group">
+          <label>Apellidos</label>
+          <input type="text" [(ngModel)]="user.apellidos" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Usuario</label>
+        <input type="text" [(ngModel)]="user.username" />
+      </div>
+
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" [(ngModel)]="user.email" />
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" placeholder="••••••••" />
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary">Guardar cambios</button>
+        <button class="btn-logout">Cerrar sesión</button>
+        <a href="#" class="delete-account">Eliminar cuenta</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───────── WIDGETS ───────── -->
+  <div class="widgets">
+
+    <!-- MIS TRANSACCIONES -->
+    <div class="widget-card">
+      <h3>Mis transacciones</h3>
+
+      @for (t of transactions; track t) {
+        <div class="transaction">
+ <span class="description">{{ t.concepto }}</span>
+
+<span class="amount"
+      [class.ingreso]="t.tipo === 'ingreso'"
+      [class.gasto]="t.tipo === 'gasto'">
+  {{ t.cantidad }}
+</span>
+        </div>
+      }
+
+    </div> <!--  CIERRE QUE FALTABA -->
+
+    <!-- PLAN ACTUAL -->
+    <div class="widget-card plan-card">
+      <h3>Tu plan actual</h3>
+      <p class="plan-name">NEXORA FREE</p>
+      <button class="btn-primary">Actualizar</button>
+    </div>
+
+  </div>
+
+</div>
