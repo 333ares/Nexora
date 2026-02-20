@@ -1,99 +1,106 @@
 <div class="card">
 
-  <!-- ── LEFT PANEL ── -->
-  <div class="left-panel">
+    <!-- Panel izquierdo: formulario -->
+    <div class="left-panel">
 
-    <div class="logo">
-      <img src="assets/logo.png" alt="Nexora logo" width="56" height="56" />
-    </div>
-
-    <h1 class="title">Inicio de sesión</h1>
-    <p class="subtitle">
-      Vuelve a tu diario financiero para organizar tus presupuestos y
-      asegurar tu tranquilidad económica
-    </p>
-
-    <form>
-      <div class="form-group">
-        <label for="email">Correo electrónico</label>
-        <input type="email" id="email" placeholder="Tu correo electrónico" />
-      </div>
-
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <div class="input-wrapper">
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            id="password"
-            placeholder="Tu contraseña"
-          />
-          <button type="button" class="toggle-pass" (click)="togglePassword()">
-            @if (!showPassword) {
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.8"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 12S5 5 12 5s11 7 11 7-4 7-11 7S1 12 1 12z"/>
-                <circle cx="12" cy="12" r="3"/>
-              </svg>
-            } @else {
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.8"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17.94 17.94A10.9 10.9 0 0 1 12 19C6 19 2 12 2 12a18.1 18.1 0 0 1 5.06-5.94"/>
-                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c6 0 10 8 10 8a18.5 18.5 0 0 1-2.16 3.19"/>
-                <line x1="1" y1="1" x2="23" y2="23"/>
-              </svg>
-            }
-          </button>
+        <!-- Logo -->
+        <div class="logo">
+            <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+                alt="" width="56" height="56" />
         </div>
-        <div class="forgot"><a href="#">¿Has olvidado tu contraseña?</a></div>
-      </div>
 
-      <button type="submit" class="btn-login">Acceder</button>
-    </form>
+        <!-- Título y descripción -->
+        <h1 class="title">Inicio de sesión</h1>
+        <p class="subtitle">
+            Vuelve a tu diario financiero para organizar tus presupuestos y asegurar tu tranquilidad económica
+        </p>
 
-    <div class="divider"><span>o</span></div>
-
-    <p class="register">
-      ¿Aún no tienes cuenta? <a routerLink="/registro">Regístrate</a>
-    </p>
-  </div>
-
-  <!-- ── RIGHT PANEL ── -->
-  <div class="right-panel">
-    <span class="brand-name">NEXORA</span>
-
-    <div class="illustration">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="logo-center">
-        <img src="assets/logo.png" alt="Nexora" width="110" height="110" />
-      </div>
-    </div>
-
-    <!-- CAROUSEL -->
-    <div class="quote-card">
-      <div class="quotes-track-wrapper">
-        <div class="quotes-track" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
-          @for (quote of quotes; track $index) {
-            <div class="quote-slide">
-              <p class="quote-text">{{ quote.text }}</p>
-              <p class="quote-author">{{ quote.author }}</p>
+        <!-- Formulario -->
+        <form>
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" placeholder="Tu correo electrónico" />
             </div>
-          }
-        </div>
-      </div>
 
-      <div class="dots">
-        @for (quote of quotes; track $index) {
-          <span
-            class="dot"
-            [ngClass]="{ active: $index === currentIndex }"
-            (click)="goTo($index)"
-          ></span>
-        }
-      </div>
+            <!-- Contraseña -->
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <div class="input-wrapper">
+                    <!-- Input dinámico (muestra/oculta contraseña) -->
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" placeholder="Tu contraseña" />
+
+                    <button type="button" class="toggle-pass"
+                        (click)="togglePassword(); $event.stopPropagation(); $event.preventDefault()">
+                        @if (!showPassword) {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                            </path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                        } @else {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        }
+                    </button>
+                </div>
+
+                <!-- Recuperar contraseña -->
+                <div class="forgot"><a href="#">¿Has olvidado tu contraseña?</a></div>
+            </div>
+
+            <!-- Botón login -->
+            <button type="submit" class="btn-login">Acceder</button>
+        </form>
+
+        <!-- Separador -->
+        <div class="divider"><span>o</span></div>
+
+        <!-- Registro -->
+        <p class="register">
+            ¿Aún no tienes cuenta? <a routerLink="/registro">Regístrate</a>
+        </p>
     </div>
 
-  </div>
+    <!-- Panel derecho: parte visual -->
+    <div class="right-panel">
+        <span class="brand-name">NEXORA</span>
+
+        <!-- Ilustración -->
+        <div class="illustration">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="logo-center">
+                <img src="" alt="Nexora" width="110" height="110" />
+            </div>
+        </div>
+
+        <!-- Carrusel de frases -->
+        <div class="quote-card">
+            <div class="quotes-track-wrapper">
+                <div class="quotes-track" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'"
+                    [style.transition]="'transform 0.5s ease'">
+                    @for (quote of quotes; track $index) {
+                    <div class="quote-slide">
+                        <p class="quote-text">{{ quote.text }}</p>
+                        <p class="quote-author">{{ quote.author }}</p>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Indicadores -->
+            <div class="dots">
+                @for (quote of quotes; track $index) {
+                <span class="dot" [ngClass]="{ active: $index === currentIndex }" (click)="goTo($index)"></span>
+                }
+            </div>
+        </div>
+
+    </div>
 </div>

@@ -1,17 +1,18 @@
+/* Importa la fuente Nunito desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
-/* ── HOST ────────────────────────────────────── */
+/* Contenedor principal del componente (ocupa toda la pantalla y centra la card) */
 :host {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #6dbf6e;
+  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
   font-family: 'Nunito', sans-serif;
   padding: 24px;
 }
 
-/* ── CARD ────────────────────────────────────── */
+/* Tarjeta principal que contiene todo el login */
 .card {
   display: flex;
   background: #f0faf0;
@@ -23,7 +24,7 @@
   box-shadow: 0 16px 56px rgba(0, 0, 0, 0.18);
 }
 
-/* ── LEFT PANEL ──────────────────────────────── */
+/* Panel izquierdo donde está el formulario */
 .left-panel {
   flex: 1;
   padding: 44px 48px;
@@ -32,27 +33,47 @@
   justify-content: center;
 }
 
-.logo { margin-bottom: 20px; }
-.logo img { display: block; }
+/* Espaciado del logo superior */
+.logo {
+  margin-bottom: 20px;
+}
 
+/* Hace que la imagen del logo no tenga espacio extra */
+.logo img {
+  display: block;
+}
+
+/* Título principal del login */
 .title {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 800;
   color: #1a1a1a;
   margin-bottom: 8px;
 }
 
+/* Subtítulo descriptivo debajo del título */
 .subtitle {
-  font-size: 13px;
+  font-size: 15px;
   color: #666;
   line-height: 1.55;
   margin-bottom: 28px;
-  max-width: 320px;
+  margin-top: 0px;
+  max-width: 360px;
+  text-align: justify;
 }
 
-/* Form */
-.form-group { margin-bottom: 16px; }
+/* El formulario ocupa todo el ancho disponible */
+form {
+  width: 100%;
+}
 
+/* Contenedor individual de cada campo del formulario */
+.form-group {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+/* Estilo de las etiquetas (Email, Password, etc.) */
 .form-group label {
   display: block;
   font-size: 13px;
@@ -61,8 +82,10 @@
   margin-bottom: 6px;
 }
 
+/* Estilo general de los inputs */
 .form-group input {
   width: 100%;
+  box-sizing: border-box;
   padding: 11px 14px;
   border: 1.5px solid #d6ead6;
   border-radius: 10px;
@@ -73,12 +96,31 @@
   outline: none;
   transition: border-color 0.2s;
 }
-.form-group input:focus { border-color: #4caf50; }
-.form-group input::placeholder { color: #bbb; }
 
-.input-wrapper { position: relative; }
-.input-wrapper input { padding-right: 42px; }
+/* Cambia el borde cuando el input está activo */
+.form-group input:focus {
+  border-color: #4caf50;
+}
 
+/* Color del texto placeholder */
+.form-group input::placeholder {
+  color: #bbb;
+}
+
+/* Contenedor relativo para el input con icono (mostrar contraseña) */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Añade espacio a la derecha para el botón del ojo */
+.input-wrapper input {
+  width: 100%;
+  padding-right: 44px;
+}
+
+/* Botón para mostrar/ocultar contraseña */
 .toggle-pass {
   position: absolute;
   right: 12px;
@@ -89,13 +131,32 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 0;
+  width: 24px;
+  height: 24px;
+  z-index: 1;
 }
 
-.forgot { text-align: right; margin-top: 6px; }
-.forgot a { font-size: 12px; color: #555; text-decoration: none; }
-.forgot a:hover { text-decoration: underline; }
+/* Contenedor del enlace "Forgot password" */
+.forgot {
+  text-align: right;
+  margin-top: 6px;
+}
 
+/* Estilo del enlace de recuperar contraseña */
+.forgot a {
+  font-size: 12px;
+  color: #555;
+  text-decoration: none;
+}
+
+/* Subrayado al pasar el mouse */
+.forgot a:hover {
+  text-decoration: underline;
+}
+
+/* Botón principal de login */
 .btn-login {
   width: 100%;
   padding: 13px;
@@ -110,9 +171,18 @@
   margin-top: 6px;
   transition: background 0.2s, transform 0.1s;
 }
-.btn-login:hover { background: #43a047; }
-.btn-login:active { transform: scale(0.98); }
 
+/* Color más oscuro al pasar el mouse */
+.btn-login:hover {
+  background: #43a047;
+}
+
+/* Efecto al hacer click */
+.btn-login:active {
+  transform: scale(0.98);
+}
+
+/* Separador visual con líneas y texto en medio */
 .divider {
   display: flex;
   align-items: center;
@@ -121,6 +191,8 @@
   color: #bbb;
   font-size: 12px;
 }
+
+/* Líneas laterales del separador */
 .divider::before,
 .divider::after {
   content: '';
@@ -129,11 +201,26 @@
   background: #ddd;
 }
 
-.register { text-align: center; font-size: 13px; color: #666; }
-.register a { color: #222; font-weight: 700; text-decoration: none; }
-.register a:hover { text-decoration: underline; }
+/* Texto inferior de registro */
+.register {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+}
 
-/* ── RIGHT PANEL ─────────────────────────────── */
+/* Enlace de registro */
+.register a {
+  color: #222;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Subrayado al pasar el mouse */
+.register a:hover {
+  text-decoration: underline;
+}
+
+/* Panel derecho decorativo */
 .right-panel {
   width: 340px;
   background: #7ecb7e;
@@ -144,6 +231,7 @@
   overflow: hidden;
 }
 
+/* Nombre de marca arriba del panel derecho */
 .brand-name {
   font-size: 11px;
   font-weight: 800;
@@ -152,6 +240,7 @@
   margin-bottom: 16px;
 }
 
+/* Contenedor central de ilustración */
 .illustration {
   flex: 1;
   position: relative;
@@ -161,8 +250,13 @@
   justify-content: center;
 }
 
-.shape { position: absolute; border-radius: 24px; }
+/* Formas decorativas */
+.shape {
+  position: absolute;
+  border-radius: 24px;
+}
 
+/* Forma decorativa 1 */
 .shape-1 {
   width: 220px;
   height: 220px;
@@ -172,6 +266,7 @@
   transform: rotate(15deg);
 }
 
+/* Forma decorativa 2 */
 .shape-2 {
   width: 200px;
   height: 200px;
@@ -181,14 +276,19 @@
   transform: rotate(-10deg);
 }
 
+/* Logo central con sombra */
 .logo-center {
   position: relative;
   z-index: 2;
   filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.25));
 }
-.logo-center img { display: block; }
 
-/* ── QUOTE CAROUSEL (slider real) ────────────── */
+/* Evita espacios extra en la imagen */
+.logo-center img {
+  display: block;
+}
+
+/* Tarjeta del carrusel de frases */
 .quote-card {
   background: rgba(255, 255, 255, 0.25);
   border-radius: 14px;
@@ -197,25 +297,25 @@
   margin-top: 12px;
 }
 
-/* El wrapper recorta las slides que están fuera */
+/* Contenedor que recorta las slides fuera del área visible */
 .quotes-track-wrapper {
   overflow: hidden;
   width: 100%;
 }
 
-/* El track contiene todas las slides en fila horizontal */
+/* Contenedor horizontal que se mueve con animación */
 .quotes-track {
   display: flex;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
 
-/* Cada slide ocupa exactamente el 100% del wrapper */
+/* Cada slide ocupa el 100% del ancho */
 .quote-slide {
   min-width: 100%;
   box-sizing: border-box;
 }
 
+/* Texto principal de la frase */
 .quote-text {
   font-size: 13px;
   color: #fff;
@@ -225,21 +325,24 @@
   min-height: 52px;
 }
 
+/* Autor de la frase */
 .quote-author {
   font-size: 11.5px;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 12px;
 }
 
-/* ── DOTS ────────────────────────────────────── */
+/* Contenedor de los indicadores (dots) */
 .dots {
   display: flex;
   gap: 6px;
   margin-top: 4px;
+  justify-content: center;
 }
 
+/* Indicador individual */
 .dot {
-  width: 22px;
+  width: 32px;
   height: 3px;
   background: rgba(255, 255, 255, 0.4);
   border-radius: 2px;
@@ -249,6 +352,7 @@
   padding: 0;
 }
 
+/* Dot activo */
 .dot.active {
   background: #fff;
 }
