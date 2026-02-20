@@ -11,3 +11,5 @@ Route::post('/logout', [AuthController::class, 'logoutUsuario']);
 
 // Usuario
 Route::get('/usuario/{id}', [UsuarioController::class, 'listarInfo']);
+Route::put('/usuario/{id}', [UsuarioController::class, 'actualizarUsuario']);
+Route::delete('/usuario/{id}', [UsuarioController::class, 'borrarUsuario']);
