@@ -63,4 +63,22 @@ class UsuarioController extends Controller
             'animal' => $usuario
         ], 200);
     }
+
+    public function borrarUsuario($id)
+    {
+        $usuario = Usuario::find($id);
+        if (!$usuario) {
+            return response()->json([
+                'message' => 'error',
+                'animal' => 'No existe ningún usuario con ese ID'
+            ], 404);
+        }
+
+        $usuario->delete();
+
+        return response()->json([
+            'message' => 'success',
+            'usuario' => 'El usuario se ha borrado correctamente'
+        ], 200);
+    }
 }
