@@ -1,28 +1,47 @@
-<a href="/login">Volver al Login</a>
+<a href="/login" class="back-link">← Volver al Login</a>
 
 <div class="card">
-    <h2>Regístrate</h2>
-        <form onsubmit="enviar(event)">
-            <div class="row">
-                <div class="field">
-                    <label>Nombre</label>
-                    <input type="text" placeholder="Tu nombre" required>
-                </div>
-                <div class="field">
-                    <label>Apellidos</label>
-                    <input type="text" placeholder="Apellidos" required>
-                </div>
-            </div>
+  <div class="right-panel">
+    <img src="tu-foto.jpg" alt="foto">
+  </div>
+  <div class="left-panel">
+    <h2 class="title">Regístrate</h2>
+    <p class="subtitle">Vuelve a tu diario financiero para organizar tus presupuestos y asegurar tu tranquilidad económica</p>
+    <br>
+    <form onsubmit="enviar(event)">
+        
 
-            <label>Nombre de usuario</label>
-            <input type="text" placeholder="Tu nombre de usuario" required>
+      <div class="row">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-group">
+          <label>Apellidos</label>
+          <input type="text" placeholder="Apellidos" required>
+        </div>
+      </div>
 
-            <label>Correo electrónico</label>
-            <input type="email" placeholder="nexora@example.com" required>
+      <div class="form-group">
+        <label>Nombre de usuario</label>
+        <input type="text" placeholder="Tu nombre de usuario" required>
+      </div>
 
-            <label>Contraseña</label>
-            <input type="password" placeholder="Tu contraseña" required>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" placeholder="nexora@example.com" required>
+      </div>
 
-            <button type="submit">Registrarse</button>
-        </form>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" placeholder="Tu contraseña" required>
+      </div>
+
+      <button type="submit" class="btn-login">Registrarse</button>
+
+      <p class="register">¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
+
+    </form>
+  </div>
+
 </div>
