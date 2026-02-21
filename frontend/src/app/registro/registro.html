@@ -23,9 +23,9 @@
     <h2 class="title">Crear cuenta</h2>
     <p class="subtitle">Vuelve a tu diario financiero para organizar tus presupuestos y asegurar tu tranquilidad económica</p>
     <br>
+    <!-- Formuoario para registrarse -->
     <form onsubmit="enviar(event)">
-        
-
+      
       <div class="row">
         <div class="form-group">
           <label>Nombre*</label>
@@ -52,10 +52,13 @@
         <input type="password" placeholder="Tu contraseña" required>
       </div>
 
-      <button type="submit" class="btn-login">Registrarse</button>
-
-      <p class="register">¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
-
     </form>
+
+    <!-- O iniciar sesion -->
+      <div class="divider">o</div>
+      <p class="login">
+        ¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesión</a>
+      </p>
+
   </div>
 </div>

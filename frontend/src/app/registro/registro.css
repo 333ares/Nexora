@@ -39,7 +39,7 @@
   border-radius: 14px;
   padding: 16px 18px 14px;
   backdrop-filter: blur(4px);
-  margin-top: 520px;
+  margin-top: 540px;
   margin-left: 30px;
   margin-right: 30px;
 }
@@ -203,4 +203,36 @@ button {
   font-family: nunito;
 }
 
+/*Boton de registrarse*/
 button:hover { background: #43a047; }
+
+/* --- Opcion de registrarse --- */
+/*Estilo de la -o-*/
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 18px 0 12px;
+  gap: 10px;
+  color: #bbb;
+  font-size: 12px;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+/*Estilo de las letras*/
+.login {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+}
+.login a {
+  color: #222;
+  font-weight: 700;
+  text-decoration: none;
+}
+.login a:hover { text-decoration: underline; }
