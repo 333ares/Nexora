@@ -16,20 +16,20 @@
   border-radius: 24px;
   overflow: hidden;
   width: 100%;
-  max-width: 1000px;    /* más ancho para los dos paneles */
+  max-width: 900px;    /* más ancho para los dos paneles */
   box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
-/* Panel izquierdo → ahora es la foto */
+/* --- PANEL IZQUIERDO -> AHORA ES LA FOTO --- */
 .right-panel {
-  width: 500px;
+  width: 400px;
   background: #7ecb7e;
   border-radius: 24px 0 0 24px; /* redondeo solo a la izquierda */
   overflow: hidden;
   position: relative;
-  background-image: url('https://i.postimg.cc/0N0T8VXM/Fondo_foto_registro.png');
+  background-image: url('https://i.postimg.cc/RVVCHHxp/Fondo_registro.png');
   background-size: cover;
-  background-position: center;
+  background-position: cover;
 }
 
 /*---CARRUSEL---*/
@@ -120,7 +120,7 @@
   display: block;
 }
 
-/* Panel derecho → formulario */
+/* --- PANEL DERECHO -> FORMULARIO --- */
 .left-panel {
   flex: 1;
   padding: 44px 48px;
@@ -139,6 +139,10 @@
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.subtitle {
+  margin-bottom: 30px;
 }
 
 .row {
@@ -193,6 +197,10 @@ button {
     font-size: 0.95rem;
     cursor: pointer;
     transition: background 0.2s;
+}
+.btn-login {
+  font-weight: bold;
+  font-family: nunito;
 }
 
 button:hover { background: #43a047; }
