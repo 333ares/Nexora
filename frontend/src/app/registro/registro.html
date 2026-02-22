@@ -24,37 +24,94 @@
     <p class="subtitle">Vuelve a tu diario financiero para organizar tus presupuestos y asegurar tu tranquilidad económica</p>
     <br>
     <!-- Formuoario para registrarse -->
-    <form onsubmit="enviar(event)">
+    <form [formGroup]="formulario" (ngSubmit)="onSubmit()"> <!-- ngSubmit solo se usa al enviar, no para validar -->
       
-      <div class="row">
+      <!-- Usuario y apellidos -->
+      <div class="row"> <!-- Para poner nombre y apellidos en la misma linea, uno al lado de otro -->
+
         <div class="form-group">
+          <!-- Lo que se ve -->
           <label>Nombre*</label>
-          <input type="text" placeholder="Tu nombre" required>
+          <input type="text" placeholder="Tu nombre" formControlName="nombre">
+          <!-- Validar errores -->
+          @if (formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched) {
+            <div class="error">
+              <span>El nombre es obligatorio</span>
+            </div>
+          }
         </div>
+
         <div class="form-group">
+          <!-- Lo que se ve -->
           <label>Apellidos*</label>
-          <input type="text" placeholder="Apellidos" required>
+          <input type="text" placeholder="Apellidos" formControlName="apellidos">
+          <!-- Validar errores -->
+          @if (formulario.get('apellidos')?.invalid && formulario.get('apellidos')?.touched) {
+            <div class="error">
+              <span>Los apellidos son obligatorios</span>
+            </div>
+          }
         </div>
+
       </div>
 
+      <!-- Nombre de usuario -->
       <div class="form-group">
+        <!-- Lo que se ve -->
         <label>Nombre de usuario*</label>
-        <input type="text" placeholder="Tu nombre de usuario" required>
+        <input type="text" placeholder="Tu nombre de usuario" formControlName="nombre_usuario">
+        <!-- Validar errores -->
+         @if (formulario.get('nombre_usuario')?.invalid && formulario.get('nombre_usuario')?.touched) {
+          <div class="error">
+            <span>El nombre de usuario es obligatorio</span>
+          </div>
+         }
       </div>
 
+      <!-- Correo -->
       <div class="form-group">
+        <!-- Lo que se ve -->
         <label>Correo electrónico*</label>
-        <input type="email" placeholder="nexora@example.com" required>
+        <input type="email" placeholder="nexora@example.com" formControlName="correo">
+        <!-- Validar errores -->
+         @if (formulario.get('correo')?.invalid && formulario.get('correo')?.touched) {
+          <div class="error">
+            @if (formulario.get('correo')?.errors?.['required']) {
+              <span>El correo es obligatorio</span>
+            }
+            @if (formulario.get('correo')?.errors?.['email']) {
+              <span>El formato de email no es válido</span>
+            }
+          </div>
+         }
       </div>
 
+      <!-- Contraseña -->
       <div class="form-group">
+        <!-- Lo que se ve -->
         <label>Contraseña*</label>
-        <input type="password" placeholder="Tu contraseña" required>
+        <input type="password" placeholder="Tu contraseña" formControlName="contrasena">
+        <!-- Validar errores -->
+         @if (formulario.get('contrasena')?.invalid && formulario.get('contrasena')?.touched) {
+          <div class="error">
+            @if (formulario.get('contrasena')?.errors?.['required']) {
+              <span>La contraseña es obligatoria</span>
+            }
+            @else if (formulario.get('contrasena')?.errors?.['minlength']) { <!-- la l de minlength es en minuscula, a pesar de ser L mayuscula en el TS -->
+              <span>La contraseña debe tener al menos 5 caracteres.</span>
+            }
+            @else if (formulario.get('contrasena')?.errors?.['pattern']) {
+              <span>La contraseña debe tener almenos un carácter especial (@%#...)</span>
+            }
+          </div>
+         }
       </div>
+      <br>
+      <button type="submit" class="btn-login">Registrarse</button>
 
     </form>
 
-    <!-- O iniciar sesion -->
+    <!-- -O- iniciar sesion -->
       <div class="divider">o</div>
       <p class="login">
         ¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesión</a>

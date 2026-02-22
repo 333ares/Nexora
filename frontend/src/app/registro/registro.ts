@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })
@@ -17,11 +17,21 @@ formulario: FormGroup; //Se define el objeto formulario
       nombre: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
       nombre_usuario: ['', [Validators.required]],
-      correo_electronico: ['', [Validators.required]],
-      contraseña: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).*$/)]],
+      correo: ['', [Validators.required, Validators.email]],
+      contrasena: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).*$/)]],
     });
   }
 
+  //Solo se usa al a hora de enviar. No valida nada. Eso lo hace en el bloque anterior
+  onSubmit() {
+    if (this.formulario.invalid) {
+      this.formulario.markAllAsTouched();
+      return;
+    }
+    // lógica de envío
+  }
+
+  //Frases de autores
   quotes = [
     { text: '"El precio es lo que pagas, el valor es lo que recibes"', author: '– Warren Buffett' },
     { text: '"No ahorres lo que te queda después de gastar, gasta lo que te queda después de ahorrar"', author: '– Warren Buffett' },
@@ -51,7 +61,7 @@ formulario: FormGroup; //Se define el objeto formulario
     this.timer = setInterval(() => this.next(), 4000);
   }
   
-  /* NMO SABEMOS SI SE VA A USAR FINALMENTE
+  /* NO SABEMOS SI SE VA A USAR FINALMENTE
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
