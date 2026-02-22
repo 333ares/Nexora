@@ -1,13 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
+import { NgClass, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [RouterLink, NgClass],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrls: ['./login.css'],
 })
 export class Login implements OnInit, OnDestroy {
 
@@ -22,27 +28,34 @@ export class Login implements OnInit, OnDestroy {
   ];
 
   currentIndex = 0;
-  private timer: any;
+  private intervalId?: ReturnType<typeof setInterval>;
 
-  ngOnInit() {
-    this.timer = setInterval(() => this.next(), 4000);
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  ngOnInit(): void {
+
+    
+    if (isPlatformBrowser(this.platformId)) {
+      this.intervalId = setInterval(() => {
+        this.currentIndex =
+          this.currentIndex + 1 >= this.quotes.length
+            ? 0
+            : this.currentIndex + 1;
+      }, 3000);
+    }
   }
 
-  ngOnDestroy() {
-    clearInterval(this.timer);
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
-  next() {
-    this.currentIndex = (this.currentIndex + 1) % this.quotes.length;
+  goTo(index: number): void {
+    this.currentIndex = index;
   }
 
-  goTo(i: number) {
-    this.currentIndex = i;
-    clearInterval(this.timer);
-    this.timer = setInterval(() => this.next(), 4000);
-  }
-
-  togglePassword() {
+  togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 }
