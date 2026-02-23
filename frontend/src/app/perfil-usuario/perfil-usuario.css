@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
-/* ── HOST  */
+/* ── HOST ─────────────────────────────────────── */
 :host {
   display: flex;
   align-items: center;
@@ -11,11 +11,11 @@
   padding: 24px;
 }
 
-/* ── CARD  */
+/* ── CARD ─────────────────────────────────────── */
 .card {
   display: flex;
   flex-direction: column;
-  background: #f0faf0;
+  background: #d8eed8;   /* verde menta como fondo separador */
   border-radius: 24px;
   overflow: hidden;
   width: 100%;
@@ -23,50 +23,69 @@
   box-shadow: 0 16px 56px rgba(0, 0, 0, 0.18);
 }
 
-/* ── MAIN LAYOUT  */
+/* ── MAIN LAYOUT ──────────────────────────────── */
 .main-layout {
   display: flex;
-  min-height: 680px;
+  gap: 16px;
+  padding: 16px;
+  align-items: flex-start;
 }
 
-/* COLUMNA IZQUIERDA */
+/* ══════════════════════════════════════════════
+   RECUADROS — base común
+══════════════════════════════════════════════ */
+.section-box {
+  background: #fff;
+  border-radius: 16px;
+  border: 1.5px solid #c8e0c8;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════
+   COLUMNA IZQUIERDA
+══════════════════════════════════════════════ */
 .left-col {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 40px 44px 40px 56px;
-  border-right: 1.5px solid #d6ead6;
 }
 
-/* COLUMNA DERECHA */
-.right-col {
-  width: 380px;
-  flex-shrink: 0;
+.profile-box {
   display: flex;
   flex-direction: column;
 }
 
-/*  Avatar  */
-.avatar-col {
-  flex-direction: column;
-  align-items: center;
-  padding-top: 8px;
+/* Banner estilo Discord */
+.banner {
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 45%, #81c784 100%);
   flex-shrink: 0;
+  border-radius: 0;
+}
+
+/* Avatar solapando el banner */
+.avatar-top {
+  padding: 0 0 0 28px;
+  margin-top: -52px;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
 }
 
 .avatar-wrapper {
   position: relative;
-  width: 120px;
-  height: 120px; 
+  width: 104px;
+  height: 104px;
 }
 
 .avatar-ring {
-  width: 120px;
-  height: 120px;
+  width: 104px;
+  height: 104px;
   border-radius: 50%;
   background: #fff;
-  border: 2.5px solid #d6ead6;
+  border: 4px solid #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,13 +103,13 @@
 
 .avatar-edit-btn {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
+  bottom: 4px;
+  right: 4px;
   width: 26px;
   height: 26px;
   border-radius: 50%;
   background: #4caf50;
-  border: 2px solid #f0faf0;
+  border: 2px solid #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -99,21 +118,18 @@
 }
 .avatar-edit-btn:hover { background: #43a047; }
 
-
-
-
-/* ── Fields  */
+/* Campos */
 .fields-col {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 20px;
+  padding: 0 28px 28px 28px;
 }
 
 .fields-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px 24px;
+  gap: 16px 24px;
 }
 
 .span-2 {
@@ -121,19 +137,23 @@
   max-width: calc(50% - 12px);
 }
 
-.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
 .form-group label {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 700;
-  color: #222;
+  color: #333;
 }
 
 .form-group input {
-  padding: 13px 16px;
-  border: 1.5px solid #d6ead6;
+  padding: 11px 14px;
+  border: 1.5px solid #c8c8c8;   /* reborde gris */
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 13.5px;
   font-family: inherit;
   color: #333;
   background: #fff;
@@ -144,11 +164,11 @@
 .form-group input::placeholder { color: #bbb; }
 
 .input-wrapper { position: relative; }
-.input-wrapper input { padding-right: 38px; }
+.input-wrapper input { padding-right: 42px; }
 
 .toggle-pass {
   position: absolute;
-  left: 190px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -159,7 +179,7 @@
   padding: 0;
 }
 
-/* ── Action buttons  */
+/* Botones acción */
 .action-row {
   display: flex;
   gap: 10px;
@@ -186,7 +206,7 @@
   padding: 11px 22px;
   background: #fff;
   color: #555;
-  border: 1.5px solid #d6ead6;
+  border: 1.5px solid #c8c8c8;
   border-radius: 10px;
   font-size: 13px;
   font-weight: 700;
@@ -210,33 +230,42 @@
 }
 .btn-delete:hover { background: #fff5f5; border-color: #e57373; }
 
-/* ── Plan panel  */
-.plan-panel {
-  background: #7ecb7e;
-  padding: 24px 22px 22px;
+/* ══════════════════════════════════════════════
+   COLUMNA DERECHA
+══════════════════════════════════════════════ */
+.right-col {
+  width: 360px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
+}
+
+/* Recuadro plan */
+.plan-box {
+  padding: 24px 22px;
+  background: #7ecb7e;
+  border-color: #5ab55a;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .plan-label {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
 }
 
 .plan-name {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
   color: #fff;
-  line-height: 1.2;
-  letter-spacing: 0.5px;
   margin: 0;
   display: flex;
   align-items: center;
-  gap: 7px;
-  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .plan-name span {
@@ -248,33 +277,14 @@
   letter-spacing: 2px;
 }
 
-.plan-features {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.plan-feature {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.plan-feature--locked {
-  color: rgba(255, 255, 255, 0.45);
-}
-
 .btn-upgrade {
-  width: 70%;
+  width: 100%;
   padding: 11px;
   background: #fff;
   color: #2e7d32;
   border: none;
   border-radius: 11px;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 800;
   font-family: inherit;
   cursor: pointer;
@@ -284,24 +294,23 @@
 .btn-upgrade:hover { background: #f1f8e9; }
 .btn-upgrade:active { transform: scale(0.98); }
 
-/* ── Transactions panel  */
-.transactions-panel {
-  flex: 1;
-  padding: 20px 22px 28px;
-  background: #f0faf0;
-  border-top: 1.5px solid #d6ead6;
+/* Recuadro transacciones */
+.transactions-box {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .panel-title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 800;
   color: #1a1a1a;
 }
 
@@ -320,7 +329,7 @@
 }
 .btn-icon-round:hover { background: #c8e6c9; }
 
-/* ── Transaction list  */
+/* Lista transacciones */
 .tx-list {
   display: flex;
   flex-direction: column;
@@ -331,7 +340,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 11px 0;
-  border-bottom: 1px solid #e4f2e4;
+  border-bottom: 1px solid #eef5ee;
 }
 .tx-item:last-child { border-bottom: none; }
 
@@ -361,7 +370,7 @@
 }
 
 .tx-type {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   color: #999;
   text-transform: uppercase;
@@ -369,7 +378,7 @@
 }
 
 .tx-category {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   color: #222;
 }
