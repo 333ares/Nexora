@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('visualizaciones', function (Blueprint $table) {
             $table->id();
+            $table->string('titulo');
+            $table->integer('valoracion'); //Los limites de numero los estabecemos en controller
             $table->timestamps();
         });
     }
