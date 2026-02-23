@@ -1,5 +1,6 @@
-/* Importa la fuente Nunito desde Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+/* Importa la fuente Onest desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Onest:wght@100..900&display=swap');
 
 /* Contenedor principal del componente (ocupa toda la pantalla y centra la card) */
 :host {
@@ -8,7 +9,7 @@
   justify-content: center;
   min-height: 100vh;
   background: linear-gradient(to bottom, #ABDE91, #4E9C25);
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Onest', 'Lato';
   padding: 24px;
 }
 
@@ -19,8 +20,7 @@
   border-radius: 24px;
   overflow: hidden;
   width: 100%;
-  max-width: 957px;
-  min-height: 520px;
+  max-width: 1000px;
   box-shadow: 0 16px 56px rgba(0, 0, 0, 0.18);
   padding: 50px;
   gap: 50px;
@@ -54,12 +54,11 @@
 
 /* Subtítulo descriptivo debajo del título */
 .subtitle {
-  font-size: 15px;
+  font-size: 17px;
   color: #666;
   line-height: 1.55;
   margin-bottom: 28px;
   margin-top: 0px;
-  max-width: 517px;
   text-align: justify;
 }
 
@@ -77,21 +76,23 @@ form {
 /* Estilo de las etiquetas (Email, Password, etc.) */
 .form-group label {
   display: block;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: #222;
   margin-bottom: 6px;
+  margin-top: 10px;
+
 }
 
 /* Estilo general de los inputs */
 .form-group input {
   width: 100%;
   box-sizing: border-box;
-  padding: 11px 14px;
-  border: 1.5px solid #d6ead6;
+  padding: 15px;
+  border: 1.5px solid #d3d3d3;
   border-radius: 10px;
-  font-size: 13.5px;
-  font-family: inherit;
+  font-size: 15px;
+  font-family: 'Lato';
   color: #333;
   background: #fff;
   outline: none;
@@ -143,6 +144,7 @@ form {
 .forgot {
   text-align: right;
   margin-top: 6px;
+  font-family: 'Lato';
 }
 
 /* Estilo del enlace de recuperar contraseña */
@@ -169,7 +171,7 @@ form {
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  margin-top: 6px;
+  margin-top: 15px;
   transition: background 0.2s, transform 0.1s;
 }
 
@@ -187,7 +189,7 @@ form {
 .divider {
   display: flex;
   align-items: center;
-  margin: 18px 0 12px;
+  margin: 30px 0 30px;
   gap: 10px;
   color: #bbb;
   font-size: 12px;
@@ -204,9 +206,12 @@ form {
 
 /* Texto inferior de registro */
 .register {
+  font-family: 'Lato';
+  ;
   text-align: center;
   font-size: 14px;
   color: #666;
+  margin: 0;
 }
 
 /* Enlace de registro */
@@ -223,7 +228,7 @@ form {
 
 /* Panel derecho decorativo */
 .right-panel {
-  width: 340px;
+  width: 370px;
   display: flex;
   flex-direction: column;
   padding: 28px 24px;
@@ -280,9 +285,10 @@ form {
 /* Autor de la frase */
 .quote-author {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #fff;
   margin-top: 0;
   margin-left: 15px;
+  font-style: italic;
 }
 
 /* Contenedor de los indicadores (dots) */
