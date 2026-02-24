@@ -10,23 +10,26 @@ class UsuarioController extends Controller
 {
     public function listarInfo($id)
     {
+        // Buscamos usuario por id
         $usuario = Usuario::find($id);
 
         if (!$usuario) {
+            // Si no lo encuentra, mostramos error
             return response()->json([
                 'message' => 'error',
                 'usuario' => 'No existe un usuario con ese ID'
             ], 400);
-        } else {
-            return response()->json([
-                'message' => 'success',
-                'usuario' => $usuario
-            ], 200);
         }
+        // Si se encuentra se muestra su información
+        return response()->json([
+            'message' => 'success',
+            'usuario' => $usuario
+        ], 200);
     }
 
     public function actualizarUsuario(Request $request, $id)
     {
+        // Comprobamos que los datos sean validos
         $validator = Validator::make($request->all(), [
             'usuario' => 'nullable|string',
             'nombre' => 'nullable|string',
@@ -35,6 +38,7 @@ class UsuarioController extends Controller
             'password' => 'nullable|string',
         ]);
 
+        // Si no son validos, mostramos error
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'error',
@@ -42,7 +46,9 @@ class UsuarioController extends Controller
             ], 400);
         }
 
+        // Buscamos usuario por id
         $usuario = Usuario::find($id);
+        // Si no lo encontramos, mostramos error
         if (!$usuario) {
             return response()->json([
                 'message' => 'error',
@@ -50,6 +56,7 @@ class UsuarioController extends Controller
             ], 404);
         }
 
+        // Actualizamos datos que nos haya pasado el usuario
         $usuario->update($request->only([
             'usuario',
             'nombre',
@@ -58,6 +65,7 @@ class UsuarioController extends Controller
             'password'
         ]));
 
+        // Mostramos usuario actualizado
         return response()->json([
             'message' => 'success',
             'animal' => $usuario
@@ -66,7 +74,9 @@ class UsuarioController extends Controller
 
     public function borrarUsuario($id)
     {
+        // Buscamos usuario por id
         $usuario = Usuario::find($id);
+        // Si no lo encontramos, mostramos error
         if (!$usuario) {
             return response()->json([
                 'message' => 'error',
@@ -74,8 +84,10 @@ class UsuarioController extends Controller
             ], 404);
         }
 
+        // Borramos usuario
         $usuario->delete();
 
+        // Devolvemos mensaje de exito
         return response()->json([
             'message' => 'success',
             'usuario' => 'El usuario se ha borrado correctamente'

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('chunks', function (Blueprint $table) {
             $table->id();
+            $table->text('texto'); //String soporta hasta 255 caracteres, pero los chunks tienen mas de esa cifra.
+            $texto->json('embedding'); //Porque contiene arrays de numeros tipo 0.123...
+            $table->string('fuente');
             $table->timestamps();
         });
     }

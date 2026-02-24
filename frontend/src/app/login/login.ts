@@ -21,7 +21,7 @@ export class Login implements OnInit, OnDestroy {
 
   quotes = [
     { text: '"El precio es lo que pagas, el valor es lo que recibes"', author: '– Warren Buffett' },
-    { text: '"No ahorres lo que te queda después de gastar, gasta lo que te queda después de ahorrar"', author: '– Warren Buffett' },
+    { text: '"Comprar por impulso es pagar por ansiedad"', author: '– Antonie de Saint-Exupéry' },
     { text: '"La inversión en conocimiento paga el mejor interés"', author: '– Benjamin Franklin' },
     { text: '"El dinero es un buen sirviente pero un mal amo"', author: '– Francis Bacon' },
     { text: '"Nunca gastes tu dinero antes de ganarlo"', author: '– Thomas Jefferson' },
