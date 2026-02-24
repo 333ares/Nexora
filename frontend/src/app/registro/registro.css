@@ -252,11 +252,6 @@ input::placeholder {
   margin-top: 15px;
 }
 
-/* Color más oscuro al pasar el mouse */
-.btn-login:hover {
-  transform: scale(1.02);
-}
-
 /* Efecto al hacer click */
 .btn-login:active {
   transform: scale(0.98);
