@@ -2,12 +2,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Onest:wght@100..900&display=swap');
 
+
+/* Reset básico para eliminar estilos por defecto del navegador */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Contenedor principal del componente */
 :host {
   display: flex;
   align-items: center;
@@ -17,6 +20,7 @@
   font-family: 'Onest', 'Lato';
 }
 
+/* Tarjeta principal del contenido */
 .card {
   display: flex;
   background: #f0faf0;
@@ -176,6 +180,7 @@
   display: block;
 }
 
+/* Texto descriptivo debajo del título */
 .subtitle {
   font-size: 17px;
   color: #666;
@@ -184,22 +189,26 @@
   text-align: justify;
 }
 
+/* Fila flexible para agrupar campos en horizontal */
 .row {
   display: flex;
   gap: 10px;
   box-sizing: border-box;
 }
 
+/* Ancho fijo para cada campo dentro de la fila */
 .row-field {
   width: 285px;
 }
 
+/* Títulos secundarios */
 h2 {
   font-size: 1.3rem;
   color: #222;
   margin-bottom: 1.5rem;
 }
 
+/* Etiquetas de los inputs */
 label {
   display: block;
   font-size: 16px;
@@ -209,6 +218,7 @@ label {
   margin-top: 10px;
 }
 
+/* Estilo base de los campos de entrada */
 input {
   width: 100%;
   box-sizing: border-box;
@@ -223,14 +233,17 @@ input {
   transition: border-color 0.2s;
 }
 
+/* Cambio visual cuando el input está activo */
 input:focus {
   border-color: #4caf50;
 }
 
+/* Estilo del texto placeholder */
 input::placeholder {
   color: #bbb;
 }
 
+/* Mensajes de error debajo del input */
 .error {
   color: red;
   font-size: 12px;
@@ -249,7 +262,7 @@ input::placeholder {
   font-family: inherit;
   cursor: pointer;
   transition: all 0.5s ease;
-  margin-top: 15px;
+  margin-top: 25px;
 }
 
 /* Efecto al hacer click */
@@ -262,7 +275,7 @@ input::placeholder {
 .divider {
   display: flex;
   align-items: center;
-  margin: 10px 0 10px;
+  margin: 24px 0 10px;
   gap: 10px;
   color: #bbb;
   font-size: 12px;
@@ -298,3 +311,32 @@ input::placeholder {
 .login a:hover {
   text-decoration: underline;
 }
+
+/* Contenedor del input y el icono */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Input de contraseña */
+.input-wrapper input {
+  width: 100%;
+  padding-right: 45px; /* Espacio para el icono */
+}
+
+/* Botón del ojo */
+.toggle-pass {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
