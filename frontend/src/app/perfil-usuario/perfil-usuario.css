@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
-/* ── HOST ─────────────────────────────────────── */
+/* ── HOST  */
 :host {
   display: flex;
   align-items: center;
@@ -11,7 +11,7 @@
   padding: 24px;
 }
 
-/* ── CARD ─────────────────────────────────────── */
+/* ── CARD  */
 .card {
   display: flex;
   flex-direction: column;
@@ -23,11 +23,11 @@
   box-shadow: 0 16px 56px rgba(0, 0, 0, 0.18);
 }
 
-/* ── MAIN LAYOUT ──────────────────────────────── */
+/* ── MAIN LAYOUT  */
 .main-layout {
   display: flex;
-  gap: 16px;
-  padding: 16px;
+  gap: 30px;
+  padding: 40px;
   align-items: flex-start;
 }
 
@@ -68,7 +68,7 @@
 .avatar-top {
   padding: 0 0 0 28px;
   margin-top: -52px;
-  margin-bottom: 16px;
+  margin-bottom: 35px;
   position: relative;
   z-index: 2;
 }
@@ -122,20 +122,16 @@
 .fields-col {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 60px;
   padding: 0 28px 28px 28px;
 }
 
 .fields-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px 24px;
+  gap: 26px 24px;
 }
 
-.span-2 {
-  grid-column: 1 / -1;
-  max-width: calc(50% - 12px);
-}
 
 .form-group {
   display: flex;
@@ -168,7 +164,7 @@
 
 .toggle-pass {
   position: absolute;
-  right: 14px;
+  left: 180px; 
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -238,7 +234,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 30px;
 }
 
 /* Recuadro plan */
@@ -252,7 +248,7 @@
 }
 
 .plan-label {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
