@@ -191,7 +191,7 @@
 }
 
 .row-field {
-  width: 100%;
+  width: 285px;
 }
 
 h2 {
@@ -240,7 +240,7 @@ input::placeholder {
 .btn-login {
   width: 100%;
   padding: 13px;
-  background: #4caf50;
+  background: linear-gradient(to bottom, #B3E29A, #78C550);
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -248,12 +248,13 @@ input::placeholder {
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: all 0.5s ease;
+  margin-top: 15px;
 }
 
 /* Color más oscuro al pasar el mouse */
 .btn-login:hover {
-  background: #43a047;
+  transform: scale(1.02);
 }
 
 /* Efecto al hacer click */
