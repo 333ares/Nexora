@@ -176,11 +176,6 @@ form {
   transition: all 0.4s ease;
 }
 
-/* Color más oscuro al pasar el mouse */
-.btn-login:hover {
-  background-image: linear-gradient(to bottom, #B3E29A 0%, #78C550 100%);
-}
-
 /* Efecto al hacer click */
 .btn-login:active {
   transform: scale(0.98);
