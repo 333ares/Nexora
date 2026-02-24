@@ -1,56 +1,57 @@
 <div class="card">
-  <div class="right-panel"> <!-- Panel IZQUIERDO!! -->
-    <img src="https://i.postimg.cc/XYpBkbgT/Letras-Nexora.png" width="140px" class="letras-izquierda">
+  <div class="left-panel"> <!-- Panel isquierdo -->
+    <img src="https://i.postimg.cc/XYpBkbgT/Letras-Nexora.png" class="letras-izquierda">
     <div class="quote-card">
       <div class="quotes-track-wrapper">
         <div class="quotes-track" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
           @for (q of quotes; track q.text) {
-            <div class="quote-slide">
-              <p class="quote-text">{{ q.text }}</p>
-              <p class="quote-author">{{ q.author }}</p>
-            </div>
+          <div class="quote-slide">
+            <p class="quote-text">{{ q.text }}</p>
+            <p class="quote-author">{{ q.author }}</p>
+          </div>
           }
         </div>
       </div>
       <div class="dots">
         @for (q of quotes; track q.text; let i = $index) {
-          <button class="dot" [class.active]="currentIndex === i" (click)="goTo(i)"></button>
+        <button class="dot" [class.active]="currentIndex === i" (click)="goTo(i)"></button>
         }
       </div>
     </div>
   </div>
-  <div class="left-panel"> <!-- Panel DERECHO -->
+  <div class="right-panel"> <!-- Panel DERECHO -->
     <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Nexora logo" class="logo">
-    <h2 class="title">Crear cuenta</h2>
-    <p class="subtitle">Vuelve a tu diario financiero para organizar tus presupuestos y asegurar tu tranquilidad económica</p>
+    <h1 class="title">Crear cuenta</h1>
+    <p class="subtitle">Regístrate ahora y toma el control de tus finanzas: la herramienta definitiva para asegurar tu
+      futuro financiero te está esperando</p>
     <br>
     <!-- Formuoario para registrarse -->
     <form [formGroup]="formulario" (ngSubmit)="onSubmit()"> <!-- ngSubmit solo se usa al enviar, no para validar -->
-      
+
       <!-- Usuario y apellidos -->
       <div class="row"> <!-- Para poner nombre y apellidos en la misma linea, uno al lado de otro -->
 
         <div class="form-group">
           <!-- Lo que se ve -->
-          <label>Nombre*</label>
-          <input type="text" placeholder="Tu nombre" formControlName="nombre">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre" formControlName="nombre" required class="row-field">
           <!-- Validar errores -->
           @if (formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched) {
-            <div class="error">
-              <span>El nombre es obligatorio</span>
-            </div>
+          <div class="error">
+            <span>El nombre es obligatorio</span>
+          </div>
           }
         </div>
 
         <div class="form-group">
           <!-- Lo que se ve -->
-          <label>Apellidos*</label>
-          <input type="text" placeholder="Apellidos" formControlName="apellidos">
+          <label>Apellidos</label>
+          <input type="text" placeholder="Apellidos" formControlName="apellidos" class="row-field">
           <!-- Validar errores -->
           @if (formulario.get('apellidos')?.invalid && formulario.get('apellidos')?.touched) {
-            <div class="error">
-              <span>Los apellidos son obligatorios</span>
-            </div>
+          <div class="error">
+            <span>Los apellidos son obligatorios</span>
+          </div>
           }
         </div>
 
@@ -59,53 +60,54 @@
       <!-- Nombre de usuario -->
       <div class="form-group">
         <!-- Lo que se ve -->
-        <label>Nombre de usuario*</label>
+        <label>Nombre de usuario</label>
         <input type="text" placeholder="Tu nombre de usuario" formControlName="nombre_usuario">
         <!-- Validar errores -->
-         @if (formulario.get('nombre_usuario')?.invalid && formulario.get('nombre_usuario')?.touched) {
-          <div class="error">
-            <span>El nombre de usuario es obligatorio</span>
-          </div>
-         }
+        @if (formulario.get('nombre_usuario')?.invalid && formulario.get('nombre_usuario')?.touched) {
+        <div class="error">
+          <span>El nombre de usuario es obligatorio</span>
+        </div>
+        }
       </div>
 
       <!-- Correo -->
       <div class="form-group">
         <!-- Lo que se ve -->
-        <label>Correo electrónico*</label>
+        <label>Correo electrónico</label>
         <input type="email" placeholder="nexora@example.com" formControlName="correo">
         <!-- Validar errores -->
-         @if (formulario.get('correo')?.invalid && formulario.get('correo')?.touched) {
-          <div class="error">
-            @if (formulario.get('correo')?.errors?.['required']) {
-              <span>El correo es obligatorio</span>
-            }
-            @if (formulario.get('correo')?.errors?.['email']) {
-              <span>El formato de email no es válido</span>
-            }
-          </div>
-         }
+        @if (formulario.get('correo')?.invalid && formulario.get('correo')?.touched) {
+        <div class="error">
+          @if (formulario.get('correo')?.errors?.['required']) {
+          <span>El correo es obligatorio</span>
+          }
+          @if (formulario.get('correo')?.errors?.['email']) {
+          <span>El formato de email no es válido</span>
+          }
+        </div>
+        }
       </div>
 
       <!-- Contraseña -->
       <div class="form-group">
         <!-- Lo que se ve -->
-        <label>Contraseña*</label>
+        <label>Contraseña</label>
         <input type="password" placeholder="Tu contraseña" formControlName="contrasena">
         <!-- Validar errores -->
-         @if (formulario.get('contrasena')?.invalid && formulario.get('contrasena')?.touched) {
-          <div class="error">
-            @if (formulario.get('contrasena')?.errors?.['required']) {
-              <span>La contraseña es obligatoria</span>
-            }
-            @else if (formulario.get('contrasena')?.errors?.['minlength']) { <!-- la l de minlength es en minuscula, a pesar de ser L mayuscula en el TS -->
-              <span>La contraseña debe tener al menos 5 caracteres.</span>
-            }
-            @else if (formulario.get('contrasena')?.errors?.['pattern']) {
-              <span>La contraseña debe tener almenos un carácter especial (@%#...)</span>
-            }
-          </div>
-         }
+        @if (formulario.get('contrasena')?.invalid && formulario.get('contrasena')?.touched) {
+        <div class="error">
+          @if (formulario.get('contrasena')?.errors?.['required']) {
+          <span>La contraseña es obligatoria</span>
+          }
+          @else if (formulario.get('contrasena')?.errors?.['minlength']) {
+          <!-- la l de minlength es en minuscula, a pesar de ser L mayuscula en el TS -->
+          <span>La contraseña debe tener al menos 5 caracteres.</span>
+          }
+          @else if (formulario.get('contrasena')?.errors?.['pattern']) {
+          <span>La contraseña debe tener almenos un carácter especial (@%#...)</span>
+          }
+        </div>
+        }
       </div>
       <br>
       <button type="submit" class="btn-login">Registrarse</button>
@@ -113,10 +115,10 @@
     </form>
 
     <!-- -O- iniciar sesion -->
-      <div class="divider">o</div>
-      <p class="login">
-        ¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesión</a>
-      </p>
+    <div class="divider">o</div>
+    <p class="login">
+      ¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesión</a>
+    </p>
 
   </div>
 </div>
