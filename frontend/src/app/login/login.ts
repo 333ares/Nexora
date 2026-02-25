@@ -69,6 +69,8 @@ export class Login implements OnInit, OnDestroy {
   onLogin() {
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
+        console.log('LOGIN OK', response);
+
         // guardamos token
         this.authService.saveToken(response.token);
 
@@ -76,6 +78,7 @@ export class Login implements OnInit, OnDestroy {
         this.router.navigate(['/perfil']);
       },
       error: (error) => {
+        console.error(error);
         this.errorMessage = error.error?.errors || 'Error al iniciar sesión';
       }
     });
