@@ -5,13 +5,15 @@ import {
   Inject,
   PLATFORM_ID
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { NgClass, isPlatformBrowser } from '@angular/common';
+import { Auth } from '../services/auth';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass,FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
@@ -30,11 +32,12 @@ export class Login implements OnInit, OnDestroy {
   currentIndex = 0;
   private intervalId?: ReturnType<typeof setInterval>;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private authService: Auth,
+    private router: Router) { }
 
   ngOnInit(): void {
 
-    
+
     if (isPlatformBrowser(this.platformId)) {
       this.intervalId = setInterval(() => {
         this.currentIndex =
@@ -57,5 +60,24 @@ export class Login implements OnInit, OnDestroy {
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
+  }
+
+  email: string = '';
+  password: string = '';
+  errorMessage: string = '';
+
+  onLogin() {
+    this.authService.login(this.email, this.password).subscribe({
+      next: (response) => {
+        // guardamos token
+        this.authService.saveToken(response.token);
+
+        // redirigir
+        this.router.navigate(['/perfil']);
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.errors || 'Error al iniciar sesión';
+      }
+    });
   }
 }
