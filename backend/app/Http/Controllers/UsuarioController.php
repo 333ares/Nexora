@@ -52,7 +52,7 @@ class UsuarioController extends Controller
         if (!$usuario) {
             return response()->json([
                 'message' => 'error',
-                'animal' => 'No existe ningún usuario con ese ID'
+                'usuario' => 'No existe ningún usuario con ese ID'
             ], 404);
         }
 
@@ -68,7 +68,7 @@ class UsuarioController extends Controller
         // Mostramos usuario actualizado
         return response()->json([
             'message' => 'success',
-            'animal' => $usuario
+            'usuario' => $usuario
         ], 200);
     }
 
@@ -80,7 +80,7 @@ class UsuarioController extends Controller
         if (!$usuario) {
             return response()->json([
                 'message' => 'error',
-                'animal' => 'No existe ningún usuario con ese ID'
+                'usuario' => 'No existe ningún usuario con ese ID'
             ], 404);
         }
 
