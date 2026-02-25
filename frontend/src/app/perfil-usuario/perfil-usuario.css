@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+/* Importa la fuente Onest y Lato desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Onest:wght@100..900&display=swap');
 
 /* ── HOST  */
 :host {
@@ -7,7 +9,7 @@
   justify-content: center;
   min-height: 100vh;
   background: #6dbf6e;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Onest', 'Lato';
   padding: 24px;
 }
 
@@ -21,12 +23,13 @@
   width: 100%;
   max-width: 1400px;
   box-shadow: 0 16px 56px rgba(0, 0, 0, 0.18);
+  
 }
 
 /* ── MAIN LAYOUT  */
 .main-layout {
   display: flex;
-  gap: 30px;
+  gap: 40px;
   padding: 40px;
   align-items: flex-start;
 }
@@ -129,29 +132,29 @@
 .fields-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 26px 24px;
+  gap: 32px 30px;
 }
 
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 11px;
 }
 
 .form-group label {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
-  color: #333;
+  color: #222;
 }
 
 .form-group input {
-  padding: 11px 14px;
+  padding: 11px 14px; 
   border: 1.5px solid #c8c8c8;   /* reborde gris */
   border-radius: 10px;
-  font-size: 13.5px;
+  font-size: 15px;
   font-family: inherit;
-  color: #333;
+  color: #222;
   background: #fff;
   outline: none;
   transition: border-color 0.2s;
@@ -164,7 +167,7 @@
 
 .toggle-pass {
   position: absolute;
-  left: 180px; 
+  left: 220px; 
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -189,7 +192,7 @@
   color: #fff;
   border: none;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -204,7 +207,7 @@
   color: #555;
   border: 1.5px solid #c8c8c8;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -218,7 +221,7 @@
   color: #e57373;
   border: 1.5px solid #ffd5d5;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -234,7 +237,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
 }
 
 /* Recuadro plan */
@@ -248,7 +251,7 @@
 }
 
 .plan-label {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
@@ -280,7 +283,7 @@
   color: #2e7d32;
   border: none;
   border-radius: 11px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 800;
   font-family: inherit;
   cursor: pointer;
@@ -305,7 +308,7 @@
 }
 
 .panel-title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 800;
   color: #1a1a1a;
 }
@@ -366,7 +369,7 @@
 }
 
 .tx-type {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   color: #999;
   text-transform: uppercase;
@@ -374,7 +377,7 @@
 }
 
 .tx-category {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   color: #222;
 }
@@ -384,7 +387,6 @@
   border-radius: 20px;
   font-size: 12.5px;
   font-weight: 700;
-  font-family: inherit;
 }
 
 .chip--green  { background: #c8f5c8; color: #2e7d32; }
