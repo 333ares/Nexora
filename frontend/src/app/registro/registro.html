@@ -132,7 +132,10 @@
       </div>
 
       @if (errorMessage) {
-      <div class="alert-error">{{ errorMessage }}</div>
+      <div class="alert-error">
+        {{ errorMessage }}
+        <button class="alert-close" (click)="errorMessage = ''">✕</button>
+      </div>
       }
 
       <button type="submit" class="btn-login">Registrarse</button>
