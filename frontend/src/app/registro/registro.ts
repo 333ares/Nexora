@@ -48,6 +48,7 @@ export class Registro implements OnInit, OnDestroy {
         this.router.navigate(['/login'], { state: { registrado: true } });
       },
       error: (error) => {
+        console.error(error);
         this.errorMessage = error.error?.errors || 'Error al registrarse';
       }
     });

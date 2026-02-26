@@ -249,6 +249,13 @@ input::placeholder {
   font-size: 12px;
 }
 
+.alert-error, .alert-success {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
 .alert-error {
   background-color: #fdecea;
   border: 1px solid #f5c6cb;
@@ -258,6 +265,16 @@ input::placeholder {
   font-size: 14px;
   margin-top: 16px;
   text-align: left;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: inherit;
+  padding: 0;
+  line-height: 1;
 }
 
 /* Botón principal de login */
