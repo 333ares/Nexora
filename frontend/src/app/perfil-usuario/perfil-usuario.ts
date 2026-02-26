@@ -14,7 +14,7 @@ export class PerfilUsuario {
 
   showPassword = false;
 
-  constructor(private authService: Auth, private router: Router) {}
+  constructor(private authService: Auth, private router: Router) { }
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -24,13 +24,34 @@ export class PerfilUsuario {
     this.authService.logout().subscribe({
       next: () => {
         this.authService.removeToken();
+        this.authService.removeUsuario();
         this.router.navigate(['/login']);
       },
       error: () => {
-        // Aunque falle el servidor, limpiamos el token igualmente
         this.authService.removeToken();
+        this.authService.removeUsuario();
         this.router.navigate(['/login']);
       }
     });
   }
+
+
+  onDelete() {
+    const usuario = this.authService.getUsuario();
+    if (!usuario) return;
+
+    this.authService.eliminarCuenta(usuario.id).subscribe({
+      next: () => {
+        this.authService.removeToken();
+        this.authService.removeUsuario();
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        this.authService.removeToken();
+        this.authService.removeUsuario();
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+
 }
