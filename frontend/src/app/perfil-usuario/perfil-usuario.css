@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Onest:wght@100..900&display=swap');
+
 
 /* ── HOST  */
 :host {
@@ -6,8 +8,8 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #6dbf6e;
-  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
+  font-family: 'Onest', 'Lato';
   padding: 24px;
 }
 
@@ -59,7 +61,7 @@
 .banner {
   width: 100%;
   height: 120px;
-  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 45%, #81c784 100%);
+  background: linear-gradient(135deg, #B3E29A 0%, #78C550);
   flex-shrink: 0;
   border-radius: 0;
 }
@@ -140,7 +142,7 @@
 }
 
 .form-group label {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   color: #333;
 }
@@ -149,7 +151,7 @@
   padding: 11px 14px;
   border: 1.5px solid #c8c8c8;   /* reborde gris */
   border-radius: 10px;
-  font-size: 13.5px;
+  font-size: 15px;
   font-family: inherit;
   color: #333;
   background: #fff;
@@ -164,7 +166,7 @@
 
 .toggle-pass {
   position: absolute;
-  left: 180px; 
+  left: 220px; 
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -185,7 +187,7 @@
 
 .btn-save {
   padding: 11px 22px;
-  background: #4caf50;
+  background: linear-gradient(135deg, #B3E29A 0%, #78C550);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -240,8 +242,7 @@
 /* Recuadro plan */
 .plan-box {
   padding: 24px 22px;
-  background: #7ecb7e;
-  border-color: #5ab55a;
+  background: linear-gradient(135deg, #B3E29A 0%, #78C550);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -277,7 +278,7 @@
   width: 100%;
   padding: 11px;
   background: #fff;
-  color: #2e7d32;
+  color: #4caf50;
   border: none;
   border-radius: 11px;
   font-size: 14px;
