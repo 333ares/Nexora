@@ -55,6 +55,10 @@
                 <!-- Recuperar contraseña -->
                 <div class="forgot"><a href="#">¿Has olvidado tu contraseña?</a></div>
             </div>
+            @if (successMessage) {
+            <div class="alert-success">{{ successMessage }}</div>
+            }
+
             @if (errorMessage) {
             <div class="alert-error">{{ errorMessage }}</div>
             }

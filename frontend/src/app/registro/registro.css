@@ -249,6 +249,17 @@ input::placeholder {
   font-size: 12px;
 }
 
+.alert-error {
+  background-color: #fdecea;
+  border: 1px solid #f5c6cb;
+  color: #c0392b;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  margin-top: 16px;
+  text-align: left;
+}
+
 /* Botón principal de login */
 .btn-login {
   width: 100%;
