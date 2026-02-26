@@ -11,9 +11,9 @@ Route::post('/usuario', [AuthController::class, 'registroUsuario']);
 // Rutas protegidas con autenticación
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logoutUsuario']);
-    
+
     // Usuario
-    Route::get('/usuario/{id}', [UsuarioController::class, 'listarInfo']);
-    Route::put('/usuario/{id}', [UsuarioController::class, 'actualizarUsuario']);
-    Route::delete('/usuario/{id}', [UsuarioController::class, 'borrarUsuario']);
+    Route::get('/usuario', [UsuarioController::class, 'listarInfo']);
+    Route::put('/usuario', [UsuarioController::class, 'actualizarUsuario']);
+    Route::delete('/usuario', [UsuarioController::class, 'borrarUsuario']);
 });

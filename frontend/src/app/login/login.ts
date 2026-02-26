@@ -84,6 +84,8 @@ export class Login implements OnInit, OnDestroy {
 
         // redirigir
         this.router.navigate(['/perfil']);
+
+        this.authService.saveUsuario(response.usuario);
       },
       error: (error) => {
         console.error(error);

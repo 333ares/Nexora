@@ -47,4 +47,27 @@ export class Auth {
   removeToken() {
     localStorage.removeItem('token');
   }
+
+  eliminarCuenta(): Observable<any> {
+    const token = this.getToken();
+    return this.http.delete(`${this.apiUrl}/usuario`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  saveUsuario(usuario: any) {
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+  }
+
+  getUsuario(): any {
+    const u = localStorage.getItem('usuario');
+    return u ? JSON.parse(u) : null;
+  }
+
+  removeUsuario() {
+    localStorage.removeItem('usuario');
+  }
 }
