@@ -48,9 +48,9 @@ export class Auth {
     localStorage.removeItem('token');
   }
 
-  eliminarCuenta(id: number): Observable<any> {
+  eliminarCuenta(): Observable<any> {
     const token = this.getToken();
-    return this.http.delete(`${this.apiUrl}/usuario/${id}`, {
+    return this.http.delete(`${this.apiUrl}/usuario`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'

@@ -40,7 +40,7 @@ export class PerfilUsuario {
     const usuario = this.authService.getUsuario();
     if (!usuario) return;
 
-    this.authService.eliminarCuenta(usuario.id).subscribe({
+    this.authService.eliminarCuenta().subscribe({
       next: () => {
         this.authService.removeToken();
         this.authService.removeUsuario();
