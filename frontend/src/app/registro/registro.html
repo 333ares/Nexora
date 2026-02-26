@@ -131,6 +131,10 @@
         }
       </div>
 
+      @if (errorMessage) {
+      <div class="alert-error">{{ errorMessage }}</div>
+      }
+
       <button type="submit" class="btn-login">Registrarse</button>
 
     </form>

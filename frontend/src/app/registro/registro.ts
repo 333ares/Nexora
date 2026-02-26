@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
+import { RouterLink, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Auth } from '../services/auth';
 
 @Component({
   selector: 'app-registro',
@@ -9,12 +14,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })
-export class Registro {
+export class Registro implements OnInit, OnDestroy {
   formulario: FormGroup;
+  showPassword = false;
+  errorMessage: string = '';
 
-  showPassword = false; // ← AÑADIDO
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: Auth, private router: Router) {
     this.formulario = this.fb.group({
       nombre: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
@@ -29,10 +34,26 @@ export class Registro {
       this.formulario.markAllAsTouched();
       return;
     }
-    // lógica de envío
+
+    const datos = {
+      nombre: this.formulario.value.nombre,
+      apellidos: this.formulario.value.apellidos,
+      usuario: this.formulario.value.nombre_usuario,
+      email: this.formulario.value.correo,
+      password: this.formulario.value.contrasena,
+    };
+
+    this.authService.registro(datos).subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.errors || 'Error al registrarse';
+      }
+    });
   }
 
-  togglePassword(): void { // ← AÑADIDO
+  togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
