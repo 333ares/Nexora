@@ -1,8 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+/* 
+   FUENTES
+   Importa Onest y Lato desde Google Fonts
+*/
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Onest:wght@100..900&display=swap');
 
 
-/* ── HOST  */
+/* 
+   HOST — fondo verde de la página completa
+ */
 :host {
   display: flex;
   align-items: center;
@@ -13,29 +19,37 @@
   padding: 24px;
 }
 
-/* ── CARD  */
+
+/* 
+   CARD — contenedor principal del modal/pantalla
+   --gap controla a la vez: padding exterior, separación entre
+   columnas y separación entre recuadros de la columna derecha.
+ */
 .card {
-  display: flex;
-  flex-direction: column;
-  background: #d8eed8;   /* verde menta como fondo separador */
+  --gap: 24px;
+
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: var(--gap);
+  padding: var(--gap);
+  background: #d8eed8;
   border-radius: 24px;
-  overflow: hidden;
   width: 100%;
   max-width: 1400px;
   box-shadow: 0 16px 56px rgba(0, 0, 0, 0.18);
 }
 
-/* ── MAIN LAYOUT  */
+/* main-layout es transparente al grid; sus hijos participan
+   directamente en el grid de .card */
 .main-layout {
-  display: flex;
-  gap: 30px;
-  padding: 40px;
-  align-items: flex-start;
+  display: contents;
 }
 
-/* ══════════════════════════════════════════════
-   RECUADROS — base común
-══════════════════════════════════════════════ */
+
+/* 
+   RECUADROS — estilos base compartidos por todas las secciones
+   (perfil, plan, transacciones)
+ */
 .section-box {
   background: #fff;
   border-radius: 16px;
@@ -43,11 +57,11 @@
   overflow: hidden;
 }
 
-/* ══════════════════════════════════════════════
-   COLUMNA IZQUIERDA
-══════════════════════════════════════════════ */
+
+/* 
+   COLUMNA IZQUIERDA — sección de perfil de usuario
+ */
 .left-col {
-  flex: 1;
   display: flex;
   flex-direction: column;
 }
@@ -57,7 +71,10 @@
   flex-direction: column;
 }
 
-/* Banner estilo Discord */
+
+/* 
+   BANNER — franja decorativa superior estilo Discord
+ */
 .banner {
   width: 100%;
   height: 120px;
@@ -66,7 +83,11 @@
   border-radius: 0;
 }
 
-/* Avatar solapando el banner */
+
+/* 
+   AVATAR — foto de perfil que solapa el banner
+   margin-top negativo = mitad del alto del avatar para el solapado
+ */
 .avatar-top {
   padding: 0 0 0 28px;
   margin-top: -52px;
@@ -87,7 +108,7 @@
   border-radius: 50%;
   background: #fff;
   border: 4px solid #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,6 +124,7 @@
   background: #e8f5e9;
 }
 
+/* Botón de editar avatar (icono lápiz sobre la foto) */
 .avatar-edit-btn {
   position: absolute;
   bottom: 4px;
@@ -118,9 +140,15 @@
   justify-content: center;
   transition: background 0.2s;
 }
-.avatar-edit-btn:hover { background: #43a047; }
 
-/* Campos */
+.avatar-edit-btn:hover {
+  background: #43a047;
+}
+
+
+/* 
+   FORMULARIO — grid de campos del perfil
+ */
 .fields-col {
   display: flex;
   flex-direction: column;
@@ -128,42 +156,57 @@
   padding: 0 28px 28px 28px;
 }
 
+/* Grid de 2 columnas para los campos */
 .fields-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 26px 24px;
+  gap: 32px 30px;
 }
 
-
+/* Cada campo: label + input */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 11px;
 }
 
 .form-group label {
   font-size: 16px;
   font-weight: 700;
-  color: #333;
+  color: #222;
 }
 
+/* Inputs con borde gris; verde al hacer foco */
 .form-group input {
   padding: 11px 14px;
-  border: 1.5px solid #c8c8c8;   /* reborde gris */
+  border: 1.5px solid #c8c8c8;
   border-radius: 10px;
   font-size: 15px;
   font-family: inherit;
-  color: #333;
+  color: #222;
   background: #fff;
   outline: none;
   transition: border-color 0.2s;
 }
-.form-group input:focus { border-color: #4caf50; }
-.form-group input::placeholder { color: #bbb; }
 
-.input-wrapper { position: relative; }
-.input-wrapper input { padding-right: 42px; }
+.form-group input:focus {
+  border-color: #4caf50;
+}
 
+.form-group input::placeholder {
+  color: #bbb;
+}
+
+/* Wrapper del campo contraseña para posicionar el ojo */
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper input {
+  padding-right: 42px;
+}
+
+/* Botón mostrar/ocultar contraseña */
 .toggle-pass {
   position: absolute;
   left: 220px; 
@@ -177,7 +220,10 @@
   padding: 0;
 }
 
-/* Botones acción */
+
+/* 
+   BOTONES DE ACCIÓN — fila inferior del formulario
+ */
 .action-row {
   display: flex;
   gap: 10px;
@@ -185,61 +231,82 @@
   align-items: center;
 }
 
+/* Guardar cambios */
 .btn-save {
   padding: 11px 22px;
   background: linear-gradient(135deg, #B3E29A 0%, #78C550);
   color: #fff;
   border: none;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
 }
-.btn-save:hover { background: #43a047; }
-.btn-save:active { transform: scale(0.98); }
 
+.btn-save:hover {
+  background: #43a047;
+}
+
+.btn-save:active {
+  transform: scale(0.98);
+}
+
+/* Cerrar sesión */
 .btn-logout {
   padding: 11px 22px;
   background: #fff;
   color: #555;
   border: 1.5px solid #c8c8c8;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
 }
-.btn-logout:hover { border-color: #4caf50; color: #333; }
 
+.btn-logout:hover {
+  border-color: #4caf50;
+  color: #333;
+}
+
+/* Eliminar cuenta */
 .btn-delete {
   padding: 11px 22px;
   background: #fff;
   color: #e57373;
   border: 1.5px solid #ffd5d5;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
 }
-.btn-delete:hover { background: #fff5f5; border-color: #e57373; }
 
-/* ══════════════════════════════════════════════
-   COLUMNA DERECHA
-══════════════════════════════════════════════ */
-.right-col {
-  width: 360px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+.btn-delete:hover {
+  background: #fff5f5;
+  border-color: #e57373;
 }
 
-/* Recuadro plan */
+
+/* 
+   COLUMNA DERECHA — plan y transacciones
+   gap: var(--gap) iguala la separación entre recuadros al
+   padding/gap general de la card
+ */
+.right-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+
+/* 
+   RECUADRO PLAN ACTUAL
+ */
 .plan-box {
   padding: 24px 22px;
   background: linear-gradient(135deg, #B3E29A 0%, #78C550);
@@ -249,12 +316,13 @@
 }
 
 .plan-label {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
 }
 
+/* Nombre del plan con badge FREE/PRO */
 .plan-name {
   font-size: 22px;
   font-weight: 800;
@@ -274,6 +342,7 @@
   letter-spacing: 2px;
 }
 
+/* Botón actualizar plan */
 .btn-upgrade {
   width: 100%;
   padding: 11px;
@@ -281,23 +350,33 @@
   color: #4caf50;
   border: none;
   border-radius: 11px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 800;
   font-family: inherit;
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
-.btn-upgrade:hover { background: #f1f8e9; }
-.btn-upgrade:active { transform: scale(0.98); }
 
-/* Recuadro transacciones */
+.btn-upgrade:hover {
+  background: #f1f8e9;
+}
+
+.btn-upgrade:active {
+  transform: scale(0.98);
+}
+
+
+/* 
+   RECUADRO MIS TRANSACCIONES
+ */
 .transactions-box {
   padding: 20px 22px 24px;
   display: flex;
   flex-direction: column;
 }
 
+/* Cabecera: título + botón flecha */
 .panel-header {
   display: flex;
   align-items: center;
@@ -306,11 +385,12 @@
 }
 
 .panel-title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 800;
   color: #1a1a1a;
 }
 
+/* Botón redondo con icono (flecha ver más) */
 .btn-icon-round {
   width: 28px;
   height: 28px;
@@ -324,14 +404,18 @@
   color: #4caf50;
   transition: background 0.2s;
 }
-.btn-icon-round:hover { background: #c8e6c9; }
 
-/* Lista transacciones */
+.btn-icon-round:hover {
+  background: #c8e6c9;
+}
+
+/* Lista de transacciones */
 .tx-list {
   display: flex;
   flex-direction: column;
 }
 
+/* Fila individual de transacción */
 .tx-item {
   display: flex;
   align-items: center;
@@ -339,7 +423,10 @@
   padding: 11px 0;
   border-bottom: 1px solid #eef5ee;
 }
-.tx-item:last-child { border-bottom: none; }
+
+.tx-item:last-child {
+  border-bottom: none;
+}
 
 .tx-left {
   display: flex;
@@ -347,6 +434,7 @@
   gap: 10px;
 }
 
+/* Punto de color que indica la categoría */
 .tx-dot {
   width: 10px;
   height: 10px;
@@ -354,11 +442,25 @@
   flex-shrink: 0;
 }
 
-.tx-dot--ocio          { background: #ff7043; }
-.tx-dot--supervivencia { background: #7c4dff; }
-.tx-dot--cultura       { background: #00acc1; }
-.tx-dot--imprevistos   { background: #ffa726; }
-.tx-dot--income        { background: #4caf50; }
+.tx-dot--ocio {
+  background: #ff7043;
+}
+
+.tx-dot--supervivencia {
+  background: #7c4dff;
+}
+
+.tx-dot--cultura {
+  background: #00acc1;
+}
+
+.tx-dot--imprevistos {
+  background: #ffa726;
+}
+
+.tx-dot--income {
+  background: #4caf50;
+}
 
 .tx-info {
   display: flex;
@@ -366,28 +468,80 @@
   gap: 1px;
 }
 
+/* Tipo (GASTO / INGRESO) en mayúsculas pequeñas */
 .tx-type {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   color: #999;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
+/* Nombre de la categoría */
 .tx-category {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   color: #222;
 }
 
+/* Chips de importe (verde = ingreso, rojo = gasto) */
 .chip {
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12.5px;
   font-weight: 700;
-  font-family: inherit;
 }
 
-.chip--green  { background: #c8f5c8; color: #2e7d32; }
-.chip--red    { background: #ffd5d5; color: #c62828; }
-.chip--orange { background: #ffe0b2; color: #e65100; }
+.chip--green {
+  background: #c8f5c8;
+  color: #2e7d32;
+}
+
+.chip--red {
+  background: #ffd5d5;
+  color: #c62828;
+}
+
+.chip--orange {
+  background: #ffe0b2;
+  color: #e65100;
+}
+
+.alert-error,
+.alert-success {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-error {
+  background-color: #fdecea;
+  border: 1px solid #f5c6cb;
+  color: #c0392b;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.alert-success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: inherit;
+  padding: 0;
+  line-height: 1;
+}

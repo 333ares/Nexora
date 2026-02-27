@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, NgClass,FormsModule],
+  imports: [RouterLink, NgClass, FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
@@ -32,12 +32,20 @@ export class Login implements OnInit, OnDestroy {
   currentIndex = 0;
   private intervalId?: ReturnType<typeof setInterval>;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private authService: Auth,
-    private router: Router) { }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private authService: Auth,
+    private router: Router
+  ) {
+    const nav = this.router.getCurrentNavigation();
+    if (nav?.extras?.state?.['registrado']) {
+      this.successMessage = 'Te has registrado correctamente, inicia sesión';
+    }
+  }
+
+  successMessage: string = '';
 
   ngOnInit(): void {
-
-
     if (isPlatformBrowser(this.platformId)) {
       this.intervalId = setInterval(() => {
         this.currentIndex =
@@ -76,6 +84,8 @@ export class Login implements OnInit, OnDestroy {
 
         // redirigir
         this.router.navigate(['/perfil']);
+
+        this.authService.saveUsuario(response.usuario);
       },
       error: (error) => {
         console.error(error);
