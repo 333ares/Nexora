@@ -12,10 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('suscripciones', function (Blueprint $table) {
-            $table->id();
+            $table->id('IDsuscripcion');
+            $table->foreignId('IDusuario')
+                ->unique() // Opcional: si un usuario solo puede tener una suscripción activa a la vez
+                ->constrained('usuarios', 'IDusuario')
+                ->onDelete('cascade');
+
             $table->date('fecha_inicio');
             $table->date('fecha_final');
             $table->string('tipo_suscripcion');
+            
             $table->timestamps();
         });
     }

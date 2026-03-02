@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gasto_mensual', function (Blueprint $table) {
-            $table->id();
+            $table->id('IDgasto_mensual');
+            $table->foreignId('IDusuario')
+                ->constrained('usuarios', 'IDusuario')
+                ->onDelete('cascade');
+
             $table->decimal('total', 15, 2);
             $table->date('fecha');
             $table->string('categoria');
