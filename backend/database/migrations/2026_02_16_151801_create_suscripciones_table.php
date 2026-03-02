@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->date('fecha_inicio');
             $table->date('fecha_final');
-            $table->string('tipo_suscripcion');
+            $table->enum('tipo', ['Go', 'Advanced', 'Premium']);
 
             $table->timestamps();
         });

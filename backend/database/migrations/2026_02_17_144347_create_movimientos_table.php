@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('IDusuario')
                   ->constrained('usuarios', 'IDusuario')
                   ->onDelete('cascade');
-            $table->enum('tipo', ['']);
+            $table->enum('tipo', ['Ingreso', 'Gasto']);
             $table->decimal('cantidad');
-            $table->string('categoria');
+            $table->enum('categoria', ['Comida', 'Transporte', 'Ocio', 'Vivienda', 'Salud', 'Otros']);
             $table->date('fecha');
             $table->string('descripcion');
             $table->timestamps();
