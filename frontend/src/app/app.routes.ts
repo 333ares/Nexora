@@ -3,6 +3,7 @@ import { Login } from './login/login';
 import { PerfilUsuario } from './perfil-usuario/perfil-usuario';
 import { Registro } from './registro/registro';
 import { AuthGuard } from './guards/auth-guard';
+import { Planes } from './planes/planes';
 
 export const routes: Routes = [
   {
@@ -19,9 +20,17 @@ export const routes: Routes = [
     component: Registro,
   },
   {
+    path: 'planes',
+    component: Planes,
+    canActivate: [AuthGuard]
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el login
   }
+
+
+
 
 ];
