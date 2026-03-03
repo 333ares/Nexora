@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Usuario extends Authenticatable
 {
+    protected $table = 'usuarios';
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -26,6 +28,11 @@ class Usuario extends Authenticatable
         'rol'
     ];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+    
     protected $attributes = [
         'linkedin' => '-',
         'balance_total' => 0.0,

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('categoria', ['Comida', 'Transporte', 'Ocio', 'Vivienda', 'Salud', 'Otros']);
             $table->date('fecha');
             $table->string('descripcion');
+            $table->foreignId('usuario_id');
             $table->timestamps();
         });
     }

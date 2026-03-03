@@ -87,17 +87,22 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Inicio de sesión correcto',
             'token' => $token,
-            'usuario' => $usuario
+            'usuario' => $usuario->only(['id', 'usuario', 'nombre', 'apellidos', 'email', 'rol', 'estado'])
         ], 200);
     }
 
     public function logoutUsuario(Request $request)
     {
-        // Cerramos sesión
-        Auth::logout();
-        
-        // Revocar todos los tokens Sanctum del usuario
-        $request->user()->tokens()->delete();
+        // Verificamos que el usuario esté autenticado
+        if (!$request->user()) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Usuario no autenticado'
+            ], 401);
+        }
+
+        // Revocar el token actual del usuario
+        $request->user()->currentAccessToken()->delete();
 
         // Mostramos mensaje de exito
         return response()->json([

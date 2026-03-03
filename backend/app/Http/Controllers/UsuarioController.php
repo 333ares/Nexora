@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
-    public function listarInfo($id)
+    public function listarInfo(Request $request)
     {
         // Buscamos usuario por id
-        $usuario = Usuario::find($id);
+        $usuario = $request->user();
 
         if (!$usuario) {
             // Si no lo encuentra, mostramos error
@@ -27,7 +26,7 @@ class UsuarioController extends Controller
         ], 200);
     }
 
-    public function actualizarUsuario(Request $request, $id)
+    public function actualizarUsuario(Request $request)
     {
         // Comprobamos que los datos sean validos
         $validator = Validator::make($request->all(), [
@@ -47,7 +46,8 @@ class UsuarioController extends Controller
         }
 
         // Buscamos usuario por id
-        $usuario = Usuario::find($id);
+        $usuario = $request->user();
+
         // Si no lo encontramos, mostramos error
         if (!$usuario) {
             return response()->json([
@@ -82,10 +82,10 @@ class UsuarioController extends Controller
         ], 200);
     }
 
-    public function borrarUsuario($id)
+    public function borrarUsuario(Request $request)
     {
         // Buscamos usuario por id
-        $usuario = Usuario::find($id);
+        $usuario = $request->user();
         // Si no lo encontramos, mostramos error
         if (!$usuario) {
             return response()->json([
