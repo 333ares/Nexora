@@ -1,7 +1,143 @@
+<!-- ══════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-brand">
+    <span class="brand-icon">💰</span>
+    <div class="brand-text">
+      <span class="brand-name">Fincan</span>
+      <span class="brand-sub">Fintect platform</span>
+    </div>
+  </div>
 
-<div class="calculos">
-<button>Ingreso</button>
-<button>Gasto</button>
-<p>Total: </p>
-</div>
+  <nav class="header-nav">
+    @for (item of menuItems; track item.id) {
+      <button
+        class="nav-item"
+        [class.active]="menuActivo() === item.id"
+        (click)="setMenu(item.id)">
+        {{ item.label }}
+      </button>
+    }
+  </nav>
 
+  <div class="header-right">
+    <div class="header-dots">
+      <span class="dot-menu"></span>
+      <span class="dot-menu"></span>
+      <span class="dot-menu"></span>
+    </div>
+    <div class="avatar">A</div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     CONTENIDO PRINCIPAL
+══════════════════════════════════════════════ -->
+<main class="page-wrapper">
+  <h1 class="bienvenida">¡Bienvenido, Alejandro!</h1>
+
+  <div class="grid-main">
+
+    <!-- ── 1. Calendario ──────────────────────────────────────── -->
+    <section class="card card-calendario">
+      <div class="cal-header">
+        <button class="cal-nav" (click)="mesAnterior()">&#8249;</button>
+        <span class="cal-title">{{ nombreMes() }} {{ anio() }}</span>
+        <button class="cal-nav" (click)="mesSiguiente()">&#8250;</button>
+      </div>
+
+      <div class="cal-grid">
+        @for (dia of diasSemana; track dia) {
+          <span class="cal-dia-header">{{ dia }}</span>
+        }
+        @for (dia of diasDelMes(); track $index) {
+          <span class="cal-dia"
+            [class.vacio]="dia.vacio"
+            [class.pasado]="dia.pasado"
+            [class.hoy]="dia.hoy">
+            @if (!dia.vacio) { {{ dia.numero }} }
+          </span>
+        }
+      </div>
+    </section>
+
+    <!-- ── 2. Resumen GASTO / INGRESO / BANCO ─────────────────── -->
+    <section class="card card-resumen">
+
+      <div class="resumen-item gasto">
+        <div class="resumen-info">
+          <span class="resumen-label">GASTO</span>
+          <span class="resumen-valor">- {{ totalGasto() | number:'1.2-2' }} €</span>
+        </div>
+        <button class="resumen-btn resumen-btn-gasto">✕</button>
+      </div>
+
+      <div class="resumen-item ingreso">
+        <div class="resumen-info">
+          <span class="resumen-label">INGRESO</span>
+          <span class="resumen-valor">+ {{ totalIngreso() | number:'1.2-2' }} €</span>
+        </div>
+        <button class="resumen-btn resumen-btn-ingreso">+</button>
+      </div>
+
+      <div class="resumen-item banco">
+        <div class="resumen-info">
+          <span class="resumen-label banco-label">BANCO</span>
+          <span class="resumen-valor">{{ saldoBanco() | number:'1.2-2' }} €</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── 3. Lista de movimientos ────────────────────────────── -->
+    <section class="card card-lista">
+      <div class="lista-header">
+        <h2 class="lista-title">Movimientos</h2>
+        <button class="btn-add">+ Añadir</button>
+      </div>
+
+      <div class="lista-scroll">
+        @for (m of movimientos(); track m.id) {
+          <div class="mov-item">
+            <span class="mov-icono">{{ m.icono }}</span>
+            <div class="mov-info">
+              <span class="mov-nombre">{{ m.nombre }}</span>
+              <span class="mov-cat">{{ m.categoria }}</span>
+            </div>
+            <span class="mov-importe"
+              [class.gasto-color]="m.tipo === 'gasto'"
+              [class.ingreso-color]="m.tipo === 'ingreso'">
+              {{ m.tipo === 'gasto' ? '-' : '+' }}{{ m.importe | number:'1.2-2' }} €
+            </span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- ── 4. Gráfica mensual ─────────────────────────────────── -->
+    <section class="card card-grafica">
+      <div class="grafica-header">
+        <h2 class="lista-title">Gráfica mensual</h2>
+        <div class="grafica-nav">
+          <button class="cal-nav">&#8249;</button>
+          <span class="grafica-mes">{{ nombreMes() }}</span>
+          <button class="cal-nav">&#8250;</button>
+        </div>
+      </div>
+
+      <div class="barras">
+        @for (mes of mesesGrafica; track mes; let i = $index) {
+          <div class="barra-col">
+            <span class="barra-valor">{{ datosGrafica[i] }}€</span>
+            <div class="barra-track">
+              <div class="barra-fill" [style.height.%]="alturaBarraPct(datosGrafica[i])"></div>
+            </div>
+            <span class="barra-label">{{ mes }}</span>
+          </div>
+        }
+      </div>
+    </section>
+
+  </div>
+</main>

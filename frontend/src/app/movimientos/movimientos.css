@@ -1,13 +1,565 @@
-.calculos{
-    font-size: 30px;
-    
-    padding: 15px 30px;
-    width: 200px;   /* Ancho fijo */
-    height: 60px;   /* Alto fijo */
-    
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Onest:wght@100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-button {
-    font-size: 16px;
-    padding: 8px 16px;
+/* ══════════════════════════════════════════════
+   HOST — igual que tu login/registro
+══════════════════════════════════════════════ */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
+  font-family: 'Onest', 'Lato';
+}
+
+/* ══════════════════════════════════════════════
+   HEADER — glassmorphism sobre el gradiente
+══════════════════════════════════════════════ */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+/* Nav — misma forma pill que Fincan.io */
+.header-nav {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  padding: 5px 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.nav-item {
+  padding: 9px 24px;
+  border-radius: 50px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: 'Onest', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.nav-item.active {
+  background: #fff;
+  color: #3a8a1a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+/* Dots + avatar */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.dot-menu {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  display: block;
+}
+
+.dot-menu:last-child {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fff;
+  color: #3a8a1a;
+  font-weight: 800;
+  font-size: 15px;
+  font-family: 'Onest', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+/* ══════════════════════════════════════════════
+   BIENVENIDA
+══════════════════════════════════════════════ */
+.page-wrapper {
+  max-width: 1100px;   /* mismo max-width que tu .card */
+  margin: 0 auto;
+  padding: 32px 24px 50px;
+}
+
+.bienvenida {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+/* ══════════════════════════════════════════════
+   CARD BASE — igual que tu .card del login
+══════════════════════════════════════════════ */
+.card {
+  background: #f0faf0;
+  border-radius: 24px;
+  box-shadow: 0 16px 56px rgba(0, 0, 0, 0.18);
+  padding: 28px;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════
+   GRID 2×2
+══════════════════════════════════════════════ */
+.grid-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ══════════════════════════════════════════════
+   CELDA 1 — CALENDARIO
+══════════════════════════════════════════════ */
+.card-calendario {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.cal-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: 0.02em;
+}
+
+.cal-nav {
+  background: none;
+  border: 1.5px solid #d3d3d3;
+  border-radius: 10px;
+  font-size: 18px;
+  color: #4E9C25;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.cal-nav:hover {
+  border-color: #4E9C25;
+  background: #f0faf0;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+}
+
+.cal-dia-header {
+  font-size: 12px;
+  font-weight: 700;
+  color: #999;
+  padding: 6px 0;
+  font-family: 'Lato', sans-serif;
+}
+
+.cal-dia {
+  font-size: 13px;
+  padding: 7px 2px;
+  border-radius: 8px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: 'Lato', sans-serif;
+}
+
+.cal-dia:hover:not(.vacio):not(.hoy) {
+  background: #d4f0bc;
+}
+
+.cal-dia.pasado {
+  color: #ccc;
+}
+
+.cal-dia.vacio {
+  pointer-events: none;
+}
+
+.cal-dia.hoy {
+  background: linear-gradient(to bottom, #B3E29A, #78C550);
+  color: #fff;
+  font-weight: 800;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(78, 156, 37, 0.35);
+}
+
+/* ══════════════════════════════════════════════
+   CELDA 2 — GASTO / INGRESO / BANCO
+══════════════════════════════════════════════ */
+.card-resumen {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Cada fila de resumen como un mini-input con borde */
+.resumen-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1.5px solid #d3d3d3;   /* igual que tus inputs */
+  transition: border-color 0.2s;
+}
+
+.resumen-item:hover {
+  border-color: #4caf50;
+}
+
+.resumen-item.gasto   { border-left: 5px solid #e74c3c; }
+.resumen-item.ingreso { border-left: 5px solid #27ae60; }
+.resumen-item.banco   { border-left: 5px solid #2980b9; }
+
+.resumen-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Misma familia y peso que tus labels */
+.resumen-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 1.5px;
+  font-family: 'Onest', sans-serif;
+  text-transform: uppercase;
+}
+
+.banco-label { color: #2980b9; }
+
+.resumen-valor {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+  font-family: 'Onest', sans-serif;
+}
+
+.resumen-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.15s;
+  font-family: 'Onest', sans-serif;
+}
+
+.resumen-btn:hover   { opacity: 0.82; }
+.resumen-btn:active  { transform: scale(0.96); }
+
+.resumen-btn-gasto   { background: #e74c3c; color: #fff; }
+.resumen-btn-ingreso { background: #27ae60; color: #fff; }
+
+/* ══════════════════════════════════════════════
+   CELDA 3 — LISTA MOVIMIENTOS
+══════════════════════════════════════════════ */
+.card-lista {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.lista-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* Mismo weight que .title */
+.lista-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0;
+  font-family: 'Onest', sans-serif;
+}
+
+/* Mismo estilo que .btn-login */
+.btn-add {
+  padding: 10px 20px;
+  background: linear-gradient(to bottom, #B3E29A, #78C550);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Onest', sans-serif;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.btn-add:active {
+  transform: scale(0.98);
+}
+
+.lista-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 270px;
+  overflow-y: auto;
+}
+
+.lista-scroll::-webkit-scrollbar       { width: 4px; }
+.lista-scroll::-webkit-scrollbar-track { background: transparent; }
+.lista-scroll::-webkit-scrollbar-thumb { background: #B3E29A; border-radius: 4px; }
+
+/* Cada movimiento como un input-row con borde */
+.mov-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 15px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1.5px solid #d3d3d3;
+  transition: border-color 0.2s;
+}
+
+.mov-item:hover {
+  border-color: #4caf50;
+}
+
+.mov-icono { font-size: 22px; }
+
+.mov-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Label style */
+.mov-nombre {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  font-family: 'Onest', sans-serif;
+}
+
+.mov-cat {
+  font-size: 13px;
+  color: #666;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+.mov-importe {
+  font-size: 16px;
+  font-weight: 800;
+  font-family: 'Onest', sans-serif;
+}
+
+.gasto-color   { color: #e74c3c; }
+.ingreso-color { color: #27ae60; }
+
+/* ══════════════════════════════════════════════
+   CELDA 4 — GRÁFICA MENSUAL
+══════════════════════════════════════════════ */
+.card-grafica {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.grafica-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.grafica-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.grafica-mes {
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+  font-family: 'Onest', sans-serif;
+  text-transform: capitalize;
+}
+
+.barras {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 170px;
+}
+
+.barra-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.barra-valor {
+  font-size: 10px;
+  color: #888;
+  font-family: 'Lato', sans-serif;
+}
+
+/* Track como un input apagado */
+.barra-track {
+  width: 100%;
+  height: 115px;
+  background: #e8e8e8;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border: 1.5px solid #d3d3d3;
+}
+
+/* Fill con el mismo gradiente que btn-login */
+.barra-fill {
+  width: 100%;
+  background: linear-gradient(to top, #78C550, #B3E29A);
+  border-radius: 8px;
+  transition: height 0.5s ease;
+}
+
+.barra-label {
+  font-size: 11px;
+  color: #666;
+  font-family: 'Lato', sans-serif;
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .grid-main {
+    grid-template-columns: 1fr;
+  }
+
+  .card-calendario,
+  .card-resumen,
+  .card-lista,
+  .card-grafica {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .header {
+    padding: 14px 20px;
+  }
+
+  .header-nav {
+    display: none;
+  }
+
+  .page-wrapper {
+    padding: 20px 16px 40px;
+  }
+
+  .bienvenida {
+    font-size: 22px;
+  }
 }
