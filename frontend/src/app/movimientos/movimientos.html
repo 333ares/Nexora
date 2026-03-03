@@ -1,11 +1,16 @@
-<!-- ══════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════════════
      HEADER
-══════════════════════════════════════════════ -->
+══════════════════════════════════════════════════════ -->
 <header class="header">
   <div class="header-brand">
-    <span class="brand-icon">💰</span>
+    <div class="brand-icon">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect width="28" height="28" rx="8" fill="rgba(255,255,255,0.25)"/>
+        <path d="M8 14 L14 8 L20 14 L14 20 Z" fill="white"/>
+      </svg>
+    </div>
     <div class="brand-text">
-      <span class="brand-name">Fincan</span>
+      <span class="brand-name">Fincan.io</span>
       <span class="brand-sub">Fintect platform</span>
     </div>
   </div>
@@ -22,6 +27,12 @@
   </nav>
 
   <div class="header-right">
+    <div class="search-bar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <span class="search-placeholder">Buscar aquí</span>
+    </div>
     <div class="header-dots">
       <span class="dot-menu"></span>
       <span class="dot-menu"></span>
@@ -31,113 +42,223 @@
   </div>
 </header>
 
-<!-- ══════════════════════════════════════════════
-     CONTENIDO PRINCIPAL
-══════════════════════════════════════════════ -->
-<main class="page-wrapper">
+<!-- ══════════════════════════════════════════════════════
+     HERO BIENVENIDA
+══════════════════════════════════════════════════════ -->
+<div class="hero">
   <h1 class="bienvenida">¡Bienvenido, Alejandro!</h1>
+  <nav class="subnav">
+    <button class="subnav-item active">Resumen</button>
+    <button class="subnav-item">Movimientos</button>
+    <button class="subnav-item">Calendario</button>
+    <button class="subnav-item">Estadísticas</button>
+  </nav>
+</div>
 
+<!-- ══════════════════════════════════════════════════════
+     GRID PRINCIPAL  (col-izq | col-der)
+══════════════════════════════════════════════════════ -->
+<main class="page-wrapper">
   <div class="grid-main">
 
-    <!-- ── 1. Calendario ──────────────────────────────────────── -->
-    <section class="card card-calendario">
-      <div class="cal-header">
-        <button class="cal-nav" (click)="mesAnterior()">&#8249;</button>
-        <span class="cal-title">{{ nombreMes() }} {{ anio() }}</span>
-        <button class="cal-nav" (click)="mesSiguiente()">&#8250;</button>
-      </div>
+    <!-- ╔══════════════════════════════╗
+         ║  COL IZQUIERDA              ║
+         ╚══════════════════════════════╝ -->
+    <div class="col-left">
 
-      <div class="cal-grid">
-        @for (dia of diasSemana; track dia) {
-          <span class="cal-dia-header">{{ dia }}</span>
-        }
-        @for (dia of diasDelMes(); track $index) {
-          <span class="cal-dia"
-            [class.vacio]="dia.vacio"
-            [class.pasado]="dia.pasado"
-            [class.hoy]="dia.hoy">
-            @if (!dia.vacio) { {{ dia.numero }} }
-          </span>
-        }
-      </div>
-    </section>
-
-    <!-- ── 2. Resumen GASTO / INGRESO / BANCO ─────────────────── -->
-    <section class="card card-resumen">
-
-      <div class="resumen-item gasto">
-        <div class="resumen-info">
-          <span class="resumen-label">GASTO</span>
-          <span class="resumen-valor">- {{ totalGasto() | number:'1.2-2' }} €</span>
+      <!-- Saldo banco -->
+      <div class="card card-balance">
+        <div class="balance-top">
+          <span class="balance-label">Saldo Banco</span>
+          <div class="balance-card-tag">
+            <span class="card-tag-dots">····</span>
+            <span class="card-tag-num">3241</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
         </div>
-        <button class="resumen-btn resumen-btn-gasto">✕</button>
-      </div>
-
-      <div class="resumen-item ingreso">
-        <div class="resumen-info">
-          <span class="resumen-label">INGRESO</span>
-          <span class="resumen-valor">+ {{ totalIngreso() | number:'1.2-2' }} €</span>
-        </div>
-        <button class="resumen-btn resumen-btn-ingreso">+</button>
-      </div>
-
-      <div class="resumen-item banco">
-        <div class="resumen-info">
-          <span class="resumen-label banco-label">BANCO</span>
-          <span class="resumen-valor">{{ saldoBanco() | number:'1.2-2' }} €</span>
+        <div class="balance-amount">{{ saldoBanco() | number:'1.2-2' }} €</div>
+        <div class="balance-actions">
+          <button class="btn-balance-action">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+            Transferir
+          </button>
+          <button class="btn-balance-action btn-action-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 5v14M5 12l7-7 7 7"/>
+            </svg>
+            Solicitar
+          </button>
         </div>
       </div>
 
-    </section>
+      <!-- Retos / Saving plans -->
+      <div class="card card-retos">
+        <div class="retos-header">
+          <h2 class="section-title">Retos de ahorro</h2>
+        </div>
 
-    <!-- ── 3. Lista de movimientos ────────────────────────────── -->
-    <section class="card card-lista">
-      <div class="lista-header">
-        <h2 class="lista-title">Movimientos</h2>
-        <button class="btn-add">+ Añadir</button>
-      </div>
-
-      <div class="lista-scroll">
-        @for (m of movimientos(); track m.id) {
-          <div class="mov-item">
-            <span class="mov-icono">{{ m.icono }}</span>
-            <div class="mov-info">
-              <span class="mov-nombre">{{ m.nombre }}</span>
-              <span class="mov-cat">{{ m.categoria }}</span>
+        @for (reto of retos(); track reto.id) {
+          <div class="reto-item">
+            <div class="reto-top">
+              <div class="reto-icon-wrap">{{ reto.icono }}</div>
+              <div class="reto-info">
+                <span class="reto-nombre">{{ reto.nombre }}</span>
+                <span class="reto-sub">Ahorro mensual: {{ reto.ahorroMensual | number:'1.2-2' }} €</span>
+              </div>
+              <div class="reto-dots">
+                <span></span><span></span><span></span>
+              </div>
             </div>
-            <span class="mov-importe"
+            <div class="reto-progress-row">
+              <span class="reto-actual">{{ reto.actual | number:'1.2-2' }} €</span>
+              <span class="reto-meta">meta: {{ reto.meta | number:'1.2-2' }} €</span>
+            </div>
+            <div class="reto-bar-track">
+              <div class="reto-bar-fill" [style.width.%]="(reto.actual / reto.meta) * 100"></div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- ╔══════════════════════════════╗
+         ║  COL DERECHA                ║
+         ╚══════════════════════════════╝ -->
+    <div class="col-right">
+
+      <!-- Fila superior: GASTO + INGRESO + BANCO -->
+      <div class="grid-top-right">
+
+        <!-- Ingreso -->
+        <div class="card card-stat">
+          <div class="stat-top">
+            <span class="stat-label">Total Ingresos</span>
+            <div class="stat-icon stat-icon-green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                <path d="M12 2v20M17 7l-5-5-5 5"/><path d="M5 20h14"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-amount ingreso-color">+ {{ totalIngreso() | number:'1.2-2' }} €</div>
+          <div class="stat-delta positive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="18 15 12 9 6 15"/>
+            </svg>
+            +12.1% respecto al mes anterior
+          </div>
+        </div>
+
+        <!-- Gasto -->
+        <div class="card card-stat">
+          <div class="stat-top">
+            <span class="stat-label">Total Gastos</span>
+            <div class="stat-icon stat-icon-red">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                <path d="M12 2v20M17 17l-5 5-5-5"/><path d="M5 4h14"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-amount gasto-color">- {{ totalGasto() | number:'1.2-2' }} €</div>
+          <div class="stat-delta negative">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+            -2.5% respecto al mes anterior
+          </div>
+        </div>
+
+        <!-- Límite de gasto -->
+        <div class="card card-stat card-stat-wide">
+          <div class="stat-top">
+            <span class="stat-label">Límite mensual</span>
+            <select class="stat-select">
+              <option>Este mes</option>
+              <option>Semana</option>
+            </select>
+          </div>
+          <div class="limit-row">
+            <span class="limit-amount">{{ totalGasto() | number:'1.2-2' }} €</span>
+            <span class="limit-meta">de {{ limiteMensual | number:'1.2-2' }} €</span>
+          </div>
+          <div class="limit-bar-track">
+            <div class="limit-bar-fill" [style.width.%]="(totalGasto() / limiteMensual) * 100"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Historial de movimientos -->
+      <div class="card card-historial">
+        <div class="historial-header">
+          <h2 class="section-title">Historial de movimientos</h2>
+          <div class="historial-actions">
+            <button class="btn-filter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
+              </svg>
+              Filtrar
+            </button>
+            <button class="btn-mas">+ Añadir</button>
+            <div class="historial-dots">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cabecera tabla -->
+        <div class="tabla-header">
+          <span class="th">Nombre
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 15l5 5 5-5M7 9l5-5 5 5"/>
+            </svg>
+          </span>
+          <span class="th">Tipo</span>
+          <span class="th">Fecha
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 15l5 5 5-5M7 9l5-5 5 5"/>
+            </svg>
+          </span>
+          <span class="th th-right">Importe</span>
+          <span class="th th-right">Estado
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 15l5 5 5-5M7 9l5-5 5 5"/>
+            </svg>
+          </span>
+        </div>
+
+        <!-- Filas -->
+        @for (m of movimientos(); track m.id) {
+          <div class="tabla-row">
+            <div class="td td-nombre">
+              <div class="mov-avatar">{{ m.icono }}</div>
+              <div class="mov-name-wrap">
+                <span class="mov-nombre">{{ m.nombre }}</span>
+                <span class="mov-cat">{{ m.categoria }}</span>
+              </div>
+            </div>
+            <span class="td">{{ m.tipo === 'gasto' ? 'Gasto' : 'Ingreso' }}</span>
+            <div class="td td-fecha">
+              <span class="fecha-dia">{{ m.fecha | date:'dd/MM/yyyy' }}</span>
+              <span class="fecha-hora">{{ m.fecha | date:'HH:mm' }}</span>
+            </div>
+            <span class="td td-right mov-importe"
               [class.gasto-color]="m.tipo === 'gasto'"
               [class.ingreso-color]="m.tipo === 'ingreso'">
               {{ m.tipo === 'gasto' ? '-' : '+' }}{{ m.importe | number:'1.2-2' }} €
             </span>
-          </div>
-        }
-      </div>
-    </section>
-
-    <!-- ── 4. Gráfica mensual ─────────────────────────────────── -->
-    <section class="card card-grafica">
-      <div class="grafica-header">
-        <h2 class="lista-title">Gráfica mensual</h2>
-        <div class="grafica-nav">
-          <button class="cal-nav">&#8249;</button>
-          <span class="grafica-mes">{{ nombreMes() }}</span>
-          <button class="cal-nav">&#8250;</button>
-        </div>
-      </div>
-
-      <div class="barras">
-        @for (mes of mesesGrafica; track mes; let i = $index) {
-          <div class="barra-col">
-            <span class="barra-valor">{{ datosGrafica[i] }}€</span>
-            <div class="barra-track">
-              <div class="barra-fill" [style.height.%]="alturaBarraPct(datosGrafica[i])"></div>
+            <div class="td td-right">
+              <span class="badge" [class.badge-ok]="m.estado === 'completado'" [class.badge-pen]="m.estado === 'pendiente'">
+                {{ m.estado === 'completado' ? 'Completado' : 'Pendiente' }}
+              </span>
             </div>
-            <span class="barra-label">{{ mes }}</span>
           </div>
         }
       </div>
-    </section>
 
-  </div>
+    </div><!-- /col-right -->
+  </div><!-- /grid-main -->
 </main>

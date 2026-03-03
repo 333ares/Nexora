@@ -9,6 +9,16 @@ export interface Movimiento {
   importe: number;
   fecha: Date;
   icono: string;
+  estado: 'completado' | 'pendiente';
+}
+
+export interface Reto {
+  id: number;
+  nombre: string;
+  icono: string;
+  ahorroMensual: number;
+  actual: number;
+  meta: number;
 }
 
 @Component({
@@ -30,67 +40,27 @@ export class Movimientos {
     { id: 'perfil',      label: 'Perfil'       },
   ];
 
-  // ── Calendario ────────────────────────────────────────────────────
-  mesActual = signal(new Date());
+  // ── Límite mensual ────────────────────────────────────────────────
+  limiteMensual = 2000;
 
-  nombreMes = computed(() =>
-    this.mesActual().toLocaleString('es-ES', { month: 'long' }).toUpperCase()
-  );
-  anio = computed(() => this.mesActual().getFullYear());
-
-  diasSemana = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-
-  diasDelMes = computed(() => {
-    const hoy    = new Date();
-    const fecha  = this.mesActual();
-    const año    = fecha.getFullYear();
-    const mes    = fecha.getMonth();
-    const total  = new Date(año, mes + 1, 0).getDate();
-    const offset = (new Date(año, mes, 1).getDay() + 6) % 7;
-
-    const dias: { numero: number; pasado: boolean; hoy: boolean; vacio: boolean }[] = [];
-
-    for (let i = 0; i < offset; i++)
-      dias.push({ numero: 0, pasado: false, hoy: false, vacio: true });
-
-    for (let d = 1; d <= total; d++) {
-      const esHoy    = d === hoy.getDate() && mes === hoy.getMonth() && año === hoy.getFullYear();
-      const esPasado = new Date(año, mes, d) < new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
-      dias.push({ numero: d, pasado: esPasado && !esHoy, hoy: esHoy, vacio: false });
-    }
-    return dias;
-  });
-
-  mesAnterior() {
-    const d = new Date(this.mesActual());
-    d.setMonth(d.getMonth() - 1);
-    this.mesActual.set(d);
-  }
-
-  mesSiguiente() {
-    const d = new Date(this.mesActual());
-    d.setMonth(d.getMonth() + 1);
-    this.mesActual.set(d);
-  }
+  // ── Retos de ahorro ───────────────────────────────────────────────
+  retos = signal<Reto[]>([
+    { id: 1, nombre: 'Comprar coche',  icono: '🚗', ahorroMensual: 100, actual: 5000,  meta: 25000 },
+    { id: 2, nombre: 'Fondo de boda',  icono: '💍', ahorroMensual: 100, actual: 351,   meta: 25000 },
+    { id: 3, nombre: 'PS5',            icono: '🎮', ahorroMensual: 100, actual: 180,   meta: 550   },
+  ]);
 
   // ── Movimientos ───────────────────────────────────────────────────
   movimientos = signal<Movimiento[]>([
-    { id: 1, nombre: 'Mercadona',     categoria: 'Alimentación',  tipo: 'gasto',   importe:  87.50,  fecha: new Date(), icono: '🛒' },
-    { id: 2, nombre: 'Nómina Marzo',  categoria: 'Trabajo',       tipo: 'ingreso', importe: 1800.00, fecha: new Date(), icono: '💼' },
-    { id: 3, nombre: 'Spotify',       categoria: 'Suscripciones', tipo: 'gasto',   importe:   9.99,  fecha: new Date(), icono: '🎵' },
-    { id: 4, nombre: 'Alquiler',      categoria: 'Vivienda',      tipo: 'gasto',   importe: 650.00,  fecha: new Date(), icono: '🏠' },
-    { id: 5, nombre: 'Freelance web', categoria: 'Trabajo',       tipo: 'ingreso', importe: 350.00,  fecha: new Date(), icono: '💻' },
-    { id: 6, nombre: 'Gasolina',      categoria: 'Transporte',    tipo: 'gasto',   importe:  45.00,  fecha: new Date(), icono: '⛽' },
+    { id: 1, nombre: 'Mercadona',      categoria: 'Supermercado',   tipo: 'gasto',   importe:  87.50,  fecha: new Date('2024-03-20T10:32:00'), icono: '🛒', estado: 'completado' },
+    { id: 2, nombre: 'Nómina Marzo',   categoria: 'Trabajo',        tipo: 'ingreso', importe: 1800.00, fecha: new Date('2024-03-20T09:00:00'), icono: '💼', estado: 'completado' },
+    { id: 3, nombre: 'Spotify',        categoria: 'Suscripciones',  tipo: 'gasto',   importe:   9.99,  fecha: new Date('2024-03-19T18:00:00'), icono: '🎵', estado: 'completado' },
+    { id: 4, nombre: 'Alquiler',       categoria: 'Vivienda',       tipo: 'gasto',   importe: 650.00,  fecha: new Date('2024-03-01T08:00:00'), icono: '🏠', estado: 'completado' },
+    { id: 5, nombre: 'Freelance web',  categoria: 'Trabajo',        tipo: 'ingreso', importe: 350.00,  fecha: new Date('2024-03-15T12:00:00'), icono: '💻', estado: 'completado' },
+    { id: 6, nombre: 'Gasolina',       categoria: 'Transporte',     tipo: 'gasto',   importe:  45.00,  fecha: new Date('2024-03-18T17:30:00'), icono: '⛽', estado: 'pendiente'  },
   ]);
 
   totalGasto   = computed(() => this.movimientos().filter(m => m.tipo === 'gasto').reduce((a, m) => a + m.importe, 0));
   totalIngreso = computed(() => this.movimientos().filter(m => m.tipo === 'ingreso').reduce((a, m) => a + m.importe, 0));
   saldoBanco   = computed(() => this.totalIngreso() - this.totalGasto());
-
-  // ── Gráfica ───────────────────────────────────────────────────────
-  mesesGrafica = ['Oct', 'Nov', 'Dic', 'Ene', 'Feb', 'Mar'];
-  datosGrafica = [320, 580, 410, 760, 490, 870];
-
-  get maxGrafica() { return Math.max(...this.datosGrafica); }
-  alturaBarraPct(v: number) { return Math.round((v / this.maxGrafica) * 100); }
 }
