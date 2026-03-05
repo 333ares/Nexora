@@ -107,4 +107,25 @@ class MovimientosController extends Controller
             'movimiento' => $movimiento
         ], 200);
     }
+
+    public function borrarMovimiento(Request $request)
+    {
+        $movimiento = Movimientos::where('id', $request->id)
+            ->where('usuario_id', $request->user()->id)
+            ->first();
+
+        if (!$movimiento) {
+            return response()->json([
+                'message' => 'error',
+                'movimiento' => 'No existe ningún movimiento con ese ID'
+            ], 404);
+        }
+
+        $movimiento->delete();
+
+        return response()->json([
+            'message' => 'success',
+            'movimiento' => 'El movimiento se ha borrado correctamente'
+        ], 200);
+    }
 }
