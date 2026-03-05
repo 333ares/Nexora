@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('fecha_final');
             
             // Calcula la duracion si es necesario, o la guardamos como entero
-            $table->integer('duracion')->comment('Duración en días');
+            //$table->integer('duracion')->comment('Duración en días');
 
             //Clave Foranea hacia tabla usuarios
             $table->foreignId('IDusuario')

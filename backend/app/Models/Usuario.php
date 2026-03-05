@@ -15,6 +15,8 @@ class Usuario extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = 'IDusuario';
+
     protected $fillable = [
         'usuario',
         'linkedin',
