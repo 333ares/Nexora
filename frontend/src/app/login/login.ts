@@ -83,7 +83,7 @@ export class Login implements OnInit, OnDestroy {
         this.authService.saveToken(response.token);
 
         // redirigir
-        this.router.navigate(['/perfil']);
+        this.router.navigate(['/movimientos']);
 
         this.authService.saveUsuario(response.usuario);
       },
