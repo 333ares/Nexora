@@ -57,12 +57,54 @@ class MovimientosController extends Controller
                 'message' => 'error',
                 'errors' => 'No tienes movimientos'
             ], 400);
-
         } else {
             return response()->json([
                 'message' => 'success',
                 'movimientos' => $movimientos
             ], 201);
         }
+    }
+
+    public function actualizarMovimiento(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'tipo' => 'nullable|string',
+            'cantidad' => 'nullable|decimal:2',
+            'categoria' => 'nullable|string',
+            'descripcion' => 'nullable|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $datos = $request->only([
+            'tipo',
+            'cantidad',
+            'categoria',
+            'descripcion'
+        ]);
+
+        $movimiento = Movimientos::where('id', $request->id)
+            ->where('usuario_id', $request->user()->id)
+            ->first();
+
+        if (!$movimiento) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Movimiento no encontrado'
+            ], 404);
+        }
+
+        $movimiento->update($datos);
+
+        return response()->json([
+            'message' => 'success',
+            'movimiento' => $movimiento
+        ], 200);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Movimientos extends Model
 {
     protected $fillable = [
+        'id',
         'tipo',
         'cantidad',
         'categoria',

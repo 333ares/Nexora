@@ -21,4 +21,5 @@ Route::middleware('auth:sanctum')->group(function () {
     // Movimientos
     Route::post('/movimiento', [MovimientosController::class, 'apuntarMovimiento']);
     Route::get('/movimientos', [MovimientosController::class, 'mostrarMovimientos']);
+    Route::put('/movimiento', [MovimientosController::class, 'actualizarMovimiento']);
 });
