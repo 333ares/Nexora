@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/usuario', [UsuarioController::class, 'listarInfo']);
     Route::put('/usuario', [UsuarioController::class, 'actualizarUsuario']);
     Route::delete('/usuario', [UsuarioController::class, 'borrarUsuario']);
+
+    // Movimientos
+    Route::post('/movimiento', [MovimientosController::class, 'apuntarMovimiento']);
+    Route::get('/movimientos', [MovimientosController::class, 'mostrarMovimientos']);
+    Route::put('/movimiento', [MovimientosController::class, 'actualizarMovimiento']);
+    Route::delete('movimiento', [MovimientosController::class, 'borrarMovimiento']);
 });

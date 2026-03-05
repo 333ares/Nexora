@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('cantidad');
             $table->string('categoria');
             $table->dateTime('fecha');
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->foreignId('usuario_id');
             $table->timestamps();
         });
