@@ -9,17 +9,13 @@
       <span class="brand-sub">Fintect platform</span>
     </div>
   </div>
-
   <nav class="header-nav">
     @for (item of menuItems; track item.id) {
-      <button class="nav-item"
-        [class.active]="menuActivo() === item.id"
-        (click)="setMenu(item.id)">
+      <button class="nav-item" [class.active]="menuActivo() === item.id" (click)="setMenu(item.id)">
         {{ item.label }}
       </button>
     }
   </nav>
-
   <div class="header-right">
     <div class="search-bar">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2">
@@ -28,9 +24,7 @@
       <span class="search-placeholder">Buscar aquí</span>
     </div>
     <div class="header-dots">
-      <span class="dot-menu"></span>
-      <span class="dot-menu"></span>
-      <span class="dot-menu"></span>
+      <span class="dot-menu"></span><span class="dot-menu"></span><span class="dot-menu"></span>
     </div>
     <div class="avatar">A</div>
   </div>
@@ -43,9 +37,7 @@
   <h1 class="bienvenida">¡Bienvenido, Alejandro!</h1>
   <nav class="subnav">
     @for (item of subnavItems; track item) {
-      <button class="subnav-item"
-        [class.active]="subnavActivo() === item"
-        (click)="setSubnav(item)">
+      <button class="subnav-item" [class.active]="subnavActivo() === item" (click)="setSubnav(item)">
         {{ item }}
       </button>
     }
@@ -59,8 +51,6 @@
   ════════════════════════════════════════════ -->
   @if (subnavActivo() === 'Resumen') {
     <div class="grid-main">
-
-      <!-- COL IZQUIERDA -->
       <div class="col-left">
 
         <!-- Saldo banco -->
@@ -68,8 +58,7 @@
           <div class="balance-top">
             <span class="balance-label">Saldo Banco</span>
             <div class="balance-card-tag">
-              <span class="card-tag-dots">····</span>
-              <span>3241</span>
+              <span class="card-tag-dots">····</span><span>3241</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
@@ -78,15 +67,11 @@
           <div class="balance-amount">{{ saldoBanco() | number:'1.2-2' }} €</div>
           <div class="balance-actions">
             <button class="btn-balance-action">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               Transferir
             </button>
             <button class="btn-balance-action btn-action-outline">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M12 5v14M5 12l7-7 7 7"/>
-              </svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7-7 7 7"/></svg>
               Solicitar
             </button>
           </div>
@@ -101,16 +86,20 @@
                 <div class="reto-icon-wrap">{{ reto.icono }}</div>
                 <div class="reto-info">
                   <span class="reto-nombre">{{ reto.nombre }}</span>
-                  <span class="reto-sub">Ahorro mensual: {{ reto.ahorroMensual | number:'1.2-2' }} €</span>
+                  <span class="reto-sub">{{ reto.activo ? 'Activo' : (reto.cumplido ? 'Cumplido' : 'No cumplido') }} · {{ reto.duracion }} meses</span>
                 </div>
+                @if (reto.cumplido) {
+                  <span class="badge badge-ok" style="font-size:10px;">✅ Cumplido</span>
+                }
                 <div class="reto-dots"><span></span><span></span><span></span></div>
               </div>
               <div class="reto-progress-row">
                 <span class="reto-actual">{{ reto.actual | number:'1.2-2' }} €</span>
-                <span class="reto-meta">meta: {{ reto.meta | number:'1.2-2' }} €</span>
+                <span class="reto-meta">meta: {{ reto.cantidad | number:'1.2-2' }} €</span>
               </div>
               <div class="reto-bar-track">
-                <div class="reto-bar-fill" [style.width.%]="retoPct(reto)"></div>
+                <div class="reto-bar-fill" [style.width.%]="retoPct(reto)"
+                  [class.reto-bar-cumplido]="reto.cumplido"></div>
               </div>
             </div>
           }
@@ -118,7 +107,6 @@
 
       </div>
 
-      <!-- COL DERECHA -->
       <div class="col-right">
 
         <!-- Stats -->
@@ -142,19 +130,14 @@
           <div class="card card-stat">
             <div class="stat-top">
               <span class="stat-label">Límite mensual</span>
-              <select class="stat-select">
-                <option>Este mes</option><option>Semana</option>
-              </select>
+              <select class="stat-select"><option>Este mes</option><option>Semana</option></select>
             </div>
             <div class="limit-row">
               <span class="limit-amount gasto-color">{{ totalGasto() | number:'1.2-2' }} €</span>
               <span class="limit-meta">de {{ LIMITE_MENSUAL_FMT }}</span>
             </div>
             <div class="limit-bar-track">
-              <div class="limit-bar-fill"
-                [style.width.%]="limitePct()"
-                [style.background]="limiteColor()">
-              </div>
+              <div class="limit-bar-fill" [style.width.%]="limitePct()" [style.background]="limiteColor()"></div>
             </div>
           </div>
         </div>
@@ -174,34 +157,28 @@
               <div class="barra-col">
                 <span class="barra-valor">{{ graficaDatos[i] }}€</span>
                 <div class="barra-track" [class.barra-track-active]="i === mesGraficaIdx()">
-                  <div class="barra-fill"
-                    [style.height.%]="alturaBarraPct(graficaDatos[i])"
-                    [class.barra-fill-active]="i === mesGraficaIdx()">
-                  </div>
+                  <div class="barra-fill" [style.height.%]="alturaBarraPct(graficaDatos[i])" [class.barra-fill-active]="i === mesGraficaIdx()"></div>
                 </div>
-                <span class="barra-label" [class.barra-label-active]="i === mesGraficaIdx()">
-                  {{ mes }}
-                </span>
+                <span class="barra-label" [class.barra-label-active]="i === mesGraficaIdx()">{{ mes }}</span>
               </div>
             }
           </div>
         </div>
 
-        <!-- Historial resumido (últimos 4) -->
+        <!-- Últimos movimientos -->
         <div class="card card-white">
           <div class="historial-header">
             <span class="section-title" style="margin:0;">Últimos movimientos</span>
             <button class="btn-mas" (click)="setSubnav('Movimientos')">Ver todos →</button>
           </div>
-          <div class="tabla-header">
+          <div class="tabla-header tabla-header-mov-resumen">
             <span class="th">Nombre</span>
             <span class="th">Tipo</span>
             <span class="th">Fecha</span>
             <span class="th th-right">Importe</span>
-            <span class="th th-right">Estado</span>
           </div>
           @for (m of ultimosMovimientos(); track m.id) {
-            <div class="tabla-row" [class.row-gasto]="m.tipo==='gasto'" [class.row-ingreso]="m.tipo==='ingreso'">
+            <div class="tabla-row tabla-row-mov-resumen" [class.row-gasto]="m.tipo==='gasto'" [class.row-ingreso]="m.tipo==='ingreso'">
               <div class="td td-nombre">
                 <div class="mov-avatar">{{ m.icono }}</div>
                 <div class="mov-name-wrap">
@@ -215,17 +192,8 @@
                 <span class="fecha-hora">{{ m.fecha | date:'HH:mm' }}</span>
               </div>
               <div class="td td-right">
-                <span class="mov-importe"
-                  [class.gasto-color]="m.tipo==='gasto'"
-                  [class.ingreso-color]="m.tipo==='ingreso'">
+                <span class="mov-importe" [class.gasto-color]="m.tipo==='gasto'" [class.ingreso-color]="m.tipo==='ingreso'">
                   {{ m.tipo === 'gasto' ? '-' : '+' }}{{ m.importe | number:'1.2-2' }} €
-                </span>
-              </div>
-              <div class="td td-right">
-                <span class="badge"
-                  [class.badge-ok]="m.estado==='completado'"
-                  [class.badge-pen]="m.estado==='pendiente'">
-                  {{ m.estado === 'completado' ? 'Completado' : 'Pendiente' }}
                 </span>
               </div>
             </div>
@@ -237,25 +205,18 @@
   }
 
   <!-- ════════════════════════════════════════════
-       MOVIMIENTOS
+       MOVIMIENTOS — sin columna Estado
   ════════════════════════════════════════════ -->
   @if (subnavActivo() === 'Movimientos') {
     <div class="card card-white">
       <div class="historial-header">
         <span class="section-title" style="margin:0;">Historial de movimientos</span>
         <div class="historial-actions">
-          <button class="btn-filter"
-            [class.active-filter]="filtroActivo() === 'todos'"
-            (click)="setFiltro('todos')">Todos
-          </button>
-          <button class="btn-filter"
-            [class.active-filter]="filtroActivo() === 'gasto'"
-            (click)="setFiltro('gasto')">
+          <button class="btn-filter" [class.active-filter]="filtroActivo()==='todos'" (click)="setFiltro('todos')">Todos</button>
+          <button class="btn-filter" [class.active-filter]="filtroActivo()==='gasto'" (click)="setFiltro('gasto')">
             <span class="dot-gasto">●</span> Gastos
           </button>
-          <button class="btn-filter"
-            [class.active-filter]="filtroActivo() === 'ingreso'"
-            (click)="setFiltro('ingreso')">
+          <button class="btn-filter" [class.active-filter]="filtroActivo()==='ingreso'" (click)="setFiltro('ingreso')">
             <span class="dot-ingreso">●</span> Ingresos
           </button>
           <button class="btn-mas" (click)="abrirModal()">+ Añadir</button>
@@ -263,27 +224,18 @@
         </div>
       </div>
 
-      <div class="tabla-header">
+      <!-- Sin columna Estado -->
+      <div class="tabla-header tabla-header-mov">
         <span class="th" (click)="ordenarPor('nombre')">
-          Nombre
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 15l5 5 5-5M7 9l5-5 5 5"/>
-          </svg>
+          Nombre <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg>
         </span>
         <span class="th">Tipo</span>
         <span class="th" (click)="ordenarPor('fecha')">
-          Fecha
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 15l5 5 5-5M7 9l5-5 5 5"/>
-          </svg>
+          Fecha <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg>
         </span>
         <span class="th th-right" (click)="ordenarPor('importe')">
-          Importe
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 15l5 5 5-5M7 9l5-5 5 5"/>
-          </svg>
+          Importe <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg>
         </span>
-        <span class="th th-right">Estado</span>
       </div>
 
       @if (movimientosFiltrados().length === 0) {
@@ -291,7 +243,7 @@
       }
 
       @for (m of movimientosFiltrados(); track m.id) {
-        <div class="tabla-row" [class.row-gasto]="m.tipo==='gasto'" [class.row-ingreso]="m.tipo==='ingreso'">
+        <div class="tabla-row tabla-row-mov" [class.row-gasto]="m.tipo==='gasto'" [class.row-ingreso]="m.tipo==='ingreso'">
           <div class="td td-nombre">
             <div class="mov-avatar">{{ m.icono }}</div>
             <div class="mov-name-wrap">
@@ -305,17 +257,8 @@
             <span class="fecha-hora">{{ m.fecha | date:'HH:mm' }}</span>
           </div>
           <div class="td td-right">
-            <span class="mov-importe"
-              [class.gasto-color]="m.tipo==='gasto'"
-              [class.ingreso-color]="m.tipo==='ingreso'">
+            <span class="mov-importe" [class.gasto-color]="m.tipo==='gasto'" [class.ingreso-color]="m.tipo==='ingreso'">
               {{ m.tipo === 'gasto' ? '-' : '+' }}{{ m.importe | number:'1.2-2' }} €
-            </span>
-          </div>
-          <div class="td td-right">
-            <span class="badge"
-              [class.badge-ok]="m.estado==='completado'"
-              [class.badge-pen]="m.estado==='pendiente'">
-              {{ m.estado === 'completado' ? 'Completado' : 'Pendiente' }}
             </span>
           </div>
         </div>
@@ -328,8 +271,6 @@
   ════════════════════════════════════════════ -->
   @if (subnavActivo() === 'Calendario') {
     <div class="grid-calendario">
-
-      <!-- Calendario grande -->
       <div class="card card-white cal-grande">
         <div class="cal-header">
           <button class="cal-nav" (click)="cambiarMes(-1)">&#8249;</button>
@@ -342,15 +283,16 @@
           }
           @for (dia of diasDelMes(); track $index) {
             <span class="cal-dia cal-dia-grande"
-              [class.vacio]="dia.vacio"
-              [class.pasado]="dia.pasado"
-              [class.hoy]="dia.hoy"
-              [class.tiene-mov]="dia.tieneMov && !dia.hoy"
+              [class.vacio]="dia.vacio" [class.pasado]="dia.pasado"
+              [class.hoy]="dia.hoy" [class.tiene-mov]="dia.tieneMov && !dia.hoy"
               (click)="!dia.vacio && seleccionarDia(dia.numero)">
               @if (!dia.vacio) {
                 <span>{{ dia.numero }}</span>
-                @if (dia.tieneMov && !dia.hoy) {
-                  <span class="mov-dot"></span>
+                @if (dia.tieneGasto || dia.tieneIngreso) {
+                  <span class="mov-dots-row">
+                    @if (dia.tieneGasto)   { <span class="mov-dot mov-dot-gasto"></span>   }
+                    @if (dia.tieneIngreso) { <span class="mov-dot mov-dot-ingreso"></span> }
+                  </span>
                 }
               }
             </span>
@@ -358,11 +300,15 @@
         </div>
       </div>
 
-      <!-- Panel lateral: movimientos del día seleccionado -->
       <div class="card card-white">
-        <p class="section-title">
-          {{ diaSeleccionado() ? 'Día ' + diaSeleccionado() + ' — ' + nombreMesCalendario() : 'Selecciona un día' }}
-        </p>
+        <div class="cal-panel-header">
+          <p class="section-title" style="margin:0;">
+            {{ diaSeleccionado() ? 'Día ' + diaSeleccionado() + ' — ' + nombreMesCalendario() : 'Selecciona un día' }}
+          </p>
+          @if (diaSeleccionado()) {
+            <button class="btn-mas btn-mas-cal" (click)="abrirModalCal()">+ Añadir</button>
+          }
+        </div>
         @if (movimientosDia().length === 0) {
           <div class="empty-state">
             {{ diaSeleccionado() ? 'Sin movimientos este día' : 'Haz clic en un día del calendario' }}
@@ -380,8 +326,6 @@
             </span>
           </div>
         }
-
-        <!-- Resumen del mes -->
         <div class="cal-resumen-mes">
           <p class="section-title" style="margin-bottom:12px;">Resumen del mes</p>
           <div class="cal-stat-row">
@@ -398,7 +342,6 @@
           </div>
         </div>
       </div>
-
     </div>
   }
 
@@ -407,8 +350,6 @@
   ════════════════════════════════════════════ -->
   @if (subnavActivo() === 'Estadísticas') {
     <div class="grid-estadisticas">
-
-      <!-- Stats grandes -->
       <div class="card card-white stats-grande">
         <p class="section-title">Resumen financiero</p>
         <div class="stats-grid">
@@ -437,7 +378,6 @@
         </div>
       </div>
 
-      <!-- Gráfica grande -->
       <div class="card card-white">
         <div class="grafica-header">
           <span class="section-title" style="margin:0;">Evolución anual</span>
@@ -452,20 +392,67 @@
             <div class="barra-col">
               <span class="barra-valor">{{ graficaDatos[i] }}€</span>
               <div class="barra-track barra-track-grande" [class.barra-track-active]="i === mesGraficaIdx()">
-                <div class="barra-fill"
-                  [style.height.%]="alturaBarraPct(graficaDatos[i])"
-                  [class.barra-fill-active]="i === mesGraficaIdx()">
-                </div>
+                <div class="barra-fill" [style.height.%]="alturaBarraPct(graficaDatos[i])" [class.barra-fill-active]="i === mesGraficaIdx()"></div>
               </div>
-              <span class="barra-label" [class.barra-label-active]="i === mesGraficaIdx()">
-                {{ mes }}
-              </span>
+              <span class="barra-label" [class.barra-label-active]="i === mesGraficaIdx()">{{ mes }}</span>
             </div>
           }
         </div>
       </div>
 
-      <!-- Gastos por categoría -->
+      <!-- Donut Gastos -->
+      <div class="card card-white donut-card">
+        <p class="section-title">Distribución de gastos</p>
+        <div class="donut-layout">
+          <div class="donut-svg-wrap">
+            <svg viewBox="0 0 160 160" width="160" height="160">
+              @for (seg of donutSegments(); track seg.nombre) {
+                <path [attr.d]="seg.path" [attr.fill]="seg.color" class="donut-path"/>
+              }
+              <circle cx="80" cy="80" r="32" fill="white"/>
+              <text x="80" y="76" text-anchor="middle" font-size="11" font-weight="800" fill="#1a1a1a" font-family="Onest,sans-serif">Total</text>
+              <text x="80" y="91" text-anchor="middle" font-size="10" fill="#888" font-family="Lato,sans-serif">{{ totalGasto() | number:'1.0-0' }}€</text>
+            </svg>
+          </div>
+          <div class="donut-legend">
+            @for (seg of donutSegments(); track seg.nombre; let i = $index) {
+              <div class="donut-legend-item">
+                <span class="donut-legend-dot" [style.background]="DONUT_COLORS_GASTO[i % 4]"></span>
+                <span class="donut-legend-label">{{ seg.nombre }}</span>
+                <span class="donut-legend-pct gasto-color">{{ seg.pct }}%</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Donut Ingresos -->
+      <div class="card card-white donut-card">
+        <p class="section-title">Distribución de ingresos</p>
+        <div class="donut-layout">
+          <div class="donut-svg-wrap">
+            <svg viewBox="0 0 160 160" width="160" height="160">
+              @for (seg of donutSegmentsIngreso(); track seg.nombre) {
+                <path [attr.d]="seg.path" [attr.fill]="seg.color" class="donut-path"/>
+              }
+              <circle cx="80" cy="80" r="32" fill="white"/>
+              <text x="80" y="76" text-anchor="middle" font-size="11" font-weight="800" fill="#1a1a1a" font-family="Onest,sans-serif">Total</text>
+              <text x="80" y="91" text-anchor="middle" font-size="10" fill="#888" font-family="Lato,sans-serif">{{ totalIngreso() | number:'1.0-0' }}€</text>
+            </svg>
+          </div>
+          <div class="donut-legend">
+            @for (seg of donutSegmentsIngreso(); track seg.nombre; let i = $index) {
+              <div class="donut-legend-item">
+                <span class="donut-legend-dot" [style.background]="DONUT_COLORS_INGRESO[i % 4]"></span>
+                <span class="donut-legend-label">{{ seg.nombre }}</span>
+                <span class="donut-legend-pct ingreso-color">{{ seg.pct }}%</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Barras gastos -->
       <div class="card card-white">
         <p class="section-title">Gastos por categoría</p>
         @for (cat of gastosPorCategoria(); track cat.nombre) {
@@ -475,14 +462,31 @@
               <span class="gasto-color" style="font-weight:800;font-size:14px;">{{ cat.total | number:'1.2-2' }} €</span>
             </div>
             <div class="reto-bar-track">
-              <div class="reto-bar-fill" [style.width.%]="(cat.total / totalGasto()) * 100"></div>
+              <div class="reto-bar-fill reto-bar-gasto" [style.width.%]="(cat.total / totalGasto()) * 100"></div>
             </div>
             <span style="font-size:11px;color:#aaa;">{{ (cat.total / totalGasto()) * 100 | number:'1.0-0' }}% del total</span>
           </div>
         }
       </div>
 
-      <!-- Límite de gasto -->
+      <!-- Barras ingresos -->
+      <div class="card card-white">
+        <p class="section-title">Ingresos por categoría</p>
+        @for (cat of ingresosPorCategoria(); track cat.nombre) {
+          <div class="cat-item">
+            <div class="cat-top">
+              <span class="cat-nombre">{{ cat.icono }} {{ cat.nombre }}</span>
+              <span class="ingreso-color" style="font-weight:800;font-size:14px;">{{ cat.total | number:'1.2-2' }} €</span>
+            </div>
+            <div class="reto-bar-track">
+              <div class="reto-bar-fill" [style.width.%]="(cat.total / totalIngreso()) * 100"></div>
+            </div>
+            <span style="font-size:11px;color:#aaa;">{{ (cat.total / totalIngreso()) * 100 | number:'1.0-0' }}% del total</span>
+          </div>
+        }
+      </div>
+
+      <!-- Límite -->
       <div class="card card-white">
         <p class="section-title">Límite mensual</p>
         <div style="margin-bottom:16px;">
@@ -491,11 +495,7 @@
             <span class="limit-meta">de {{ LIMITE_MENSUAL_FMT }}</span>
           </div>
           <div class="limit-bar-track" style="height:12px;">
-            <div class="limit-bar-fill"
-              [style.width.%]="limitePct()"
-              [style.background]="limiteColor()"
-              style="height:12px;">
-            </div>
+            <div class="limit-bar-fill" [style.width.%]="limitePct()" [style.background]="limiteColor()" style="height:12px;"></div>
           </div>
           <div style="display:flex;justify-content:space-between;margin-top:6px;">
             <span style="font-size:11px;color:#aaa;font-family:'Lato';">0 €</span>
@@ -506,41 +506,239 @@
           </div>
         </div>
       </div>
-
     </div>
   }
 
+  <!-- ════════════════════════════════════════════
+       RETOS
+  ════════════════════════════════════════════ -->
+  @if (subnavActivo() === 'Retos') {
+    <div class="grid-retos">
+
+      <!-- ── COLUMNA PRINCIPAL ── -->
+      <div class="retos-col-left">
+
+        <!-- Tabs activo / historial -->
+        <div class="card card-white retos-header-card">
+          <div class="retos-tabs">
+            <button class="reto-vista-tab" [class.active]="retosVista()==='activo'"    (click)="retosVista.set('activo')">🎯 Reto actual</button>
+            <button class="reto-vista-tab" [class.active]="retosVista()==='historial'" (click)="retosVista.set('historial')">📋 Historial</button>
+            <!-- Nuevo reto solo si NO hay activo -->
+            @if (!tieneRetoActivo()) {
+              <button class="btn-mas" style="margin-left:auto;" (click)="abrirModalReto()">+ Nuevo reto</button>
+            }
+          </div>
+        </div>
+
+        <!-- ══ VISTA: RETO ACTIVO ══ -->
+        @if (retosVista() === 'activo') {
+
+          @if (!retoActivo()) {
+            <!-- Sin reto activo -->
+            <div class="card card-white">
+              <div class="reto-vacio">
+                <span class="reto-vacio-icon">🎯</span>
+                <p class="reto-vacio-titulo">Sin reto activo</p>
+                <p class="reto-vacio-desc">Crea un nuevo reto de ahorro para empezar a ahorrar hacia tu objetivo.</p>
+                <button class="btn-submit" style="width:auto;padding:12px 28px;flex:none;" (click)="abrirModalReto()">
+                  + Crear primer reto
+                </button>
+              </div>
+            </div>
+          } @else {
+            <!-- Tarjeta reto activo -->
+            <div class="card card-white reto-card">
+              <div class="reto-card-top">
+                <div class="reto-card-icon">{{ retoActivo()!.icono }}</div>
+                <div class="reto-card-info">
+                  <span class="reto-card-nombre">{{ retoActivo()!.nombre }}</span>
+                  <span class="reto-card-desc">
+                    Inicio: {{ retoActivo()!.fechaInicio | date:'dd/MM/yyyy' }}
+                    @if (retoActivo()!.fechaFinal) {
+                      · Fin: {{ retoActivo()!.fechaFinal | date:'dd/MM/yyyy' }}
+                    }
+                  </span>
+                </div>
+                <span class="badge badge-activo">🟢 Activo</span>
+              </div>
+
+              <!-- Métricas BDD -->
+              <div class="reto-card-meta-row">
+                <div class="reto-card-meta-item">
+                  <span class="reto-card-meta-label">Cantidad (meta)</span>
+                  <span class="reto-card-meta-val ingreso-color">{{ retoActivo()!.cantidad | number:'1.2-2' }} €</span>
+                </div>
+                <div class="reto-card-meta-item">
+                  <span class="reto-card-meta-label">Acumulado</span>
+                  <span class="reto-card-meta-val" style="color:#1a1a1a;">{{ retoActivo()!.actual | number:'1.2-2' }} €</span>
+                </div>
+                <div class="reto-card-meta-item">
+                  <span class="reto-card-meta-label">Restante</span>
+                  <span class="reto-card-meta-val gasto-color">
+                    {{ (retoActivo()!.cantidad - retoActivo()!.actual) | number:'1.2-2' }} €
+                  </span>
+                </div>
+                <div class="reto-card-meta-item">
+                  <span class="reto-card-meta-label">Duración</span>
+                  <span class="reto-card-meta-val" style="color:#888;">{{ retoActivo()!.duracion }} meses</span>
+                </div>
+              </div>
+
+              <div class="reto-pct-row">
+                <span class="reto-pct-label">{{ retoPct(retoActivo()!) | number:'1.0-0' }}% completado</span>
+              </div>
+              <div class="reto-bar-track" style="height:10px;">
+                <div class="reto-bar-fill" [style.width.%]="retoPct(retoActivo()!)"></div>
+              </div>
+
+              <!-- Acción abandonar -->
+              <div style="margin-top:18px;display:flex;justify-content:flex-end;">
+                <button class="btn-abandonar" (click)="abandonarReto()">
+                  Abandonar reto
+                </button>
+              </div>
+            </div>
+          }
+        }
+
+        <!-- ══ VISTA: HISTORIAL ══ -->
+        @if (retosVista() === 'historial') {
+          <div class="card card-white">
+            <div class="historial-header" style="flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+              <span class="section-title" style="margin:0;">Historial de retos</span>
+              <div class="historial-actions">
+                <button class="btn-filter" [class.active-filter]="historialFiltroEstado()==='todos'"      (click)="historialFiltroEstado.set('todos')">Todos</button>
+                <button class="btn-filter" [class.active-filter]="historialFiltroEstado()==='cumplido'"   (click)="historialFiltroEstado.set('cumplido')">
+                  <span style="color:#27ae60;">●</span> Cumplidos
+                </button>
+                <button class="btn-filter" [class.active-filter]="historialFiltroEstado()==='nocumplido'" (click)="historialFiltroEstado.set('nocumplido')">
+                  <span style="color:#e74c3c;">●</span> No cumplidos
+                </button>
+              </div>
+            </div>
+
+            <!-- Tabla historial -->
+            <div class="tabla-header tabla-header-historial-retos">
+              <span class="th" (click)="ordenarHistorialPor('nombre')">
+                Reto <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg>
+              </span>
+              <span class="th" (click)="ordenarHistorialPor('fechaInicio')">
+                Inicio <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg>
+              </span>
+              <span class="th">Fin</span>
+              <span class="th">Dur.</span>
+              <span class="th th-right" (click)="ordenarHistorialPor('cantidad')">
+                Cantidad <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg>
+              </span>
+              <span class="th th-right">Acumulado</span>
+              <span class="th th-right">Estado</span>
+            </div>
+
+            @if (historialFiltrado().length === 0) {
+              <div class="empty-state">No hay retos en el historial</div>
+            }
+
+            @for (r of historialFiltrado(); track r.id) {
+              <div class="tabla-row tabla-row-historial-retos"
+                [class.row-ingreso]="r.cumplido"
+                [class.row-gasto]="!r.cumplido">
+                <div class="td td-nombre">
+                  <div class="mov-avatar">{{ r.icono }}</div>
+                  <span class="mov-nombre">{{ r.nombre }}</span>
+                </div>
+                <div class="td"><span class="fecha-dia">{{ r.fechaInicio | date:'dd/MM/yy' }}</span></div>
+                <div class="td">
+                  @if (r.fechaFinal) {
+                    <span class="fecha-dia">{{ r.fechaFinal | date:'dd/MM/yy' }}</span>
+                  } @else {
+                    <span style="color:#ccc;">—</span>
+                  }
+                </div>
+                <div class="td"><span class="fecha-dia">{{ r.duracion }}m</span></div>
+                <div class="td td-right">
+                  <span class="mov-importe" style="color:#1a1a1a;">{{ r.cantidad | number:'1.2-2' }} €</span>
+                </div>
+                <div class="td td-right">
+                  <span class="mov-importe ingreso-color">{{ r.actual | number:'1.2-2' }} €</span>
+                </div>
+                <div class="td td-right">
+                  <span class="badge" [class.badge-ok]="r.cumplido" [class.badge-red]="!r.cumplido">
+                    {{ r.cumplido ? '✅ Cumplido' : '❌ No cumplido' }}
+                  </span>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+      </div>
+
+      <!-- ── PANEL DERECHO: resumen ── -->
+      <div class="retos-col-right">
+        <div class="card card-white">
+          <p class="section-title">Resumen</p>
+
+          @if (retoActivo()) {
+            <div class="reto-resumen-activo-box">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="font-size:24px;">{{ retoActivo()!.icono }}</span>
+                <div>
+                  <div style="font-size:14px;font-weight:800;font-family:'Onest';color:#1a1a1a;">{{ retoActivo()!.nombre }}</div>
+                  <div style="font-size:11px;color:#aaa;font-family:'Lato';">Reto activo</div>
+                </div>
+              </div>
+              <div class="reto-bar-track" style="height:8px;margin-bottom:6px;">
+                <div class="reto-bar-fill" [style.width.%]="retoPct(retoActivo()!)"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;font-family:'Onest';">
+                <span style="font-weight:700;color:#4E9C25;">{{ retoPct(retoActivo()!) | number:'1.0-0' }}%</span>
+                <span style="color:#aaa;">{{ retoActivo()!.actual | number:'1.0-0' }} / {{ retoActivo()!.cantidad | number:'1.0-0' }} €</span>
+              </div>
+            </div>
+          } @else {
+            <div class="empty-state" style="padding:16px;">Sin reto activo</div>
+          }
+
+          <div class="reto-resumen-stat">
+            <span class="reto-resumen-label">Retos completados</span>
+            <span class="reto-resumen-val ingreso-color">{{ retosCumplidos().length }}</span>
+          </div>
+          <div class="reto-resumen-stat">
+            <span class="reto-resumen-label">Total historial</span>
+            <span class="reto-resumen-val" style="color:#888;font-size:16px;">{{ retosHistorial().length }}</span>
+          </div>
+          <div class="reto-resumen-stat" style="border-top:1.5px solid #f0f0f0;padding-top:12px;margin-top:4px;">
+            <span class="reto-resumen-label">Total ahorrado</span>
+            <span class="reto-resumen-val ingreso-color" style="font-size:16px;">
+              {{ totalAhorradoRetos() | number:'1.2-2' }} €
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  }
 </main>
 
 <!-- ══════════════════════════════════════════════
-     MODAL
+     MODAL NUEVO MOVIMIENTO
 ══════════════════════════════════════════════ -->
 @if (modalAbierto()) {
   <div class="modal-overlay" (click)="cerrarModal()">
     <div class="modal" (click)="$event.stopPropagation()">
       <div class="modal-title">Nuevo movimiento</div>
+
+      <div class="modal-tipo-tabs">
+        <button class="tipo-tab" [class.tipo-tab-gasto]="nuevoMov().tipo==='gasto'" (click)="actualizarNuevoMov('tipo','gasto')">💸 Gasto</button>
+        <button class="tipo-tab" [class.tipo-tab-ingreso]="nuevoMov().tipo==='ingreso'" (click)="actualizarNuevoMov('tipo','ingreso')">💰 Ingreso</button>
+      </div>
+
       <div class="modal-row">
         <div class="modal-field">
           <label>Nombre</label>
-          <input type="text" placeholder="Ej: Mercadona"
+          <input type="text" [placeholder]="nuevoMov().tipo==='gasto' ? 'Ej: Mercadona' : 'Ej: Nómina'"
             [value]="nuevoMov().nombre"
             (input)="actualizarNuevoMov('nombre', $any($event.target).value)"/>
-        </div>
-        <div class="modal-field">
-          <label>Categoría</label>
-          <input type="text" placeholder="Ej: Alimentación"
-            [value]="nuevoMov().categoria"
-            (input)="actualizarNuevoMov('categoria', $any($event.target).value)"/>
-        </div>
-      </div>
-      <div class="modal-row">
-        <div class="modal-field">
-          <label>Tipo</label>
-          <select [value]="nuevoMov().tipo"
-            (change)="actualizarNuevoMov('tipo', $any($event.target).value)">
-            <option value="gasto">💸 Gasto</option>
-            <option value="ingreso">💰 Ingreso</option>
-          </select>
         </div>
         <div class="modal-field">
           <label>Importe (€)</label>
@@ -551,26 +749,117 @@
       </div>
       <div class="modal-row">
         <div class="modal-field">
-          <label>Icono</label>
-          <select [value]="nuevoMov().icono"
-            (change)="actualizarNuevoMov('icono', $any($event.target).value)">
-            @for (ic of iconosDisponibles; track ic) {
-              <option [value]="ic">{{ ic }}</option>
+          <label>Categoría</label>
+          <select [value]="nuevoMov().categoria"
+            (change)="actualizarNuevoMov('categoria', $any($event.target).value)">
+            @for (cat of categoriasActualesMov; track cat) {
+              <option [value]="cat">{{ cat }}</option>
             }
           </select>
         </div>
+      </div>
+      <!-- Sin campo estado -->
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
+        <!-- Mismo color verde para ambos tipos -->
+        <button class="btn-submit" (click)="guardarMovimiento()">
+          Guardar {{ nuevoMov().tipo === 'gasto' ? 'gasto' : 'ingreso' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- ══════════════════════════════════════════════
+     MODAL CALENDARIO
+══════════════════════════════════════════════ -->
+@if (modalCalAbierto()) {
+  <div class="modal-overlay" (click)="cerrarModalCal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-title">Añadir — Día {{ diaSeleccionado() }} {{ nombreMesCalendario() }}</div>
+      <div class="modal-tipo-tabs">
+        <button class="tipo-tab" [class.tipo-tab-gasto]="nuevoMovCal().tipo==='gasto'" (click)="actualizarMovCal('tipo','gasto')">💸 Gasto</button>
+        <button class="tipo-tab" [class.tipo-tab-ingreso]="nuevoMovCal().tipo==='ingreso'" (click)="actualizarMovCal('tipo','ingreso')">💰 Ingreso</button>
+      </div>
+      <div class="modal-row">
         <div class="modal-field">
-          <label>Estado</label>
-          <select [value]="nuevoMov().estado"
-            (change)="actualizarNuevoMov('estado', $any($event.target).value)">
-            <option value="completado">✅ Completado</option>
-            <option value="pendiente">⏳ Pendiente</option>
+          <label>Nombre</label>
+          <input type="text" placeholder="Ej: Nómina, Mercadona..."
+            [value]="nuevoMovCal().nombre"
+            (input)="actualizarMovCal('nombre', $any($event.target).value)"/>
+        </div>
+        <div class="modal-field">
+          <label>Importe (€)</label>
+          <input type="number" placeholder="0.00" step="0.01" min="0"
+            [value]="nuevoMovCal().importe ?? ''"
+            (input)="actualizarMovCal('importe', +$any($event.target).value)"/>
+        </div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Categoría</label>
+          <select [value]="nuevoMovCal().categoria"
+            (change)="actualizarMovCal('categoria', $any($event.target).value)">
+            @for (cat of categoriasActualesCal; track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
           </select>
         </div>
       </div>
       <div class="modal-actions">
-        <button class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
-        <button class="btn-submit" (click)="guardarMovimiento()">Guardar movimiento</button>
+        <button class="btn-cancel" (click)="cerrarModalCal()">Cancelar</button>
+        <button class="btn-submit" (click)="guardarMovimientoCal()">
+          Guardar {{ nuevoMovCal().tipo === 'gasto' ? 'gasto' : 'ingreso' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- ══════════════════════════════════════════════
+     MODAL NUEVO RETO
+══════════════════════════════════════════════ -->
+@if (modalRetoAbierto()) {
+  <div class="modal-overlay" (click)="cerrarModalReto()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-title">🎯 Nuevo reto de ahorro</div>
+      <p style="font-size:12px;color:#aaa;font-family:'Lato';margin:-10px 0 18px;">
+        Solo puedes tener un reto activo a la vez.
+      </p>
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Nombre del reto</label>
+          <input type="text" placeholder="Ej: Viaje a Japón"
+            [value]="nuevoReto().nombre"
+            (input)="actualizarNuevoReto('nombre', $any($event.target).value)"/>
+        </div>
+        <div class="modal-field" style="max-width:100px;">
+          <label>Icono</label>
+          <select [value]="nuevoReto().icono"
+            (change)="actualizarNuevoReto('icono', $any($event.target).value)">
+            @for (ic of iconosReto; track ic) {
+              <option [value]="ic">{{ ic }}</option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Cantidad (€) — meta total</label>
+          <input type="number" placeholder="Ej: 3000" step="1" min="1"
+            [value]="nuevoReto().cantidad ?? ''"
+            (input)="actualizarNuevoReto('cantidad', +$any($event.target).value)"/>
+        </div>
+        <div class="modal-field">
+          <label>Duración (meses)</label>
+          <input type="number" placeholder="Ej: 12" step="1" min="1" max="120"
+            [value]="nuevoReto().duracion ?? ''"
+            (input)="actualizarNuevoReto('duracion', +$any($event.target).value)"/>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cerrarModalReto()">Cancelar</button>
+        <button class="btn-submit" (click)="guardarReto()">Crear reto</button>
       </div>
     </div>
   </div>
