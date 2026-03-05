@@ -29,4 +29,11 @@ class RetoController extends Controller
             'data' => $reto
         ], 201);
     }
+    public function index()
+    {
+        // Obtenemos todos los retos
+        $retos = \App\Models\Reto::all();
+        return response()->json($retos, 200);
+    }
+    
 }
