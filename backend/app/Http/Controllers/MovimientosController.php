@@ -15,7 +15,7 @@ class MovimientosController extends Controller
             'tipo' => 'required|in:ingreso,gasto',
             'cantidad' => 'required|decimal:2',
             'categoria' => 'required|string',
-            'descripcion' => 'required|string',
+            'descripcion' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -45,6 +45,24 @@ class MovimientosController extends Controller
                 'message' => 'error',
                 'errors' => $validator->errors()
             ], 400);
+        }
+    }
+
+    public function mostrarMovimientos(Request $request)
+    {
+        $movimientos = Movimientos::where('usuario_id', $request->user()->id)->get();
+
+        if (count($movimientos) <= 0) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'No tienes movimientos'
+            ], 400);
+
+        } else {
+            return response()->json([
+                'message' => 'success',
+                'movimientos' => $movimientos
+            ], 201);
         }
     }
 }

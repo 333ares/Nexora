@@ -11,6 +11,7 @@ class Movimientos extends Model
         'cantidad',
         'categoria',
         'fecha',
-        'descripcion'
+        'descripcion',
+        'usuario_id'
     ];
 }
