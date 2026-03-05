@@ -4,15 +4,19 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-planes',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './planes.html',
-  styleUrl: './planes.css',
+  styleUrl: './planes.css'
 })
 export class Planes {
 
   // Plan actualmente contratado por el usuario
-  // Cambia este valor según lo que devuelva tu backend
+  // TODO: obtener del backend / servicio de auth
   planActual: string = 'free';
+
+  // Índice de la pregunta FAQ abierta (-1 = ninguna)
+  faqAbierta: number = -1;
 
   constructor(private router: Router) {}
 
@@ -21,11 +25,15 @@ export class Planes {
     this.router.navigate(['/perfil']);
   }
 
-  // Lógica para seleccionar un nuevo plan
+  // Selecciona un nuevo plan
   seleccionarPlan(plan: string): void {
     // TODO: conectar con el backend para actualizar el plan
-    console.log('Plan seleccionado:', plan);
     this.planActual = plan;
+  }
+
+  // Abre/cierra una pregunta del FAQ (acordeón: solo una abierta a la vez)
+  toggleFaq(index: number): void {
+    this.faqAbierta = this.faqAbierta === index ? -1 : index;
   }
 
 }

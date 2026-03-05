@@ -1,4 +1,3 @@
-
 /* 
    FUENTES — mismas que perfil para coherencia visual
 */
@@ -7,103 +6,202 @@
 
 
 /* 
-   HOST — fondo verde degradado de página (idéntico al perfil)
+   HOST — fondo blanco, ocupa todo el ancho disponible
 */
 :host {
-  display: flex;
-  justify-content: center;
+  display: block;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
+  background: #fff;
   font-family: 'Onest', 'Lato';
-  padding: 40px 24px 60px;
 }
 
 
 /* 
-   PAGE — contenedor principal de scroll vertical
-   --gap: valor único que controla todos los espaciados internos,
-   igual que en perfil para coherencia.
+   PAGE — contenedor centrado para las secciones superiores
+   --gap: valor único de espaciado
 */
 .page {
   --gap: 24px;
 
   width: 100%;
   max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 0;
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) * 2);
+  gap: calc(var(--gap) * 1.5);
 }
 
 
 /* 
-   CABECERA — título, subtítulo y botón volver
+   BOTÓN VOLVER — sobre fondo blanco
 */
-.page-header {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+.back-row { display: flex; }
 
 .btn-back {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.25);
-  border: none;
+  background: #f0faf0;
+  border: 1.5px solid #c8e0c8;
   border-radius: 10px;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 700;
   font-family: inherit;
-  color: #fff;
+  color: #2e7d32;
   cursor: pointer;
-  width: fit-content;
-  transition: background 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 }
-.btn-back:hover { background: rgba(255, 255, 255, 0.38); }
+.btn-back:hover { background: #dff0df; border-color: #78C550; }
 
-.header-text {
+
+/* ══════════════════════════════════════════════
+   BLOQUE PLANES — hero + tarjetas
+   Fondo verde menta como estaba al principio
+══════════════════════════════════════════════ */
+.white-block {
+  background: #d8eed8;
+  border-radius: 24px;
+  border: 1.5px solid #c8e0c8;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
-.page-title {
-  font-size: 36px;
-  font-weight: 900;
-  color: #fff;
-  margin: 0;
-  line-height: 1.1;
-  letter-spacing: -0.5px;
+/* ══════════════════════════════════════════════
+   BLOQUE WHY — separado, fondo verde menta con borde
+══════════════════════════════════════════════ */
+.why-block {
+  background: linear-gradient(135deg, #B3E29A 0%, #78C550);
+  border-radius: 24px;
+  border: 1.5px solid #5ab55a;
+  overflow: hidden;
 }
 
-.page-title span {
-  color: #fff;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.18);
-}
 
-.page-subtitle {
-  font-size: 16px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.85);
-  margin: 0;
+/* ══════════════════════════════════════════════
+   HERO BANNER — recuadro verde menta con título
+   y patrón de círculos contenidos
+══════════════════════════════════════════════ */
+.hero {
+  background: #d8eed8;
+  position: relative;
+  overflow: hidden;
+  padding: 48px 40px 44px;
 }
-
 
 /* 
-   GRID DE PLANES — 4 columnas con tarjetas
+   CÍRCULOS DECORATIVOS — 8 bolas contenidas en el hero
 */
+.hero__circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Esquina superior derecha — cluster grande */
+.hero__circle--1 {
+  width: 180px; height: 180px;
+  background: rgba(120, 197, 80, 0.20);
+  top: 10px; right: 10px;
+}
+.hero__circle--2 {
+  width: 110px; height: 110px;
+  background: rgba(78, 156, 37, 0.15);
+  top: 20px; right: 130px;
+}
+.hero__circle--3 {
+  width: 65px; height: 65px;
+  background: rgba(179, 226, 154, 0.30);
+  top: 50px; right: 70px;
+}
+
+/* Esquina inferior izquierda — cluster mediano */
+.hero__circle--4 {
+  width: 150px; height: 150px;
+  background: rgba(120, 197, 80, 0.15);
+  bottom: 10px; left: 10px;
+}
+.hero__circle--5 {
+  width: 85px; height: 85px;
+  background: rgba(78, 156, 37, 0.12);
+  bottom: 20px; left: 130px;
+}
+
+/* Bolas sueltas por el centro */
+.hero__circle--6 {
+  width: 90px; height: 90px;
+  background: rgba(179, 226, 154, 0.20);
+  top: 12px; left: 38%;
+}
+.hero__circle--7 {
+  width: 55px; height: 55px;
+  background: rgba(78, 156, 37, 0.10);
+  bottom: 12px; right: 35%;
+}
+.hero__circle--8 {
+  width: 48px; height: 48px;
+  background: rgba(120, 197, 80, 0.18);
+  top: 14px; left: 30px;
+}
+
+/* Texto del hero */
+.hero__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero__eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #4E9C25;
+  background: rgba(78, 156, 37, 0.1);
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(78,156,37,0.2);
+  margin: 0;
+}
+
+.hero__title {
+  font-size: 36px;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+.hero__title span { color: #4E9C25; }
+
+.hero__subtitle {
+  font-size: 15px;
+  color: #555;
+  margin: 0;
+  line-height: 1.6;
+}
+
+
+/* ══════════════════════════════════════════════
+   GRID DE PLANES — dentro del bloque superior
+══════════════════════════════════════════════ */
+.plans-wrapper {
+  padding: 32px 32px 40px;
+}
+
 .plans-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--gap);
-  align-items: start;
 }
 
-
-/* 
-   TARJETA DE PLAN — base común
-*/
+/* Tarjeta de plan — base */
 .plan-card {
   background: #fff;
   border-radius: 20px;
@@ -113,30 +211,25 @@
   justify-content: space-between;
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
 }
 .plan-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
 }
-
-/* Tarjeta del plan actualmente contratado */
 .plan-card--current {
   border-color: #78C550;
   box-shadow: 0 0 0 2px #78C550;
 }
-
-/* Tarjeta destacada (Más popular) */
 .plan-card--featured {
   border-color: #4E9C25;
-  box-shadow: 0 8px 32px rgba(78,156,37,0.22);
+  box-shadow: 0 8px 28px rgba(78,156,37,0.22);
   transform: scale(1.03);
 }
 .plan-card--featured:hover {
   transform: scale(1.03) translateY(-4px);
 }
 
-/* Etiqueta "Más popular" en la tarjeta destacada */
 .plan-card__featured-label {
   background: linear-gradient(135deg, #B3E29A 0%, #78C550);
   color: #fff;
@@ -145,27 +238,23 @@
   text-transform: uppercase;
   letter-spacing: 1.5px;
   text-align: center;
-  padding: 6px 0;
+  padding: 7px 0;
 }
 
 .plan-card__top {
-  padding: 22px 22px 0;
+  padding: 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.plan-card__bottom {
+  padding: 0 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.plan-card__bottom {
-  padding: 0 22px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-
-/* 
-   BADGES DE PLAN — etiqueta de nombre del plan
-*/
+/* Badges */
 .plan-badge {
   display: inline-block;
   font-size: 10px;
@@ -175,96 +264,70 @@
   border-radius: 6px;
   width: fit-content;
 }
-
 .plan-badge--free     { background: #e8f5e9; color: #388e3c; }
 .plan-badge--go       { background: #e3f2fd; color: #1565c0; }
 .plan-badge--advanced { background: linear-gradient(135deg, #B3E29A, #78C550); color: #fff; }
 .plan-badge--premium  { background: #fff3e0; color: #e65100; }
 
-
-/* 
-   CONTENIDO DE LA TARJETA
-*/
 .plan-card__name {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 800;
   color: #1a1a1a;
   margin: 0;
 }
-
 .plan-card__desc {
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 12.5px;
   color: #777;
   margin: 0;
   line-height: 1.5;
 }
-
 .plan-card__divider {
   height: 1px;
   background: #eef5ee;
   margin: 4px 0;
 }
 
-/* Lista de características */
+/* Lista de features */
 .plan-card__features {
   list-style: none;
   padding: 0;
-  margin: 0 0 18px 0;
+  margin: 0 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 8px;
 }
-
 .plan-card__features li {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 600;
   color: #333;
 }
+.plan-card__features li svg { flex-shrink: 0; color: #4caf50; }
+.feature--disabled { color: #bbb !important; }
+.feature--disabled svg { color: #ddd !important; }
 
-.plan-card__features li svg {
-  flex-shrink: 0;
-  color: #4caf50;
-}
-
-/* Feature no disponible en el plan */
-.feature--disabled {
-  color: #bbb !important;
-}
-.feature--disabled svg {
-  color: #ddd !important;
-}
-
-
-/* 
-   PRECIO Y AHORRO
-*/
+/* Precio */
 .plan-card__price {
   display: flex;
   align-items: baseline;
   gap: 4px;
 }
-
 .price-amount {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 900;
   color: #1a1a1a;
 }
-
 .price-period {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
   color: #999;
 }
-
 .plan-card__saving {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #4caf50;
-  margin: -6px 0 0 0;
+  margin: -4px 0 0;
   background: #e8f5e9;
   display: inline-block;
   padding: 2px 8px;
@@ -272,23 +335,18 @@
   width: fit-content;
 }
 
-
-/* 
-   BOTONES DE LAS TARJETAS
-*/
+/* Botones */
 .btn-plan {
   width: 100%;
-  padding: 11px;
+  padding: 10px;
   border-radius: 11px;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 800;
   font-family: inherit;
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
   border: none;
 }
-
-/* Botón plan no seleccionado */
 .btn-plan--select {
   background: #f0faf0;
   color: #2e7d32;
@@ -296,8 +354,6 @@
 }
 .btn-plan--select:hover { background: #dff0df; border-color: #78C550; }
 .btn-plan--select:active { transform: scale(0.98); }
-
-/* Botón plan destacado (Advanced) */
 .btn-plan--featured {
   background: linear-gradient(135deg, #B3E29A 0%, #78C550);
   color: #fff;
@@ -305,8 +361,6 @@
 }
 .btn-plan--featured:hover { background: linear-gradient(135deg, #a0d87e 0%, #6ab840); }
 .btn-plan--featured:active { transform: scale(0.98); }
-
-/* Botón plan actual (deshabilitado) */
 .btn-plan--current {
   background: #e8f5e9;
   color: #4caf50;
@@ -316,55 +370,46 @@
 }
 
 
-/* 
-   SECCIÓN ¿POR QUÉ SUSCRIBIRSE?
-*/
+/* ══════════════════════════════════════════════
+   SECCIÓN ¿POR QUÉ? — dentro de .why-block
+   Fondos verdosos como estaban originalmente
+══════════════════════════════════════════════ */
 .why-section {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 40px 36px;
+  padding: 36px 32px 40px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 20px;
+  background: rgba(255,255,255,0.2);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.35);
 }
-
 .why-title {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 900;
   color: #fff;
   margin: 0;
-  letter-spacing: -0.3px;
 }
-
 .why-subtitle {
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 14px;
   color: rgba(255,255,255,0.85);
-  margin: -16px 0 0 0;
+  margin: -8px 0 0;
 }
-
 .why-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gap);
 }
-
-/* Cada ventaja */
 .why-item {
   background: rgba(255,255,255,0.18);
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.3);
-  padding: 24px 20px;
+  padding: 22px 18px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
 .why-icon {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   background: rgba(255,255,255,0.3);
   border-radius: 12px;
   display: flex;
@@ -372,18 +417,118 @@
   justify-content: center;
   color: #fff;
 }
-
 .why-item__title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   color: #fff;
   margin: 0;
 }
-
 .why-item__desc {
-  font-size: 13.5px;
-  font-weight: 400;
+  font-size: 13px;
   color: rgba(255,255,255,0.82);
   margin: 0;
   line-height: 1.5;
+}
+
+
+/* ══════════════════════════════════════════════
+   FAQ — fondo verde completo de borde a borde
+   Usa margin negativo para romper el max-width del .page
+   y width: 100vw para ocupar toda la pantalla
+══════════════════════════════════════════════ */
+.faq-section {
+  /* Rompe el contenedor para ir de borde a borde */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+
+  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
+  padding: 56px 0 60px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Contenido del FAQ centrado y con max-width */
+.faq-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+  text-align: center;
+}
+.faq-subtitle {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  margin: -12px 0 4px;
+  text-align: center;
+}
+
+/* Lista centrada con max-width */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Item del acordeón */
+.faq-item {
+  background: #fff;
+  border-radius: 14px;
+  border: 1.5px solid #c8e0c8;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+.faq-item:hover {
+  border-color: #78C550;
+  box-shadow: 0 4px 16px rgba(78,156,37,0.1);
+}
+.faq-item--open {
+  border-color: #78C550;
+  box-shadow: 0 4px 20px rgba(78,156,37,0.12);
+}
+
+.faq-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  gap: 16px;
+}
+.faq-item__question {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+.faq-item__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e8f5e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4caf50;
+  flex-shrink: 0;
+  transition: transform 0.25s, background 0.2s;
+}
+.faq-item--open .faq-item__icon {
+  transform: rotate(180deg);
+  background: #4caf50;
+  color: #fff;
+}
+.faq-item__answer {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.65;
+  margin: 0;
+  padding: 14px 22px 20px;
+  border-top: 1px solid #eef5ee;
 }
