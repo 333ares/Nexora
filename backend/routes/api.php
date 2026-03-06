@@ -12,7 +12,7 @@ Route::post('/usuarios', [AuthController::class, 'registroUsuario']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 
 // Rutas protegidas con autenticación
-Route::middleware('auth:sanctum')->group(function () {
+//Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logoutUsuario']);
 
     // Usuario
@@ -25,10 +25,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/movimientos', [MovimientosController::class, 'mostrarMovimientos']);
     Route::put('/movimiento', [MovimientosController::class, 'actualizarMovimiento']);
     Route::delete('movimiento', [MovimientosController::class, 'borrarMovimiento']);
-  
+
    // Esta línea conecta la URL /api/retos con la función store del controlador
-    Route::post('/retos', [RetoController::class, 'store']);
-    Route::get('/retos/{id}', [RetoController::class, 'show']);
-    
+    Route::post('/reto', [RetoController::class, 'store']);
+    Route::get('/reto', [RetoController::class, 'verReto']);
     Route::get('/retos', [RetoController::class, 'index']);
-});
+    Route::put('/reto', [RetoController::class, 'actualizarReto']);
+    Route::post('/reto/eliminar', [RetoController::class, 'eliminarReto']);
+
+//});
+
