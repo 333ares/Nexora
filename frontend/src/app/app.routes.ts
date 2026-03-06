@@ -14,7 +14,7 @@ export const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuario,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'registro',
@@ -23,12 +23,12 @@ export const routes: Routes = [
   {
     path: 'planes',
     component: Planes,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'movimientos',
     component: Movimientos,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: '',
