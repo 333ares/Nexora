@@ -4,37 +4,28 @@ import { FormsModule } from '@angular/forms';
 
 // ── Interfaces alineadas con BDD ──────────────────────────────────────────────
 
-/**
- * Refleja tabla: gasto_mensual (id, total, fecha, categoria, created_at, updated_at)
- * + campos de UI: nombre, tipo, icono
- * NOTA: Se elimina el campo "estado" (pendiente/completado)
- */
 export interface Movimiento {
   id: number;
   nombre: string;
-  categoria: string;   // -> categoria (BDD)
+  categoria: string;
   tipo: 'gasto' | 'ingreso';
-  importe: number;     // -> total (BDD)
-  fecha: Date;         // -> fecha (BDD)
+  importe: number;
+  fecha: Date;
   icono: string;
+  descripcion?: string;   // campo nuevo (opcional)
 }
 
-/**
- * Refleja BDD: RETOS(IDreto, activo, cumplido, cantidad, fecha_inicio, fecha_final, duracion, IDusuario)
- * Regla: solo 1 reto con activo=true al mismo tiempo
- */
 export interface Reto {
-  id:          number;       // IDreto
-  activo:      boolean;      // activo — solo 1 puede ser true
-  cumplido:    boolean;      // cumplido
-  cantidad:    number;       // cantidad (importe meta)
-  fechaInicio: Date;         // fecha_inicio
-  fechaFinal:  Date | null;  // fecha_final
-  duracion:    number;       // duracion en meses
-  // campos UI (no están en BDD)
+  id:          number;
+  activo:      boolean;
+  cumplido:    boolean;
+  cantidad:    number;
+  fechaInicio: Date;
+  fechaFinal:  Date | null;
+  duracion:    number;
   nombre:  string;
   icono:   string;
-  actual:  number;           // acumulado calculado en frontend
+  actual:  number;
 }
 
 export interface DiaCal {
@@ -70,6 +61,7 @@ const ICONOS_GASTO: Record<string, string> = {
 export class Movimientos implements OnInit {
 
   // ── Constantes ────────────────────────────────────────────────────
+  readonly Math = Math;
   readonly LIMITE_MENSUAL     = 2000;
   readonly LIMITE_MENSUAL_FMT = '2.000,00 €';
   readonly diasSemana   = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
@@ -95,7 +87,7 @@ export class Movimientos implements OnInit {
   setMenu(id: string)     { this.menuActivo.set(id); }
   setSubnav(item: string) { this.subnavActivo.set(item); }
 
-  // ── Movimientos (sin campo "estado") ─────────────────────────────
+  // ── Movimientos ───────────────────────────────────────────────────
   private _movimientos = signal<Movimiento[]>([
     { id:1, nombre:'Nómina Marzo',   categoria:'Sueldo',              tipo:'ingreso', importe:1800,  fecha:new Date('2024-03-20T09:00:00'), icono:'💼' },
     { id:2, nombre:'Mercadona',      categoria:'Supervivencia',       tipo:'gasto',   importe:87.50, fecha:new Date('2024-03-20T10:32:00'), icono:'🛒' },
@@ -155,8 +147,7 @@ export class Movimientos implements OnInit {
     return 'linear-gradient(to right,#B3E29A,#78C550)';
   });
 
-  // ── Retos — BDD: RETOS(IDreto, activo, cumplido, cantidad, fecha_inicio, fecha_final, duracion, IDusuario)
-  // REGLA: solo puede existir UN reto con activo=true al mismo tiempo
+  // ── Retos ─────────────────────────────────────────────────────────
   retos = signal<Reto[]>([
     {
       id:1, activo:true, cumplido:false,
@@ -165,21 +156,18 @@ export class Movimientos implements OnInit {
       nombre:'Comprar coche', icono:'🚗',
     },
     {
-      // Reto pasado — no cumplido (abandonado)
       id:2, activo:false, cumplido:false,
       cantidad:25000, actual:351, duracion:30,
       fechaInicio:new Date('2024-01-01'), fechaFinal:new Date('2026-06-01'),
       nombre:'Fondo de boda', icono:'💍',
     },
     {
-      // Reto pasado — cumplido ✅
       id:3, activo:false, cumplido:true,
       cantidad:549, actual:549, duracion:11,
       fechaInicio:new Date('2024-01-15'), fechaFinal:new Date('2024-12-15'),
       nombre:'PS5', icono:'🎮',
     },
     {
-      // Reto pasado — no cumplido
       id:4, activo:false, cumplido:false,
       cantidad:3000, actual:1200, duracion:13,
       fechaInicio:new Date('2024-06-01'), fechaFinal:new Date('2025-07-01'),
@@ -189,19 +177,16 @@ export class Movimientos implements OnInit {
 
   retoPct(reto: Reto): number { return Math.min((reto.actual / reto.cantidad) * 100, 100); }
 
-  // El único reto activo (o null si no hay ninguno)
   retoActivo      = computed(() => this.retos().find(r => r.activo) ?? null);
   tieneRetoActivo = computed(() => this.retos().some(r => r.activo));
 
-  // Historial = todos los retos no activos, ordenados por fecha desc
   retosHistorial = computed(() =>
     [...this.retos().filter(r => !r.activo)]
       .sort((a, b) => new Date(b.fechaInicio).getTime() - new Date(a.fechaInicio).getTime())
   );
-  retosCumplidos = computed(() => this.retos().filter(r => r.cumplido));
+  retosCumplidos     = computed(() => this.retos().filter(r => r.cumplido));
   totalAhorradoRetos = computed(() => this.retos().reduce((sum, r) => sum + r.actual, 0));
 
-  // Filtros historial
   historialFiltroEstado = signal<'todos' | 'cumplido' | 'nocumplido'>('todos');
   historialOrdenCol     = signal<'fechaInicio' | 'cantidad' | 'nombre'>('fechaInicio');
   historialOrdenAsc     = signal(false);
@@ -236,7 +221,6 @@ export class Movimientos implements OnInit {
   retosVista = signal<'activo' | 'historial'>('activo');
 
   // ── Modal nuevo reto ──────────────────────────────────────────────
-  // Solo se puede crear si NO hay un reto activo actualmente
   modalRetoAbierto = signal(false);
   nuevoReto = signal({
     nombre:   '',
@@ -265,16 +249,17 @@ export class Movimientos implements OnInit {
       this.showToast('⚠️ Completa todos los campos');
       return;
     }
+    const duracionEntera = Math.floor(r.duracion);
     const hoy = new Date();
     const fin  = new Date(hoy);
-    fin.setMonth(fin.getMonth() + r.duracion);
+    fin.setMonth(fin.getMonth() + duracionEntera);
     this.retos.update(lista => [...lista, {
       id: this.nextId++,
       activo:      true,
       cumplido:    false,
       cantidad:    r.cantidad!,
       actual:      0,
-      duracion:    r.duracion!,
+      duracion:    duracionEntera,
       fechaInicio: hoy,
       fechaFinal:  fin,
       nombre:  r.nombre.trim(),
@@ -284,7 +269,6 @@ export class Movimientos implements OnInit {
     this.showToast('✅ Reto creado. ¡Mucho ánimo!');
   }
 
-  // Abandonar reto activo (marca activo=false, cumplido=false)
   abandonarReto() {
     this.retos.update(lista => lista.map(r =>
       r.activo ? { ...r, activo: false } : r
@@ -353,11 +337,14 @@ export class Movimientos implements OnInit {
     });
   });
 
-  // ── Modal calendario ──────────────────────────────────────────────
+  // ── Modal calendario — con descripcion ───────────────────────────
   modalCalAbierto = signal(false);
   nuevoMovCal = signal({
-    nombre:'', categoria:CATEGORIAS_GASTO[0],
-    tipo:'gasto' as 'gasto'|'ingreso', importe:null as number|null,
+    nombre: '',
+    categoria: CATEGORIAS_GASTO[0],
+    tipo: 'gasto' as 'gasto' | 'ingreso',
+    importe: null as number | null,
+    descripcion: '' as string,
   });
 
   get categoriasActualesCal(): string[] {
@@ -365,7 +352,7 @@ export class Movimientos implements OnInit {
   }
 
   abrirModalCal() {
-    this.nuevoMovCal.set({ nombre:'', categoria:CATEGORIAS_GASTO[0], tipo:'gasto', importe:null });
+    this.nuevoMovCal.set({ nombre:'', categoria:CATEGORIAS_GASTO[0], tipo:'gasto', importe:null, descripcion:'' });
     this.modalCalAbierto.set(true);
   }
   cerrarModalCal() { this.modalCalAbierto.set(false); }
@@ -390,6 +377,7 @@ export class Movimientos implements OnInit {
     this._movimientos.update(lista => [{
       id:this.nextId++, nombre:m.nombre.trim(), categoria:m.categoria,
       tipo:m.tipo, importe:m.importe!, fecha, icono:iconMap[m.categoria]??'💰',
+      descripcion: m.descripcion ?? '',
     }, ...lista]);
     this.cerrarModalCal();
     this.showToast('✅ Movimiento añadido al calendario');
@@ -402,14 +390,18 @@ export class Movimientos implements OnInit {
   alturaBarraPct(v: number): number { return Math.round((v / this.maxGrafica) * 100); }
   cambiarMesGrafica(dir: number) { this.mesGraficaIdx.update(i => (i + dir + 12) % 12); }
 
-  // ── Modal nuevo movimiento (sección Movimientos) ──────────────────
+  // ── Modal nuevo movimiento — con descripcion ──────────────────────
   modalAbierto = signal(false);
   toastVisible = signal(false);
   toastMsg     = signal('');
 
   nuevoMov = signal({
-    nombre:'', categoria:CATEGORIAS_GASTO[0],
-    tipo:'gasto' as 'gasto'|'ingreso', importe:null as number|null, icono:'🛒',
+    nombre: '',
+    categoria: CATEGORIAS_GASTO[0],
+    tipo: 'gasto' as 'gasto' | 'ingreso',
+    importe: null as number | null,
+    icono: '🛒',
+    descripcion: '' as string,
   });
 
   get categoriasActualesMov(): string[] {
@@ -419,7 +411,7 @@ export class Movimientos implements OnInit {
   abrirModal() { this.modalAbierto.set(true); }
   cerrarModal() {
     this.modalAbierto.set(false);
-    this.nuevoMov.set({ nombre:'', categoria:CATEGORIAS_GASTO[0], tipo:'gasto', importe:null, icono:'🛒' });
+    this.nuevoMov.set({ nombre:'', categoria:CATEGORIAS_GASTO[0], tipo:'gasto', importe:null, icono:'🛒', descripcion:'' });
   }
   actualizarNuevoMov(campo: string, valor: any) {
     this.nuevoMov.update(v => {
@@ -440,6 +432,7 @@ export class Movimientos implements OnInit {
     this._movimientos.update(lista => [{
       id:this.nextId++, nombre:m.nombre.trim(), categoria:m.categoria,
       tipo:m.tipo, importe:m.importe!, fecha:new Date(), icono:m.icono,
+      descripcion: m.descripcion ?? '',
     }, ...lista]);
     this.cerrarModal();
     this.showToast('✅ Movimiento añadido correctamente');
