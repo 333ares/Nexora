@@ -27,8 +27,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/movimiento', [MovimientosController::class, 'actualizarMovimiento']);
     Route::delete('movimiento', [MovimientosController::class, 'borrarMovimiento']);
 
-    // Esta línea conecta la URL /api/retos con la función store del controlador
-    Route::post('/retos', [RetoController::class, 'store']);
-    Route::get('/retos/{id}', [RetoController::class, 'show']);
+   // Esta línea conecta la URL /api/retos con la función store del controlador
+    Route::post('/reto', [RetoController::class, 'store']);
+    Route::get('/reto', [RetoController::class, 'verReto']);
     Route::get('/retos', [RetoController::class, 'index']);
+    Route::put('/reto', [RetoController::class, 'actualizarReto']);
+    Route::post('/reto/eliminar', [RetoController::class, 'eliminarReto']);
+
 });
+
