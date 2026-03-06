@@ -12,7 +12,7 @@ Route::post('/usuarios', [AuthController::class, 'registroUsuario']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 
 // Rutas protegidas con autenticación
-//Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logoutUsuario']);
 
     // Usuario
@@ -33,5 +33,5 @@ Route::get('/usuarios', [UsuarioController::class, 'index']);
     Route::put('/reto', [RetoController::class, 'actualizarReto']);
     Route::post('/reto/eliminar', [RetoController::class, 'eliminarReto']);
 
-//});
+});
 
