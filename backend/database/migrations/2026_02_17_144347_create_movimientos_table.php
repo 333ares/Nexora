@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('movimientos', function (Blueprint $table) {
-            $table->id();
-            $table->string('tipo');
+            $table->id('IDmovimiento');
+            $table->foreignId('IDusuario')
+                  ->constrained('usuarios', 'IDusuario')
+                  ->onDelete('cascade');
+            $table->enum('tipo', ['Ingreso', 'Gasto']);
             $table->decimal('cantidad');
             $table->string('categoria');
             $table->dateTime('fecha');
