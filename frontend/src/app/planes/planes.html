@@ -1,1 +1,262 @@
-<p>planes works!</p>
+<div class="page">
+
+  <!-- BOTÓN VOLVER -->
+  <div class="back-row">
+    <button class="btn-back" type="button" (click)="onBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+      Volver
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE BLANCO — hero + planes + why
+  ══════════════════════════════════════════ -->
+  <div class="white-block">
+
+    <!-- HERO BANNER -->
+    <div class="hero">
+      <!-- Patrón de círculos decorativos contenidos -->
+      <div class="hero__circle hero__circle--1"></div>
+      <div class="hero__circle hero__circle--2"></div>
+      <div class="hero__circle hero__circle--3"></div>
+      <div class="hero__circle hero__circle--4"></div>
+      <div class="hero__circle hero__circle--5"></div>
+      <div class="hero__circle hero__circle--6"></div>
+      <div class="hero__circle hero__circle--7"></div>
+      <div class="hero__circle hero__circle--8"></div>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow">Precios simples y transparentes</p>
+        <h1 class="hero__title">Planes de <span>NEXORA</span></h1>
+        <p class="hero__subtitle">
+          Elige el plan que mejor se adapte a ti.<br>
+          Sin costes ocultos, sin sorpresas.
+        </p>
+      </div>
+    </div>
+    <!-- FIN HERO -->
+
+    <!-- GRID DE PLANES -->
+    <div class="plans-wrapper">
+      <div class="plans-grid">
+
+        <!-- Plan FREE -->
+        <div class="plan-card" [class.plan-card--current]="planActual === 'free'">
+          <div class="plan-card__top">
+            <div class="plan-badge plan-badge--free">GRATIS</div>
+            <h2 class="plan-card__name">Nexora Free</h2>
+            <p class="plan-card__desc">Todo lo esencial para empezar a gestionar tus finanzas personales.</p>
+            <div class="plan-card__divider"></div>
+            <ul class="plan-card__features">
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Registro de gastos e ingresos</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Hasta 50 transacciones/mes</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Categorías básicas Kakebo</li>
+              <li class="feature--disabled"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Estadísticas avanzadas</li>
+              <li class="feature--disabled"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Sin anuncios</li>
+            </ul>
+          </div>
+          <div class="plan-card__bottom">
+            <div class="plan-card__price"><span class="price-amount">0 €</span><span class="price-period">/mes</span></div>
+            @if (planActual === 'free') {
+              <button class="btn-plan btn-plan--current" disabled>Plan actual</button>
+            } @else {
+              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('free')">Seleccionar</button>
+            }
+          </div>
+        </div>
+
+        <!-- Plan GO -->
+        <div class="plan-card" [class.plan-card--current]="planActual === 'go'">
+          <div class="plan-card__top">
+            <div class="plan-badge plan-badge--go">GO</div>
+            <h2 class="plan-card__name">Nexora Go</h2>
+            <p class="plan-card__desc">Para quienes quieren llevar sus finanzas un paso más allá.</p>
+            <div class="plan-card__divider"></div>
+            <ul class="plan-card__features">
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Todo lo de Free</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Transacciones ilimitadas</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Estadísticas mensuales</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sin anuncios</li>
+              <li class="feature--disabled"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Exportar informes PDF</li>
+            </ul>
+          </div>
+          <div class="plan-card__bottom">
+            <div class="plan-card__price"><span class="price-amount">2 €</span><span class="price-period">/mes</span></div>
+            <p class="plan-card__saving">Te ahorras un 10%</p>
+            @if (planActual === 'go') {
+              <button class="btn-plan btn-plan--current" disabled>Plan actual</button>
+            } @else {
+              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('go')">Seleccionar</button>
+            }
+          </div>
+        </div>
+
+        <!-- Plan ADVANCED (destacado) -->
+        <div class="plan-card plan-card--featured" [class.plan-card--current]="planActual === 'advanced'">
+          <div class="plan-card__featured-label">⭐ Más popular</div>
+          <div class="plan-card__top">
+            <div class="plan-badge plan-badge--advanced">ADVANCED</div>
+            <h2 class="plan-card__name">Nexora Advanced</h2>
+            <p class="plan-card__desc">El favorito de quienes toman el control total de su dinero.</p>
+            <div class="plan-card__divider"></div>
+            <ul class="plan-card__features">
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Todo lo de Go</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Estadísticas avanzadas y anuales</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Exportar informes PDF</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Metas de ahorro</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Categorías personalizadas</li>
+            </ul>
+          </div>
+          <div class="plan-card__bottom">
+            <div class="plan-card__price"><span class="price-amount">8 €</span><span class="price-period">/mes</span></div>
+            <p class="plan-card__saving">Te ahorras un 33%</p>
+            @if (planActual === 'advanced') {
+              <button class="btn-plan btn-plan--current" disabled>Plan actual</button>
+            } @else {
+              <button class="btn-plan btn-plan--featured" type="button" (click)="seleccionarPlan('advanced')">Seleccionar</button>
+            }
+          </div>
+        </div>
+
+        <!-- Plan PREMIUM -->
+        <div class="plan-card" [class.plan-card--current]="planActual === 'premium'">
+          <div class="plan-card__top">
+            <div class="plan-badge plan-badge--premium">PREMIUM</div>
+            <h2 class="plan-card__name">Nexora Premium</h2>
+            <p class="plan-card__desc">La experiencia completa, sin límites y con soporte prioritario.</p>
+            <div class="plan-card__divider"></div>
+            <ul class="plan-card__features">
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Todo lo de Advanced</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sincronización con banco</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Soporte prioritario 24/7</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Asesor financiero IA</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso anticipado a novedades</li>
+            </ul>
+          </div>
+          <div class="plan-card__bottom">
+            <div class="plan-card__price"><span class="price-amount">12 €</span><span class="price-period">/mes</span></div>
+            <p class="plan-card__saving">Te ahorras un 50%</p>
+            @if (planActual === 'premium') {
+              <button class="btn-plan btn-plan--current" disabled>Plan actual</button>
+            } @else {
+              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('premium')">Seleccionar</button>
+            }
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- FIN GRID DE PLANES -->
+
+  </div>
+  <!-- FIN BLOQUE PLANES -->
+
+  <!-- BLOQUE WHY — separado -->
+  <div class="why-block">
+    <div class="why-section">
+      <h2 class="why-title">¿Por qué suscribirte?</h2>
+      <p class="why-subtitle">Desbloquea todo el potencial de Nexora y toma el control de tus finanzas.</p>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="why-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h3 class="why-item__title">Sin anuncios</h3>
+          <p class="why-item__desc">Navega sin interrupciones. Concéntrate en lo que importa: tus finanzas.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 class="why-item__title">Estadísticas reales</h3>
+          <p class="why-item__desc">Gráficas detalladas de tus hábitos de gasto para tomar mejores decisiones.</p>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h3 class="why-item__title">Metas de ahorro</h3>
+          <p class="why-item__desc">Define objetivos y sigue tu progreso mes a mes con claridad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FIN BLOQUE WHY -->
+
+  <!-- ══════════════════════════════════════════
+       FAQ — mantiene el fondo verde del host
+  ══════════════════════════════════════════ -->
+  <div class="faq-section">
+    <h2 class="faq-title">Preguntas frecuentes</h2>
+    <p class="faq-subtitle">Todo lo que necesitas saber antes de elegir tu plan.</p>
+
+    <div class="faq-list">
+
+      <div class="faq-item" [class.faq-item--open]="faqAbierta === 0" (click)="toggleFaq(0)">
+        <div class="faq-item__header">
+          <span class="faq-item__question">¿Puedo cambiar de plan en cualquier momento?</span>
+          <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        @if (faqAbierta === 0) {
+          <p class="faq-item__answer">Sí, puedes cambiar de plan cuando quieras desde tu perfil. Los cambios se aplican inmediatamente y el ajuste de precio se calcula de forma proporcional al tiempo restante del mes.</p>
+        }
+      </div>
+
+      <div class="faq-item" [class.faq-item--open]="faqAbierta === 1" (click)="toggleFaq(1)">
+        <div class="faq-item__header">
+          <span class="faq-item__question">¿Qué métodos de pago aceptáis?</span>
+          <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        @if (faqAbierta === 1) {
+          <p class="faq-item__answer">Aceptamos tarjetas de crédito y débito (Visa, Mastercard, American Express) y PayPal. Todos los pagos se procesan de forma segura con cifrado SSL.</p>
+        }
+      </div>
+
+      <div class="faq-item" [class.faq-item--open]="faqAbierta === 2" (click)="toggleFaq(2)">
+        <div class="faq-item__header">
+          <span class="faq-item__question">¿Hay período de prueba gratuito?</span>
+          <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        @if (faqAbierta === 2) {
+          <p class="faq-item__answer">El plan Free es gratuito para siempre y no requiere tarjeta. Los planes de pago incluyen 14 días de prueba gratuita para que puedas probar todas las funciones sin compromiso.</p>
+        }
+      </div>
+
+      <div class="faq-item" [class.faq-item--open]="faqAbierta === 3" (click)="toggleFaq(3)">
+        <div class="faq-item__header">
+          <span class="faq-item__question">¿Mis datos financieros están seguros?</span>
+          <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        @if (faqAbierta === 3) {
+          <p class="faq-item__answer">Absolutamente. Utilizamos cifrado AES-256 para todos tus datos, servidores con certificación ISO 27001 y nunca compartimos tu información con terceros. Tu privacidad es nuestra prioridad.</p>
+        }
+      </div>
+
+      <div class="faq-item" [class.faq-item--open]="faqAbierta === 4" (click)="toggleFaq(4)">
+        <div class="faq-item__header">
+          <span class="faq-item__question">¿Puedo cancelar mi suscripción en cualquier momento?</span>
+          <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        @if (faqAbierta === 4) {
+          <p class="faq-item__answer">Sí, puedes cancelar cuando quieras sin penalizaciones. Seguirás teniendo acceso a las funciones de pago hasta el final del período facturado y luego pasarás automáticamente al plan Free.</p>
+        }
+      </div>
+
+      <div class="faq-item" [class.faq-item--open]="faqAbierta === 5" (click)="toggleFaq(5)">
+        <div class="faq-item__header">
+          <span class="faq-item__question">¿Qué es el método Kakebo?</span>
+          <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        @if (faqAbierta === 5) {
+          <p class="faq-item__answer">Kakebo es un método japonés de gestión financiera personal que consiste en registrar todos tus ingresos y gastos divididos en categorías (supervivencia, ocio, cultura e imprevistos) para tomar conciencia de tus hábitos de consumo y ahorrar de forma progresiva.</p>
+        }
+      </div>
+
+    </div>
+  </div>
+  <!-- FIN FAQ -->
+
+</div>

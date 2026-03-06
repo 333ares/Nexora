@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RetoController;
@@ -15,11 +16,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logoutUsuario']);
 
     // Usuario
-    Route::get('/usuarios/{id}', [UsuarioController::class, 'listarInfo']);
-    Route::put('/usuarios/{id}', [UsuarioController::class, 'actualizarUsuario']);
-    Route::delete('/usuarios/{id}', [UsuarioController::class, 'borrarUsuario']);
+    Route::get('/usuario', [UsuarioController::class, 'listarInfo']);
+    Route::put('/usuario', [UsuarioController::class, 'actualizarUsuario']);
+    Route::delete('/usuario', [UsuarioController::class, 'borrarUsuario']);
 
-    // Esta línea conecta la URL /api/retos con la función store del controlador
+    // Movimientos
+    Route::post('/movimiento', [MovimientosController::class, 'apuntarMovimiento']);
+    Route::get('/movimientos', [MovimientosController::class, 'mostrarMovimientos']);
+    Route::put('/movimiento', [MovimientosController::class, 'actualizarMovimiento']);
+    Route::delete('movimiento', [MovimientosController::class, 'borrarMovimiento']);
+  
+   // Esta línea conecta la URL /api/retos con la función store del controlador
     Route::post('/retos', [RetoController::class, 'store']);
     Route::get('/retos/{id}', [RetoController::class, 'show']);
     

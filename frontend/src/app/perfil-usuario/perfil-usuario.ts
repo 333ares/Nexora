@@ -110,4 +110,10 @@ export class PerfilUsuario implements OnInit {
       }
     });
   }
+
+    // Navega a la pantalla de planes de suscripción
+  onUpgrade(): void {
+    this.router.navigate(['/planes']);
+  }
+  
 }

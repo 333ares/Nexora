@@ -18,9 +18,9 @@ return new class extends Migration
                   ->onDelete('cascade');
             $table->enum('tipo', ['Ingreso', 'Gasto']);
             $table->decimal('cantidad');
-            $table->enum('categoria', ['Comida', 'Transporte', 'Ocio', 'Vivienda', 'Salud', 'Otros']);
-            $table->date('fecha');
-            $table->string('descripcion');
+            $table->string('categoria');
+            $table->dateTime('fecha');
+            $table->string('descripcion')->nullable();
             $table->foreignId('usuario_id');
             $table->timestamps();
         });
