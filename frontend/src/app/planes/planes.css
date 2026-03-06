@@ -221,25 +221,6 @@
   border-color: #78C550;
   box-shadow: 0 0 0 2px #78C550;
 }
-.plan-card--featured {
-  border-color: #4E9C25;
-  box-shadow: 0 8px 28px rgba(78,156,37,0.22);
-  transform: scale(1.03);
-}
-.plan-card--featured:hover {
-  transform: scale(1.03) translateY(-4px);
-}
-
-.plan-card__featured-label {
-  background: linear-gradient(135deg, #B3E29A 0%, #78C550);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  text-align: center;
-  padding: 7px 0;
-}
 
 .plan-card__top {
   padding: 20px 20px 0;
@@ -266,7 +247,7 @@
 }
 .plan-badge--free     { background: #e8f5e9; color: #388e3c; }
 .plan-badge--go       { background: #e3f2fd; color: #1565c0; }
-.plan-badge--advanced { background: linear-gradient(135deg, #B3E29A, #78C550); color: #fff; }
+.plan-badge--advanced { background: #ede7f6; color: #4527a0; }
 .plan-badge--premium  { background: #fff3e0; color: #e65100; }
 
 .plan-card__name {
@@ -327,12 +308,11 @@
   font-size: 11.5px;
   font-weight: 700;
   color: #4caf50;
-  margin: -4px 0 0;
   background: #e8f5e9;
-  display: inline-block;
   padding: 2px 8px;
   border-radius: 6px;
   width: fit-content;
+  margin: 0 0 4px 0;
 }
 
 /* Botones */
@@ -354,13 +334,6 @@
 }
 .btn-plan--select:hover { background: #dff0df; border-color: #78C550; }
 .btn-plan--select:active { transform: scale(0.98); }
-.btn-plan--featured {
-  background: linear-gradient(135deg, #B3E29A 0%, #78C550);
-  color: #fff;
-  box-shadow: 0 4px 14px rgba(78,156,37,0.3);
-}
-.btn-plan--featured:hover { background: linear-gradient(135deg, #a0d87e 0%, #6ab840); }
-.btn-plan--featured:active { transform: scale(0.98); }
 .btn-plan--current {
   background: #e8f5e9;
   color: #4caf50;
