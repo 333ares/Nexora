@@ -12,9 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('visualizaciones', function (Blueprint $table) {
-            $table->id();
+            $table->id('IDvisualizaciones');
             $table->string('titulo');
             $table->integer('valoracion'); //Los limites de numero los estabecemos en controller
+            
+            // Clave Foránea hacia USUARIOS
+            $table->foreignId('IDusuario')
+                ->constrained('usuarios', 'IDusuario')
+                ->onDelete('cascade');
+
+            // Clave Foránea hacia ACADEMIA
+            $table->foreignId('IDcontenido')
+                ->constrained('academia', 'IDcontenido')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
