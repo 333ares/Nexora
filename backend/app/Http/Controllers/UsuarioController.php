@@ -7,23 +7,16 @@ use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
-    public function listarInfo(Request $request)
+    public function listarInfo(Request $request, $id) 
     {
-        // Buscamos usuario por id
-        $usuario = $request->user();
+        // Ahora ya puedes usar $id para buscar al usuario
+        $usuario = \App\Models\Usuario::find($id);
 
         if (!$usuario) {
-            // Si no lo encuentra, mostramos error
-            return response()->json([
-                'message' => 'error',
-                'usuario' => 'No existe un usuario con ese ID'
-            ], 400);
+            return response()->json(['error' => 'No existe un usuario con ese ID'], 404);
         }
-        // Si se encuentra se muestra su información
-        return response()->json([
-            'message' => 'success',
-            'usuario' => $usuario
-        ], 200);
+
+        return response()->json($usuario, 200);
     }
 
     public function actualizarUsuario(Request $request)
@@ -102,5 +95,17 @@ class UsuarioController extends Controller
             'message' => 'success',
             'usuario' => 'El usuario se ha borrado correctamente'
         ], 200);
+    }
+
+    public function index()
+    {
+        // Trae todos los registros de la tabla usuarios
+        $usuarios = \App\Models\Usuario::all();
+
+        if ($usuarios->isEmpty()) {
+            return response()->json(['message' => 'No hay usuarios registrados'], 404);
+        }
+
+        return response()->json($usuarios, 200);
     }
 }
