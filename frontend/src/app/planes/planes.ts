@@ -31,7 +31,7 @@ export class Planes {
     this.planActual = plan;
   }
 
-  // Abre/cierra una pregunta del FAQ (acordeón: solo una abierta a la vez)
+  // Abre/cierra una pregunta del FAQ (solo una abierta a la vez)
   toggleFaq(index: number): void {
     this.faqAbierta = this.faqAbierta === index ? -1 : index;
   }
