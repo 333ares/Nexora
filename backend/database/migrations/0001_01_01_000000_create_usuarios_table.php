@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->id();
+            $table->id('IDusuario');
             $table->string('usuario');
             $table->string('linkedin')->nullable(); //Nullable porque se puede dejar vacío
             $table->string('nombre');
@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('rango'); //No es enum porque es el progrmaa el que selecciona el rango
-            $table->enum('estado', ['Activo', 'Inactivo', 'Bloqueado']);
-            $table->enum('rol', ['usuario', 'admin']);
+            $table->enum('estado', ['Activo', 'Inactivo', 'Bloqueado'])->default('Activo'); //Por defecto el perfil está activo
+            $table->enum('rol', ['usuario', 'admin'])->default('usuario');
             $table->timestamps();
         });
 
