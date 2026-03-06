@@ -31,7 +31,7 @@ class MovimientosController extends Controller
             'categoria' => $request->categoria,
             'descripcion' => $request->descripcion,
             'fecha' => Carbon::now(),
-            'usuario_id' => $request->user()->id,
+            'usuario_id' => $request->user()->IDusuario,
         ]);
 
         if ($movimiento) {
@@ -50,7 +50,7 @@ class MovimientosController extends Controller
 
     public function mostrarMovimientos(Request $request)
     {
-        $movimientos = Movimientos::where('usuario_id', $request->user()->id)->get();
+        $movimientos = Movimientos::where('usuario_id', $request->user()->IDusuario)->get();
 
         if (count($movimientos) <= 0) {
             return response()->json([
@@ -62,6 +62,25 @@ class MovimientosController extends Controller
                 'message' => 'success',
                 'movimientos' => $movimientos
             ], 201);
+        }
+    }
+
+    public function verInfoMovimiento(Request $request)
+    {
+        $movimiento = Movimientos::where('id', $request->id)
+            ->where('usuario_id', $request->user()->IDusuario)
+            ->first();
+
+        if (!$movimiento) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Movimiento no encontrado'
+            ], 404);
+        } else {
+            return response()->json([
+                'message' => 'success',
+                'movimiento' => $movimiento
+            ], 200);
         }
     }
 
@@ -90,7 +109,7 @@ class MovimientosController extends Controller
         ]);
 
         $movimiento = Movimientos::where('id', $request->id)
-            ->where('usuario_id', $request->user()->id)
+            ->where('usuario_id', $request->user()->IDusuario)
             ->first();
 
         if (!$movimiento) {
@@ -111,7 +130,7 @@ class MovimientosController extends Controller
     public function borrarMovimiento(Request $request)
     {
         $movimiento = Movimientos::where('id', $request->id)
-            ->where('usuario_id', $request->user()->id)
+            ->where('usuario_id', $request->user()->IDusuario)
             ->first();
 
         if (!$movimiento) {
