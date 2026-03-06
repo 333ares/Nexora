@@ -227,12 +227,23 @@
           <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
         </svg>
       </span>
+      <span class="th">
+        Descripción <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
+        </svg>
+      </span>
       <span class="th th-right" (click)="ordenarPor('importe')">
         Importe <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
         </svg>
       </span>
+      <span class="th th-right" >
+        Acciones <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
+        </svg>
+      </span>
     </div>
+
 
     @if (movimientosFiltrados().length === 0) {
     <div class="empty-state">No hay movimientos para mostrar</div>
@@ -245,6 +256,9 @@
         <div class="mov-name-wrap">
           <span class="mov-nombre">{{ m.nombre }}</span>
           <span class="mov-cat">{{ m.categoria }}</span>
+          @if (m.descripcion) {
+          <span class="mov-desc">{{ m.descripcion }}</span>
+          }
         </div>
       </div>
       <span class="td">{{ m.tipo === 'gasto' ? 'Gasto' : 'Ingreso' }}</span>
@@ -252,10 +266,17 @@
         <span class="fecha-dia">{{ m.fecha | date:'dd/MM/yyyy' }}</span>
         <span class="fecha-hora">{{ m.fecha | date:'HH:mm' }}</span>
       </div>
+      <div class="td td-desc">
+          <p>hola qhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talue tal</p>
+      </div>
       <div class="td td-right">
         <span class="mov-importe" [class.gasto-color]="m.tipo==='gasto'" [class.ingreso-color]="m.tipo==='ingreso'">
           {{ m.tipo === 'gasto' ? '-' : '+' }}{{ m.importe | number:'1.2-2' }} €
         </span>
+      </div>
+      <div class="td td-right">
+        <button>Editar</button>
+        <button>Borrar</button>
       </div>
     </div>
     }
@@ -859,8 +880,10 @@
       </div>
       <div class="modal-field">
         <label>Duración (meses)</label>
-        <input type="number" placeholder="Ej: 12" step="1" min="1" max="120" [value]="nuevoReto().duracion ?? ''"
-          (input)="actualizarNuevoReto('duracion', +$any($event.target).value)" />
+        <input type="number" placeholder="Ej: 12" step="1" min="1" max="120" pattern="[0-9]*" inputmode="numeric"
+          [value]="nuevoReto().duracion ?? ''"
+          (input)="actualizarNuevoReto('duracion', Math.floor(+$any($event.target).value))"
+          (keydown)="$event.key==='.' || $event.key===',' ? $event.preventDefault() : null" />
       </div>
     </div>
     <div class="modal-actions">
