@@ -5,8 +5,13 @@ import { Registro } from './registro/registro';
 import { AuthGuard } from './guards/auth-guard';
 import { Planes } from './planes/planes';
 import { Movimientos } from './movimientos/movimientos';
+import { Inicio } from './inicio/inicio';
 
-export const routes: Routes = [
+export const routes: Routes = [  
+  {
+    path: 'inicio',
+    component: Inicio,
+  },
   {
     path: 'login', //es lo que aparece en la URL.
     component: Login, // Login es el componente que se mostrará
@@ -28,7 +33,7 @@ export const routes: Routes = [
   {
     path: 'movimientos',
     component: Movimientos,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: '',
