@@ -3,12 +3,17 @@
 ══════════════════════════════════════════════ -->
 <header class="header">
   <div class="header-brand">
-    <div class="brand-icon">💰</div>
+    <div class="brand-icon">
+      <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+        alt="Fincan.io logo" width="56" height="56" />
+    </div>
     <div class="brand-text">
-      <span class="brand-name">Fincan.io</span>
-      <span class="brand-sub">Fintect platform</span>
+       <img src="https://image2url.com/r2/default/images/1773067082329-3d49e8f6-224a-40ce-a605-7a951779f07c.png"
+            alt="Logo Nexora letras" class="logo2">
     </div>
   </div>
+
+
   <nav class="header-nav">
     @for (item of menuItems; track item.id) {
     <button class="nav-item" [class.active]="menuActivo() === item.id" (click)="setMenu(item.id)">
@@ -237,7 +242,7 @@
           <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
         </svg>
       </span>
-      <span class="th th-right" >
+      <span class="th th-right">
         Acciones <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
         </svg>
@@ -267,7 +272,9 @@
         <span class="fecha-hora">{{ m.fecha | date:'HH:mm' }}</span>
       </div>
       <div class="td td-desc">
-          <p>hola qhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talue tal</p>
+        <p>hola qhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola
+          que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talue tal
+        </p>
       </div>
       <div class="td td-right">
         <span class="mov-importe" [class.gasto-color]="m.tipo==='gasto'" [class.ingreso-color]="m.tipo==='ingreso'">
