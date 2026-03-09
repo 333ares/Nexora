@@ -107,7 +107,7 @@
         <div class="card card-stat">
           <div class="stat-top">
             <span class="stat-label">Total Ingresos</span>
-            <div class="stat-icon stat-icon-green"><i class="bi bi-coin"></i></div>
+            <div class="stat-icon stat-icon-green"><i class="bi bi-arrow-up"></i></div>
           </div>
           <div class="stat-amount ingreso-color">+ {{ totalIngreso() | number:'1.2-2' }} €</div>
           <div class="stat-delta positive">▲ +12.1% mes anterior</div>
@@ -115,7 +115,7 @@
         <div class="card card-stat">
           <div class="stat-top">
             <span class="stat-label">Total Gastos</span>
-            <div class="stat-icon stat-icon-red"><i class="bi bi-cash-coin"></i></div>
+            <div class="stat-icon stat-icon-red"><i class="bi bi-arrow-down"></i></div>
           </div>
           <div class="stat-amount gasto-color">- {{ totalGasto() | number:'1.2-2' }} €</div>
           <div class="stat-delta negative">▼ -2.5% mes anterior</div>
@@ -176,7 +176,7 @@
         </div>
         @for (m of ultimosMovimientos(); track m.id) {
         <div class="tabla-row tabla-row-mov-resumen" [class.row-gasto]="m.tipo==='gasto'"
-          [class.row-ingreso]="m.tipo==='ingreso'">
+          [class.row-]="m.tipo==='ingreso'">
           <div class="td td-nombre">
             <div class="mov-avatar">{{ m.icono }}</div>
             <div class="mov-name-wrap">
@@ -551,7 +551,7 @@
           <button class="reto-vista-tab" [class.active]="retosVista()==='activo'" (click)="retosVista.set('activo')">🎯
             Reto actual</button>
           <button class="reto-vista-tab" [class.active]="retosVista()==='historial'"
-            (click)="retosVista.set('historial')">📋 Historial</button>
+            (click)="retosVista.set('historial')"><i class="bi bi-journal-text"></i> Historial</button>
           @if (!tieneRetoActivo()) {
           <button class="btn-mas" style="margin-left:auto;" (click)="abrirModalReto()">+ Nuevo reto</button>
           }
@@ -759,9 +759,9 @@
 
     <div class="modal-tipo-tabs">
       <button class="tipo-tab" [class.tipo-tab-gasto]="nuevoMov().tipo==='gasto'"
-        (click)="actualizarNuevoMov('tipo','gasto')"><i class="bi bi-cash-coin"></i> Gasto</button>
+        (click)="actualizarNuevoMov('tipo','gasto')"><i class="bi bi-graph-down-arrow"></i> Gasto</button>
       <button class="tipo-tab" [class.tipo-tab-ingreso]="nuevoMov().tipo==='ingreso'"
-        (click)="actualizarNuevoMov('tipo','ingreso')"><i class="bi bi-coin"></i> Ingreso</button>
+        (click)="actualizarNuevoMov('tipo','ingreso')"><i class="bi bi-graph-up-arrow"></i> Ingreso</button>
     </div>
 
     <div class="modal-row">
@@ -813,9 +813,9 @@
     <div class="modal-title">Añadir — Día {{ diaSeleccionado() }} {{ nombreMesCalendario() }}</div>
     <div class="modal-tipo-tabs">
       <button class="tipo-tab" [class.tipo-tab-gasto]="nuevoMovCal().tipo==='gasto'"
-        (click)="actualizarMovCal('tipo','gasto')"><i class="bi bi-cash-coin"></i> Gasto</button>
+        (click)="actualizarMovCal('tipo','gasto')"><i class="bi bi-graph-down-arrow"></i> Gasto</button>
       <button class="tipo-tab" [class.tipo-tab-ingreso]="nuevoMovCal().tipo==='ingreso'"
-        (click)="actualizarMovCal('tipo','ingreso')"><i class="bi bi-coin"></i> Ingreso</button>
+        (click)="actualizarMovCal('tipo','ingreso')"><i class="bi bi-graph-up-arrow"></i> Ingreso</button>
     </div>
     <div class="modal-row">
       <div class="modal-field">
