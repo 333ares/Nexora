@@ -83,7 +83,7 @@
                 reto.duracion }} meses</span>
             </div>
             @if (reto.cumplido) {
-            <span class="badge badge-ok" style="font-size:10px;">✅ Cumplido</span>
+            <span class="badge badge-ok" style="font-size:10px;"><i class="bi bi-check2-circle"></i> Cumplido</span>
             }
             <div class="reto-dots"><span></span><span></span><span></span></div>
           </div>
@@ -548,7 +548,7 @@
 
       <div class="card card-white retos-header-card">
         <div class="retos-tabs">
-          <button class="reto-vista-tab" [class.active]="retosVista()==='activo'" (click)="retosVista.set('activo')">🎯
+          <button class="reto-vista-tab" [class.active]="retosVista()==='activo'" (click)="retosVista.set('activo')"><i class="bi bi-bullseye"></i>
             Reto actual</button>
           <button class="reto-vista-tab" [class.active]="retosVista()==='historial'"
             (click)="retosVista.set('historial')"><i class="bi bi-journal-text"></i> Historial</button>
@@ -562,7 +562,7 @@
       @if (!retoActivo()) {
       <div class="card card-white">
         <div class="reto-vacio">
-          <span class="reto-vacio-icon">🎯</span>
+          <span class="reto-vacio-icon"><i class="bi bi-bullseye"></i></span>
           <p class="reto-vacio-titulo">Sin reto activo</p>
           <p class="reto-vacio-desc">Crea un nuevo reto de ahorro para empezar a ahorrar hacia tu objetivo.</p>
           <button class="btn-submit" style="width:auto;padding:12px 28px;flex:none;" (click)="abrirModalReto()">
@@ -583,7 +583,7 @@
               }
             </span>
           </div>
-          <span class="badge badge-activo">🟢 Activo</span>
+          <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
         </div>
 
         <div class="reto-card-meta-row">
@@ -863,7 +863,7 @@
 @if (modalRetoAbierto()) {
 <div class="modal-overlay" (click)="cerrarModalReto()">
   <div class="modal" (click)="$event.stopPropagation()">
-    <div class="modal-title">🎯 Nuevo reto de ahorro</div>
+    <div class="modal-title"><i class="bi bi-bullseye"></i> Nuevo reto de ahorro</div>
     <p style="font-size:13px;color:#aaa;font-family:'Lato';margin:-10px 0 18px;">
       Solo puedes tener un reto activo a la vez.
     </p>

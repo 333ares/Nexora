@@ -246,7 +246,7 @@ export class Movimientos implements OnInit {
   guardarReto() {
     const r = this.nuevoReto();
     if (!r.nombre.trim() || !r.cantidad || r.cantidad <= 0 || !r.duracion || r.duracion <= 0) {
-      this.showToast('⚠️ Completa todos los campos');
+      this.showToast('Completa todos los campos');
       return;
     }
     const duracionEntera = Math.floor(r.duracion);
@@ -266,7 +266,7 @@ export class Movimientos implements OnInit {
       icono: r.icono,
     }]);
     this.cerrarModalReto();
-    this.showToast('✅ Reto creado. ¡Mucho ánimo!');
+    this.showToast(' Reto creado. ¡Mucho ánimo!');
   }
 
   abandonarReto() {
@@ -369,7 +369,7 @@ export class Movimientos implements OnInit {
     const m = this.nuevoMovCal();
     const dia = this.diaSeleccionado();
     if (!m.nombre.trim() || !m.importe || m.importe <= 0 || !dia) {
-      this.showToast('⚠️ Completa todos los campos correctamente');
+      this.showToast('Completa todos los campos correctamente');
       return;
     }
     const iconMap = m.tipo === 'gasto' ? ICONOS_GASTO : ICONOS_INGRESO;
@@ -380,7 +380,7 @@ export class Movimientos implements OnInit {
       descripcion: m.descripcion ?? '',
     }, ...lista]);
     this.cerrarModalCal();
-    this.showToast('✅ Movimiento añadido al calendario');
+    this.showToast('Movimiento añadido al calendario');
   }
 
   // ── Gráfica ───────────────────────────────────────────────────────
