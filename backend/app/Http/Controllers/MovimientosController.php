@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movimientos;
+use App\Models\Reto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -48,7 +49,7 @@ class MovimientosController extends Controller
         }
     }
 
-    public function mostrarMovimientos(Request $request)
+    public function listarMovimientos(Request $request)
     {
         $movimientos = Movimientos::where('usuario_id', $request->user()->IDusuario)->get();
 
@@ -80,6 +81,44 @@ class MovimientosController extends Controller
             return response()->json([
                 'message' => 'success',
                 'movimiento' => $movimiento
+            ], 200);
+        }
+    }
+
+    public function listarGastos(Request $request)
+    {
+        $gastos = Movimientos::where('tipo', 'gasto')
+            ->where('usuario_id', $request->user()->IDusuario)
+            ->get();
+
+        if (count($gastos) <= 0) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Lista de gastos no encontrada'
+            ], 404);
+        } else {
+            return response()->json([
+                'message' => 'success',
+                'gastos' => $gastos
+            ], 200);
+        }
+    }
+
+    public function listarIngresos(Request $request)
+    {
+        $ingresos = Movimientos::where('tipo', 'ingreso')
+            ->where('usuario_id', $request->user()->IDusuario)
+            ->get();
+
+        if (count($ingresos) <= 0) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Lista de ingresos no encontrada'
+            ], 404);
+        } else {
+            return response()->json([
+                'message' => 'success',
+                'ingresos' => $ingresos
             ], 200);
         }
     }
