@@ -2,14 +2,17 @@
      HEADER
 ══════════════════════════════════════════════ -->
 <header class="header">
+  <!-- Iconos Bootsrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
   <div class="header-brand">
     <div class="brand-icon">
       <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
         alt="Fincan.io logo" width="56" height="56" />
     </div>
     <div class="brand-text">
-       <img src="https://image2url.com/r2/default/images/1773067082329-3d49e8f6-224a-40ce-a605-7a951779f07c.png"
-            alt="Logo Nexora letras" class="logo2">
+      <img src="https://image2url.com/r2/default/images/1773067082329-3d49e8f6-224a-40ce-a605-7a951779f07c.png"
+        alt="Logo Nexora letras" class="logo2">
     </div>
   </div>
 
@@ -104,7 +107,7 @@
         <div class="card card-stat">
           <div class="stat-top">
             <span class="stat-label">Total Ingresos</span>
-            <div class="stat-icon stat-icon-green">💰</div>
+            <div class="stat-icon stat-icon-green"><i class="bi bi-coin"></i></div>
           </div>
           <div class="stat-amount ingreso-color">+ {{ totalIngreso() | number:'1.2-2' }} €</div>
           <div class="stat-delta positive">▲ +12.1% mes anterior</div>
@@ -112,7 +115,7 @@
         <div class="card card-stat">
           <div class="stat-top">
             <span class="stat-label">Total Gastos</span>
-            <div class="stat-icon stat-icon-red">💸</div>
+            <div class="stat-icon stat-icon-red"><i class="bi bi-cash-coin"></i></div>
           </div>
           <div class="stat-amount gasto-color">- {{ totalGasto() | number:'1.2-2' }} €</div>
           <div class="stat-delta negative">▼ -2.5% mes anterior</div>
@@ -756,9 +759,9 @@
 
     <div class="modal-tipo-tabs">
       <button class="tipo-tab" [class.tipo-tab-gasto]="nuevoMov().tipo==='gasto'"
-        (click)="actualizarNuevoMov('tipo','gasto')">💸 Gasto</button>
+        (click)="actualizarNuevoMov('tipo','gasto')"><i class="bi bi-cash-coin"></i> Gasto</button>
       <button class="tipo-tab" [class.tipo-tab-ingreso]="nuevoMov().tipo==='ingreso'"
-        (click)="actualizarNuevoMov('tipo','ingreso')">💰 Ingreso</button>
+        (click)="actualizarNuevoMov('tipo','ingreso')"><i class="bi bi-coin"></i> Ingreso</button>
     </div>
 
     <div class="modal-row">
@@ -810,9 +813,9 @@
     <div class="modal-title">Añadir — Día {{ diaSeleccionado() }} {{ nombreMesCalendario() }}</div>
     <div class="modal-tipo-tabs">
       <button class="tipo-tab" [class.tipo-tab-gasto]="nuevoMovCal().tipo==='gasto'"
-        (click)="actualizarMovCal('tipo','gasto')">💸 Gasto</button>
+        (click)="actualizarMovCal('tipo','gasto')"><i class="bi bi-cash-coin"></i> Gasto</button>
       <button class="tipo-tab" [class.tipo-tab-ingreso]="nuevoMovCal().tipo==='ingreso'"
-        (click)="actualizarMovCal('tipo','ingreso')">💰 Ingreso</button>
+        (click)="actualizarMovCal('tipo','ingreso')"><i class="bi bi-coin"></i> Ingreso</button>
     </div>
     <div class="modal-row">
       <div class="modal-field">
