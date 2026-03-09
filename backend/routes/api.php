@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/ingresos', [MovimientosController::class, 'listarIngresos']);
     Route::put('/movimiento', [MovimientosController::class, 'actualizarMovimiento']);
     Route::delete('movimiento', [MovimientosController::class, 'borrarMovimiento']);
+
+    // Estadisticas
+    Route::get('gastoMensual', [EstadisticasController::class, 'gastoMensual']);
+    Route::get('gastoMensualCat', [EstadisticasController::class, 'gastoMensualPorCategoria']);
 
     // Esta línea conecta la URL /api/retos con la función store del controlador
     Route::post('/reto', [RetoController::class, 'store']);
