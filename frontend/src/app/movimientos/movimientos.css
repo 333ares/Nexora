@@ -29,10 +29,15 @@
   z-index: 100;
 }
 
+
+.logo2 {
+  width: 75px;
+}
+
 .header-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
 .brand-icon {
