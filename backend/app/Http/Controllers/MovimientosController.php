@@ -50,6 +50,19 @@ class MovimientosController extends Controller
                 'errors' => 'No se ha podido añadir el movimiento'
             ], 400);
         }
+
+        $cantidad = $request->cantidad;
+        $balanceUsuario = $request->user()->balance_total;
+
+        if ($request->tipo === 'ingreso') {
+            $request->user()->update([
+                'balance_total' => $balanceUsuario + $cantidad
+            ]);
+        } else {
+            $request->user()->update([
+                'balance_total' => $balanceUsuario - $cantidad
+            ]);
+        }
     }
 
     public function listarMovimientos(Request $request)
@@ -190,6 +203,19 @@ class MovimientosController extends Controller
             'message' => 'success',
             'movimiento' => $movimiento
         ], 200);
+
+        $cantidad = $request->cantidad;
+        $balanceUsuario = $request->user()->balance_total;
+
+        if ($request->tipo === 'ingreso') {
+            $request->user()->update([
+                'balance_total' => $balanceUsuario + $cantidad
+            ]);
+        } else {
+            $request->user()->update([
+                'balance_total' => $balanceUsuario - $cantidad
+            ]);
+        }
     }
 
     public function borrarMovimiento(Request $request)
@@ -215,5 +241,12 @@ class MovimientosController extends Controller
             'message' => 'success',
             'movimiento' => 'El movimiento se ha borrado correctamente'
         ], 200);
+
+        $cantidad = $request->cantidad;
+        $balanceUsuario = $request->user()->balance_total;
+
+        $request->user()->update([
+            'balance_total' => $balanceUsuario - $cantidad
+        ]);
     }
 }

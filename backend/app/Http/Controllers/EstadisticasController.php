@@ -7,6 +7,19 @@ use App\Models\Movimientos;
 
 class EstadisticasController extends Controller
 {
+
+    public function balanceTotal(Request $request)
+    {
+        // Buscamos el balance total del usuario
+        $balanceTotal = $request->user()->balance_total;
+
+        // Devolvemos el balance total del usuario
+        return response()->json([
+            'message' => 'success',
+            'balance_total' => $balanceTotal
+        ], 200);
+    }
+
     public function gastoMensual(Request $request)
     {
         // Cogemos el id del usuario
@@ -165,7 +178,7 @@ class EstadisticasController extends Controller
                 'errors' => 'No se han encontrado ingresos por categoria'
             ], 404);
         }
-        
+
         // Devolvemos los ingresos por categoria
         return response()->json([
             'message' => 'success',
