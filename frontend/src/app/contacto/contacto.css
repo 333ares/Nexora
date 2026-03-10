@@ -1,0 +1,100 @@
+/* Contenedor principal con el degradado verde */
+.main-wrapper {
+  background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* La tarjeta blanca */
+.contact-card {
+  background-color: #f8fff0; /* Blanco con un toque verdoso */
+  padding: 50px 60px;
+  border-radius: 40px; /* Bordes muy redondeados como en tu imagen */
+  width: 100%;
+  max-width: 550px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+h1 {
+  color: #1a4a1a;
+  font-size: 24px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* Inputs y Labels */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+textarea {
+  height: 100px;
+  resize: none;
+}
+
+/* El botón verde degradado */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(to right, #a1d65d, #7ed957);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.3s;
+}
+
+.btn-submit:hover {
+  opacity: 0.9;
+}
+
+/* Footer y enlaces */
+.footer-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+}
+
+.footer-link a {
+  color: #2d5a27;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.logo-container {
+  margin-bottom: 20px;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
