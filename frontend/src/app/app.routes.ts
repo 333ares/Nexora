@@ -28,7 +28,7 @@ export const routes: Routes = [
   {
     path: 'movimientos',
     component: Movimientos,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: '',
