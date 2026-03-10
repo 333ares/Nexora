@@ -1,6 +1,6 @@
 /* Contenedor principal con el degradado verde */
 .main-wrapper {
-  background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -56,7 +56,7 @@ textarea {
 .btn-submit {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(to right, #a1d65d, #7ed957);
+  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
   border: none;
   border-radius: 12px;
   color: white;
