@@ -2,7 +2,6 @@
      HEADER
 ══════════════════════════════════════════════ -->
 <header class="header">
-  <!-- Iconos Bootsrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <div class="header-brand">
@@ -15,7 +14,6 @@
         alt="Logo Nexora letras" class="logo2">
     </div>
   </div>
-
 
   <nav class="header-nav">
     @for (item of menuItems; track item.id) {
@@ -62,7 +60,6 @@
   <div class="grid-main">
     <div class="col-left">
 
-      <!-- Saldo banco — sin botones ni número de tarjeta -->
       <div class="card card-white">
         <div class="balance-top">
           <span class="balance-label">Saldo Banco</span>
@@ -70,7 +67,6 @@
         <div class="balance-amount">{{ saldoBanco() | number:'1.2-2' }} €</div>
       </div>
 
-      <!-- Retos de ahorro -->
       <div class="card card-white">
         <p class="section-title">Retos de ahorro</p>
         @for (reto of retos(); track reto.id) {
@@ -102,7 +98,6 @@
 
     <div class="col-right">
 
-      <!-- Stats -->
       <div class="grid-top-right">
         <div class="card card-stat">
           <div class="stat-top">
@@ -138,7 +133,6 @@
         </div>
       </div>
 
-      <!-- Gráfica -->
       <div class="card card-white">
         <div class="grafica-header">
           <span class="section-title" style="margin:0;">Gráfica mensual</span>
@@ -162,7 +156,6 @@
         </div>
       </div>
 
-      <!-- Últimos movimientos -->
       <div class="card card-white">
         <div class="historial-header">
           <span class="section-title" style="margin:0;">Últimos movimientos</span>
@@ -176,7 +169,7 @@
         </div>
         @for (m of ultimosMovimientos(); track m.id) {
         <div class="tabla-row tabla-row-mov-resumen" [class.row-gasto]="m.tipo==='gasto'"
-          [class.row-]="m.tipo==='ingreso'">
+          [class.row-ingreso]="m.tipo==='ingreso'">
           <div class="td td-nombre">
             <div class="mov-avatar">{{ m.icono }}</div>
             <div class="mov-name-wrap">
@@ -235,23 +228,14 @@
           <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
         </svg>
       </span>
-      <span class="th">
-        Descripción <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
-        </svg>
-      </span>
+      <span class="th">Descripción</span>
       <span class="th th-right" (click)="ordenarPor('importe')">
         Importe <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
         </svg>
       </span>
-      <span class="th th-right">
-        Acciones <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
-        </svg>
-      </span>
+      <span class="th th-right">Acciones</span>
     </div>
-
 
     @if (movimientosFiltrados().length === 0) {
     <div class="empty-state">No hay movimientos para mostrar</div>
@@ -275,18 +259,16 @@
         <span class="fecha-hora">{{ m.fecha | date:'HH:mm' }}</span>
       </div>
       <div class="td td-desc">
-        <p>hola qhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola
-          que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talhola que talue tal
-        </p>
+        <span class="mov-desc-tabla">{{ m.descripcion || '—' }}</span>
       </div>
       <div class="td td-right">
         <span class="mov-importe" [class.gasto-color]="m.tipo==='gasto'" [class.ingreso-color]="m.tipo==='ingreso'">
           {{ m.tipo === 'gasto' ? '-' : '+' }}{{ m.importe | number:'1.2-2' }} €
         </span>
       </div>
-      <div class="td td-right">
-        <button>Editar</button>
-        <button>Borrar</button>
+      <div class="td td-acciones">
+        <button class="btn-accion btn-editar" title="Editar" (click)="abrirModalEditar(m)">✏️</button>
+        <button class="btn-accion btn-eliminar" title="Eliminar" (click)="eliminarMovimiento(m.id)">🗑️</button>
       </div>
     </div>
     }
@@ -545,13 +527,15 @@
   <div class="grid-retos">
 
     <div class="retos-col-left">
-
       <div class="card card-white retos-header-card">
         <div class="retos-tabs">
-          <button class="reto-vista-tab" [class.active]="retosVista()==='activo'" (click)="retosVista.set('activo')"><i class="bi bi-bullseye"></i>
-            Reto actual</button>
+          <button class="reto-vista-tab" [class.active]="retosVista()==='activo'" (click)="retosVista.set('activo')">
+            <i class="bi bi-bullseye"></i> Reto actual
+          </button>
           <button class="reto-vista-tab" [class.active]="retosVista()==='historial'"
-            (click)="retosVista.set('historial')"><i class="bi bi-journal-text"></i> Historial</button>
+            (click)="retosVista.set('historial')">
+            <i class="bi bi-journal-text"></i> Historial
+          </button>
           @if (!tieneRetoActivo()) {
           <button class="btn-mas" style="margin-left:auto;" (click)="abrirModalReto()">+ Nuevo reto</button>
           }
@@ -578,14 +562,11 @@
             <span class="reto-card-nombre">{{ retoActivo()!.nombre }}</span>
             <span class="reto-card-desc">
               Inicio: {{ retoActivo()!.fechaInicio | date:'dd/MM/yyyy' }}
-              @if (retoActivo()!.fechaFinal) {
-              · Fin: {{ retoActivo()!.fechaFinal | date:'dd/MM/yyyy' }}
-              }
+              @if (retoActivo()!.fechaFinal) { · Fin: {{ retoActivo()!.fechaFinal | date:'dd/MM/yyyy' }} }
             </span>
           </div>
           <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
         </div>
-
         <div class="reto-card-meta-row">
           <div class="reto-card-meta-item">
             <span class="reto-card-meta-label">Cantidad (meta)</span>
@@ -606,18 +587,14 @@
             <span class="reto-card-meta-val" style="color:#888;">{{ retoActivo()!.duracion }} meses</span>
           </div>
         </div>
-
         <div class="reto-pct-row">
           <span class="reto-pct-label">{{ retoPct(retoActivo()!) | number:'1.0-0' }}% completado</span>
         </div>
         <div class="reto-bar-track" style="height:10px;">
           <div class="reto-bar-fill" [style.width.%]="retoPct(retoActivo()!)"></div>
         </div>
-
         <div style="margin-top:18px;display:flex;justify-content:flex-end;">
-          <button class="btn-abandonar" (click)="abandonarReto()">
-            Abandonar reto
-          </button>
+          <button class="btn-abandonar" (click)="abandonarReto()">Abandonar reto</button>
         </div>
       </div>
       }
@@ -640,33 +617,27 @@
             </button>
           </div>
         </div>
-
         <div class="tabla-header tabla-header-historial-retos">
-          <span class="th" (click)="ordenarHistorialPor('nombre')">
-            Reto <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <span class="th" (click)="ordenarHistorialPor('nombre')">Reto <svg width="10" height="10" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2">
               <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
-            </svg>
-          </span>
-          <span class="th" (click)="ordenarHistorialPor('fechaInicio')">
-            Inicio <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            </svg></span>
+          <span class="th" (click)="ordenarHistorialPor('fechaInicio')">Inicio <svg width="10" height="10"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
-            </svg>
-          </span>
+            </svg></span>
           <span class="th">Fin</span>
           <span class="th">Dur.</span>
-          <span class="th th-right" (click)="ordenarHistorialPor('cantidad')">
-            Cantidad <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <span class="th th-right" (click)="ordenarHistorialPor('cantidad')">Cantidad <svg width="10" height="10"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
-            </svg>
-          </span>
+            </svg></span>
           <span class="th th-right">Acumulado</span>
           <span class="th th-right">Estado</span>
         </div>
-
         @if (historialFiltrado().length === 0) {
         <div class="empty-state">No hay retos en el historial</div>
         }
-
         @for (r of historialFiltrado(); track r.id) {
         <div class="tabla-row tabla-row-historial-retos" [class.row-ingreso]="r.cumplido"
           [class.row-gasto]="!r.cumplido">
@@ -676,18 +647,13 @@
           </div>
           <div class="td"><span class="fecha-dia">{{ r.fechaInicio | date:'dd/MM/yy' }}</span></div>
           <div class="td">
-            @if (r.fechaFinal) {
-            <span class="fecha-dia">{{ r.fechaFinal | date:'dd/MM/yy' }}</span>
-            } @else {
-            <span style="color:#ccc;">—</span>
-            }
+            @if (r.fechaFinal) { <span class="fecha-dia">{{ r.fechaFinal | date:'dd/MM/yy' }}</span> }
+            @else { <span style="color:#ccc;">—</span> }
           </div>
           <div class="td"><span class="fecha-dia">{{ r.duracion }}m</span></div>
-          <div class="td td-right">
-            <span class="mov-importe" style="color:#1a1a1a;">{{ r.cantidad | number:'1.2-2' }} €</span>
-          </div>
-          <div class="td td-right">
-            <span class="mov-importe ingreso-color">{{ r.actual | number:'1.2-2' }} €</span>
+          <div class="td td-right"><span class="mov-importe" style="color:#1a1a1a;">{{ r.cantidad | number:'1.2-2' }}
+              €</span></div>
+          <div class="td td-right"><span class="mov-importe ingreso-color">{{ r.actual | number:'1.2-2' }} €</span>
           </div>
           <div class="td td-right">
             <span class="badge" [class.badge-ok]="r.cumplido" [class.badge-red]="!r.cumplido">
@@ -698,13 +664,11 @@
         }
       </div>
       }
-
     </div>
 
     <div class="retos-col-right">
       <div class="card card-white">
         <p class="section-title">Resumen</p>
-
         @if (retoActivo()) {
         <div class="reto-resumen-activo-box">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
@@ -727,7 +691,6 @@
         } @else {
         <div class="empty-state" style="padding:16px;">Sin reto activo</div>
         }
-
         <div class="reto-resumen-stat">
           <span class="reto-resumen-label">Retos completados</span>
           <span class="reto-resumen-val ingreso-color">{{ retosCumplidos().length }}</span>
@@ -738,32 +701,30 @@
         </div>
         <div class="reto-resumen-stat" style="border-top:1.5px solid #f0f0f0;padding-top:12px;margin-top:4px;">
           <span class="reto-resumen-label">Total ahorrado</span>
-          <span class="reto-resumen-val ingreso-color" style="font-size:16px;">
-            {{ totalAhorradoRetos() | number:'1.2-2' }} €
-          </span>
+          <span class="reto-resumen-val ingreso-color" style="font-size:16px;">{{ totalAhorradoRetos() | number:'1.2-2'
+            }} €</span>
         </div>
       </div>
     </div>
 
   </div>
   }
+
 </main>
 
 <!-- ══════════════════════════════════════════════
-     MODAL NUEVO MOVIMIENTO — con campo Descripción
+     MODAL NUEVO MOVIMIENTO
 ══════════════════════════════════════════════ -->
 @if (modalAbierto()) {
 <div class="modal-overlay" (click)="cerrarModal()">
   <div class="modal" (click)="$event.stopPropagation()">
     <div class="modal-title">Nuevo movimiento</div>
-
     <div class="modal-tipo-tabs">
       <button class="tipo-tab" [class.tipo-tab-gasto]="nuevoMov().tipo==='gasto'"
         (click)="actualizarNuevoMov('tipo','gasto')"><i class="bi bi-graph-down-arrow"></i> Gasto</button>
       <button class="tipo-tab" [class.tipo-tab-ingreso]="nuevoMov().tipo==='ingreso'"
         (click)="actualizarNuevoMov('tipo','ingreso')"><i class="bi bi-graph-up-arrow"></i> Ingreso</button>
     </div>
-
     <div class="modal-row">
       <div class="modal-field">
         <label>Nombre</label>
@@ -780,32 +741,78 @@
       <div class="modal-field">
         <label>Categoría</label>
         <select [value]="nuevoMov().categoria" (change)="actualizarNuevoMov('categoria', $any($event.target).value)">
-          @for (cat of categoriasActualesMov; track cat) {
-          <option [value]="cat">{{ cat }}</option>
-          }
+          @for (cat of categoriasActualesMov; track cat) { <option [value]="cat">{{ cat }}</option> }
         </select>
       </div>
     </div>
-    <!-- Campo Descripción -->
     <div class="modal-row">
       <div class="modal-field">
         <label>Descripción <span style="color:#ccc;font-weight:400;">(opcional)</span></label>
-        <textarea placeholder="Añade una nota o descripción..." [value]="nuevoMov().descripcion ?? ''"
+        <textarea maxlength="150" placeholder="Añade una nota o descripción..." [value]="nuevoMov().descripcion ?? ''"
           (input)="actualizarNuevoMov('descripcion', $any($event.target).value)"></textarea>
+        <span class="char-counter">{{ (nuevoMov().descripcion ?? '').length }} / 150</span>
       </div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
-      <button class="btn-submit" (click)="guardarMovimiento()">
-        Guardar {{ nuevoMov().tipo === 'gasto' ? 'gasto' : 'ingreso' }}
-      </button>
+      <button class="btn-submit" (click)="guardarMovimiento()">Guardar {{ nuevoMov().tipo === 'gasto' ? 'gasto' :
+        'ingreso' }}</button>
     </div>
   </div>
 </div>
 }
 
 <!-- ══════════════════════════════════════════════
-     MODAL CALENDARIO — con campo Descripción
+     MODAL EDITAR MOVIMIENTO
+══════════════════════════════════════════════ -->
+@if (modalEditarAbierto()) {
+<div class="modal-overlay" (click)="cerrarModalEditar()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-title">Editar movimiento</div>
+    <div class="modal-tipo-tabs">
+      <button class="tipo-tab" [class.tipo-tab-gasto]="movEditar().tipo==='gasto'"
+        (click)="actualizarMovEditar('tipo','gasto')"><i class="bi bi-graph-down-arrow"></i> Gasto</button>
+      <button class="tipo-tab" [class.tipo-tab-ingreso]="movEditar().tipo==='ingreso'"
+        (click)="actualizarMovEditar('tipo','ingreso')"><i class="bi bi-graph-up-arrow"></i> Ingreso</button>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label>Nombre</label>
+        <input type="text" [value]="movEditar().nombre"
+          (input)="actualizarMovEditar('nombre', $any($event.target).value)" />
+      </div>
+      <div class="modal-field">
+        <label>Importe (€)</label>
+        <input type="number" step="0.01" min="0" [value]="movEditar().importe ?? ''"
+          (input)="actualizarMovEditar('importe', +$any($event.target).value)" />
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label>Categoría</label>
+        <select [value]="movEditar().categoria" (change)="actualizarMovEditar('categoria', $any($event.target).value)">
+          @for (cat of categoriasEditarMov; track cat) { <option [value]="cat">{{ cat }}</option> }
+        </select>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label>Descripción <span style="color:#ccc;font-weight:400;">(opcional)</span></label>
+        <textarea maxlength="150" placeholder="Añade una nota o descripción..." [value]="movEditar().descripcion ?? ''"
+          (input)="actualizarMovEditar('descripcion', $any($event.target).value)"></textarea>
+        <span class="char-counter">{{ (movEditar().descripcion ?? '').length }} / 150</span>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="cerrarModalEditar()">Cancelar</button>
+      <button class="btn-submit" (click)="guardarEdicion()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+}
+
+<!-- ══════════════════════════════════════════════
+     MODAL CALENDARIO
 ══════════════════════════════════════════════ -->
 @if (modalCalAbierto()) {
 <div class="modal-overlay" (click)="cerrarModalCal()">
@@ -833,25 +840,23 @@
       <div class="modal-field">
         <label>Categoría</label>
         <select [value]="nuevoMovCal().categoria" (change)="actualizarMovCal('categoria', $any($event.target).value)">
-          @for (cat of categoriasActualesCal; track cat) {
-          <option [value]="cat">{{ cat }}</option>
-          }
+          @for (cat of categoriasActualesCal; track cat) { <option [value]="cat">{{ cat }}</option> }
         </select>
       </div>
     </div>
-    <!-- Campo Descripción -->
     <div class="modal-row">
       <div class="modal-field">
         <label>Descripción <span style="color:#ccc;font-weight:400;">(opcional)</span></label>
-        <textarea placeholder="Añade una nota o descripción..." [value]="nuevoMovCal().descripcion ?? ''"
+        <textarea maxlength="150" placeholder="Añade una nota o descripción..."
+          [value]="nuevoMovCal().descripcion ?? ''"
           (input)="actualizarMovCal('descripcion', $any($event.target).value)"></textarea>
+        <span class="char-counter">{{ (nuevoMovCal().descripcion ?? '').length }} / 150</span>
       </div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" (click)="cerrarModalCal()">Cancelar</button>
-      <button class="btn-submit" (click)="guardarMovimientoCal()">
-        Guardar {{ nuevoMovCal().tipo === 'gasto' ? 'gasto' : 'ingreso' }}
-      </button>
+      <button class="btn-submit" (click)="guardarMovimientoCal()">Guardar {{ nuevoMovCal().tipo === 'gasto' ? 'gasto' :
+        'ingreso' }}</button>
     </div>
   </div>
 </div>
@@ -876,9 +881,7 @@
       <div class="modal-field" style="max-width:100px;">
         <label>Icono</label>
         <select [value]="nuevoReto().icono" (change)="actualizarNuevoReto('icono', $any($event.target).value)">
-          @for (ic of iconosReto; track ic) {
-          <option [value]="ic">{{ ic }}</option>
-          }
+          @for (ic of iconosReto; track ic) { <option [value]="ic">{{ ic }}</option> }
         </select>
       </div>
     </div>
@@ -890,7 +893,7 @@
       </div>
       <div class="modal-field">
         <label>Duración (meses)</label>
-        <input type="number" placeholder="Ej: 12" step="1" min="1" max="120" pattern="[0-9]*" inputmode="numeric"
+        <input type="number" placeholder="Ej: 12" step="1" min="1" max="120" inputmode="numeric"
           [value]="nuevoReto().duracion ?? ''"
           (input)="actualizarNuevoReto('duracion', Math.floor(+$any($event.target).value))"
           (keydown)="$event.key==='.' || $event.key===',' ? $event.preventDefault() : null" />
