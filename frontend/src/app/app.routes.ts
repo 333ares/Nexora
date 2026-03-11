@@ -34,6 +34,7 @@ export const routes: Routes = [
   {
     path: 'movimientos',
     component: Movimientos,
+    canActivate: [AuthGuard],
     children: [
       { path: 'resumen', component: Resumen },
       { path: 'lista', component: Lista },
@@ -41,6 +42,7 @@ export const routes: Routes = [
       { path: 'estadisticas', component: Estadisticas },
       { path: 'retos', component: Retos },
       { path: '', redirectTo: 'resumen', pathMatch: 'full' }
+      
     ]
   },
   {
