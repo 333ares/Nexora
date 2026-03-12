@@ -1,0 +1,96 @@
+<div class="grid-retos">
+
+  <div class="retos-col-left">
+
+    <div class="card card-white retos-header-card">
+      <div class="retos-tabs">
+        <button class="reto-vista-tab active">
+          <i class="bi bi-bullseye"></i> Reto actual
+        </button>
+        <button class="reto-vista-tab">
+          <i class="bi bi-journal-text"></i> Historial
+        </button>
+        <button class="btn-mas" style="margin-left:auto;">+ Nuevo reto</button>
+      </div>
+    </div>
+
+    <!-- Reto activo -->
+    <div class="card card-white reto-card">
+      <div class="reto-card-top">
+        <div class="reto-card-icon">🚗</div>
+        <div class="reto-card-info">
+          <span class="reto-card-nombre">Comprar coche</span>
+          <span class="reto-card-desc">Inicio: 01/01/2023 · Fin: 01/01/2026</span>
+        </div>
+        <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
+      </div>
+
+      <div class="reto-card-meta-row">
+        <div class="reto-card-meta-item">
+          <span class="reto-card-meta-label">Cantidad (meta)</span>
+          <span class="reto-card-meta-val ingreso-color">25.000,00 €</span>
+        </div>
+        <div class="reto-card-meta-item">
+          <span class="reto-card-meta-label">Acumulado</span>
+          <span class="reto-card-meta-val ingreso-color">5.000,00 €</span>
+        </div>
+        <div class="reto-card-meta-item">
+          <span class="reto-card-meta-label">Restante</span>
+          <span class="reto-card-meta-val gasto-color">20.000,00 €</span>
+        </div>
+        <div class="reto-card-meta-item">
+          <span class="reto-card-meta-label">Duración</span>
+          <span class="reto-card-meta-val" style="color:#888;">36 meses</span>
+        </div>
+      </div>
+
+      <div class="reto-pct-row">
+        <span class="reto-pct-label">20% completado</span>
+      </div>
+      <div class="reto-bar-track" style="height:10px;">
+        <div class="reto-bar-fill" style="width:20%"></div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;justify-content:flex-end;">
+        <button class="btn-abandonar">Abandonar reto</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="retos-col-right">
+    <div class="card card-white">
+      <p class="section-title">Resumen</p>
+
+      <div class="reto-resumen-activo-box">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <span style="font-size:24px;">🚗</span>
+          <div>
+            <span style="font-family:'Onest';font-weight:700;font-size:15px;">Comprar coche</span><br>
+            <span style="font-size:12px;color:#aaa;">En progreso</span>
+          </div>
+        </div>
+        <div class="reto-bar-track" style="height:8px;margin-bottom:6px;">
+          <div class="reto-bar-fill" style="width:20%"></div>
+        </div>
+        <span style="font-size:12px;color:#4E9C25;font-weight:700;">
+          20% — 5.000,00 € de 25.000,00 €
+        </span>
+      </div>
+
+      <div class="reto-resumen-stat">
+        <span class="reto-resumen-label">Retos completados</span>
+        <span class="reto-resumen-val ingreso-color">1</span>
+      </div>
+      <div class="reto-resumen-stat">
+        <span class="reto-resumen-label">Retos en historial</span>
+        <span class="reto-resumen-val">3</span>
+      </div>
+      <div class="reto-resumen-stat" style="border-top:1.5px solid #f0f0f0;padding-top:12px;margin-top:4px;">
+        <span class="reto-resumen-label">Total ahorrado</span>
+        <span class="reto-resumen-val ingreso-color" style="font-size:16px;">7.100,00 €</span>
+      </div>
+    </div>
+  </div>
+
+</div>

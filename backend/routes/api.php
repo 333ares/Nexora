@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\UsuarioController;
@@ -11,6 +12,11 @@ use App\Http\Controllers\RetoController;
 Route::post('/login', [AuthController::class, 'loginUsuario']);
 Route::post('/usuarios', [AuthController::class, 'registroUsuario']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
+
+// Contacto
+Route::post('/contacto', [ContactoController::class, 'guardarMensaje']);
+Route::get('/contacto', [ContactoController::class, 'verTodos']);
+
 
 // Rutas protegidas con autenticación
 Route::middleware('auth:sanctum')->group(function () {
@@ -31,8 +37,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('movimiento', [MovimientosController::class, 'borrarMovimiento']);
 
     // Estadisticas
+    Route::get('balanceTotal', [EstadisticasController::class, 'balanceTotal']);
     Route::get('gastoMensual', [EstadisticasController::class, 'gastoMensual']);
     Route::get('gastoMensualCat', [EstadisticasController::class, 'gastoMensualPorCategoria']);
+    Route::get('ingresoMensual', [EstadisticasController::class, 'ingresoMensual']);
+    Route::get('ingresoMensualCat', [EstadisticasController::class, 'ingresoMensualPorCategoria']);
 
     // Esta línea conecta la URL /api/retos con la función store del controlador
     Route::post('/reto', [RetoController::class, 'store']);
