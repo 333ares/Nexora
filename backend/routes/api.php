@@ -19,7 +19,7 @@ Route::get('/contacto', [ContactoController::class, 'verTodos']);
 
 
 // Rutas protegidas con autenticación
-Route::middleware('auth:sanctum')->group(function () {
+//Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logoutUsuario']);
 
     // Usuario
@@ -49,4 +49,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/retos', [RetoController::class, 'index']);
     Route::put('/reto', [RetoController::class, 'actualizarReto']);
     Route::delete('/reto', [RetoController::class, 'eliminarReto']);
-});
+//});
