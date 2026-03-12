@@ -5,6 +5,7 @@ import { Registro } from './registro/registro';
 import { AuthGuard } from './guards/auth-guard';
 import { Planes } from './planes/planes';
 import { Movimientos } from './movimientos/movimientos';
+import { Contacto } from './contacto/contacto';
 import { Calendario } from './movimientos/calendario/calendario';
 import { Estadisticas } from './movimientos/estadisticas/estadisticas';
 import { Retos } from './movimientos/retos/retos';
@@ -19,7 +20,7 @@ export const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuario,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'registro',
@@ -28,7 +29,7 @@ export const routes: Routes = [
   {
     path: 'planes',
     component: Planes,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
 
   {
@@ -44,6 +45,11 @@ export const routes: Routes = [
       { path: '', redirectTo: 'resumen', pathMatch: 'full' }
       
     ]
+  },
+  {
+    path: 'contacto',
+    component: Contacto,
+    //canActivate: [AuthGuard]
   },
   {
     path: '',
