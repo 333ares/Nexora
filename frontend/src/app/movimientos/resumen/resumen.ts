@@ -11,12 +11,14 @@ import { Auth } from '../../services/auth';
 })
 
 export class Resumen implements OnInit {
-  balanceTotal: number = 0;
+  balanceTotal: number = 0.00;
+  ingresoMensual: number = 0.00;
 
   constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.cargarBalanceTotal();
+    this.cargarIngresoMensual();
   }
 
   cargarBalanceTotal(): void {
@@ -28,6 +30,24 @@ export class Resumen implements OnInit {
       },
       error: (err) => {
         console.error('Error al obtener el balance total:', err);
+      }
+    });
+  }
+
+  cargarIngresoMensual(): void {
+    this.authService.getIngresoMensual().subscribe({
+      next: (response) => {
+        console.log('Respuesta:', response);
+        this.ingresoMensual = parseFloat(response.data.ingreso_mes_actual);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          this.ingresoMensual = 0;
+          this.cdr.detectChanges();
+        } else {
+          console.error('Error al obtener el ingreso mensual:', err);
+        }
       }
     });
   }
