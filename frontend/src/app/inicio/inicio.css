@@ -145,6 +145,16 @@ nav {
   overflow: hidden;
 }
 
+/* Decorative pattern */
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.2) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .hero::before {
   content: '';
   position: absolute;
@@ -320,6 +330,32 @@ section {
   max-width: 560px;
 }
 
+/* ── SECTION LINK ───────────────────────────────────── */
+.section-link-center {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.btn-link {
+  font-family: 'Onest', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--green-mid);
+  text-decoration: none;
+  padding: 12px 24px;
+  background: var(--mint);
+  border: 1.5px solid var(--mint-border);
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-link:hover {
+  background: #c6e6c6;
+  transform: translateY(-1px);
+}
+
 /* ── QUÉ ES NEXORA ───────────────────────────────────── */
 .que-es {
   background: var(--white);
@@ -330,7 +366,6 @@ section {
   grid-template-columns: 1fr 1fr;
   gap: 40px;
   align-items: center;
-  margin-top: 0;
 }
 
 .que-es-text p {
@@ -457,58 +492,80 @@ section {
   line-height: 1.6;
 }
 
-/* ── RETOS ───────────────────────────────────────────── */
-.retos {
+/* ── PLANES PREVIEW ─────────────────────────────────── */
+.planes-preview {
   background: var(--white);
 }
 
-.retos-inner {
+.preview-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.preview-header .section-subtitle {
+  margin: 0 auto;
+}
+
+.plan-preview-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.retos-text .section-subtitle {
-  margin-bottom: 24px;
-}
-
-.reto-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.reto-card {
-  background: var(--mint);
+.plan-preview-card {
+  background: var(--white);
   border: 1.5px solid var(--mint-border);
-  border-radius: 16px;
-  padding: 18px 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  transition: transform 0.2s;
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.plan-preview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(78,156,37,0.12);
+}
+.plan-preview-card--featured {
+  border-color: var(--green-mid);
+  box-shadow: 0 8px 24px rgba(78,156,37,0.12);
 }
 
-.reto-card:hover { transform: translateX(4px); }
-
-.reto-emoji {
-  font-size: 1.8rem;
-  flex-shrink: 0;
+.plan-preview-badge {
+  font-family: 'Onest', sans-serif;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  padding: 4px 14px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 14px;
 }
+.badge--free { background: var(--mint); color: var(--green-dark); }
+.badge--advanced { background: linear-gradient(135deg, var(--green-mid), var(--green-light)); color: white; }
+.badge--premium { background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); color: white; }
 
-.reto-card h4 {
+.plan-preview-card h3 {
   font-family: 'Onest', sans-serif;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   color: var(--text-dark);
-  margin-bottom: 2px;
+  margin-bottom: 12px;
 }
 
-.reto-card p {
-  font-size: 0.85rem;
+.plan-preview-price {
+  margin-bottom: 12px;
+  font-size: 0.88rem;
   color: var(--text-muted);
-  margin: 0;
+}
+.big-price {
+  font-family: 'Onest', sans-serif;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: var(--text-dark);
+}
+
+.plan-preview-card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
 /* ── POR QUÉ NEXORA ──────────────────────────────────── */
@@ -712,6 +769,98 @@ section {
   padding: 0 20px 18px;
 }
 
+/* ── ABOUT PREVIEW ──────────────────────────────────── */
+.about-preview {
+  background: linear-gradient(160deg, #f5fbf2 0%, var(--mint) 100%);
+}
+
+.about-preview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.about-preview-text p {
+  font-size: 1.05rem;
+  color: var(--text-mid);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.about-preview-team {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adda-logo-mini {
+  background: white;
+  border: 1.5px solid var(--mint-border);
+  border-radius: 24px;
+  padding: 48px 56px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(78,156,37,0.08);
+}
+
+.adda-text-mini {
+  font-family: 'Onest', sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+  letter-spacing: 0.18em;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid), var(--green-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.adda-sub-mini {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── CONTACT PREVIEW ────────────────────────────────── */
+.contact-preview {
+  background: var(--white);
+}
+
+.contact-preview-box {
+  background: linear-gradient(135deg, var(--mint), #eaf5ea);
+  border: 1.5px solid var(--mint-border);
+  border-radius: 24px;
+  padding: 56px 48px;
+  max-width: 740px;
+  margin: 0 auto;
+}
+
+.contact-preview-content .section-title {
+  margin-bottom: 12px;
+}
+
+.contact-preview-content p {
+  font-size: 1.05rem;
+  color: var(--text-mid);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.contact-preview-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.contact-email {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  color: var(--green-mid);
+  text-decoration: none;
+  font-weight: 600;
+}
+.contact-email:hover { text-decoration: underline; }
+
 /* ── EQUIPO ADDA ─────────────────────────────────────── */
 .equipo {
   background: linear-gradient(160deg, #f5fbf2 0%, var(--mint) 100%);
@@ -866,12 +1015,14 @@ footer {
   .hero-logo-wrap      { width: 200px; height: 200px; }
   .que-es-grid         { grid-template-columns: 1fr; }
   .func-grid           { grid-template-columns: 1fr; }
-  .retos-inner         { grid-template-columns: 1fr; }
+  .plan-preview-grid   { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
   .benefits-grid       { grid-template-columns: 1fr; }
+  .about-preview-grid  { grid-template-columns: 1fr; }
   .team-grid           { grid-template-columns: 1fr 1fr; }
   .footer-inner        { grid-template-columns: 1fr; gap: 24px; }
   .footer-bottom       { flex-direction: column; gap: 8px; text-align: center; }
   .nav-links           { display: none; }
   .newsletter-form     { flex-direction: column; }
   .newsletter-box      { padding: 32px 24px; }
+  .contact-preview-box { padding: 32px 24px; }
 }
