@@ -65,6 +65,12 @@ export class Auth {
     });
   }
 
+  getIngresoMensual(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/ingresoMensual`, {
+      headers: this.getHeaders()
+    });
+  }
+
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
     if (this.isBrowser()) localStorage.setItem('token', token);
