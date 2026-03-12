@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
 
@@ -13,7 +13,7 @@ import { Auth } from '../../services/auth';
 export class Resumen implements OnInit {
   balanceTotal: number = 0;
 
-  constructor(private authService: Auth) { }
+  constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.cargarBalanceTotal();
@@ -22,7 +22,9 @@ export class Resumen implements OnInit {
   cargarBalanceTotal(): void {
     this.authService.getBalanceTotal().subscribe({
       next: (response) => {
-        this.balanceTotal = response.balance_total;
+        console.log('Respuesta:', response);
+        this.balanceTotal = parseFloat(response.balance_total);
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error al obtener el balance total:', err);
