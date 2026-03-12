@@ -60,7 +60,7 @@ export class Auth {
 
   // --- ESTADISTICAS --- 
   getBalanceTotal(): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/balanceTotal`, {
+    return this.http.get(`${this.apiUrl}/balanceTotal`, {
       headers: this.getHeaders()
     });
   }
