@@ -11,8 +11,13 @@ import { Estadisticas } from './movimientos/estadisticas/estadisticas';
 import { Retos } from './movimientos/retos/retos';
 import { Lista } from './movimientos/lista/lista';
 import { Resumen } from './movimientos/resumen/resumen';
+import { Inicio } from './inicio/inicio';
 
-export const routes: Routes = [
+export const routes: Routes = [  
+  {
+    path: 'inicio',
+    component: Inicio,
+  },
   {
     path: 'login', //es lo que aparece en la URL.
     component: Login, // Login es el componente que se mostrará
