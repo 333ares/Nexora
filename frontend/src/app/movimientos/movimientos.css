@@ -7,7 +7,7 @@
   box-sizing: border-box;
 }
 
-:host {
+app-movimientos {
   display: block;
   min-height: 100vh;
   background: linear-gradient(to bottom, #ABDE91, #4E9C25);
@@ -29,15 +29,14 @@
   z-index: 100;
 }
 
-
 .logo2 {
   width: 75px;
 }
 
 .header-brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .brand-icon {
@@ -184,6 +183,8 @@
   border-bottom: 2px solid transparent;
   margin-bottom: -2px;
   transition: color 0.2s, border-color 0.2s;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .subnav-item:hover {
@@ -195,7 +196,7 @@
   border-bottom-color: #fff;
 }
 
-/* ══ PAGE ══ */
+/* ══ PAGE WRAPPER ══ */
 .page-wrapper {
   max-width: 1300px;
   margin: 0 auto;
@@ -235,7 +236,7 @@
   gap: 20px;
 }
 
-/* ══ SALDO — sin botones ni tarjeta ══ */
+/* ══ SALDO ══ */
 .balance-top {
   display: flex;
   justify-content: space-between;
@@ -257,7 +258,6 @@
   font-family: 'Onest';
 }
 
-/* Ocultar acciones y tag de tarjeta */
 .balance-actions {
   display: none;
 }
@@ -266,7 +266,7 @@
   display: none;
 }
 
-/* ══ RETOS ══ */
+/* ══ SECTION TITLE ══ */
 .section-title {
   font-size: 17px;
   font-weight: 800;
@@ -275,6 +275,7 @@
   margin: 0 0 16px 0;
 }
 
+/* ══ RETOS SIDEBAR ══ */
 .reto-item {
   margin-bottom: 18px;
 }
@@ -701,7 +702,7 @@
 .tabla-row-mov {
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr;
-  padding: 12px 12px;
+  padding: 12px;
   border-radius: 12px;
   transition: background 0.15s;
   align-items: center;
@@ -719,7 +720,7 @@
 .tabla-row-mov-resumen {
   display: grid;
   grid-template-columns: 2fr 1fr 1.2fr 1fr;
-  padding: 12px 12px;
+  padding: 12px;
   border-radius: 12px;
   transition: background 0.15s;
   align-items: center;
@@ -737,7 +738,7 @@
 .tabla-row-historial {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-  padding: 12px 12px;
+  padding: 12px;
   border-radius: 12px;
   transition: background 0.15s;
   align-items: center;
@@ -862,6 +863,26 @@
   justify-content: flex-end;
 }
 
+.td-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.btn-accion {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.btn-accion:hover {
+  background: #f0f0f0;
+}
+
 .mov-importe {
   font-size: 15px;
   font-weight: 800;
@@ -882,6 +903,13 @@
   white-space: nowrap;
 }
 
+.mov-desc-tabla {
+  font-size: 12px;
+  color: #aaa;
+  font-family: 'Lato';
+  font-style: italic;
+}
+
 .badge {
   padding: 4px 12px;
   border-radius: 20px;
@@ -898,6 +926,11 @@
 .badge-pen {
   background: #fef3c7;
   color: #92400e;
+}
+
+.badge-red {
+  background: #ffebee;
+  color: #c0392b;
 }
 
 .empty-state {
@@ -982,7 +1015,6 @@
   pointer-events: none;
 }
 
-/* DÍA ACTUAL: solo borde verde, sin fondo sólido */
 .cal-dia.hoy {
   background: transparent;
   color: #2d7a0a;
@@ -1005,7 +1037,6 @@
   justify-content: center;
 }
 
-/* Días con movimientos: solo puntos, sin fondo */
 .cal-dia.tiene-mov {
   background: transparent;
   border: none;
@@ -1430,7 +1461,7 @@
 .tabla-row-historial-retos {
   display: grid;
   grid-template-columns: 2fr 0.9fr 0.9fr 0.6fr 1fr 1fr 1fr;
-  padding: 12px 12px;
+  padding: 12px;
   border-radius: 12px;
   transition: background 0.15s;
   align-items: center;
@@ -1562,6 +1593,13 @@
 .modal-field select:focus,
 .modal-field textarea:focus {
   border-color: #4caf50;
+}
+
+.char-counter {
+  font-size: 11px;
+  color: #aaa;
+  font-family: 'Lato';
+  text-align: right;
 }
 
 .modal-actions {
@@ -1730,6 +1768,22 @@
     grid-template-columns: 1fr;
   }
 
+  .bienvenida {
+    font-size: 24px;
+  }
+
+  .donut-layout {
+    flex-direction: column;
+  }
+
+  .reto-card-meta-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .tabla-header-mov,
   .tabla-header-mov-resumen,
   .tabla-header-historial {
@@ -1745,21 +1799,5 @@
   .tabla-row-historial {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .bienvenida {
-    font-size: 24px;
-  }
-
-  .donut-layout {
-    flex-direction: column;
-  }
-
-  .reto-card-meta-row {
-    grid-template-columns: 1fr 1fr;
   }
 }
