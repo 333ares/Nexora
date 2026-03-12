@@ -37,8 +37,11 @@ Route::get('/contacto', [ContactoController::class, 'verTodos']);
     Route::delete('movimiento', [MovimientosController::class, 'borrarMovimiento']);
 
     // Estadisticas
+    Route::get('balanceTotal', [EstadisticasController::class, 'balanceTotal']);
     Route::get('gastoMensual', [EstadisticasController::class, 'gastoMensual']);
     Route::get('gastoMensualCat', [EstadisticasController::class, 'gastoMensualPorCategoria']);
+    Route::get('ingresoMensual', [EstadisticasController::class, 'ingresoMensual']);
+    Route::get('ingresoMensualCat', [EstadisticasController::class, 'ingresoMensualPorCategoria']);
 
     // Esta línea conecta la URL /api/retos con la función store del controlador
     Route::post('/reto', [RetoController::class, 'store']);
