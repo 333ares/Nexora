@@ -5,11 +5,11 @@
     <span>NEXORA</span>
   </a>
   <div class="nav-links">
-    <a href="#que-es">¿Qué es?</a>
-    <a href="#funcionalidades">Funcionalidades</a>
-    <a href="#retos">Retos</a>
-    <a href="#faq">FAQ</a>
-    <a href="#equipo">Equipo</a>
+    <a routerLink="/servicios">Servicios</a>
+    <a routerLink="/planes-suscripcion">Planes</a>
+    <a routerLink="/faqs">FAQ</a>
+    <a routerLink="/acerca-de">Nosotros</a>
+    <a routerLink="/contacto">Contacto</a>
   </div>
   <div class="nav-cta">
     <a routerLink="/login" class="btn-nav-secondary">Acceder</a>
@@ -19,6 +19,7 @@
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-pattern"></div>
   <div class="hero-inner">
     <div class="hero-text">
       <div class="hero-eyebrow"><span>🌱</span> Finanzas personales</div>
@@ -121,49 +122,42 @@
         <p>Con los planes de pago, disfruta de una experiencia limpia, sin interrupciones publicitarias.</p>
       </div>
     </div>
+    <div class="section-link-center">
+      <a routerLink="/servicios" class="btn-link">Descubrir todos los servicios →</a>
+    </div>
   </div>
 </section>
 
-<!-- RETOS -->
-<section class="retos" id="retos">
+<!-- PLANES RESUMEN -->
+<section class="planes-preview" id="planes">
   <div class="container">
-    <div class="retos-inner">
-      <div class="retos-text">
-        <p class="section-eyebrow">Retos mensuales</p>
-        <h2 class="section-title">Desafíate a gastar<br>mejor cada mes</h2>
-        <p class="section-subtitle">Cada mes, Nexora propone retos financieros pensados para ayudarte a tomar conciencia de tus gastos y mejorar tus hábitos de forma progresiva.</p>
-        <a routerLink="/registro" class="btn-primary">Ver retos activos →</a>
+    <div class="preview-header">
+      <p class="section-eyebrow">Planes de suscripción</p>
+      <h2 class="section-title">Elige el plan que mejor se adapte a ti</h2>
+      <p class="section-subtitle">Desde 0€. Sin costes ocultos, sin sorpresas.</p>
+    </div>
+    <div class="plan-preview-grid">
+      <div class="plan-preview-card">
+        <div class="plan-preview-badge badge--free">GRATIS</div>
+        <h3>Nexora Free</h3>
+        <div class="plan-preview-price"><span class="big-price">0 €</span>/mes</div>
+        <p>Registro de gastos, academia y retos mensuales.</p>
       </div>
-      <div class="reto-cards">
-        <div class="reto-card">
-          <div class="reto-emoji">☕</div>
-          <div>
-            <h4>Sin café de fuera</h4>
-            <p>No gastes en cafeterías durante 7 días seguidos</p>
-          </div>
-        </div>
-        <div class="reto-card">
-          <div class="reto-emoji">🛒</div>
-          <div>
-            <h4>Lista de la compra estricta</h4>
-            <p>Haz la compra semanal sin salirte de tu presupuesto</p>
-          </div>
-        </div>
-        <div class="reto-card">
-          <div class="reto-emoji">💸</div>
-          <div>
-            <h4>Ahorra el 10%</h4>
-            <p>Destina el 10% de tus ingresos este mes al ahorro</p>
-          </div>
-        </div>
-        <div class="reto-card">
-          <div class="reto-emoji">📵</div>
-          <div>
-            <h4>Sin suscripciones extra</h4>
-            <p>Cancela o pausa un servicio que no uses realmente</p>
-          </div>
-        </div>
+      <div class="plan-preview-card plan-preview-card--featured">
+        <div class="plan-preview-badge badge--advanced">POPULAR</div>
+        <h3>Nexora Advanced</h3>
+        <div class="plan-preview-price"><span class="big-price">8 €</span>/6 meses</div>
+        <p>Todo incluido: estadísticas, Kiro, sin anuncios.</p>
       </div>
+      <div class="plan-preview-card">
+        <div class="plan-preview-badge badge--premium">PREMIUM</div>
+        <h3>Nexora Premium</h3>
+        <div class="plan-preview-price"><span class="big-price">12 €</span>/12 meses</div>
+        <p>Un año completo al mejor precio. ¡50% de ahorro!</p>
+      </div>
+    </div>
+    <div class="section-link-center">
+      <a routerLink="/planes-suscripcion" class="btn-link">Ver todos los planes →</a>
     </div>
   </div>
 </section>
@@ -231,7 +225,7 @@
   </div>
 </section>
 
-<!-- FAQ -->
+<!-- FAQ RESUMEN -->
 <section class="faq" id="faq">
   <div class="container">
     <div class="faq-header">
@@ -248,6 +242,46 @@
           <div class="faq-answer">{{ item.respuesta }}</div>
         </div>
       }
+    </div>
+    <div class="section-link-center" style="margin-top: 32px;">
+      <a routerLink="/faqs" class="btn-link">Ver todas las preguntas →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ACERCA DE RESUMEN -->
+<section class="about-preview" id="acerca">
+  <div class="container">
+    <div class="about-preview-grid">
+      <div class="about-preview-text">
+        <p class="section-eyebrow">Conócenos</p>
+        <h2 class="section-title">El equipo detrás de Nexora</h2>
+        <p>Somos ADDA, un equipo de desarrolladores web apasionados por la tecnología y la educación financiera. Creamos Nexora para ayudar a las personas a tomar el control de sus finanzas de forma sencilla y accesible.</p>
+        <a routerLink="/acerca-de" class="btn-link">Conocer al equipo →</a>
+      </div>
+      <div class="about-preview-team">
+        <div class="adda-logo-mini">
+          <div class="adda-text-mini">ADDA</div>
+          <div class="adda-sub-mini">Desarrolladores Web</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO RESUMEN -->
+<section class="contact-preview">
+  <div class="container">
+    <div class="contact-preview-box">
+      <div class="contact-preview-content">
+        <p class="section-eyebrow">Contacto</p>
+        <h2 class="section-title">¿Necesitas ayuda?</h2>
+        <p>Estamos aquí para resolver tus dudas. Escríbenos y te responderemos lo antes posible.</p>
+        <div class="contact-preview-actions">
+          <a routerLink="/contacto" class="btn-primary">Contactar →</a>
+          <a href="mailto:contacto@nexora.app" class="contact-email">contacto&#64;nexora.app</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -299,16 +333,16 @@
     </div>
     <div class="footer-col">
       <h5>Producto</h5>
-      <a href="#funcionalidades">Funcionalidades</a>
-      <a href="#retos">Retos</a>
-      <a routerLink="/planes">Precios</a>
+      <a routerLink="/servicios">Servicios</a>
+      <a routerLink="/planes-suscripcion">Planes</a>
       <a routerLink="/registro">Registro</a>
     </div>
     <div class="footer-col">
       <h5>Empresa</h5>
-      <a href="#equipo">Equipo ADDA</a>
-      <a href="#faq">FAQ</a>
-      <a href="mailto:contacto@nexora.app">Contacto</a>
+      <a routerLink="/acerca-de">Acerca de ADDA</a>
+      <a routerLink="/faqs">FAQ</a>
+      <a routerLink="/contacto">Contacto</a>
+      <a routerLink="/politica-privacidad">Política de privacidad</a>
     </div>
   </div>
   <div class="footer-bottom">
