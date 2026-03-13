@@ -19,88 +19,46 @@
     <span class="th th-right">Acciones</span>
   </div>
 
-  <div class="tabla-row tabla-row-mov row-ingreso">
-    <div class="td td-nombre">
-      <div class="mov-avatar">💼</div>
-      <div class="mov-name-wrap">
-        <span class="mov-nombre">Nómina Marzo</span>
-        <span class="mov-cat">Sueldo</span>
-      </div>
-    </div>
-    <div class="td td-fecha">
-      <span class="fecha-dia">20/03/2024</span>
-      <span class="fecha-hora">09:00</span>
-    </div>
-    <div class="td">Sueldo</div>
-    <div class="td td-desc"><span class="mov-desc-tabla">—</span></div>
-    <div class="td td-right"><span class="mov-importe ingreso-color">+1.800,00 €</span></div>
-    <div class="td td-acciones">
-      <button class="btn-accion btn-editar" title="Editar">✏️</button>
-      <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
-    </div>
-  </div>
+  @for (mov of movimientos; track mov.id) {
+  <div class="tabla-row tabla-row-mov" [class.row-ingreso]="mov.tipo === 'ingreso'"
+    [class.row-gasto]="mov.tipo === 'gasto'">
 
-  <div class="tabla-row tabla-row-mov row-gasto">
     <div class="td td-nombre">
-      <div class="mov-avatar">🛒</div>
+      <div class="mov-avatar">{{ mov.tipo === 'ingreso' ? '💰' : '💸' }}</div>
       <div class="mov-name-wrap">
-        <span class="mov-nombre">Mercadona</span>
-        <span class="mov-cat">Supervivencia</span>
+        <span class="mov-nombre">{{ mov.descripcion || 'Sin descripción' }}</span>
+        <span class="mov-cat">{{ mov.categoria }}</span>
       </div>
     </div>
-    <div class="td td-fecha">
-      <span class="fecha-dia">20/03/2024</span>
-      <span class="fecha-hora">10:32</span>
-    </div>
-    <div class="td">Supervivencia</div>
-    <div class="td td-desc"><span class="mov-desc-tabla">Compra semanal</span></div>
-    <div class="td td-right"><span class="mov-importe gasto-color">-87,50 €</span></div>
-    <div class="td td-acciones">
-      <button class="btn-accion btn-editar" title="Editar">✏️</button>
-      <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
-    </div>
-  </div>
 
-  <div class="tabla-row tabla-row-mov row-ingreso">
-    <div class="td td-nombre">
-      <div class="mov-avatar">💹</div>
-      <div class="mov-name-wrap">
-        <span class="mov-nombre">Freelance web</span>
-        <span class="mov-cat">Negocios y ventas</span>
-      </div>
-    </div>
     <div class="td td-fecha">
-      <span class="fecha-dia">15/03/2024</span>
-      <span class="fecha-hora">12:00</span>
+      <span class="fecha-dia">{{ mov.fecha | date:'dd/MM/yyyy' }}</span>
+      <span class="fecha-hora">{{ mov.fecha | date:'HH:mm' }}</span>
     </div>
-    <div class="td">Negocios y ventas</div>
-    <div class="td td-desc"><span class="mov-desc-tabla">Proyecto cliente X</span></div>
-    <div class="td td-right"><span class="mov-importe ingreso-color">+350,00 €</span></div>
-    <div class="td td-acciones">
-      <button class="btn-accion btn-editar" title="Editar">✏️</button>
-      <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
-    </div>
-  </div>
 
-  <div class="tabla-row tabla-row-mov row-gasto">
-    <div class="td td-nombre">
-      <div class="mov-avatar">🎮</div>
-      <div class="mov-name-wrap">
-        <span class="mov-nombre">Spotify</span>
-        <span class="mov-cat">Ocio</span>
-      </div>
+    <div class="td">{{ mov.categoria }}</div>
+
+    <div class="td td-desc">
+      <span class="mov-desc-tabla">{{ mov.descripcion || '—' }}</span>
     </div>
-    <div class="td td-fecha">
-      <span class="fecha-dia">19/03/2024</span>
-      <span class="fecha-hora">18:00</span>
+
+    <div class="td td-right">
+      <span class="mov-importe" [class.ingreso-color]="mov.tipo === 'ingreso'"
+        [class.gasto-color]="mov.tipo === 'gasto'">
+        {{ mov.tipo === 'ingreso' ? '+' : '-' }}{{ mov.cantidad | number:'1.2-2' }} €
+      </span>
     </div>
-    <div class="td">Ocio</div>
-    <div class="td td-desc"><span class="mov-desc-tabla">—</span></div>
-    <div class="td td-right"><span class="mov-importe gasto-color">-9,99 €</span></div>
+
     <div class="td td-acciones">
       <button class="btn-accion btn-editar" title="Editar">✏️</button>
       <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
     </div>
+
   </div>
+  }
+
+  @empty {
+  <div class="empty-state">No hay movimientos registrados</div>
+  }
 
 </div>
