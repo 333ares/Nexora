@@ -66,7 +66,9 @@ class MovimientosController extends Controller
     public function listarMovimientos(Request $request)
     {
         // Cogemos todos los movimientos del usuario que ha hecho la petición
-        $movimientos = Movimientos::where('usuario_id', $request->user()->IDusuario)->get();
+        $movimientos = Movimientos::where('usuario_id', $request->user()->IDusuario)
+            ->orderBy('fecha', 'desc')
+            ->get();
 
         // Si no hay movimientos, mostramos error
         if (count($movimientos) <= 0) {

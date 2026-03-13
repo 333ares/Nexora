@@ -20,7 +20,7 @@ export const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuario,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'registro',
@@ -29,7 +29,7 @@ export const routes: Routes = [
   {
     path: 'planes',
     component: Planes,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
 
   {
@@ -49,7 +49,7 @@ export const routes: Routes = [
   {
     path: 'contacto',
     component: Contacto,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: '',
