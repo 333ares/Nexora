@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-academia',
-  imports: [],
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    RouterLink,         
+    RouterLinkActive   
+  ],
   templateUrl: './academia.html',
-  styleUrl: './academia.css',
+  styleUrls: ['./academia.css']
 })
-export class Academia {
-
-}
+export class Academia {}
