@@ -26,6 +26,7 @@ export class Auth {
     };
   }
 
+  // --- AUTENTICACIÓN ---
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password }, {
       headers: { 'Content-Type': 'application/json' }
@@ -44,6 +45,7 @@ export class Auth {
     });
   }
 
+  // --- USUARIO ---
   actualizarUsuario(datos: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/usuario`, datos, {
       headers: this.getHeaders()
@@ -56,6 +58,26 @@ export class Auth {
     });
   }
 
+  // --- ESTADISTICAS --- 
+  getBalanceTotal(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/balanceTotal`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  getIngresoMensual(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/ingresoMensual`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  getGastoMensual(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/gastoMensual`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  // --- LOCAL STORAGE ---
   saveToken(token: string) {
     if (this.isBrowser()) localStorage.setItem('token', token);
   }

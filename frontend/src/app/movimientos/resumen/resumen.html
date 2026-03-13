@@ -4,9 +4,9 @@
 
     <div class="card card-white">
       <div class="balance-top">
-        <span class="balance-label">Saldo Banco</span>
+        <span class="balance-label">Saldo banco</span>
       </div>
-      <div class="balance-amount">2.552,51 €</div>
+      <div class="balance-amount">{{ balanceTotal | number:'1.2-2' }} €</div>
     </div>
 
     <div class="card card-white">
@@ -39,14 +39,14 @@
           <span class="stat-label">Total ingresos</span>
           <div class="stat-icon stat-icon-green">💰</div>
         </div>
-        <div class="stat-amount ingreso-color">3.100,00 €</div>
+        <div class="stat-amount ingreso-color">{{ ingresoMensual | number:'1.2-2' }} €</div>
       </div>
       <div class="card card-stat">
         <div class="stat-top">
           <span class="stat-label">Total gastos</span>
           <div class="stat-icon stat-icon-red">💸</div>
         </div>
-        <div class="stat-amount gasto-color">547,49 €</div>
+        <div class="stat-amount gasto-color">{{ gastoMensual | number:'1.2-2' }} €</div>
       </div>
       <div class="card card-stat">
         <div class="stat-top">
