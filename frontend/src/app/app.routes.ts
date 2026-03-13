@@ -12,11 +12,16 @@ import { Retos } from './movimientos/retos/retos';
 import { Lista } from './movimientos/lista/lista';
 import { Resumen } from './movimientos/resumen/resumen';
 import { Inicio } from './inicio/inicio';
+import { Servicios } from './servicios/servicios';
 
 export const routes: Routes = [  
   {
     path: 'inicio',
     component: Inicio,
+  },
+  {
+    path: 'servicios',
+    component: Servicios,
   },
   {
     path: 'login', //es lo que aparece en la URL.

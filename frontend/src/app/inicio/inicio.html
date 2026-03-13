@@ -6,7 +6,7 @@
   </a>
   <div class="nav-links">
     <a routerLink="/servicios">Servicios</a>
-    <a routerLink="/planes-suscripcion">Planes</a>
+    <a routerLink="/planes">Planes</a>
     <a routerLink="/faqs">FAQ</a>
     <a routerLink="/acerca-de">Nosotros</a>
     <a routerLink="/contacto">Contacto</a>
@@ -19,10 +19,19 @@
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero__circle hero__circle--1"></div>
+  <div class="hero__circle hero__circle--2"></div>
+  <div class="hero__circle hero__circle--3"></div>
+  <div class="hero__circle hero__circle--4"></div>
+  <div class="hero__circle hero__circle--5"></div>
+  <div class="hero__circle hero__circle--6"></div>
+  <div class="hero__circle hero__circle--7"></div>
+  <div class="hero__circle hero__circle--8"></div>
+
   <div class="hero-pattern"></div>
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-eyebrow"><span>🌱</span> Finanzas personales</div>
+      <div class="hero-eyebrow">Finanzas personales</div>
       <h1 class="hero-title">
         Controla tu dinero,<br>
         <em>transforma tus hábitos</em>
@@ -54,10 +63,10 @@
         <p>Nexora nació con un objetivo claro: ayudarte a entender a dónde va tu dinero. Con un registro monitorizado de gastos e ingresos, podrás identificar patrones, detectar excesos y tomar decisiones más inteligentes.</p>
         <p>Además, conectamos a usuarios con profesionales del ámbito económico que comparten contenido de valor para que aprendas a gestionar mejor tus finanzas.</p>
         <ul class="features-list">
-          <li><span class="icon">📊</span> Registra gastos e ingresos fácilmente</li>
-          <li><span class="icon">🎓</span> Accede a la academia con contenido profesional</li>
-          <li><span class="icon">🤖</span> Kiro, tu consejero financiero con IA</li>
-          <li><span class="icon">🏆</span> Retos mensuales para mejorar tus hábitos</li>
+          <li>Registra gastos e ingresos fácilmente</li>
+          <li>Accede a la academia con contenido profesional</li>
+          <li>Kiro, tu consejero financiero con IA</li>
+          <li>Retos mensuales para mejorar tus hábitos</li>
         </ul>
       </div>
       <div class="stats-cards">
@@ -92,32 +101,26 @@
     </div>
     <div class="func-grid">
       <div class="func-card">
-        <div class="func-icon func-icon--green">📈</div>
         <h3>Registro de gastos e ingresos</h3>
         <p>Añade tus movimientos en segundos y tenlos siempre organizados y accesibles.</p>
       </div>
       <div class="func-card">
-        <div class="func-icon func-icon--green">📉</div>
         <h3>Estadísticas avanzadas</h3>
         <p>Visualiza tendencias, categorías y evolución de tu economía con gráficas claras.</p>
       </div>
       <div class="func-card">
-        <div class="func-icon func-icon--dark">🤖</div>
         <h3>Kiro — Consejero con IA</h3>
         <p>Tu asistente financiero personal disponible 24/7 para responder dudas y darte recomendaciones personalizadas.</p>
       </div>
       <div class="func-card">
-        <div class="func-icon func-icon--green">🎓</div>
         <h3>Academia financiera</h3>
         <p>Accede a contenido creado por profesionales del sector económico: artículos, guías y cursos.</p>
       </div>
       <div class="func-card">
-        <div class="func-icon func-icon--green">🏆</div>
         <h3>Retos mensuales</h3>
         <p>Ponte a prueba con desafíos financieros diseñados para mejorar tus hábitos poco a poco.</p>
       </div>
       <div class="func-card">
-        <div class="func-icon func-icon--green">🚫</div>
         <h3>Sin anuncios</h3>
         <p>Con los planes de pago, disfruta de una experiencia limpia, sin interrupciones publicitarias.</p>
       </div>
@@ -157,7 +160,7 @@
       </div>
     </div>
     <div class="section-link-center">
-      <a routerLink="/planes-suscripcion" class="btn-link">Ver todos los planes →</a>
+      <a routerLink="/planes" class="btn-link">Ver todos los planes →</a>
     </div>
   </div>
 </section>
@@ -172,32 +175,26 @@
     </div>
     <div class="benefits-grid">
       <div class="benefit-card">
-        <span class="big-icon">🎯</span>
         <h3>Simple y visual</h3>
         <p>Interfaz intuitiva pensada para que cualquier persona pueda usarla desde el primer día.</p>
       </div>
       <div class="benefit-card">
-        <span class="big-icon">🔒</span>
         <h3>Tus datos, seguros</h3>
         <p>Tu información financiera es privada y está protegida. Nunca la compartimos con terceros.</p>
       </div>
       <div class="benefit-card">
-        <span class="big-icon">💡</span>
         <h3>Aprende mientras gestionas</h3>
         <p>La academia y las recomendaciones de Kiro te enseñan a tomar mejores decisiones cada día.</p>
       </div>
       <div class="benefit-card">
-        <span class="big-icon">🌱</span>
         <h3>Empieza gratis</h3>
         <p>El plan Free es para siempre. Mejora cuando lo necesites, sin presiones.</p>
       </div>
       <div class="benefit-card">
-        <span class="big-icon">📆</span>
         <h3>Hábitos a largo plazo</h3>
         <p>Los retos mensuales te ayudan a construir una relación sana con el dinero de forma progresiva.</p>
       </div>
       <div class="benefit-card">
-        <span class="big-icon">👨‍💼</span>
         <h3>Contenido profesional</h3>
         <p>Profesionales del sector económico publican guías y artículos exclusivos para nuestra comunidad.</p>
       </div>
@@ -234,13 +231,13 @@
     </div>
     <div class="faq-list">
       @for (item of faqItems; track item.id) {
-        <div class="faq-item" [class.open]="faqAbierta === item.id">
-          <button class="faq-question" (click)="toggleFaq(item.id)">
+        <details class="faq-item">
+          <summary class="faq-question">
             {{ item.pregunta }}
             <span class="faq-chevron">▼</span>
-          </button>
+          </summary>
           <div class="faq-answer">{{ item.respuesta }}</div>
-        </div>
+        </details>
       }
     </div>
     <div class="section-link-center" style="margin-top: 32px;">
@@ -286,40 +283,7 @@
   </div>
 </section>
 
-<!-- EQUIPO ADDA -->
-<section class="equipo" id="equipo">
-  <div class="container">
-    <div class="equipo-header">
-      <p class="section-eyebrow">Detrás de Nexora</p>
-      <div class="adda-logo">
-        <div class="adda-text">ADDA</div>
-        <div class="adda-sub">El equipo de desarrolladores web que construye Nexora</div>
-      </div>
-    </div>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar av-a1">A</div>
-        <h4>Alejandro Crespo</h4>
-        <div class="role">Desarrollador Web</div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar av-d1">D</div>
-        <h4>Dayron Varsendan</h4>
-        <div class="role">Desarrollador Web</div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar av-d2">D</div>
-        <h4>Dani Alcaraz</h4>
-        <div class="role">Desarrollador Web</div>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar av-a2">A</div>
-        <h4>Ares Gomez</h4>
-        <div class="role">Desarrollador Web</div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <!-- FOOTER -->
 <footer>
@@ -329,12 +293,12 @@
         <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="32" height="32" style="object-fit: contain;" />
         <span>NEXORA</span>
       </a>
-      <p>Plataforma de gestión de gastos y hábitos financieros. Desarrollada con ❤️ por el equipo ADDA.</p>
+      <p>Plataforma de gestión de gastos y hábitos financieros. Desarrollada por el equipo ADDA.</p>
     </div>
     <div class="footer-col">
       <h5>Producto</h5>
       <a routerLink="/servicios">Servicios</a>
-      <a routerLink="/planes-suscripcion">Planes</a>
+      <a routerLink="/planes">Planes</a>
       <a routerLink="/registro">Registro</a>
     </div>
     <div class="footer-col">

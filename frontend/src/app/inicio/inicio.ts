@@ -17,7 +17,6 @@ interface FaqItem {
 export class Inicio {
 
   emailNewsletter: string = '';
-  faqAbierta: number = -1;
 
   // Solo 3 preguntas en la home (resumen)
   faqItems: FaqItem[] = [
@@ -38,9 +37,6 @@ export class Inicio {
     }
   ];
 
-  toggleFaq(id: number): void {
-    this.faqAbierta = this.faqAbierta === id ? -1 : id;
-  }
 
   suscribirse(): void {
     if (this.emailNewsletter) {
