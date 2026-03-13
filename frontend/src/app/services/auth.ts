@@ -77,6 +77,12 @@ export class Auth {
     });
   }
 
+  getHistorialMovimientos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/movimientos`, {
+      headers: this.getHeaders()
+    });
+  }
+
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
     if (this.isBrowser()) localStorage.setItem('token', token);
