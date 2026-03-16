@@ -13,6 +13,9 @@ import { Lista } from './movimientos/lista/lista';
 import { Resumen } from './movimientos/resumen/resumen';
 import { Inicio } from './inicio/inicio';
 import { Servicios } from './servicios/servicios';
+import { AcercaDe } from './acerca-de/acerca-de';
+import { Faqs } from './faqs/faqs';
+import { PoliticaPrivacidad } from './politica-privacidad/politica-privacidad';
 
 export const routes: Routes = [  
   {
@@ -22,6 +25,23 @@ export const routes: Routes = [
   {
     path: 'servicios',
     component: Servicios,
+  }, 
+  {
+    path: 'planes',
+    component: Planes,
+    //canActivate: [AuthGuard]
+  },
+  {
+    path: 'acerca-de',
+    component: AcercaDe,
+  },
+  {
+    path: 'faqs',
+    component: Faqs,
+  },
+  {
+    path: 'politica-privacidad',
+    component: PoliticaPrivacidad,
   },
   {
     path: 'login', //es lo que aparece en la URL.
@@ -36,11 +56,7 @@ export const routes: Routes = [
     path: 'registro',
     component: Registro,
   },
-  {
-    path: 'planes',
-    component: Planes,
-    //canActivate: [AuthGuard]
-  },
+
 
   {
     path: 'movimientos',
