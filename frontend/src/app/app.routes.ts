@@ -13,6 +13,10 @@ import { Lista } from './movimientos/lista/lista';
 import { Resumen } from './movimientos/resumen/resumen';
 import { Inicio } from './inicio/inicio';
 import { LoginGuard } from './guards/login-guard';
+import { Academia } from './academia/academia';
+import { VerVideo } from './academia/ver-video/ver-video';
+import { AdministrarContenido } from './academia/administrar-contenido/administrar-contenido';
+import { AcademiaHome } from './academia/academia-home/academia-home';
 
 export const routes: Routes = [  
   {
@@ -27,7 +31,7 @@ export const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuario,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'registro',
@@ -37,7 +41,7 @@ export const routes: Routes = [
   {
     path: 'planes',
     component: Planes,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
 
   {
@@ -51,13 +55,32 @@ export const routes: Routes = [
       { path: 'estadisticas', component: Estadisticas },
       { path: 'retos', component: Retos },
       { path: '', redirectTo: 'resumen', pathMatch: 'full' }
-      
+
     ]
   },
   {
     path: 'contacto',
     component: Contacto,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'academia',
+    component: Academia,
+    // canActivate: [AuthGuard],  
+    children: [
+      {
+        path: '',
+        component: AcademiaHome,          // pantalla principal (slider + popular)
+      },
+      {
+        path: 'ver-video',
+        component: VerVideo,              // vista detalle de video (estilo YouTube)
+      },
+      {
+        path: 'administrar',
+        component: AdministrarContenido,  // gestión de contenido propio
+      },
+    ],
   },
   {
     path: '',

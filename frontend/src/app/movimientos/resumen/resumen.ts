@@ -14,6 +14,7 @@ export class Resumen implements OnInit {
   balanceTotal: number = 0.00;
   ingresoMensual: number = 0.00;
   gastoMensual: number = 0.00;
+  movimientos: any[] = [];
 
   constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
 
@@ -21,6 +22,7 @@ export class Resumen implements OnInit {
     this.cargarBalanceTotal();
     this.cargarIngresoMensual();
     this.cargarGastoMensual();
+    this.cargarHistorialMovimientos();
   }
 
   cargarBalanceTotal(): void {
@@ -36,6 +38,22 @@ export class Resumen implements OnInit {
     });
   }
 
+  cargarHistorialMovimientos(): void {
+    this.authService.getHistorialMovimientos().subscribe({
+      next: (response) => {
+        this.movimientos = response.movimientos;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          this.movimientos = [];
+        } else {
+          console.error('Error al obtener el historial:', err);
+        }
+      }
+    });
+  }
+  
   cargarIngresoMensual(): void {
     this.authService.getIngresoMensual().subscribe({
       next: (response) => {

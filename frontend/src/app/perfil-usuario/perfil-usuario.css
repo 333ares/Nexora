@@ -12,13 +12,12 @@
 :host {
   display: flex;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
   background: linear-gradient(to bottom, #ABDE91, #4E9C25);
   font-family: 'Onest', 'Lato';
-  padding: 24px;
+  padding: 110px 40px 40px 40px;
+  box-sizing: border-box;
 }
-
 
 /* 
    CARD — contenedor principal del modal/pantalla
@@ -34,8 +33,10 @@
   background: #d8eed8;
   border-radius: 24px;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1300px;
+  margin: 0 auto;
   box-shadow: 0 16px 56px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
 }
 
 /* main-layout es transparente al grid; sus hijos participan
