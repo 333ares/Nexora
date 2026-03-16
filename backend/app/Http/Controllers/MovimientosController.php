@@ -37,14 +37,8 @@ class MovimientosController extends Controller
             'usuario_id' => $request->user()->IDusuario,
         ]);
 
-        // Si se ha podido crear, mostramos un mensaje de éxito
-        if ($movimiento) {
-            return response()->json([
-                'message' => 'Movimiento añadido correctamente'
-            ], 201);
-
-            // Si no, mostramos el error
-        } else {
+        // Si no se ha podido crear, mostramos un error
+        if (!$movimiento) {
             return response()->json([
                 'message' => 'error',
                 'errors' => 'No se ha podido añadir el movimiento'
@@ -63,12 +57,18 @@ class MovimientosController extends Controller
                 'balance_total' => $balanceUsuario - $cantidad
             ]);
         }
+
+        return response()->json([
+            'message' => 'Movimiento añadido correctamente'
+        ], 201);
     }
 
     public function listarMovimientos(Request $request)
     {
         // Cogemos todos los movimientos del usuario que ha hecho la petición
-        $movimientos = Movimientos::where('usuario_id', $request->user()->IDusuario)->get();
+        $movimientos = Movimientos::where('usuario_id', $request->user()->IDusuario)
+            ->orderBy('fecha', 'desc')
+            ->get();
 
         // Si no hay movimientos, mostramos error
         if (count($movimientos) <= 0) {

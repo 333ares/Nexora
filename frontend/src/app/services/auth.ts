@@ -1,7 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +9,15 @@ import { Observable } from 'rxjs';
 export class Auth {
 
   private apiUrl = 'http://localhost:8000/api';
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  isLoggedIn$ = this.loggedIn.asObservable(); // Observable publico
 
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+  ) {
+    this.loggedIn.next(!!this.getToken())
+  }
 
   private isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
@@ -26,6 +30,7 @@ export class Auth {
     };
   }
 
+  // --- AUTENTICACIÓN ---
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password }, {
       headers: { 'Content-Type': 'application/json' }
@@ -44,6 +49,7 @@ export class Auth {
     });
   }
 
+  // --- USUARIO ---
   actualizarUsuario(datos: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/usuario`, datos, {
       headers: this.getHeaders()
@@ -56,8 +62,37 @@ export class Auth {
     });
   }
 
+  // --- ESTADISTICAS --- 
+  getBalanceTotal(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/balanceTotal`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  getIngresoMensual(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/ingresoMensual`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  getGastoMensual(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/gastoMensual`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  getHistorialMovimientos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/movimientos`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  // --- LOCAL STORAGE ---
   saveToken(token: string) {
-    if (this.isBrowser()) localStorage.setItem('token', token);
+    if (this.isBrowser()) {
+      localStorage.setItem('token', token);
+      this.loggedIn.next(true); // avisar que está logueado
+    }
   }
 
   getToken(): string | null {
@@ -65,7 +100,10 @@ export class Auth {
   }
 
   removeToken() {
-    if (this.isBrowser()) localStorage.removeItem('token');
+    if (this.isBrowser()) {
+      localStorage.removeItem('token');
+      this.loggedIn.next(false); // avisar que ha cerrado sesión
+    }
   }
 
   saveUsuario(usuario: any) {

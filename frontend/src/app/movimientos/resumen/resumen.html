@@ -4,9 +4,9 @@
 
     <div class="card card-white">
       <div class="balance-top">
-        <span class="balance-label">Saldo Banco</span>
+        <span class="balance-label">Saldo banco</span>
       </div>
-      <div class="balance-amount">2.552,51 €</div>
+      <div class="balance-amount">{{ balanceTotal | number:'1.2-2' }} €</div>
     </div>
 
     <div class="card card-white">
@@ -39,14 +39,14 @@
           <span class="stat-label">Total ingresos</span>
           <div class="stat-icon stat-icon-green">💰</div>
         </div>
-        <div class="stat-amount ingreso-color">3.100,00 €</div>
+        <div class="stat-amount ingreso-color">{{ ingresoMensual | number:'1.2-2' }} €</div>
       </div>
       <div class="card card-stat">
         <div class="stat-top">
           <span class="stat-label">Total gastos</span>
           <div class="stat-icon stat-icon-red">💸</div>
         </div>
-        <div class="stat-amount gasto-color">547,49 €</div>
+        <div class="stat-amount gasto-color">{{ gastoMensual | number:'1.2-2' }} €</div>
       </div>
       <div class="card card-stat">
         <div class="stat-top">
@@ -158,70 +158,43 @@
         <span class="th th-right">Tipo</span>
       </div>
 
-      <div class="tabla-row tabla-row-mov-resumen row-ingreso">
+      @for (mov of movimientos; track mov.id) {
+      <div class="tabla-row tabla-row-mov-resumen" [class.row-ingreso]="mov.tipo === 'ingreso'"
+        [class.row-gasto]="mov.tipo === 'gasto'">
+
         <div class="td td-nombre">
-          <div class="mov-avatar">💼</div>
+          <div class="mov-avatar">{{ mov.tipo === 'ingreso' ? '💰' : '💸' }}</div>
           <div class="mov-name-wrap">
-            <span class="mov-nombre">Nómina Marzo</span>
-            <span class="mov-cat">Sueldo</span>
+            <span class="mov-nombre">{{ mov.descripcion || 'Sin descripción' }}</span>
+            <span class="mov-cat">{{ mov.categoria }}</span>
           </div>
         </div>
-        <div class="td td-fecha">
-          <span class="fecha-dia">20/03/2024</span>
-          <span class="fecha-hora">09:00</span>
-        </div>
-        <div class="td td-right"><span class="mov-importe ingreso-color">+1.800,00 €</span></div>
-        <div class="td td-right"><span class="badge badge-ok">Ingreso</span></div>
-      </div>
 
-      <div class="tabla-row tabla-row-mov-resumen row-gasto">
-        <div class="td td-nombre">
-          <div class="mov-avatar">🛒</div>
-          <div class="mov-name-wrap">
-            <span class="mov-nombre">Mercadona</span>
-            <span class="mov-cat">Supervivencia</span>
-          </div>
-        </div>
         <div class="td td-fecha">
-          <span class="fecha-dia">20/03/2024</span>
-          <span class="fecha-hora">10:32</span>
+          <span class="fecha-dia">{{ mov.fecha | date:'dd/MM/yyyy' }}</span>
+          <span class="fecha-hora">{{ mov.fecha | date:'HH:mm' }}</span>
         </div>
-        <div class="td td-right"><span class="mov-importe gasto-color">-87,50 €</span></div>
-        <div class="td td-right"><span class="badge badge-red">Gasto</span></div>
-      </div>
 
-      <div class="tabla-row tabla-row-mov-resumen row-ingreso">
-        <div class="td td-nombre">
-          <div class="mov-avatar">💹</div>
-          <div class="mov-name-wrap">
-            <span class="mov-nombre">Freelance web</span>
-            <span class="mov-cat">Negocios y ventas</span>
-          </div>
+        <div class="td td-right">
+          <span class="mov-importe" [class.ingreso-color]="mov.tipo === 'ingreso'"
+            [class.gasto-color]="mov.tipo === 'gasto'">
+            {{ mov.tipo === 'ingreso' ? '+' : '-' }}{{ mov.cantidad | number:'1.2-2' }} €
+          </span>
         </div>
-        <div class="td td-fecha">
-          <span class="fecha-dia">15/03/2024</span>
-          <span class="fecha-hora">12:00</span>
-        </div>
-        <div class="td td-right"><span class="mov-importe ingreso-color">+350,00 €</span></div>
-        <div class="td td-right"><span class="badge badge-ok">Ingreso</span></div>
-      </div>
 
-      <div class="tabla-row tabla-row-mov-resumen row-gasto">
-        <div class="td td-nombre">
-          <div class="mov-avatar">🎮</div>
-          <div class="mov-name-wrap">
-            <span class="mov-nombre">Spotify</span>
-            <span class="mov-cat">Ocio</span>
-          </div>
+        <div class="td td-right">
+          <span class="badge" [class.badge-ok]="mov.tipo === 'ingreso'" [class.badge-red]="mov.tipo === 'gasto'">
+            {{ mov.tipo === 'ingreso' ? 'Ingreso' : 'Gasto' }}
+          </span>
         </div>
-        <div class="td td-fecha">
-          <span class="fecha-dia">19/03/2024</span>
-          <span class="fecha-hora">18:00</span>
-        </div>
-        <div class="td td-right"><span class="mov-importe gasto-color">-9,99 €</span></div>
-        <div class="td td-right"><span class="badge badge-red">Gasto</span></div>
-      </div>
 
+      </div>
+      }
+
+      @empty {
+      <div class="tabla-row">
+        <span>No hay movimientos registrados</span>
+      </div>
+      }
     </div>
   </div>
-</div>

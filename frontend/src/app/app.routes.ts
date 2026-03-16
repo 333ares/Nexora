@@ -16,6 +16,10 @@ import { Servicios } from './servicios/servicios';
 import { AcercaDe } from './acerca-de/acerca-de';
 import { Faqs } from './faqs/faqs';
 import { PoliticaPrivacidad } from './politica-privacidad/politica-privacidad';
+import { Academia } from './academia/academia';
+import { VerVideo } from './academia/ver-video/ver-video';
+import { AdministrarContenido } from './academia/administrar-contenido/administrar-contenido';
+import { AcademiaHome } from './academia/academia-home/academia-home';
 
 export const routes: Routes = [  
   {
@@ -50,14 +54,12 @@ export const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuario,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'registro',
     component: Registro,
   },
-
-
   {
     path: 'movimientos',
     component: Movimientos,
@@ -69,13 +71,32 @@ export const routes: Routes = [
       { path: 'estadisticas', component: Estadisticas },
       { path: 'retos', component: Retos },
       { path: '', redirectTo: 'resumen', pathMatch: 'full' }
-      
+
     ]
   },
   {
     path: 'contacto',
     component: Contacto,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'academia',
+    component: Academia,
+    // canActivate: [AuthGuard],  
+    children: [
+      {
+        path: '',
+        component: AcademiaHome,          // pantalla principal (slider + popular)
+      },
+      {
+        path: 'ver-video',
+        component: VerVideo,              // vista detalle de video (estilo YouTube)
+      },
+      {
+        path: 'administrar',
+        component: AdministrarContenido,  // gestión de contenido propio
+      },
+    ],
   },
   {
     path: '',
