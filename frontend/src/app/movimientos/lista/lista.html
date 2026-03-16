@@ -3,9 +3,12 @@
   <div class="historial-header">
     <span class="section-title" style="margin:0;">Movimientos</span>
     <div class="historial-actions">
-      <button class="btn-filter active-filter">Todos</button>
-      <button class="btn-filter">Gastos</button>
-      <button class="btn-filter">Ingresos</button>
+      <button class="btn-filter" [class.active-filter]="filtroActivo === 'todos'"
+        (click)="filtrar('todos')">Todos</button>
+      <button class="btn-filter" [class.active-filter]="filtroActivo === 'gasto'"
+        (click)="filtrar('gasto')">Gastos</button>
+      <button class="btn-filter" [class.active-filter]="filtroActivo === 'ingreso'"
+        (click)="filtrar('ingreso')">Ingresos</button>
       <button class="btn-mas">+ Añadir</button>
     </div>
   </div>
@@ -19,7 +22,7 @@
     <span class="th th-right">Acciones</span>
   </div>
 
-  @for (mov of movimientos; track mov.id) {
+  @for (mov of movimientosFiltrados; track mov.id) {
   <div class="tabla-row tabla-row-mov" [class.row-ingreso]="mov.tipo === 'ingreso'"
     [class.row-gasto]="mov.tipo === 'gasto'">
 
@@ -50,7 +53,7 @@
     </div>
 
     <div class="td td-acciones">
-      <button class="btn-accion btn-editar" title="Editar">✏️</button>
+      <button class="btn-accion btn-editar" title="Editar" >✏️</button>
       <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
     </div>
 
