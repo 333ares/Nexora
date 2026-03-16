@@ -12,6 +12,7 @@ import { Retos } from './movimientos/retos/retos';
 import { Lista } from './movimientos/lista/lista';
 import { Resumen } from './movimientos/resumen/resumen';
 import { Inicio } from './inicio/inicio';
+import { LoginGuard } from './guards/login-guard';
 
 export const routes: Routes = [  
   {
@@ -21,6 +22,7 @@ export const routes: Routes = [
   {
     path: 'login', //es lo que aparece en la URL.
     component: Login, // Login es el componente que se mostrará
+    canActivate: [LoginGuard]
   },
   {
     path: 'perfil',
@@ -30,6 +32,7 @@ export const routes: Routes = [
   {
     path: 'registro',
     component: Registro,
+    canActivate: [LoginGuard]
   },
   {
     path: 'planes',

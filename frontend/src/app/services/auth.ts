@@ -34,7 +34,7 @@ export class Auth {
   }
 
   registro(datos: { nombre: string, apellidos: string, usuario: string, email: string, password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/usuario`, datos, {
+    return this.http.post(`${this.apiUrl}/usuarios`, datos, {
       headers: { 'Content-Type': 'application/json' }
     });
   }
