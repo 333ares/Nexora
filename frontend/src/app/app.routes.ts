@@ -11,12 +11,42 @@ import { Estadisticas } from './movimientos/estadisticas/estadisticas';
 import { Retos } from './movimientos/retos/retos';
 import { Lista } from './movimientos/lista/lista';
 import { Resumen } from './movimientos/resumen/resumen';
+import { Inicio } from './inicio/inicio';
+import { Servicios } from './servicios/servicios';
+import { AcercaDe } from './acerca-de/acerca-de';
+import { Faqs } from './faqs/faqs';
+import { PoliticaPrivacidad } from './politica-privacidad/politica-privacidad';
 import { Academia } from './academia/academia';
 import { VerVideo } from './academia/ver-video/ver-video';
 import { AdministrarContenido } from './academia/administrar-contenido/administrar-contenido';
 import { AcademiaHome } from './academia/academia-home/academia-home';
 
-export const routes: Routes = [
+export const routes: Routes = [  
+  {
+    path: 'inicio',
+    component: Inicio,
+  },
+  {
+    path: 'servicios',
+    component: Servicios,
+  }, 
+  {
+    path: 'planes',
+    component: Planes,
+    //canActivate: [AuthGuard]
+  },
+  {
+    path: 'acerca-de',
+    component: AcercaDe,
+  },
+  {
+    path: 'faqs',
+    component: Faqs,
+  },
+  {
+    path: 'politica-privacidad',
+    component: PoliticaPrivacidad,
+  },
   {
     path: 'login', //es lo que aparece en la URL.
     component: Login, // Login es el componente que se mostrará
@@ -30,12 +60,6 @@ export const routes: Routes = [
     path: 'registro',
     component: Registro,
   },
-  {
-    path: 'planes',
-    component: Planes,
-    canActivate: [AuthGuard]
-  },
-
   {
     path: 'movimientos',
     component: Movimientos,
