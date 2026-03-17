@@ -22,7 +22,7 @@ import { VerVideo } from './academia/ver-video/ver-video';
 import { AdministrarContenido } from './academia/administrar-contenido/administrar-contenido';
 import { AcademiaHome } from './academia/academia-home/academia-home';
 
-export const routes: Routes = [  
+export const routes: Routes = [
   {
     path: 'inicio',
     component: Inicio,
@@ -30,7 +30,7 @@ export const routes: Routes = [
   {
     path: 'servicios',
     component: Servicios,
-  }, 
+  },
   {
     path: 'planes',
     component: Planes,
@@ -66,7 +66,7 @@ export const routes: Routes = [
   {
     path: 'movimientos',
     component: Movimientos,
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       { path: 'resumen', component: Resumen },
       { path: 'lista', component: Lista },
@@ -85,7 +85,7 @@ export const routes: Routes = [
   {
     path: 'academia',
     component: Academia,
-    canActivate: [AuthGuard],  
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
