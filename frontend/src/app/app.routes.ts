@@ -82,7 +82,7 @@ export const routes: Routes = [
   {
     path: 'academia',
     component: Academia,
-    // canActivate: [AuthGuard],  
+    canActivate: [AuthGuard],  
     children: [
       {
         path: '',
@@ -100,8 +100,8 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el login
+    redirectTo: 'inicio',
+    pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el inicio
   }
 
 
