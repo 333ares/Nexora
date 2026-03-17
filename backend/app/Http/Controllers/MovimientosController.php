@@ -27,10 +27,21 @@ class MovimientosController extends Controller
             ], 400);
         }
 
+        $cantidad = $request->cantidad;
+        $balanceUsuario = $request->user()->balance_total;
+
+        // Si el tipo es gasto y el balance es menor que la cantidad, mostramos error
+        if ($request->tipo === 'gasto' && $balanceUsuario < $cantidad) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Saldo insuficiente para realizar este gasto'
+            ], 400);
+        }
+
         // Creamos un nuevo movimiento
         $movimiento = Movimientos::create([
             'tipo' => $request->tipo,
-            'cantidad' => $request->cantidad,
+            'cantidad' => $cantidad,
             'categoria' => $request->categoria,
             'descripcion' => $request->descripcion,
             'fecha' => Carbon::now(),
@@ -45,9 +56,7 @@ class MovimientosController extends Controller
             ], 400);
         }
 
-        $cantidad = $request->cantidad;
-        $balanceUsuario = $request->user()->balance_total;
-
+        // Actualizamos el balance del usuario
         if ($request->tipo === 'ingreso') {
             $request->user()->update([
                 'balance_total' => $balanceUsuario + $cantidad
@@ -58,6 +67,7 @@ class MovimientosController extends Controller
             ]);
         }
 
+        // Devolvemos un mensaje de éxito
         return response()->json([
             'message' => 'Movimiento añadido correctamente'
         ], 201);
