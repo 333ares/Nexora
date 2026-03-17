@@ -33,7 +33,7 @@ export const routes: Routes = [
   {
     path: 'planes',
     component: Planes,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'acerca-de',
@@ -82,7 +82,7 @@ export const routes: Routes = [
   {
     path: 'academia',
     component: Academia,
-    // canActivate: [AuthGuard],  
+    canActivate: [AuthGuard],  
     children: [
       {
         path: '',
