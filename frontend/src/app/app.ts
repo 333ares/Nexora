@@ -15,7 +15,7 @@ export class App implements OnInit {
   isLoggedIn: boolean = false;
   showHeader: boolean = false;
 
-  private rutasSinHeader = ['/login', '/registro', '/planes', '/contacto'];
+  private rutasConHeader = ['/academia', '/movimientos', '/perfil'];
 
   constructor(
     private authService: Auth,
@@ -40,7 +40,7 @@ export class App implements OnInit {
 
   private actualizarHeader(): void {
     const rutaActual = this.router.url;
-    const esRutaSinHeader = this.rutasSinHeader.some(ruta => rutaActual.startsWith(ruta));
-    this.showHeader = this.isLoggedIn && !esRutaSinHeader;
+    const esRutaConHeader = this.rutasConHeader.some(ruta => rutaActual.startsWith(ruta));
+    this.showHeader = this.isLoggedIn && esRutaConHeader;
   }
 }

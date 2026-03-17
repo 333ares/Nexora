@@ -48,5 +48,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reto', [RetoController::class, 'verReto']);
     Route::get('/retos', [RetoController::class, 'index']);
     Route::put('/reto', [RetoController::class, 'actualizarReto']);
-    Route::post('/reto/eliminar', [RetoController::class, 'eliminarReto']);
+    Route::delete('/reto', [RetoController::class, 'eliminarReto']);
 });

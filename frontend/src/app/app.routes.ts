@@ -12,6 +12,7 @@ import { Retos } from './movimientos/retos/retos';
 import { Lista } from './movimientos/lista/lista';
 import { Resumen } from './movimientos/resumen/resumen';
 import { Inicio } from './inicio/inicio';
+import { LoginGuard } from './guards/login-guard';
 import { Servicios } from './servicios/servicios';
 import { AcercaDe } from './acerca-de/acerca-de';
 import { Faqs } from './faqs/faqs';
@@ -50,6 +51,7 @@ export const routes: Routes = [
   {
     path: 'login', //es lo que aparece en la URL.
     component: Login, // Login es el componente que se mostrará
+    canActivate: [LoginGuard]
   },
   {
     path: 'perfil',
@@ -59,11 +61,12 @@ export const routes: Routes = [
   {
     path: 'registro',
     component: Registro,
+    canActivate: [LoginGuard]
   },
   {
     path: 'movimientos',
     component: Movimientos,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
       { path: 'resumen', component: Resumen },
       { path: 'lista', component: Lista },
@@ -101,6 +104,7 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'inicio',
+    pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el login
     pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el inicio
   }
 
