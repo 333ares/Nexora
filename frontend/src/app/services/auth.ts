@@ -1,5 +1,4 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -9,25 +8,19 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class Auth {
 
   private apiUrl = 'http://localhost:8000/api';
-  private loggedIn = new BehaviorSubject<boolean>(false);
-  isLoggedIn$ = this.loggedIn.asObservable(); // Observable publico
+  private loggedIn = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
+  isLoggedIn$ = this.loggedIn.asObservable(); // Observable público
 
-  constructor(
-    private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.loggedIn.next(!!this.getToken())
-  }
+  constructor(private http: HttpClient) { }
 
-  private isBrowser(): boolean {
-    return isPlatformBrowser(this.platformId);
-  }
-
+  // --- HEADERS ---
   private getHeaders() {
-    return {
-      'Authorization': `Bearer ${this.getToken()}`,
-      'Content-Type': 'application/json'
-    };
+    const token = this.getToken();
+
+    // Construimos los headers y agregamos Authorization solo si hay token
+    const headers: any = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    return headers;
   }
 
   // --- AUTENTICACIÓN ---
@@ -38,85 +31,66 @@ export class Auth {
   }
 
   registro(datos: { nombre: string, apellidos: string, usuario: string, email: string, password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/usuario`, datos, {
+    return this.http.post(`${this.apiUrl}/usuarios`, datos, {
       headers: { 'Content-Type': 'application/json' }
     });
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/logout`, {}, {
-      headers: this.getHeaders()
-    });
+    return this.http.post(`${this.apiUrl}/logout`, {}, { headers: this.getHeaders() });
   }
 
   // --- USUARIO ---
   actualizarUsuario(datos: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/usuario`, datos, {
-      headers: this.getHeaders()
-    });
+    return this.http.put(`${this.apiUrl}/usuario`, datos, { headers: this.getHeaders() });
   }
 
   eliminarCuenta(): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/usuario`, {
-      headers: this.getHeaders()
-    });
+    return this.http.delete(`${this.apiUrl}/usuario`, { headers: this.getHeaders() });
   }
 
-  // --- ESTADISTICAS --- 
+  // --- ESTADÍSTICAS ---
   getBalanceTotal(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/balanceTotal`, {
-      headers: this.getHeaders()
-    });
+    return this.http.get(`${this.apiUrl}/balanceTotal`, { headers: this.getHeaders() });
   }
 
   getIngresoMensual(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/ingresoMensual`, {
-      headers: this.getHeaders()
-    });
+    return this.http.get(`${this.apiUrl}/ingresoMensual`, { headers: this.getHeaders() });
   }
 
   getGastoMensual(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/gastoMensual`, {
-      headers: this.getHeaders()
-    });
+    return this.http.get(`${this.apiUrl}/gastoMensual`, { headers: this.getHeaders() });
   }
 
   getHistorialMovimientos(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/movimientos`, {
-      headers: this.getHeaders()
-    });
+    return this.http.get(`${this.apiUrl}/movimientos`, { headers: this.getHeaders() });
   }
 
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
-    if (this.isBrowser()) {
-      localStorage.setItem('token', token);
-      this.loggedIn.next(true); // avisar que está logueado
-    }
+    localStorage.setItem('token', token);
+    this.loggedIn.next(true); // avisar que está logueado
   }
 
   getToken(): string | null {
-    return this.isBrowser() ? localStorage.getItem('token') : null;
+    return localStorage.getItem('token');
   }
 
   removeToken() {
-    if (this.isBrowser()) {
-      localStorage.removeItem('token');
-      this.loggedIn.next(false); // avisar que ha cerrado sesión
-    }
+    localStorage.removeItem('token');
+    this.loggedIn.next(false); // avisar que ha cerrado sesión
   }
 
   saveUsuario(usuario: any) {
-    if (this.isBrowser()) localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem('usuario', JSON.stringify(usuario));
   }
 
   getUsuario(): any {
-    if (!this.isBrowser()) return null;
     const u = localStorage.getItem('usuario');
     return u ? JSON.parse(u) : null;
   }
 
   removeUsuario() {
-    if (this.isBrowser()) localStorage.removeItem('usuario');
+    localStorage.removeItem('usuario');
   }
 }

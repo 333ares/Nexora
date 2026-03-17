@@ -12,6 +12,7 @@ import { Retos } from './movimientos/retos/retos';
 import { Lista } from './movimientos/lista/lista';
 import { Resumen } from './movimientos/resumen/resumen';
 import { Inicio } from './inicio/inicio';
+import { LoginGuard } from './guards/login-guard';
 import { Servicios } from './servicios/servicios';
 import { AcercaDe } from './acerca-de/acerca-de';
 import { Faqs } from './faqs/faqs';
@@ -21,7 +22,7 @@ import { VerVideo } from './academia/ver-video/ver-video';
 import { AdministrarContenido } from './academia/administrar-contenido/administrar-contenido';
 import { AcademiaHome } from './academia/academia-home/academia-home';
 
-export const routes: Routes = [  
+export const routes: Routes = [
   {
     path: 'inicio',
     component: Inicio,
@@ -29,7 +30,7 @@ export const routes: Routes = [
   {
     path: 'servicios',
     component: Servicios,
-  }, 
+  },
   {
     path: 'planes',
     component: Planes,
@@ -50,6 +51,7 @@ export const routes: Routes = [
   {
     path: 'login', //es lo que aparece en la URL.
     component: Login, // Login es el componente que se mostrará
+    canActivate: [LoginGuard]
   },
   {
     path: 'perfil',
@@ -59,6 +61,7 @@ export const routes: Routes = [
   {
     path: 'registro',
     component: Registro,
+    canActivate: [LoginGuard]
   },
   {
     path: 'movimientos',
@@ -82,7 +85,7 @@ export const routes: Routes = [
   {
     path: 'academia',
     component: Academia,
-    canActivate: [AuthGuard],  
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -100,8 +103,8 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el login
+    redirectTo: 'inicio',
+    pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el inicio
   }
 
 

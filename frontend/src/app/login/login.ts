@@ -89,7 +89,13 @@ export class Login implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error(error);
-        this.errorMessage = error.error?.errors || 'Error al iniciar sesión';
+        if (typeof error.error?.errors === 'object') {
+          // Extraer el primer error si es un objeto (Laravel style)
+          const firstErrorKey = Object.keys(error.error.errors)[0];
+          this.errorMessage = error.error.errors[firstErrorKey][0];
+        } else {
+          this.errorMessage = error.error?.errors || 'Error al iniciar sesión';
+        }
       }
     });
   }
