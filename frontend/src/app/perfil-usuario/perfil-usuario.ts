@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-perfil-usuario',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink ],
   templateUrl: './perfil-usuario.html',
   styleUrl: './perfil-usuario.css'
 })
@@ -111,9 +112,9 @@ export class PerfilUsuario implements OnInit {
     });
   }
 
-    // Navega a la pantalla de planes de suscripción
+  // Navega a la pantalla de planes de suscripción
   onUpgrade(): void {
     this.router.navigate(['/planes']);
   }
-  
+
 }
