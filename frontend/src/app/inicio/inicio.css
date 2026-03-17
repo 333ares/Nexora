@@ -770,10 +770,18 @@ section {
 }
 
 .faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.2s;
   padding: 0 20px 18px;
   font-size: 0.93rem;
   color: var(--text-muted);
   line-height: 1.7;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 300px;
+  padding: 0 20px 18px;
 }
 
 /* ── ABOUT PREVIEW ──────────────────────────────────── */
