@@ -100,8 +100,8 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el login
+    redirectTo: 'inicio',
+    pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el inicio
   }
 
 
