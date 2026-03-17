@@ -34,7 +34,7 @@ export const routes: Routes = [
   {
     path: 'planes',
     component: Planes,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'acerca-de',
