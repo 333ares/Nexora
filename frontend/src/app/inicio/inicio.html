@@ -1,8 +1,8 @@
 <!-- NAV -->
 <nav>
   <a routerLink="/inicio" class="nav-logo">
-    <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png"
-      alt="Nexora" width="36" height="36" style="object-fit: contain;" />
+    <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Nexora" width="36" height="36"
+      style="object-fit: contain;" />
     <span>NEXORA</span>
   </a>
   <div class="nav-links">
@@ -33,30 +33,22 @@
       <div class="hero__circle hero__circle--6"></div>
       <div class="hero__circle hero__circle--7"></div>
       <div class="hero__circle hero__circle--8"></div>
-
-      <div class="hero-pattern"></div>
-      <div class="hero-inner">
-        <div class="hero-text">
-          <div class="hero-eyebrow">Finanzas personales</div>
-          <h1 class="hero-title">
-            Controla tu dinero,<br>
-            <em>transforma tus hábitos</em>
-          </h1>
-          <p class="hero-subtitle">
-            Nexora es la plataforma que te ayuda a registrar y monitorizar tus gastos,
-            acceder a contenido económico profesional y construir mejores hábitos financieros día a día.
-          </p>
-          <div class="hero-buttons">
-            <a routerLink="/registro" class="btn-primary">Empieza gratis →</a>
-            <a href="#que-es" class="btn-secondary">Saber más</a>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <div class="hero-logo-wrap">
-            <img src="https://i.postimg.cc/2SYmMkky/Logo_nexora.png"
-              alt="Nexora" class="hero-logo-img" />
-          </div>
-        </div>
+      <h1 class="hero-title">
+        Controla tu dinero,<br>
+        <em>transforma tus hábitos</em>
+      </h1>
+      <p class="hero-subtitle">
+        Nexora es la plataforma que te ayuda a registrar y monitorizar tus gastos,
+        acceder a contenido económico profesional y construir mejores hábitos financieros día a día.
+      </p>
+      <div class="hero-buttons">
+        <a routerLink="/registro" class="btn-primary">Empieza gratis →</a>
+        <a href="#que-es" class="btn-secondary">Saber más</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-logo-wrap">
+        <img src="https://i.postimg.cc/2SYmMkky/Logo_nexora.png" alt="Nexora" class="hero-logo-img" />
       </div>
     </div>
   </div>
@@ -69,8 +61,10 @@
       <div class="que-es-text">
         <p class="section-eyebrow">Nuestra misión</p>
         <h2 class="section-title">Tu dinero, bajo control</h2>
-        <p>Nexora nació con un objetivo claro: ayudarte a entender a dónde va tu dinero. Con un registro monitorizado de gastos e ingresos, podrás identificar patrones, detectar excesos y tomar decisiones más inteligentes.</p>
-        <p>Además, conectamos a usuarios con profesionales del ámbito económico que comparten contenido de valor para que aprendas a gestionar mejor tus finanzas.</p>
+        <p>Nexora nació con un objetivo claro: ayudarte a entender a dónde va tu dinero. Con un registro monitorizado de
+          gastos e ingresos, podrás identificar patrones, detectar excesos y tomar decisiones más inteligentes.</p>
+        <p>Además, conectamos a usuarios con profesionales del ámbito económico que comparten contenido de valor para
+          que aprendas a gestionar mejor tus finanzas.</p>
         <ul class="features-list">
           <li>Registra gastos e ingresos fácilmente</li>
           <li>Accede a la academia con contenido profesional</li>
@@ -106,7 +100,8 @@
     <div class="func-header">
       <p class="section-eyebrow">Funcionalidades</p>
       <h2 class="section-title">Todo lo que necesitas en un solo lugar</h2>
-      <p class="section-subtitle">Desde el registro diario hasta el asesoramiento inteligente, Nexora te acompaña en cada paso.</p>
+      <p class="section-subtitle">Desde el registro diario hasta el asesoramiento inteligente, Nexora te acompaña en
+        cada paso.</p>
     </div>
     <div class="func-grid">
       <div class="func-card">
@@ -119,7 +114,8 @@
       </div>
       <div class="func-card">
         <h3>Kiro — Consejero con IA</h3>
-        <p>Tu asistente financiero personal disponible 24/7 para responder dudas y darte recomendaciones personalizadas.</p>
+        <p>Tu asistente financiero personal disponible 24/7 para responder dudas y darte recomendaciones personalizadas.
+        </p>
       </div>
       <div class="func-card">
         <h3>Academia financiera</h3>
@@ -217,14 +213,10 @@
     <div class="newsletter-box">
       <p class="section-eyebrow">Newsletter</p>
       <h2 class="section-title">Consejos financieros en tu correo</h2>
-      <p class="section-subtitle">Cada semana, tips prácticos sobre ahorro, inversión y hábitos financieros. Sin spam, solo valor.</p>
+      <p class="section-subtitle">Cada semana, tips prácticos sobre ahorro, inversión y hábitos financieros. Sin spam,
+        solo valor.</p>
       <div class="newsletter-form">
-        <input
-          class="newsletter-input"
-          type="email"
-          placeholder="tu&#64;correo.com"
-          [(ngModel)]="emailNewsletter"
-        />
+        <input class="newsletter-input" type="email" placeholder="tu&#64;correo.com" [(ngModel)]="emailNewsletter" />
         <button class="btn-newsletter" (click)="suscribirse()">Suscribirme</button>
       </div>
     </div>
@@ -240,13 +232,13 @@
     </div>
     <div class="faq-list">
       @for (item of faqItems; track item.id) {
-        <details class="faq-item">
-          <summary class="faq-question">
-            {{ item.pregunta }}
-            <span class="faq-chevron">▼</span>
-          </summary>
-          <div class="faq-answer">{{ item.respuesta }}</div>
-        </details>
+      <details class="faq-item">
+        <summary class="faq-question">
+          {{ item.pregunta }}
+          <span class="faq-chevron">▼</span>
+        </summary>
+        <div class="faq-answer">{{ item.respuesta }}</div>
+      </details>
       }
     </div>
     <div class="section-link-center" style="margin-top: 32px;">
@@ -262,7 +254,8 @@
       <div class="about-preview-text">
         <p class="section-eyebrow">Conócenos</p>
         <h2 class="section-title">El equipo detrás de Nexora</h2>
-        <p>Somos ADDA, un equipo de desarrolladores web apasionados por la tecnología y la educación financiera. Creamos Nexora para ayudar a las personas a tomar el control de sus finanzas de forma sencilla y accesible.</p>
+        <p>Somos ADDA, un equipo de desarrolladores web apasionados por la tecnología y la educación financiera. Creamos
+          Nexora para ayudar a las personas a tomar el control de sus finanzas de forma sencilla y accesible.</p>
         <a routerLink="/acerca-de" class="btn-link">Conocer al equipo →</a>
       </div>
       <div class="about-preview-team">
@@ -299,7 +292,8 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <a routerLink="/inicio" class="nav-logo">
-        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="32" height="32" style="object-fit: contain;" />
+        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+          alt="Nexora" width="32" height="32" style="object-fit: contain;" />
         <span>NEXORA</span>
       </a>
       <p>Plataforma de gestión de gastos y hábitos financieros. Desarrollada por el equipo ADDA.</p>
