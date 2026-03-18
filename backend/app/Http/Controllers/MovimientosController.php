@@ -14,7 +14,7 @@ class MovimientosController extends Controller
         // Comprobamos que los datos del usuario son correctos
         $validator = Validator::make($request->all(), [
             'tipo' => 'required|in:ingreso,gasto',
-            'cantidad' => 'required|decimal:2',
+            'cantidad' => 'required|numeric|min:0.01',
             'categoria' => 'required|string',
             'descripcion' => 'nullable|string',
         ]);
