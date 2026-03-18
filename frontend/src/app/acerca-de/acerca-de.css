@@ -20,16 +20,16 @@ nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width:
 .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .nav-logo span { font-family: 'Onest', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--green-mid); letter-spacing: 0.04em; }
 .nav-links { display: flex; align-items: center; gap: 6px; }
-.nav-links a { font-family: 'Lato', sans-serif; font-size: 0.88rem; color: var(--text-mid); text-decoration: none; padding: 6px 14px; border-radius: 999px; transition: background 0.2s, color 0.2s; }
+.nav-links a { font-family: 'Lato', sans-serif; font-size: 1rem; color: var(--text-mid); text-decoration: none; padding: 6px 14px; border-radius: 999px; transition: background 0.2s, color 0.2s; }
 .nav-links a:hover, .nav-links a.active { background: var(--mint); color: var(--green-dark); }
 .nav-cta { display: flex; gap: 8px; }
-.btn-nav-secondary { font-family: 'Onest', sans-serif; font-weight: 600; font-size: 0.88rem; color: var(--green-mid); background: var(--mint); border: 1.5px solid var(--mint-border); border-radius: 999px; padding: 8px 18px; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+.btn-nav-secondary { font-family: 'Onest', sans-serif; font-weight: 600; font-size: 1rem; color: var(--green-mid); background: var(--mint); border: 1.5px solid var(--mint-border); border-radius: 999px; padding: 8px 18px; cursor: pointer; text-decoration: none; transition: background 0.2s; }
 .btn-nav-secondary:hover { background: #c6e6c6; }
-.btn-nav-primary { font-family: 'Onest', sans-serif; font-weight: 700; font-size: 0.88rem; color: #fff; background: linear-gradient(135deg, var(--green-mid), var(--green-light)); border: none; border-radius: 999px; padding: 8px 20px; cursor: pointer; text-decoration: none; box-shadow: 0 2px 12px rgba(78,156,37,0.35); transition: box-shadow 0.2s, transform 0.15s; }
+.btn-nav-primary { font-family: 'Onest', sans-serif; font-weight: 700; font-size: 1rem; color: #fff; background: linear-gradient(135deg, var(--green-mid), var(--green-light)); border: none; border-radius: 999px; padding: 8px 20px; cursor: pointer; text-decoration: none; box-shadow: 0 2px 12px rgba(78,156,37,0.35); transition: box-shadow 0.2s, transform 0.15s; }
 .btn-nav-primary:hover { box-shadow: 0 4px 20px rgba(78,156,37,0.5); transform: translateY(-1px); }
 
 .container { max-width: 960px; margin: 0 auto; }
-.section-eyebrow { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-dark); margin-bottom: 12px; }
+.section-eyebrow { font-size: 1rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-dark); margin-bottom: 12px; }
 
 /* ── HERO ────────────────────────────────────────────── */
 .page-hero {
@@ -116,7 +116,7 @@ nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width:
   font-family: 'Onest', sans-serif; font-weight: 700;
   font-size: 1rem; color: var(--text-dark); margin-bottom: 8px;
 }
-.value-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+.value-card p { font-size: 1rem; color: var(--text-muted); line-height: 1.6; }
 
 /* ── TEAM ────────────────────────────────────────────── */
 .team-section { padding: 80px 24px; }
@@ -128,7 +128,7 @@ nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width:
   background: linear-gradient(135deg, var(--green-dark), var(--green-mid), var(--green-light));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.adda-sub { font-size: 0.88rem; color: var(--text-muted); margin-top: 4px; }
+.adda-sub { font-size: 1rem; color: var(--text-muted); margin-top: 4px; }
 .team-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -160,8 +160,8 @@ nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width:
   font-family: 'Onest', sans-serif; font-weight: 700;
   font-size: 1rem; color: var(--text-dark); margin-bottom: 4px;
 }
-.role { font-size: 0.82rem; color: var(--green-mid); font-weight: 600; margin-bottom: 10px; }
-.team-bio { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+.role { font-size: 1rem; color: var(--green-mid); font-weight: 600; margin-bottom: 10px; }
+.team-bio { font-size: 1rem; color: var(--text-muted); line-height: 1.5; }
 
 /* ── STORY ───────────────────────────────────────────── */
 .story-section {
@@ -200,7 +200,7 @@ nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width:
   font-family: 'Onest', sans-serif; font-weight: 900;
   font-size: 2.2rem; color: var(--green-mid); line-height: 1; margin-bottom: 6px;
 }
-.stat-label { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+.stat-label { font-size: 1rem; color: var(--text-muted); line-height: 1.4; }
 
 /* ── CTA ─────────────────────────────────────────────── */
 .about-cta { padding: 80px 24px 80px; }
@@ -238,11 +238,11 @@ footer { background: var(--text-dark); color: rgba(255,255,255,0.7); padding: 48
 .footer-inner { max-width: 960px; margin: 0 auto 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; }
 .footer-brand .nav-logo { margin-bottom: 14px; }
 .footer-brand .nav-logo span { color: #78C550; }
-.footer-brand p { font-size: 0.88rem; line-height: 1.7; }
-.footer-col h5 { font-family: 'Onest', sans-serif; font-weight: 700; font-size: 0.88rem; color: white; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
-.footer-col a { display: block; font-size: 0.88rem; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
+.footer-brand p { font-size: 1rem; line-height: 1.7; }
+.footer-col h5 { font-family: 'Onest', sans-serif; font-weight: 700; font-size: 1rem; color: white; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
+.footer-col a { display: block; font-size: 1rem; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
 .footer-col a:hover { color: #ABDE91; }
-.footer-bottom { max-width: 960px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; }
+.footer-bottom { max-width: 960px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; font-size: 1rem; }
 .footer-bottom .contact a { color: #ABDE91; text-decoration: none; }
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
