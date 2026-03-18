@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Auth } from '../../services/auth';
@@ -30,7 +30,7 @@ export class Lista implements OnInit {
     descripcion: ''
   };
 
-  constructor(private authService: Auth) { }
+  constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.cargarMovimientos();
@@ -39,12 +39,18 @@ export class Lista implements OnInit {
   cargarMovimientos() {
     this.authService.getHistorialMovimientos().subscribe({
       next: (res) => {
-        this.movimientos = res.movimientos ?? res;
+        this.movimientos = res.movimientos ?? res ?? [];
         this.filtrar(this.filtroActivo);
+        this.cdr.detectChanges(); // fuerza la detección de cambios
       },
-      error: (err) => console.error(err)
+      error: () => {
+        this.movimientos = [];
+        this.filtrar(this.filtroActivo);
+        this.cdr.detectChanges();
+      }
     });
   }
+
 
   filtrar(tipo: string) {
     this.filtroActivo = tipo;
