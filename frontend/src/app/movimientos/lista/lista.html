@@ -29,15 +29,14 @@
     <div class="td td-nombre">
       <div class="mov-avatar">{{ mov.tipo === 'ingreso' ? '💰' : '💸' }}</div>
       <div class="mov-name-wrap">
-        <span class="mov-nombre">{{ mov.descripcion || 'Sin descripción' }}</span>
-        <span class="mov-cat">{{ mov.categoria }}</span>
+        <span class="mov-nombre">{{ mov.categoria }}</span>
       </div>
     </div>
     <div class="td td-fecha">
       <span class="fecha-dia">{{ mov.fecha | date:'dd/MM/yyyy' }}</span>
       <span class="fecha-hora">{{ mov.fecha | date:'HH:mm' }}</span>
     </div>
-    <div class="td">{{ mov.categoria }}</div>
+    <div class="td">{{ mov.tipo === 'ingreso' ? 'Ingreso' : 'Gasto' }}</div>
     <div class="td td-desc"><span class="mov-desc-tabla">{{ mov.descripcion || '—' }}</span></div>
     <div class="td td-right">
       <span class="mov-importe" [class.ingreso-color]="mov.tipo === 'ingreso'"
