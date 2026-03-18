@@ -113,7 +113,12 @@ export class Lista implements OnInit {
       },
       error: (err) => {
         this.cargando = false;
-        this.errorModal = err.error?.errors || 'Error al añadir el movimiento.';
+        const errores = err.error?.errors;
+        if (typeof errores === 'object' && errores !== null) {
+          this.errorModal = Object.values(errores).flat().join(', ');
+        } else {
+          this.errorModal = errores || 'Error al añadir el movimiento.';
+        }
       }
     });
   }
