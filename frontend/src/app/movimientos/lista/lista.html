@@ -81,8 +81,9 @@
     <div class="modal-body">
       <div class="modal-field">
         <label>Cantidad (€)</label>
-        <input type="number" min="0" step="0.01" placeholder="0.00" [(ngModel)]="nuevoMovimiento.cantidad"
-          (blur)="formatearCantidad()" class="modal-input" />
+        <input type="text" inputmode="decimal" placeholder="0.00" #cantidadInput [value]="cantidadDisplay"
+          (input)="cantidadDisplay = cantidadInput.value" (blur)="formatearCantidad(cantidadInput)"
+          class="modal-input" />
       </div>
 
       <div class="modal-field">
