@@ -35,7 +35,8 @@ export class Lista implements OnInit {
     tipo: 'ingreso',
     cantidad: null as number | null,
     categoria: '',
-    descripcion: ''
+    descripcion: '',
+    fecha: ''
   };
 
   constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
@@ -77,9 +78,20 @@ export class Lista implements OnInit {
 
   // Abre el modal en modo creación
   abrirModal() {
+    const hoy = new Date();
+    const año = hoy.getFullYear();
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoy.getDate()).padStart(2, '0');
+
     this.modoEdicion = false;
     this.movimientoEditandoId = null;
-    this.nuevoMovimiento = { tipo: 'ingreso', cantidad: null, categoria: '', descripcion: '' };
+    this.nuevoMovimiento = {
+      tipo: 'ingreso',
+      cantidad: null,
+      categoria: '',
+      descripcion: '',
+      fecha: `${año}-${mes}-${dia}`
+    };
     this.cantidadDisplay = '';
     this.errorModal = '';
     this.exitoModal = '';
@@ -94,7 +106,8 @@ export class Lista implements OnInit {
       tipo: mov.tipo,
       cantidad: mov.cantidad,
       categoria: mov.categoria,
-      descripcion: mov.descripcion || ''
+      descripcion: mov.descripcion || '',
+      fecha: mov.fecha
     };
     this.cantidadDisplay = Number(mov.cantidad).toFixed(2);
     this.errorModal = '';

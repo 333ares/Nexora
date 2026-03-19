@@ -96,9 +96,13 @@
       </div>
 
       <div class="modal-field">
+        <label>Fecha</label>
+        <input type="date" [(ngModel)]="nuevoMovimiento.fecha" class="modal-input" />
+      </div>
+
+      <div class="modal-field">
         <label>Descripción <span class="opcional">(opcional)</span></label>
-        <input type="text" placeholder="Ej: Compra supermercado" [(ngModel)]="nuevoMovimiento.descripcion"
-          class="modal-input" />
+        <input type="text" [(ngModel)]="nuevoMovimiento.descripcion" class="modal-input" />
       </div>
 
       @if (errorModal) {
@@ -126,6 +130,7 @@
       <h2 class="modal-title">Eliminar movimiento</h2>
       <button class="modal-close" (click)="cerrarModalBorrar()">✕</button>
     </div>
+
 
     <div class="modal-body">
       <div class="borrar-icon">🗑️</div>
