@@ -1,50 +1,120 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-lista',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './lista.html',
   styleUrl: './lista.css'
 })
 export class Lista implements OnInit {
+
   movimientos: any[] = [];
   movimientosFiltrados: any[] = [];
   filtroActivo: string = 'todos';
+  modalAbierto = false;
+  cargando = false;
+  errorModal = '';
+  exitoModal = '';
 
-  constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
+  categoríasIngreso = ['Nómina', 'Capital (Alquileres)', 'Negocios y ventas', 'Otros'];
+  categoríasGasto = ['Ocio', 'Supervivencia', 'Cultura', 'Extras o imprevistos'];
 
-  ngOnInit(): void {
-    this.cargarHistorialMovimientos();
+  nuevoMovimiento = {
+    tipo: 'ingreso',
+    cantidad: null as number | null,
+    categoria: '',
+    descripcion: ''
+  };
+
+  constructor(private authService: Auth) { }
+
+  ngOnInit() {
+    this.cargarMovimientos();
   }
 
-  cargarHistorialMovimientos(): void {
+  cargarMovimientos() {
     this.authService.getHistorialMovimientos().subscribe({
-      next: (response) => {
-        this.movimientos = response.movimientos;
-        this.movimientosFiltrados = this.movimientos;
-        this.cdr.detectChanges();
+      next: (res) => {
+        this.movimientos = res.movimientos ?? res;
+        this.filtrar(this.filtroActivo);
       },
-      error: (err) => {
-        if (err.status === 400) {
-          this.movimientos = [];
-          this.movimientosFiltrados = [];
-        } else {
-          console.error('Error al obtener el historial:', err);
-        }
-      }
+      error: (err) => console.error(err)
     });
   }
 
-  filtrar(tipo: string): void {
+  filtrar(tipo: string) {
     this.filtroActivo = tipo;
-    if (tipo === 'todos') {
-      this.movimientosFiltrados = this.movimientos;
+    this.movimientosFiltrados = tipo === 'todos'
+      ? this.movimientos
+      : this.movimientos.filter(m => m.tipo === tipo);
+  }
+
+  get categoriasActuales(): string[] {
+    return this.nuevoMovimiento.tipo === 'ingreso'
+      ? this.categoríasIngreso
+      : this.categoríasGasto;
+  }
+
+  cantidadDisplay: string = '';
+
+  abrirModal() {
+    this.nuevoMovimiento = { tipo: 'ingreso', cantidad: null, categoria: '', descripcion: '' };
+    this.cantidadDisplay = '';
+    this.errorModal = '';
+    this.exitoModal = '';
+    this.modalAbierto = true;
+  }
+
+  cerrarModal() {
+    this.modalAbierto = false;
+  }
+
+  onTipoChange() {
+    this.nuevoMovimiento.categoria = ''; // reset categoría al cambiar tipo
+  }
+
+  formatearCantidad(input: HTMLInputElement) {
+    const valor = parseFloat(this.cantidadDisplay.replace(',', '.'));
+    if (!isNaN(valor) && valor > 0) {
+      this.nuevoMovimiento.cantidad = valor;
+      this.cantidadDisplay = valor.toFixed(2);
+      input.value = valor.toFixed(2);
     } else {
-      this.movimientosFiltrados = this.movimientos.filter(m => m.tipo === tipo);
+      this.nuevoMovimiento.cantidad = null;
+      this.cantidadDisplay = '';
+      input.value = '';
     }
-    this.cdr.detectChanges();
+  }
+
+  guardarMovimiento() {
+    if (!this.nuevoMovimiento.cantidad || !this.nuevoMovimiento.categoria) {
+      this.errorModal = 'Cantidad y categoría son obligatorias.';
+      return;
+    }
+
+    this.cargando = true;
+    this.errorModal = '';
+
+    this.authService.apuntarMovimiento({
+      tipo: this.nuevoMovimiento.tipo,
+      cantidad: this.nuevoMovimiento.cantidad,
+      categoria: this.nuevoMovimiento.categoria,
+      descripcion: this.nuevoMovimiento.descripcion
+    }).subscribe({
+      next: () => {
+        this.cargando = false;
+        this.exitoModal = 'Movimiento añadido correctamente.';
+        this.cargarMovimientos();
+        setTimeout(() => this.cerrarModal(), 1200);
+      },
+      error: (err) => {
+        this.cargando = false;
+        this.errorModal = err.error?.errors || 'Error al añadir el movimiento.';
+      }
+    });
   }
 }

@@ -9,10 +9,11 @@
         (click)="filtrar('gasto')">Gastos</button>
       <button class="btn-filter" [class.active-filter]="filtroActivo === 'ingreso'"
         (click)="filtrar('ingreso')">Ingresos</button>
-      <button class="btn-mas">+ Añadir</button>
+      <button class="btn-mas" (click)="abrirModal()">+ Añadir</button>
     </div>
   </div>
 
+  <!-- tabla igual que antes -->
   <div class="tabla-header-mov">
     <span class="th">Nombre</span>
     <span class="th">Fecha</span>
@@ -25,7 +26,6 @@
   @for (mov of movimientosFiltrados; track mov.id) {
   <div class="tabla-row tabla-row-mov" [class.row-ingreso]="mov.tipo === 'ingreso'"
     [class.row-gasto]="mov.tipo === 'gasto'">
-
     <div class="td td-nombre">
       <div class="mov-avatar">{{ mov.tipo === 'ingreso' ? '💰' : '💸' }}</div>
       <div class="mov-name-wrap">
@@ -33,35 +33,90 @@
         <span class="mov-cat">{{ mov.categoria }}</span>
       </div>
     </div>
-
     <div class="td td-fecha">
       <span class="fecha-dia">{{ mov.fecha | date:'dd/MM/yyyy' }}</span>
       <span class="fecha-hora">{{ mov.fecha | date:'HH:mm' }}</span>
     </div>
-
     <div class="td">{{ mov.categoria }}</div>
-
-    <div class="td td-desc">
-      <span class="mov-desc-tabla">{{ mov.descripcion || '—' }}</span>
-    </div>
-
+    <div class="td td-desc"><span class="mov-desc-tabla">{{ mov.descripcion || '—' }}</span></div>
     <div class="td td-right">
       <span class="mov-importe" [class.ingreso-color]="mov.tipo === 'ingreso'"
         [class.gasto-color]="mov.tipo === 'gasto'">
         {{ mov.tipo === 'ingreso' ? '+' : '-' }}{{ mov.cantidad | number:'1.2-2' }} €
       </span>
     </div>
-
     <div class="td td-acciones">
-      <button class="btn-accion btn-editar" title="Editar" >✏️</button>
+      <button class="btn-accion btn-editar" title="Editar">✏️</button>
       <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
     </div>
-
   </div>
-  }
-
-  @empty {
+  } @empty {
   <div class="empty-state">No hay movimientos registrados</div>
   }
 
 </div>
+
+<!-- POPUP -->
+@if (modalAbierto) {
+<div class="modal-overlay" (click)="cerrarModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Nuevo movimiento</h2>
+      <button class="modal-close" (click)="cerrarModal()">✕</button>
+    </div>
+
+    <!-- Selector tipo -->
+    <div class="modal-tipo-selector">
+      <button class="tipo-btn" [class.tipo-ingreso-active]="nuevoMovimiento.tipo === 'ingreso'"
+        (click)="nuevoMovimiento.tipo = 'ingreso'; onTipoChange()">
+        💰 Ingreso
+      </button>
+      <button class="tipo-btn" [class.tipo-gasto-active]="nuevoMovimiento.tipo === 'gasto'"
+        (click)="nuevoMovimiento.tipo = 'gasto'; onTipoChange()">
+        💸 Gasto
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-field">
+        <label>Cantidad (€)</label>
+        <input type="text" inputmode="decimal" placeholder="0.00" #cantidadInput [value]="cantidadDisplay"
+          (input)="cantidadDisplay = cantidadInput.value" (blur)="formatearCantidad(cantidadInput)"
+          class="modal-input" />
+      </div>
+
+      <div class="modal-field">
+        <label>Categoría</label>
+        <select [(ngModel)]="nuevoMovimiento.categoria" class="modal-input">
+          <option value="" disabled>Selecciona una categoría</option>
+          @for (cat of categoriasActuales; track cat) {
+          <option [value]="cat">{{ cat }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="modal-field">
+        <label>Descripción <span class="opcional">(opcional)</span></label>
+        <input type="text" placeholder="Ej: Compra supermercado" [(ngModel)]="nuevoMovimiento.descripcion"
+          class="modal-input" />
+      </div>
+
+      @if (errorModal) {
+      <p class="modal-error">{{ errorModal }}</p>
+      }
+      @if (exitoModal) {
+      <p class="modal-exito">{{ exitoModal }}</p>
+      }
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+      <button class="btn-guardar" (click)="guardarMovimiento()" [disabled]="cargando">
+        {{ cargando ? 'Guardando...' : 'Guardar' }}
+      </button>
+    </div>
+
+  </div>
+</div>
+}

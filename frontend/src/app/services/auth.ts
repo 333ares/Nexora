@@ -66,6 +66,13 @@ export class Auth {
     return this.http.get(`${this.apiUrl}/movimientos`, { headers: this.getHeaders() });
   }
 
+  // --- MOVIMIENTOS ---
+  apuntarMovimiento(datos: { tipo: string, cantidad: number, categoria: string, descripcion?: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/movimiento`, datos, {
+      headers: this.getHeaders()
+    });
+  }
+
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
     localStorage.setItem('token', token);
