@@ -46,7 +46,7 @@
     </div>
     <div class="td td-acciones">
       <button class="btn-accion btn-editar" title="Editar" (click)="abrirModalEditar(mov)">✏️</button>
-      <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
+      <button class="btn-accion btn-eliminar" title="Eliminar" (click)="abrirModalBorrar(mov.id)">🗑️</button>
     </div>
   </div>
   } @empty {
@@ -111,6 +111,31 @@
       <button class="btn-guardar" (click)="guardarMovimiento()" [disabled]="cargando">
         {{ cargando ? 'Guardando...' : (modoEdicion ? 'Actualizar' : 'Guardar') }}
       </button>
+    </div>
+
+  </div>
+</div>
+}
+
+<!-- MODAL CONFIRMAR BORRADO -->
+@if (modalBorrarAbierto) {
+<div class="modal-overlay" (click)="cerrarModalBorrar()">
+  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Eliminar movimiento</h2>
+      <button class="modal-close" (click)="cerrarModalBorrar()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="borrar-icon">🗑️</div>
+      <p class="borrar-texto">¿Estás seguro de que quieres eliminar este movimiento? Esta acción no se puede deshacer.
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModalBorrar()">Cancelar</button>
+      <button class="btn-borrar" (click)="confirmarBorrar()">Eliminar</button>
     </div>
 
   </div>
