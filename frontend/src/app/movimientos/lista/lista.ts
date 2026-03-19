@@ -187,4 +187,33 @@ export class Lista implements OnInit {
       });
     }
   }
+
+  // --- CONFIRMAR BORRADO ---
+  modalBorrarAbierto = false;
+  movimientoBorrandoId: number | null = null;
+
+  abrirModalBorrar(id: number) {
+    this.movimientoBorrandoId = id;
+    this.modalBorrarAbierto = true;
+  }
+
+  cerrarModalBorrar() {
+    this.modalBorrarAbierto = false;
+    this.movimientoBorrandoId = null;
+  }
+
+  confirmarBorrar() {
+    if (this.movimientoBorrandoId === null) return;
+
+    this.authService.borrarMovimimento(this.movimientoBorrandoId).subscribe({
+      next: () => {
+        this.cerrarModalBorrar();
+        this.cargarMovimientos();
+      },
+      error: (err) => {
+        console.error('Error al borrar:', err);
+        this.cerrarModalBorrar();
+      }
+    });
+  }
 }
