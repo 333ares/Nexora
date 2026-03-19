@@ -171,7 +171,7 @@ nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width:
 .story-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: 100px;
   align-items: center;
 }
 .story-title {
@@ -201,6 +201,20 @@ nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width:
   font-size: 2.2rem; color: var(--green-mid); line-height: 1; margin-bottom: 6px;
 }
 .stat-label { font-size: 1rem; color: var(--text-muted); line-height: 1.4; }
+
+
+.story-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-logo-img {
+  width: 360px;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.85;
+}
 
 /* ── CTA ─────────────────────────────────────────────── */
 .about-cta { padding: 80px 24px 80px; }

@@ -228,7 +228,7 @@ nav {
 }
 
 .hero-subtitle {
-  font-size: 1.05rem;
+  font-size: 20px;
   line-height: 1.7;
   color: var(--text-mid);
   margin-bottom: 36px;
@@ -430,8 +430,7 @@ section {
 
 .stat-card .number {
   font-family: 'Onest', sans-serif;
-  font-weight: 900;
-  font-size: 2.2rem;
+  font-size: 20px;
   color: var(--green-mid);
   line-height: 1;
   margin-bottom: 6px;
