@@ -73,6 +73,10 @@ export class Auth {
     });
   }
 
+  actualizarMovimiento(datos: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/movimiento`, datos, { headers: this.getHeaders() });
+  }
+
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
     localStorage.setItem('token', token);
