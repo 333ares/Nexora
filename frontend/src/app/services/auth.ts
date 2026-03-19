@@ -73,6 +73,17 @@ export class Auth {
     });
   }
 
+  actualizarMovimiento(datos: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/movimiento`, datos, { headers: this.getHeaders() });
+  }
+
+  borrarMovimimento(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/movimiento`, {
+      headers: this.getHeaders(),
+      body: { id }
+    });
+  }
+
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
     localStorage.setItem('token', token);
