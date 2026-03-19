@@ -17,6 +17,7 @@ class MovimientosController extends Controller
             'cantidad' => 'required|numeric|min:0.01',
             'categoria' => 'required|string',
             'descripcion' => 'nullable|string',
+            'fecha' => 'nullable|date',
         ]);
 
         // Si el validador falla, mostramos porque
@@ -44,7 +45,7 @@ class MovimientosController extends Controller
             'cantidad' => $cantidad,
             'categoria' => $request->categoria,
             'descripcion' => $request->descripcion,
-            'fecha' => Carbon::now(),
+            'fecha' => $request->fecha ? Carbon::parse($request->fecha) : Carbon::now(),
             'usuario_id' => $request->user()->IDusuario,
         ]);
 
