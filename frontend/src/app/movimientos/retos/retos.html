@@ -56,30 +56,35 @@
     </div>
 
     <form [formGroup]="retoForm" (ngSubmit)="guardarReto()">
-      <div class="modal-content-wrapper">
-        
-        <div class="modal-field">
-          <label>¿Qué quieres lograr?</label>
-          <input type="text" formControlName="titulo" placeholder="Ej: Viaje a Japón" class="modal-input">
-        </div>
+      <<div class="modal-content-wrapper">
+  
+  <div class="modal-field">
+    <label>¿Qué quieres lograr?</label>
+    <input type="text" formControlName="titulo" placeholder="Ej: Viaje a Japón" class="modal-input">
+  </div>
 
-        <div class="row-flex">
-          <div class="modal-field flex-1">
-            <label>Emoji</label>
-            <select formControlName="emoji" class="modal-input">
-              <option value="🎯">🎯 Ingreso</option> <option value="💰">💰 Ahorro</option>
-              <option value="✈️">✈️ Viaje</option>
-              <option value="🚗">🚗 Coche</option>
-            </select>
-          </div>
+  <div class="row-flex">
+    <div class="modal-field flex-1">
+      <label>Emoji</label>
+      <select formControlName="emoji" class="modal-input">
+        <option value="🎯">🎯 Meta</option>
+        <option value="💰">💰 Ahorro</option>
+        <option value="✈️">✈️ Viaje</option>
+        <option value="🚗">🚗 Coche</option>
+      </select>
+    </div>
 
-          <div class="modal-field flex-1">
-            <label>Cantidad (€)</label>
-            <input type="number" formControlName="cantidad" placeholder="0.00" class="modal-input">
-          </div>
-        </div>
+    <div class="modal-field flex-1">
+      <label>Cantidad (€)</label>
+      <input type="number" formControlName="cantidad" placeholder="0.00" class="modal-input">
+    </div>
+  </div>
 
-      </div>
+  <p style="font-size: 11px; color: #888; margin-top: 10px;">
+    * El reto se activará hoy y finalizará en exactamente 30 días.
+  </p>
+
+  </div>
 
       <div class="modal-footer">
         <button type="button" class="btn-footer-cancel" (click)="cerrarModal()">Cancelar</button>

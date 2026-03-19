@@ -18,15 +18,14 @@ export class Retos implements OnInit {
   mostrarPopup: boolean = false; 
 
   constructor(private retosService: RetosService) {
-    this.retoForm = new FormGroup({
-      titulo: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      emoji: new FormControl('🎯', Validators.required),
-      cantidad: new FormControl('', [Validators.required, Validators.min(1)]),
-      fecha_inicio: new FormControl(new Date().toISOString().split('T')[0], Validators.required),
-      fecha_final: new FormControl('', Validators.required),
-      IDusuario: new FormControl(1) 
-    });
-  }
+  this.retoForm = new FormGroup({
+    // Solo pedimos 3 cosas, sin reglas raras
+    titulo: new FormControl('', Validators.required),
+    emoji: new FormControl('🎯', Validators.required),
+    cantidad: new FormControl('', [Validators.required, Validators.min(0.01)]), // 0.01 por si pones céntimos
+    IDusuario: new FormControl(1) // Fijo y sin validador
+  });
+}
 
   ngOnInit(): void {
     this.cargarRetos();
@@ -60,30 +59,33 @@ export class Retos implements OnInit {
 
   // Función única para guardar (fusionada y corregida)
   guardarReto() {
-    if (this.retoForm.valid) {
-      console.log('Enviando reto...', this.retoForm.value);
-      
-      this.retosService.crearReto(this.retoForm.value).subscribe({
-        next: (res: any) => {
-          console.log('¡Reto guardado con éxito!', res);
-          this.cargarRetos(); // Recargamos la lista
-          this.cerrarModal(); // Cerramos el popup
-        },
-        error: (err: any) => {
-          console.error('Error de Laravel:', err);
-          if (err.status === 422) {
-            console.table(err.error.errors); // Muestra los errores de validación de Laravel
-          }
-        }
-      });
-    } else {
-      alert('Por favor, rellena todos los campos correctamente.');
-    }
+  // Añadimos este console.log para ver qué pasa si falla
+  if (this.retoForm.invalid) {
+    console.error('❌ El formulario es inválido. Mira qué campo falla:');
+    console.log('- Errores Título:', this.retoForm.get('titulo')?.errors);
+    console.log('- Errores Cantidad:', this.retoForm.get('cantidad')?.errors);
+    console.log('- Estado general:', this.retoForm.value);
+    alert('Revisa la consola (F12), hay un campo inválido.');
+    return; // Detenemos la ejecución aquí
   }
+
+  // Si es válido, enviamos a Laravel
+  console.log('✅ Formulario válido, enviando:', this.retoForm.value);
+  this.retosService.crearReto(this.retoForm.value).subscribe({
+    next: (res) => {
+      console.log('¡Guardado!', res);
+      this.cerrarModal();
+      this.cargarRetos();
+    },
+    error: (err) => console.error('Error de Laravel:', err)
+  });
+}
 
   // Mantenemos esta por si tu botón viejo todavía la llama, 
   // pero ahora simplemente abre el modal profesional
   crearNuevoReto() {
     this.abrirModal();
   }
+
+  
 }

@@ -4,32 +4,38 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reto; // Importas el modelo para poder guardar
+use Carbon\Carbon; // Asegúrate de importar Carbon arriba
 
 class RetoController extends Controller
 {
-    public function store(Request $request)
-    {
-        //Comprueba los datos antes de seguir
-        $rules = [
-            'titulo'       => 'required|string|min:3|max:100',
-            'cantidad'     => 'required|numeric|min:1',
-            'fecha_inicio' => 'required|date|after_or_equal:today',
-            'fecha_final'  => 'required|date|after:fecha_inicio',
-            'IDusuario'    => 'required|exists:usuarios,IDusuario',
-        ];
+    public function store(Request $request) {
+        // 1. Validamos solo lo que el usuario SÍ puede tocar
+        $validated = $request->validate([
+            'titulo'    => 'required|string|min:3',
+            'cantidad'  => 'required|numeric|min:1',
+            'emoji'     => 'nullable|string',
+            'IDusuario' => 'required|exists:usuarios,IDusuario',
+        ]);
 
-        //Ejecuta la validación
-        $validatedData = $request->validate($rules);
+        // 2. Definimos los valores automáticos (Sysdate y +1 mes)
+        $fechaInicio = Carbon::now(); // Fecha actual del sistema
+        $fechaFinal  = $fechaInicio->copy()->addMonth(); // Exactamente un mes después
 
-        //Si los datos son validos, crea el reto en la base de datos
-        $reto = Reto::create($validatedData);
+        // 3. Creamos el registro con los estados por defecto
+        $reto = Reto::create([
+            'titulo'       => $validated['titulo'],
+            'cantidad'     => $validated['cantidad'],
+            'emoji'        => $validated['emoji'] ?? '🎯',
+            'IDusuario'    => $validated['IDusuario'],
+            'fecha_inicio' => $fechaInicio,
+            'fecha_final'  => $fechaFinal,
+            'activo'       => true,  // Forzado por defecto
+            'cumplido'     => false, // Forzado por defecto
+        ]);
 
-        //Responde a Angular con un mensaje de éxito
-        return response()->json([
-            'message' => 'Reto creado correctamente',
-            'data' => $reto
-        ], 201);
+        return response()->json($reto, 201);
     }
+
     public function index()
     {
         // Obtenemos todos los retos
