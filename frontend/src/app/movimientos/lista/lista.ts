@@ -113,9 +113,8 @@ export class Lista implements OnInit {
     }).subscribe({
       next: () => {
         this.cargando = false;
-        this.exitoModal = 'Movimiento añadido correctamente.';
+        this.cerrarModal();
         this.cargarMovimientos();
-        setTimeout(() => this.cerrarModal(), 1200);
       },
       error: (err) => {
         this.cargando = false;
