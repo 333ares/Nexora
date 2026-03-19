@@ -171,7 +171,7 @@ class MovimientosController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'tipo' => 'nullable|string',
-            'cantidad' => 'nullable|decimal:2',
+            'cantidad' => 'nullable|numeric|min:0.01',
             'categoria' => 'nullable|string',
             'descripcion' => 'nullable|string'
         ]);
