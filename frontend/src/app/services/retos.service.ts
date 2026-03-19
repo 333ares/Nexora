@@ -13,4 +13,9 @@ export class RetosService {
   getRetos(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
+
+  crearReto(datos: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reto`, datos);
+  }
+  
 }

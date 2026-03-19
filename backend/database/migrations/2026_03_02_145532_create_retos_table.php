@@ -16,8 +16,10 @@ return new class extends Migration
             $table->boolean('activo')->default(true); //El reto está activo por defecto.
             $table->boolean('cumplido')->default(false); //No se ha cumplido a menos que se marque lo contrario
             $table->decimal('cantidad', 15, 2);
+            $table->string('titulo');
             $table->date('fecha_inicio');
             $table->date('fecha_final');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); //Esto es vital si no quieres que todos vean los mismos retos
             
             // Calcula la duracion si es necesario, o la guardamos como entero
             //$table->integer('duracion')->comment('Duración en días');

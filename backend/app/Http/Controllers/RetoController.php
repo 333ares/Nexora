@@ -11,6 +11,7 @@ class RetoController extends Controller
     {
         //Comprueba los datos antes de seguir
         $rules = [
+            'titulo'       => 'required|string|min:3|max:100',
             'cantidad'     => 'required|numeric|min:1',
             'fecha_inicio' => 'required|date|after_or_equal:today',
             'fecha_final'  => 'required|date|after:fecha_inicio',
