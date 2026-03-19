@@ -69,11 +69,11 @@
     <div class="modal-tipo-selector">
       <button class="tipo-btn" [class.tipo-ingreso-active]="nuevoMovimiento.tipo === 'ingreso'"
         (click)="nuevoMovimiento.tipo = 'ingreso'; onTipoChange()">
-        💰 Ingreso
+        <i class="bi bi-graph-up-arrow"></i> Ingreso
       </button>
       <button class="tipo-btn" [class.tipo-gasto-active]="nuevoMovimiento.tipo === 'gasto'"
         (click)="nuevoMovimiento.tipo = 'gasto'; onTipoChange()">
-        💸 Gasto
+        <i class="bi bi-graph-down-arrow"></i> Gasto
       </button>
     </div>
 
