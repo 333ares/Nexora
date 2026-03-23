@@ -246,20 +246,25 @@ class MovimientosController extends Controller
             ], 404);
         }
 
+        // Guardamos los datos ANTES de borrar
+        $tipo     = $movimiento->tipo;
+        $cantidad = $movimiento->cantidad;
+        $balance  = $request->user()->balance_total;
+
         // Borramos el movimiento
         $movimiento->delete();
+
+        // Revertimos el efecto que tuvo el movimiento sobre el saldo
+        $request->user()->update([
+            'balance_total' => $tipo === 'ingreso'
+                ? $balance - $cantidad // era un ingreso, lo quitamos
+                : $balance + $cantidad // era un gasto, lo devolvemos
+        ]);
 
         // Mensaje de éxito
         return response()->json([
             'message' => 'success',
             'movimiento' => 'El movimiento se ha borrado correctamente'
         ], 200);
-
-        $cantidad = $request->cantidad;
-        $balanceUsuario = $request->user()->balance_total;
-
-        $request->user()->update([
-            'balance_total' => $balanceUsuario - $cantidad
-        ]);
     }
 }
