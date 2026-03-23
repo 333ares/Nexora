@@ -4,15 +4,15 @@
     <div class="stats-grid">
       <div class="stat-box stat-box-ingreso">
         <span class="stat-box-label">Total ingresos</span>
-        <span class="stat-box-valor ingreso-color">3.100,00 €</span>
+        <span class="stat-box-valor ingreso-color">{{ gastoMensual | number:'1.2-2' }} €</span>
       </div>
       <div class="stat-box stat-box-gasto">
         <span class="stat-box-label">Total gastos</span>
-        <span class="stat-box-valor gasto-color">547,49 €</span>
+        <span class="stat-box-valor gasto-color">{{ ingresoMensual | number:'1.2-2' }} €</span>
       </div>
       <div class="stat-box">
         <span class="stat-box-label">Saldo neto</span>
-        <span class="stat-box-valor">2.552,51 €</span>
+        <span class="stat-box-valor">{{ balanceTotal | number:'1.2-2' }} €</span>
       </div>
       <div class="stat-box">
         <span class="stat-box-label">Tasa de ahorro</span>
@@ -59,8 +59,7 @@
     <div class="donut-layout">
       <div class="donut-svg-wrap">
         <svg width="160" height="160" viewBox="0 0 160 160">
-          <path class="donut-path" fill="#27ae60"
-            d="M 80 20 A 60 60 0 1 1 79.99 20 L 79.99 42 A 38 38 0 1 0 80 42 Z" />
+          <path class="donut-path" fill="#27ae60" d="M 80 20 A 60 60 0 1 1 79.99 20 L 79.99 42 A 38 38 0 1 0 80 42 Z" />
         </svg>
       </div>
       <div class="donut-legend">
