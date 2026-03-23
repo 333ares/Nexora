@@ -1,10 +1,11 @@
 <div class="grid-calendario">
 
+  <!-- CALENDARIO -->
   <div class="card card-white">
     <div class="cal-header">
-      <button class="cal-nav">‹</button>
-      <span class="cal-title">Marzo 2024</span>
-      <button class="cal-nav">›</button>
+      <button class="cal-nav" (click)="mesAnterior()">‹</button>
+      <span class="cal-title">{{ tituloMes }}</span>
+      <button class="cal-nav" (click)="mesSiguiente()">›</button>
     </div>
 
     <div class="cal-grid cal-grid-grande">
@@ -16,116 +17,136 @@
       <div class="cal-dia-header">S</div>
       <div class="cal-dia-header">D</div>
 
-      <!-- offset marzo: empieza viernes = 4 vacíos -->
+      @for (dia of diasDelMes; track $index) {
+      @if (dia === null) {
       <div class="cal-dia cal-dia-grande vacio"></div>
-      <div class="cal-dia cal-dia-grande vacio"></div>
-      <div class="cal-dia cal-dia-grande vacio"></div>
-      <div class="cal-dia cal-dia-grande vacio"></div>
-
-      <div class="cal-dia cal-dia-grande">1</div>
-      <div class="cal-dia cal-dia-grande">2</div>
-      <div class="cal-dia cal-dia-grande">3</div>
-      <div class="cal-dia cal-dia-grande">4</div>
-      <div class="cal-dia cal-dia-grande tiene-mov">
-        5
+      } @else {
+      <div class="cal-dia cal-dia-grande" [class.hoy]="esHoy(dia)" [class.tiene-mov]="movimientosDelDia(dia).length > 0"
+        [class.seleccionado]="diaSeleccionado === dia" (click)="seleccionarDia(dia)">
+        {{ dia }}
+        @if (movimientosDelDia(dia).length > 0) {
         <div class="mov-dots-row">
+          @if (tieneIngresos(dia)) {
           <span class="mov-dot mov-dot-ingreso"></span>
-        </div>
-      </div>
-      <div class="cal-dia cal-dia-grande">6</div>
-      <div class="cal-dia cal-dia-grande">7</div>
-      <div class="cal-dia cal-dia-grande">8</div>
-      <div class="cal-dia cal-dia-grande">9</div>
-      <div class="cal-dia cal-dia-grande tiene-mov">
-        10
-        <div class="mov-dots-row">
+          }
+          @if (tieneGastos(dia)) {
           <span class="mov-dot mov-dot-gasto"></span>
+          }
         </div>
+        }
       </div>
-      <div class="cal-dia cal-dia-grande">11</div>
-      <div class="cal-dia cal-dia-grande">12</div>
-      <div class="cal-dia cal-dia-grande">13</div>
-      <div class="cal-dia cal-dia-grande">14</div>
-      <div class="cal-dia cal-dia-grande tiene-mov">
-        15
-        <div class="mov-dots-row">
-          <span class="mov-dot mov-dot-ingreso"></span>
-        </div>
-      </div>
-      <div class="cal-dia cal-dia-grande">16</div>
-      <div class="cal-dia cal-dia-grande">17</div>
-      <div class="cal-dia cal-dia-grande tiene-mov">
-        18
-        <div class="mov-dots-row">
-          <span class="mov-dot mov-dot-gasto"></span>
-        </div>
-      </div>
-      <div class="cal-dia cal-dia-grande tiene-mov">
-        19
-        <div class="mov-dots-row">
-          <span class="mov-dot mov-dot-gasto"></span>
-        </div>
-      </div>
-      <div class="cal-dia cal-dia-grande hoy tiene-mov">
-        20
-        <div class="mov-dots-row">
-          <span class="mov-dot mov-dot-ingreso"></span>
-          <span class="mov-dot mov-dot-gasto"></span>
-        </div>
-      </div>
-      <div class="cal-dia cal-dia-grande">21</div>
-      <div class="cal-dia cal-dia-grande">22</div>
-      <div class="cal-dia cal-dia-grande">23</div>
-      <div class="cal-dia cal-dia-grande">24</div>
-      <div class="cal-dia cal-dia-grande">25</div>
-      <div class="cal-dia cal-dia-grande">26</div>
-      <div class="cal-dia cal-dia-grande">27</div>
-      <div class="cal-dia cal-dia-grande">28</div>
-      <div class="cal-dia cal-dia-grande">29</div>
-      <div class="cal-dia cal-dia-grande">30</div>
-      <div class="cal-dia cal-dia-grande">31</div>
+      }
+      }
     </div>
   </div>
 
+  <!-- PANEL LATERAL -->
   <div class="card card-white">
     <div class="cal-panel-header">
-      <span class="section-title" style="margin:0;">Día 20</span>
-      <button class="btn-mas btn-mas-cal">+ Añadir</button>
+      <span class="section-title" style="margin:0;">
+        {{ diaSeleccionado ? 'Día ' + diaSeleccionado : 'Selecciona un día' }}
+      </span>
+      @if (diaSeleccionado) {
+      <button class="btn-mas btn-mas-cal" (click)="abrirModal()">+ Añadir</button>
+      }
     </div>
 
+    @if (!diaSeleccionado) {
+    <div class="empty-state">Haz clic en un día para ver sus movimientos</div>
+    } @else if (movimientosDiaSeleccionado.length === 0) {
+    <div class="empty-state">Sin movimientos este día</div>
+    } @else {
+    @for (mov of movimientosDiaSeleccionado; track mov.id) {
     <div class="mov-item-cal">
-      <div class="mov-avatar">💼</div>
+      <div class="mov-avatar">{{ mov.tipo === 'ingreso' ? '💰' : '💸' }}</div>
       <div class="mov-info-cal">
-        <span class="mov-nombre">Nómina Marzo</span>
-        <span class="mov-cat">Sueldo</span>
+        <span class="mov-nombre">{{ mov.categoria }}</span>
       </div>
-      <span class="mov-importe ingreso-color">+1.800,00 €</span>
+      <span class="mov-importe" [class.ingreso-color]="mov.tipo === 'ingreso'"
+        [class.gasto-color]="mov.tipo === 'gasto'">
+        {{ mov.tipo === 'ingreso' ? '+' : '-' }}{{ mov.cantidad | number:'1.2-2' }} €
+      </span>
     </div>
+    }
+    }
 
-    <div class="mov-item-cal">
-      <div class="mov-avatar">🛒</div>
-      <div class="mov-info-cal">
-        <span class="mov-nombre">Mercadona</span>
-        <span class="mov-cat">Supervivencia</span>
-      </div>
-      <span class="mov-importe gasto-color">-87,50 €</span>
-    </div>
-
+    <!-- Resumen del mes -->
     <div class="cal-resumen-mes">
       <p class="section-title" style="margin-bottom:10px;">Resumen del mes</p>
       <div class="cal-stat-row">
         <span class="cal-stat-label">Total gastos</span>
-        <span class="mov-importe gasto-color">547,49 €</span>
+        <span class="mov-importe gasto-color">{{ totalGastosMes | number:'1.2-2' }} €</span>
       </div>
       <div class="cal-stat-row">
         <span class="cal-stat-label">Total ingresos</span>
-        <span class="mov-importe ingreso-color">3.100,00 €</span>
+        <span class="mov-importe ingreso-color">{{ totalIngresosMes | number:'1.2-2' }} €</span>
       </div>
       <div class="cal-stat-row">
         <span class="cal-stat-label">Saldo</span>
-        <span class="mov-importe">2.552,51 €</span>
+        <span class="mov-importe">{{ totalIngresosMes - totalGastosMes | number:'1.2-2' }} €</span>
       </div>
     </div>
   </div>
 
 </div>
+
+<!-- MODAL AÑADIR -->
+@if (modalAbierto) {
+<div class="modal-overlay" (click)="cerrarModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Nuevo movimiento — Día {{ diaSeleccionado }}</h2>
+      <button class="modal-close" (click)="cerrarModal()">✕</button>
+    </div>
+
+    <div class="modal-tipo-selector">
+      <button class="tipo-btn" [class.tipo-ingreso-active]="nuevoMovimiento.tipo === 'ingreso'"
+        (click)="nuevoMovimiento.tipo = 'ingreso'; onTipoChange()">💰 Ingreso</button>
+      <button class="tipo-btn" [class.tipo-gasto-active]="nuevoMovimiento.tipo === 'gasto'"
+        (click)="nuevoMovimiento.tipo = 'gasto'; onTipoChange()">💸 Gasto</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-field">
+        <label>Cantidad (€)</label>
+        <input type="text" inputmode="decimal" placeholder="0.00" #cantidadInput [value]="cantidadDisplay"
+          (input)="cantidadDisplay = cantidadInput.value" (blur)="formatearCantidad(cantidadInput)"
+          class="modal-input" />
+      </div>
+      <div class="modal-field">
+        <label>Categoría</label>
+        <select [(ngModel)]="nuevoMovimiento.categoria" class="modal-input">
+          <option value="" disabled>Selecciona una categoría</option>
+          @for (cat of categoriasActuales; track cat) {
+          <option [value]="cat">{{ cat }}</option>
+          }
+        </select>
+      </div>
+      <div class="modal-field">
+        <label>Fecha</label>
+        <input type="date" [(ngModel)]="nuevoMovimiento.fecha" (change)="onFechaChange()" class="modal-input" />
+      </div>
+      <div class="modal-field">
+        <label>Hora</label>
+        <input type="time" [(ngModel)]="nuevoMovimiento.hora" class="modal-input" />
+      </div>
+      <div class="modal-field">
+        <label>Descripción <span class="opcional">(opcional)</span></label>
+        <input type="text" [(ngModel)]="nuevoMovimiento.descripcion" class="modal-input" />
+      </div>
+      @if (errorModal) {
+      <p class="modal-error">{{ errorModal }}</p>
+      }
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+      <button class="btn-guardar" (click)="guardarMovimiento()" [disabled]="cargando">
+        {{ cargando ? 'Guardando...' : 'Guardar' }}
+      </button>
+    </div>
+
+  </div>
+</div>
+}
