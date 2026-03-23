@@ -1,8 +1,9 @@
-<!-- TOOLBAR: buscador + acciones -->
+<!-- TOOLBAR -->
 <div class="toolbar">
   <div class="toolbar-search">
     <svg class="toolbar-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
     </svg>
     <input type="text" class="toolbar-search-input" placeholder="Buscar cursos, guías, tutoriales..." />
     <span class="toolbar-search-kbd">⌘K</span>
@@ -10,176 +11,244 @@
   <div class="toolbar-actions">
     <button class="toolbar-btn-ghost" data-bs-toggle="modal" data-bs-target="#modalVerificar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
       </svg>
       Mi perfil
     </button>
     <button class="toolbar-btn-primary" data-bs-toggle="modal" data-bs-target="#modalSubir">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="17 8 12 3 7 8" />
+        <line x1="12" y1="3" x2="12" y2="15" />
       </svg>
       Subir contenido
     </button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     HERO CAROUSEL — CSS puro con input[radio]
-     Truco: #sN:checked ~ .carousel { transform }
-     mueve la pista horizontal sin JS
-     ══════════════════════════════════════════════ -->
+<!-- Radios FUERA del wrapper -->
+<input type="radio" name="slide" id="s1" class="slide-radio" checked />
+<input type="radio" name="slide" id="s2" class="slide-radio" />
+<input type="radio" name="slide" id="s3" class="slide-radio" />
+<input type="radio" name="slide" id="s4" class="slide-radio" />
+
 <div class="carousel-wrap">
-
-  <input type="radio" name="slide" id="s1" class="slide-radio" checked />
-  <input type="radio" name="slide" id="s2" class="slide-radio" />
-  <input type="radio" name="slide" id="s3" class="slide-radio" />
-  <input type="radio" name="slide" id="s4" class="slide-radio" />
-
   <div class="carousel">
 
-    <!-- SLIDE 1 — Verde corporativo -->
+    <!-- SLIDE 1 -->
     <div class="slide slide-1">
       <div class="slide-bg"></div>
-      <div class="slide-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
-      <div class="slide-content">
-        <div class="slide-eyebrow">
-          <span class="slide-badge slide-badge--featured">⚡ Destacado</span>
-          <span class="slide-badge slide-badge--type">🎬 Video · 12:34</span>
-        </div>
-        <h2 class="slide-title">Cómo ahorrar el<br><em>30% de tu sueldo</em></h2>
-        <p class="slide-desc">Técnicas probadas usadas por más de 10.000 personas para transformar su relación con el dinero.</p>
-        <div class="slide-meta">
-          <div class="slide-author">
-            <div class="slide-author-av">JL</div>
-            <div><div class="slide-author-name">Juan López</div><div class="slide-author-sub">12.4K seguidores</div></div>
-          </div>
-          <div class="slide-stats"><span class="slide-stat">👁 10.4K</span><span class="slide-stat">⭐ 4.8</span></div>
-        </div>
-        <div class="slide-cta">
-          <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">▶</span>Ver ahora</a>
-          <button class="btn-slide-save">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-            Guardar
-          </button>
-        </div>
+      <div class="slide-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
       </div>
-      <div class="slide-visual">
-        <div class="slide-video-mock">
-          <div class="slide-video-overlay"><div class="slide-play-ring"><span class="slide-play-tri">▶</span></div></div>
-          <div class="slide-video-bars"><div class="bar bar-1"></div><div class="bar bar-2"></div><div class="bar bar-3"></div><div class="bar bar-4"></div><div class="bar bar-5"></div></div>
+      <div class="slide-inner">
+        <div class="slide-content">
+          <div class="slide-eyebrow">
+            <span class="slide-badge slide-badge--featured">⚡ Destacado</span>
+            <span class="slide-badge slide-badge--type">🎬 Video · 12:34</span>
+          </div>
+          <h2 class="slide-title">Cómo ahorrar el<br><em>30% de tu sueldo</em></h2>
+          <p class="slide-desc">Técnicas probadas usadas por más de 10.000 personas para transformar su relación con el
+            dinero.</p>
+          <div class="slide-meta">
+            <div class="slide-author">
+              <div class="slide-author-av">JL</div>
+              <div>
+                <div class="slide-author-name">Juan López</div>
+                <div class="slide-author-sub">12.4K seguidores</div>
+              </div>
+            </div>
+            <div class="slide-stats"><span class="slide-stat">👁 10.4K</span><span class="slide-stat">⭐ 4.8</span></div>
+          </div>
+          <div class="slide-cta">
+            <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">▶</span>Ver ahora</a>
+            <button class="btn-slide-save">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+              </svg>
+              Guardar
+            </button>
+          </div>
+        </div>
+        <div class="slide-visual">
+          <div class="slide-video-mock">
+            <div class="slide-video-overlay">
+              <div class="slide-play-ring"><span class="slide-play-tri">▶</span></div>
+            </div>
+            <div class="slide-video-bars">
+              <div class="bar bar-1"></div>
+              <div class="bar bar-2"></div>
+              <div class="bar bar-3"></div>
+              <div class="bar bar-4"></div>
+              <div class="bar bar-5"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 2 — Azul -->
+    <!-- SLIDE 2 -->
     <div class="slide slide-2">
       <div class="slide-bg"></div>
-      <div class="slide-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
-      <div class="slide-content">
-        <div class="slide-eyebrow">
-          <span class="slide-badge slide-badge--new">🆕 Nuevo</span>
-          <span class="slide-badge slide-badge--type">📄 Documento</span>
-        </div>
-        <h2 class="slide-title">Guía de Inversión<br><em>para Principiantes</em></h2>
-        <p class="slide-desc">Todo lo que necesitas saber para empezar a invertir con seguridad, desde cero y con estrategia.</p>
-        <div class="slide-meta">
-          <div class="slide-author">
-            <div class="slide-author-av">AG</div>
-            <div><div class="slide-author-name">Ana García</div><div class="slide-author-sub">8.2K seguidores</div></div>
-          </div>
-          <div class="slide-stats"><span class="slide-stat">👁 5.2K</span><span class="slide-stat">⭐ 4.9</span></div>
-        </div>
-        <div class="slide-cta">
-          <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">📖</span>Leer guía</a>
-          <button class="btn-slide-save">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-            Guardar
-          </button>
-        </div>
+      <div class="slide-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
       </div>
-      <!-- Visual tipo documento con líneas shimmer y gráfico animado -->
-      <div class="slide-visual">
-        <div class="slide-doc-mock">
-          <div class="doc-line doc-line--title"></div><div class="doc-line doc-line--sub"></div>
-          <div class="doc-line"></div><div class="doc-line doc-line--short"></div><div class="doc-line"></div>
-          <div class="doc-chart">
-            <div class="doc-bar" style="height:40%"></div><div class="doc-bar" style="height:65%"></div>
-            <div class="doc-bar" style="height:55%"></div><div class="doc-bar" style="height:80%"></div>
-            <div class="doc-bar" style="height:70%"></div>
+      <div class="slide-inner">
+        <div class="slide-content">
+          <div class="slide-eyebrow">
+            <span class="slide-badge slide-badge--new">🆕 Nuevo</span>
+            <span class="slide-badge slide-badge--type">📄 Documento</span>
+          </div>
+          <h2 class="slide-title">Guía de Inversión<br><em>para Principiantes</em></h2>
+          <p class="slide-desc">Todo lo que necesitas saber para empezar a invertir con seguridad, desde cero y con
+            estrategia.</p>
+          <div class="slide-meta">
+            <div class="slide-author">
+              <div class="slide-author-av">AG</div>
+              <div>
+                <div class="slide-author-name">Ana García</div>
+                <div class="slide-author-sub">8.2K seguidores</div>
+              </div>
+            </div>
+            <div class="slide-stats"><span class="slide-stat">👁 5.2K</span><span class="slide-stat">⭐ 4.9</span></div>
+          </div>
+          <div class="slide-cta">
+            <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">📖</span>Leer
+              guía</a>
+            <button class="btn-slide-save">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+              </svg>
+              Guardar
+            </button>
+          </div>
+        </div>
+        <div class="slide-visual">
+          <div class="slide-doc-mock">
+            <div class="doc-line doc-line--title"></div>
+            <div class="doc-line doc-line--sub"></div>
+            <div class="doc-line"></div>
+            <div class="doc-line doc-line--short"></div>
+            <div class="doc-line"></div>
+            <div class="doc-chart">
+              <div class="doc-bar" style="height:40%"></div>
+              <div class="doc-bar" style="height:65%"></div>
+              <div class="doc-bar" style="height:55%"></div>
+              <div class="doc-bar" style="height:80%"></div>
+              <div class="doc-bar" style="height:70%"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 3 — Morado -->
+    <!-- SLIDE 3 -->
     <div class="slide slide-3">
       <div class="slide-bg"></div>
-      <div class="slide-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
-      <div class="slide-content">
-        <div class="slide-eyebrow">
-          <span class="slide-badge slide-badge--hot">🔥 Tendencia</span>
-          <span class="slide-badge slide-badge--type">🎬 Video · 8:20</span>
-        </div>
-        <h2 class="slide-title">Presupuesto personal<br><em>en 5 pasos</em></h2>
-        <p class="slide-desc">El método más simple y efectivo para organizar tus finanzas y empezar a ahorrar esta semana.</p>
-        <div class="slide-meta">
-          <div class="slide-author">
-            <div class="slide-author-av">PM</div>
-            <div><div class="slide-author-name">Pedro M.</div><div class="slide-author-sub">5.7K seguidores</div></div>
-          </div>
-          <div class="slide-stats"><span class="slide-stat">👁 3.8K</span><span class="slide-stat">⭐ 4.7</span></div>
-        </div>
-        <div class="slide-cta">
-          <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">▶</span>Ver ahora</a>
-          <button class="btn-slide-save">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-            Guardar
-          </button>
-        </div>
+      <div class="slide-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
       </div>
-      <div class="slide-visual">
-        <div class="slide-video-mock slide-video-mock--alt">
-          <div class="slide-video-overlay"><div class="slide-play-ring"><span class="slide-play-tri">▶</span></div></div>
-          <div class="slide-video-bars"><div class="bar bar-1"></div><div class="bar bar-2"></div><div class="bar bar-3"></div><div class="bar bar-4"></div><div class="bar bar-5"></div></div>
+      <div class="slide-inner">
+        <div class="slide-content">
+          <div class="slide-eyebrow">
+            <span class="slide-badge slide-badge--hot">🔥 Tendencia</span>
+            <span class="slide-badge slide-badge--type">🎬 Video · 8:20</span>
+          </div>
+          <h2 class="slide-title">Presupuesto personal<br><em>en 5 pasos</em></h2>
+          <p class="slide-desc">El método más simple y efectivo para organizar tus finanzas y empezar a ahorrar esta
+            semana.</p>
+          <div class="slide-meta">
+            <div class="slide-author">
+              <div class="slide-author-av">PM</div>
+              <div>
+                <div class="slide-author-name">Pedro M.</div>
+                <div class="slide-author-sub">5.7K seguidores</div>
+              </div>
+            </div>
+            <div class="slide-stats"><span class="slide-stat">👁 3.8K</span><span class="slide-stat">⭐ 4.7</span></div>
+          </div>
+          <div class="slide-cta">
+            <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">▶</span>Ver ahora</a>
+            <button class="btn-slide-save">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+              </svg>
+              Guardar
+            </button>
+          </div>
+        </div>
+        <div class="slide-visual">
+          <div class="slide-video-mock slide-video-mock--alt">
+            <div class="slide-video-overlay">
+              <div class="slide-play-ring"><span class="slide-play-tri">▶</span></div>
+            </div>
+            <div class="slide-video-bars">
+              <div class="bar bar-1"></div>
+              <div class="bar bar-2"></div>
+              <div class="bar bar-3"></div>
+              <div class="bar bar-4"></div>
+              <div class="bar bar-5"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- SLIDE 4 — Naranja (nuevo) -->
+    <!-- SLIDE 4 -->
     <div class="slide slide-4">
       <div class="slide-bg"></div>
-      <div class="slide-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
-      <div class="slide-content">
-        <div class="slide-eyebrow">
-          <span class="slide-badge slide-badge--premium">⭐ Premium</span>
-          <span class="slide-badge slide-badge--type">🎬 Video · 22:10</span>
-        </div>
-        <h2 class="slide-title">Fondos de inversión:<br><em>¿cuál elegir?</em></h2>
-        <p class="slide-desc">Comparativa completa de los mejores fondos del mercado para que decidas con confianza dónde poner tu dinero.</p>
-        <div class="slide-meta">
-          <div class="slide-author">
-            <div class="slide-author-av">SL</div>
-            <div><div class="slide-author-name">Sofía L.</div><div class="slide-author-sub">9.1K seguidores</div></div>
-          </div>
-          <div class="slide-stats"><span class="slide-stat">👁 9.1K</span><span class="slide-stat">⭐ 4.9</span></div>
-        </div>
-        <div class="slide-cta">
-          <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">▶</span>Ver ahora</a>
-          <button class="btn-slide-save">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-            Guardar
-          </button>
-        </div>
+      <div class="slide-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
       </div>
-      <div class="slide-visual">
-        <div class="slide-doc-mock slide-doc-mock--orange">
-          <div class="doc-line doc-line--title"></div><div class="doc-line doc-line--sub"></div>
-          <div class="doc-line"></div><div class="doc-line doc-line--short"></div>
-          <div class="doc-chart">
-            <div class="doc-bar" style="height:55%"></div><div class="doc-bar" style="height:90%"></div>
-            <div class="doc-bar" style="height:70%"></div><div class="doc-bar" style="height:45%"></div>
-            <div class="doc-bar" style="height:80%"></div>
+      <div class="slide-inner">
+        <div class="slide-content">
+          <div class="slide-eyebrow">
+            <span class="slide-badge slide-badge--premium">⭐ Premium</span>
+            <span class="slide-badge slide-badge--type">🎬 Video · 22:10</span>
+          </div>
+          <h2 class="slide-title">Fondos de inversión:<br><em>¿cuál elegir?</em></h2>
+          <p class="slide-desc">Comparativa completa de los mejores fondos del mercado para que decidas con confianza
+            dónde poner tu dinero.</p>
+          <div class="slide-meta">
+            <div class="slide-author">
+              <div class="slide-author-av">SL</div>
+              <div>
+                <div class="slide-author-name">Sofía L.</div>
+                <div class="slide-author-sub">9.1K seguidores</div>
+              </div>
+            </div>
+            <div class="slide-stats"><span class="slide-stat">👁 9.1K</span><span class="slide-stat">⭐ 4.9</span></div>
+          </div>
+          <div class="slide-cta">
+            <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">▶</span>Ver ahora</a>
+            <button class="btn-slide-save">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+              </svg>
+              Guardar
+            </button>
+          </div>
+        </div>
+        <div class="slide-visual">
+          <div class="slide-doc-mock slide-doc-mock--orange">
+            <div class="doc-line doc-line--title"></div>
+            <div class="doc-line doc-line--sub"></div>
+            <div class="doc-line"></div>
+            <div class="doc-line doc-line--short"></div>
+            <div class="doc-chart">
+              <div class="doc-bar" style="height:55%"></div>
+              <div class="doc-bar" style="height:90%"></div>
+              <div class="doc-bar" style="height:70%"></div>
+              <div class="doc-bar" style="height:45%"></div>
+              <div class="doc-bar" style="height:80%"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -187,7 +256,7 @@
 
   </div><!-- /carousel -->
 
-  <!-- Dots — cada label activa su radio -->
+  <!-- Dots -->
   <div class="carousel-controls">
     <label for="s1" class="carousel-dot"></label>
     <label for="s2" class="carousel-dot"></label>
@@ -195,12 +264,13 @@
     <label for="s4" class="carousel-dot"></label>
   </div>
 
-  <!-- Flechas prev/next — labels que apuntan al radio correcto -->
+  <!-- Flechas prev -->
   <label for="s4" class="carousel-arrow carousel-arrow--prev ca-prev-s1">‹</label>
   <label for="s1" class="carousel-arrow carousel-arrow--prev ca-prev-s2">‹</label>
   <label for="s2" class="carousel-arrow carousel-arrow--prev ca-prev-s3">‹</label>
   <label for="s3" class="carousel-arrow carousel-arrow--prev ca-prev-s4">‹</label>
 
+  <!-- Flechas next -->
   <label for="s2" class="carousel-arrow carousel-arrow--next ca-next-s1">›</label>
   <label for="s3" class="carousel-arrow carousel-arrow--next ca-next-s2">›</label>
   <label for="s4" class="carousel-arrow carousel-arrow--next ca-next-s3">›</label>
@@ -209,12 +279,7 @@
 </div><!-- /carousel-wrap -->
 
 
-<!-- ══════════════════════════════════════════════
-     POPULAR AHORA — slider de cards, mismo truco
-     Dos páginas de 4 cards cada una
-     #p1:checked ~ .pop-slider-wrap .pop-track → X=0
-     #p2:checked ~ .pop-slider-wrap .pop-track → X=-100%
-     ══════════════════════════════════════════════ -->
+<!-- POPULAR AHORA -->
 <div class="popular-section">
 
   <div class="popular-header">
@@ -230,32 +295,38 @@
     <a class="popular-ver-todo" routerLink="/academia/administrar">
       Ver todo
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
+        <path d="M5 12h14M12 5l7 7-7 7" />
       </svg>
     </a>
   </div>
 
-  <!-- Radios del slider de cards -->
   <input type="radio" name="pop" id="p1" class="pop-radio" checked />
   <input type="radio" name="pop" id="p2" class="pop-radio" />
 
   <div class="pop-slider-wrap">
     <div class="pop-track">
 
-      <!-- PÁGINA 1 de cards -->
       <div class="pop-page">
         <div class="ccard ccard--animate-1" routerLink="/academia/ver-video">
           <div class="ccard-thumb ccard-thumb--1">
             <div class="ccard-thumb-glow"></div>
             <span class="ccard-play-btn">▶</span>
-            <div class="ccard-badges"><span class="ccard-badge ccard-badge--video">VIDEO</span><span class="ccard-badge ccard-badge--premium">⭐ PREMIUM</span></div>
+            <div class="ccard-badges"><span class="ccard-badge ccard-badge--video">VIDEO</span><span
+                class="ccard-badge ccard-badge--premium">⭐ PREMIUM</span></div>
             <span class="ccard-duration">12:34</span>
           </div>
           <div class="ccard-body">
-            <div class="ccard-top"><span class="ccard-cat">Ahorro</span><button class="ccard-save-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+            <div class="ccard-top"><span class="ccard-cat">Ahorro</span><button class="ccard-save-btn"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg></button></div>
             <h3 class="ccard-title">Cómo ahorrar el 30% de tu sueldo</h3>
-            <div class="ccard-author"><div class="ccard-author-av">JL</div><span class="ccard-author-name">Juan López</span></div>
-            <div class="ccard-footer"><div class="ccard-stats"><span>👁 10.4K</span><span>⭐ 4.8</span></div></div>
+            <div class="ccard-author">
+              <div class="ccard-author-av">JL</div><span class="ccard-author-name">Juan López</span>
+            </div>
+            <div class="ccard-footer">
+              <div class="ccard-stats"><span>👁 10.4K</span><span>⭐ 4.8</span></div>
+            </div>
           </div>
         </div>
 
@@ -263,13 +334,21 @@
           <div class="ccard-thumb ccard-thumb--2">
             <div class="ccard-thumb-glow"></div>
             <span class="ccard-doc-icon">📄</span>
-            <div class="ccard-badges"><span class="ccard-badge ccard-badge--doc">DOC</span><span class="ccard-badge ccard-badge--premium">⭐ PREMIUM</span></div>
+            <div class="ccard-badges"><span class="ccard-badge ccard-badge--doc">DOC</span><span
+                class="ccard-badge ccard-badge--premium">⭐ PREMIUM</span></div>
           </div>
           <div class="ccard-body">
-            <div class="ccard-top"><span class="ccard-cat">Inversión</span><button class="ccard-save-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+            <div class="ccard-top"><span class="ccard-cat">Inversión</span><button class="ccard-save-btn"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg></button></div>
             <h3 class="ccard-title">Guía de Inversión para Principiantes</h3>
-            <div class="ccard-author"><div class="ccard-author-av">AG</div><span class="ccard-author-name">Ana García</span></div>
-            <div class="ccard-footer"><div class="ccard-stats"><span>👁 5.2K</span><span>⭐ 4.9</span></div></div>
+            <div class="ccard-author">
+              <div class="ccard-author-av">AG</div><span class="ccard-author-name">Ana García</span>
+            </div>
+            <div class="ccard-footer">
+              <div class="ccard-stats"><span>👁 5.2K</span><span>⭐ 4.9</span></div>
+            </div>
           </div>
         </div>
 
@@ -281,10 +360,17 @@
             <span class="ccard-duration">8:20</span>
           </div>
           <div class="ccard-body">
-            <div class="ccard-top"><span class="ccard-cat">Presupuesto</span><button class="ccard-save-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+            <div class="ccard-top"><span class="ccard-cat">Presupuesto</span><button class="ccard-save-btn"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg></button></div>
             <h3 class="ccard-title">Presupuesto personal en 5 pasos</h3>
-            <div class="ccard-author"><div class="ccard-author-av">PM</div><span class="ccard-author-name">Pedro M.</span></div>
-            <div class="ccard-footer"><div class="ccard-stats"><span>👁 3.8K</span><span>⭐ 4.7</span></div></div>
+            <div class="ccard-author">
+              <div class="ccard-author-av">PM</div><span class="ccard-author-name">Pedro M.</span>
+            </div>
+            <div class="ccard-footer">
+              <div class="ccard-stats"><span>👁 3.8K</span><span>⭐ 4.7</span></div>
+            </div>
           </div>
         </div>
 
@@ -295,15 +381,21 @@
             <div class="ccard-badges"><span class="ccard-badge ccard-badge--doc">DOC</span></div>
           </div>
           <div class="ccard-body">
-            <div class="ccard-top"><span class="ccard-cat">Herramientas</span><button class="ccard-save-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+            <div class="ccard-top"><span class="ccard-cat">Herramientas</span><button class="ccard-save-btn"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg></button></div>
             <h3 class="ccard-title">Plantilla de Gastos Mensual</h3>
-            <div class="ccard-author"><div class="ccard-author-av">SL</div><span class="ccard-author-name">Sofía L.</span></div>
-            <div class="ccard-footer"><div class="ccard-stats"><span>👁 7.1K</span><span>⭐ 4.6</span></div></div>
+            <div class="ccard-author">
+              <div class="ccard-author-av">SL</div><span class="ccard-author-name">Sofía L.</span>
+            </div>
+            <div class="ccard-footer">
+              <div class="ccard-stats"><span>👁 7.1K</span><span>⭐ 4.6</span></div>
+            </div>
           </div>
         </div>
-      </div><!-- /pop-page 1 -->
+      </div>
 
-      <!-- PÁGINA 2 de cards -->
       <div class="pop-page">
         <div class="ccard" routerLink="/academia/ver-video">
           <div class="ccard-thumb ccard-thumb--5">
@@ -313,10 +405,17 @@
             <span class="ccard-duration">15:00</span>
           </div>
           <div class="ccard-body">
-            <div class="ccard-top"><span class="ccard-cat">Ahorro</span><button class="ccard-save-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+            <div class="ccard-top"><span class="ccard-cat">Ahorro</span><button class="ccard-save-btn"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg></button></div>
             <h3 class="ccard-title">Retos de ahorro: el método 52 semanas</h3>
-            <div class="ccard-author"><div class="ccard-author-av">JL</div><span class="ccard-author-name">Juan López</span></div>
-            <div class="ccard-footer"><div class="ccard-stats"><span>👁 6.3K</span><span>⭐ 4.8</span></div></div>
+            <div class="ccard-author">
+              <div class="ccard-author-av">JL</div><span class="ccard-author-name">Juan López</span>
+            </div>
+            <div class="ccard-footer">
+              <div class="ccard-stats"><span>👁 6.3K</span><span>⭐ 4.8</span></div>
+            </div>
           </div>
         </div>
 
@@ -324,14 +423,22 @@
           <div class="ccard-thumb ccard-thumb--6">
             <div class="ccard-thumb-glow"></div>
             <span class="ccard-play-btn">▶</span>
-            <div class="ccard-badges"><span class="ccard-badge ccard-badge--video">VIDEO</span><span class="ccard-badge ccard-badge--premium">⭐ PREMIUM</span></div>
+            <div class="ccard-badges"><span class="ccard-badge ccard-badge--video">VIDEO</span><span
+                class="ccard-badge ccard-badge--premium">⭐ PREMIUM</span></div>
             <span class="ccard-duration">22:10</span>
           </div>
           <div class="ccard-body">
-            <div class="ccard-top"><span class="ccard-cat">Inversión</span><button class="ccard-save-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+            <div class="ccard-top"><span class="ccard-cat">Inversión</span><button class="ccard-save-btn"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg></button></div>
             <h3 class="ccard-title">Fondos de inversión: ¿cuál elegir?</h3>
-            <div class="ccard-author"><div class="ccard-author-av">SL</div><span class="ccard-author-name">Sofía L.</span></div>
-            <div class="ccard-footer"><div class="ccard-stats"><span>👁 9.1K</span><span>⭐ 4.9</span></div></div>
+            <div class="ccard-author">
+              <div class="ccard-author-av">SL</div><span class="ccard-author-name">Sofía L.</span>
+            </div>
+            <div class="ccard-footer">
+              <div class="ccard-stats"><span>👁 9.1K</span><span>⭐ 4.9</span></div>
+            </div>
           </div>
         </div>
 
@@ -342,10 +449,17 @@
             <div class="ccard-badges"><span class="ccard-badge ccard-badge--doc">DOC</span></div>
           </div>
           <div class="ccard-body">
-            <div class="ccard-top"><span class="ccard-cat">Finanzas</span><button class="ccard-save-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+            <div class="ccard-top"><span class="ccard-cat">Finanzas</span><button class="ccard-save-btn"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg></button></div>
             <h3 class="ccard-title">Deuda vs Ahorro: ¿qué hacer primero?</h3>
-            <div class="ccard-author"><div class="ccard-author-av">MV</div><span class="ccard-author-name">Marta V.</span></div>
-            <div class="ccard-footer"><div class="ccard-stats"><span>👁 11K</span><span>⭐ 4.7</span></div></div>
+            <div class="ccard-author">
+              <div class="ccard-author-av">MV</div><span class="ccard-author-name">Marta V.</span>
+            </div>
+            <div class="ccard-footer">
+              <div class="ccard-stats"><span>👁 11K</span><span>⭐ 4.7</span></div>
+            </div>
           </div>
         </div>
 
@@ -353,32 +467,37 @@
           <div class="ccard-thumb ccard-thumb--8">
             <div class="ccard-thumb-glow"></div>
             <span class="ccard-doc-icon">💰</span>
-            <div class="ccard-badges"><span class="ccard-badge ccard-badge--doc">DOC</span><span class="ccard-badge ccard-badge--premium">⭐ PREMIUM</span></div>
+            <div class="ccard-badges"><span class="ccard-badge ccard-badge--doc">DOC</span><span
+                class="ccard-badge ccard-badge--premium">⭐ PREMIUM</span></div>
           </div>
           <div class="ccard-body">
-            <div class="ccard-top"><span class="ccard-cat">Inversión</span><button class="ccard-save-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+            <div class="ccard-top"><span class="ccard-cat">Inversión</span><button class="ccard-save-btn"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg></button></div>
             <h3 class="ccard-title">Cómo empezar en bolsa con 100€</h3>
-            <div class="ccard-author"><div class="ccard-author-av">CR</div><span class="ccard-author-name">Carlos R.</span></div>
-            <div class="ccard-footer"><div class="ccard-stats"><span>👁 4.4K</span><span>⭐ 4.8</span></div></div>
+            <div class="ccard-author">
+              <div class="ccard-author-av">CR</div><span class="ccard-author-name">Carlos R.</span>
+            </div>
+            <div class="ccard-footer">
+              <div class="ccard-stats"><span>👁 4.4K</span><span>⭐ 4.8</span></div>
+            </div>
           </div>
         </div>
-      </div><!-- /pop-page 2 -->
+      </div>
 
-    </div><!-- /pop-track -->
+    </div>
 
-    <!-- Flechas del slider de cards: next p1→p2, prev p2→p1 -->
     <label for="p2" class="pop-arrow pop-arrow--next pa-next-p1">›</label>
     <label for="p1" class="pop-arrow pop-arrow--prev pa-prev-p2">‹</label>
+  </div>
 
-  </div><!-- /pop-slider-wrap -->
-
-  <!-- Dots del slider de cards -->
   <div class="pop-dots">
     <label for="p1" class="pop-dot"></label>
     <label for="p2" class="pop-dot"></label>
   </div>
 
-</div><!-- /popular-section -->
+</div>
 
 <script>
   function filterPill(el) {

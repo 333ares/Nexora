@@ -1,215 +1,151 @@
-    <div class="video-page">
+<div class="video-page">
 
-        <!-- COLUMNA PRINCIPAL -->
-        <div class="video-main">
+    <!-- COLUMNA PRINCIPAL -->
+    <div class="video-main">
 
-            <!-- PLAYER -->
-            <div class="video-player">
-                <div class="video-player-inner">
-                    <div class="video-play-overlay">
-                        <button class="video-big-play">▶</button>
+        <!-- PLAYER -->
+        <div class="video-player">
+            <div class="video-player-inner">
+                <div class="video-play-overlay">
+                    <button class="video-big-play">▶</button>
+                </div>
+                <div class="video-controls">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
                     </div>
-                    <div class="video-controls">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                        <div class="controls-row">
-                            <button class="ctrl-btn">▶</button>
-                            <button class="ctrl-btn">🔊</button>
-                            <span class="ctrl-time">0:00 / 12:34</span>
-                            <div class="controls-spacer"></div>
-                            <button class="ctrl-btn">⚙️</button>
-                            <button class="ctrl-btn">📺</button>
-                            <button class="ctrl-btn">⛶</button>
-                        </div>
+                    <div class="controls-row">
+                        <button class="ctrl-btn">▶</button>
+                        <button class="ctrl-btn">🔊</button>
+                        <span class="ctrl-time">0:00 / 12:34</span>
+                        <div class="controls-spacer"></div>
+                        <button class="ctrl-btn">⚙️</button>
+                        <button class="ctrl-btn">📺</button>
+                        <button class="ctrl-btn">⛶</button>
                     </div>
                 </div>
             </div>
-
-            <!-- TÍTULO Y ACCIONES -->
-            <div class="video-title-section">
-                <h1 class="video-title">Cómo ahorrar el 30% de tu sueldo — Técnicas Probadas</h1>
-                <div class="video-meta-row">
-                    <div class="video-author">
-                        <div class="author-avatar">JL</div>
-                        <div class="author-info">
-                            <span class="author-name">Juan López</span>
-                            <span class="author-subs">12.4K suscriptores</span>
-                        </div>
-                        <button class="btn-suscribir">Suscribirse</button>
-                    </div>
-                    <div class="video-actions">
-                        <div class="action-group">
-                            <button class="btn-action-like">👍 20</button>
-                            <button class="btn-action-like btn-action-dislike">👎</button>
-                        </div>
-                        <button class="btn-action">↗ Compartir</button>
-                        <button class="btn-action btn-action-reportar" data-bs-toggle="modal"
-                            data-bs-target="#modalReportar">
-                            🚩 Reportar
-                        </button>
-                        <button class="btn-action-dots">···</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DESCRIPCIÓN -->
-            <div class="video-description card">
-                <div class="desc-meta">
-                    <span class="desc-views">10,432 visualizaciones</span>
-                    <span class="desc-date">12 mar 2025</span>
-                    <span class="desc-tag">Ahorro</span>
-                    <span class="desc-tag">Finanzas personales</span>
-                </div>
-                <div class="desc-text" id="descText">
-                    En este video te explico las técnicas que personalmente uso para ahorrar más del 30% de mis ingresos
-                    cada mes.
-                    Aprenderás a identificar gastos innecesarios, crear un presupuesto que realmente funcione y automatizar
-                    tu ahorro.
-                    <br><br>📌 Capítulos:<br>
-                    0:00 - Introducción<br>
-                    1:30 - El método 50/30/20<br>
-                    4:15 - Automatizar el ahorro<br>
-                    7:00 - Trucos para reducir gastos fijos<br>
-                    10:20 - Conclusión y retos semanales
-                </div>
-                <button class="btn-desc-toggle" id="btnDescToggle" onclick="toggleDesc()">...más ▼</button>
-            </div>
-
-            <!-- COMENTARIOS -->
-            <div class="comentarios-section card">
-                <h3 class="section-title-sm">Comentarios · 47</h3>
-                <div class="comentario-input-row">
-                    <div class="comment-avatar-sm">Tú</div>
-                    <input class="comentario-input" type="text" placeholder="Añade un comentario..." />
-                </div>
-
-                <div class="comentarios-list">
-                    <div class="comentario-item">
-                        <div class="comment-avatar-sm">MA</div>
-                        <div class="comentario-body">
-                            <div class="comentario-header">
-                                <span class="comentario-autor">María A.</span>
-                                <span class="comentario-fecha">hace 2 días</span>
-                            </div>
-                            <p class="comentario-texto">¡Excelente video! Llevaba meses buscando algo así de claro.</p>
-                            <div class="comentario-acciones">
-                                <button class="btn-like-comment">👍 12</button>
-                                <button class="btn-like-comment">👎</button>
-                                <button class="btn-reply">Responder</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="comentario-item">
-                        <div class="comment-avatar-sm">CR</div>
-                        <div class="comentario-body">
-                            <div class="comentario-header">
-                                <span class="comentario-autor">Carlos R.</span>
-                                <span class="comentario-fecha">hace 5 días</span>
-                            </div>
-                            <p class="comentario-texto">El método 50/30/20 me ha cambiado la vida. Muy bien explicado.</p>
-                            <div class="comentario-acciones">
-                                <button class="btn-like-comment">👍 8</button>
-                                <button class="btn-like-comment">👎</button>
-                                <button class="btn-reply">Responder</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="comentario-item">
-                        <div class="comment-avatar-sm">LP</div>
-                        <div class="comentario-body">
-                            <div class="comentario-header">
-                                <span class="comentario-autor">Laura P.</span>
-                                <span class="comentario-fecha">hace 1 semana</span>
-                            </div>
-                            <p class="comentario-texto">Gracias, empecé a aplicarlo y ya noté diferencia en el primer mes.
-                            </p>
-                            <div class="comentario-acciones">
-                                <button class="btn-like-comment">👍 5</button>
-                                <button class="btn-like-comment">👎</button>
-                                <button class="btn-reply">Responder</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-        <!-- SIDEBAR -->
-        <div class="video-sidebar">
-            <div class="sidebar-chips">
-                <button class="chip chip-active">Todos</button>
-                <button class="chip">Ahorro</button>
-                <button class="chip">Inversión</button>
-                <button class="chip">Presupuesto</button>
-            </div>
-
-            <div class="related-list">
-                <div class="related-item" routerLink="/academia/ver-video">
-                    <div class="related-thumb related-thumb--2">
-                        <span class="related-play">▶</span>
-                        <span class="related-dur">18:45</span>
+        <!-- TÍTULO Y ACCIONES -->
+        <div class="video-title-section">
+            <h1 class="video-title">Cómo ahorrar el 30% de tu sueldo — Técnicas Probadas</h1>
+            <div class="video-meta-row">
+                <div class="video-author">
+                    <div class="author-avatar">JL</div>
+                    <div class="author-info">
+                        <span class="author-name">Juan López</span>
+                        <span class="author-subs">12.4K suscriptores</span>
                     </div>
-                    <div class="related-info">
-                        <h4 class="related-title">Guía de Inversión para Principiantes</h4>
-                        <p class="related-autor">Ana García</p>
-                        <p class="related-meta">5.2K · hace 3 días</p>
-                    </div>
-                    <button class="related-dots">⋮</button>
+                    <button class="btn-suscribir">Suscribirse</button>
                 </div>
-
-                <div class="related-item" routerLink="/academia/ver-video">
-                    <div class="related-thumb related-thumb--3">
-                        <span class="related-play">▶</span>
-                        <span class="related-dur">8:20</span>
+                <div class="video-actions">
+                    <div class="action-group">
+                        <button class="btn-action-like">👍 20</button>
+                        <button class="btn-action-like btn-action-dislike">👎</button>
                     </div>
-                    <div class="related-info">
-                        <h4 class="related-title">Presupuesto personal en 5 pasos</h4>
-                        <p class="related-autor">Pedro M.</p>
-                        <p class="related-meta">3.8K · hace 1 semana</p>
-                    </div>
-                    <button class="related-dots">⋮</button>
-                </div>
-
-                <div class="related-item" routerLink="/academia/ver-video">
-                    <div class="related-thumb related-thumb--4">
-                        <span class="related-play">▶</span>
-                        <span class="related-dur">22:10</span>
-                    </div>
-                    <div class="related-info">
-                        <h4 class="related-title">Fondos de inversión: ¿cuál elegir?</h4>
-                        <p class="related-autor">Sofía L.</p>
-                        <p class="related-meta">9.1K · hace 2 semanas</p>
-                    </div>
-                    <button class="related-dots">⋮</button>
-                </div>
-
-                <div class="related-item" routerLink="/academia/ver-video">
-                    <div class="related-thumb related-thumb--5">
-                        <span class="related-play">▶</span>
-                        <span class="related-dur">10:05</span>
-                    </div>
-                    <div class="related-info">
-                        <h4 class="related-title">Retos de ahorro: el método 52 semanas</h4>
-                        <p class="related-autor">Juan López</p>
-                        <p class="related-meta">6.3K · hace 1 mes</p>
-                    </div>
-                    <button class="related-dots">⋮</button>
+                    <button class="btn-action">↗ Compartir</button>
+                    <button class="btn-action-dots">···</button>
                 </div>
             </div>
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="video-description card">
+            <div class="desc-meta">
+                <span class="desc-views">10,432 visualizaciones</span>
+                <span class="desc-date">12 mar 2025</span>
+                <span class="desc-tag">Ahorro</span>
+                <span class="desc-tag">Finanzas personales</span>
+            </div>
+            <div class="desc-text" id="descText">
+                En este video te explico las técnicas que personalmente uso para ahorrar más del 30% de mis ingresos
+                cada mes.
+                Aprenderás a identificar gastos innecesarios, crear un presupuesto que realmente funcione y automatizar
+                tu ahorro.
+                <br><br>📌 Capítulos:<br>
+                0:00 - Introducción<br>
+                1:30 - El método 50/30/20<br>
+                4:15 - Automatizar el ahorro<br>
+                7:00 - Trucos para reducir gastos fijos<br>
+                10:20 - Conclusión y retos semanales
+            </div>
+            <button class="btn-desc-toggle" id="btnDescToggle" onclick="toggleDesc()">...más ▼</button>
         </div>
 
     </div>
 
-    <script>
-        function toggleDesc() {
-            const txt = document.getElementById('descText');
-            const btn = document.getElementById('btnDescToggle');
-            if (!txt || !btn) return;
-            txt.classList.toggle('desc-expanded');
-            btn.textContent = txt.classList.contains('desc-expanded') ? 'Mostrar menos ▲' : '...más ▼';
-        }
-    </script>
+    <!-- SIDEBAR -->
+    <div class="video-sidebar">
+        <div class="sidebar-chips">
+            <button class="chip chip-active">Todos</button>
+            <button class="chip">Ahorro</button>
+            <button class="chip">Inversión</button>
+            <button class="chip">Presupuesto</button>
+        </div>
+
+        <div class="related-list">
+            <div class="related-item" routerLink="/academia/ver-video">
+                <div class="related-thumb related-thumb--2">
+                    <span class="related-play">▶</span>
+                    <span class="related-dur">18:45</span>
+                </div>
+                <div class="related-info">
+                    <h4 class="related-title">Guía de Inversión para Principiantes</h4>
+                    <p class="related-autor">Ana García</p>
+                    <p class="related-meta">5.2K · hace 3 días</p>
+                </div>
+                <button class="related-dots">⋮</button>
+            </div>
+
+            <div class="related-item" routerLink="/academia/ver-video">
+                <div class="related-thumb related-thumb--3">
+                    <span class="related-play">▶</span>
+                    <span class="related-dur">8:20</span>
+                </div>
+                <div class="related-info">
+                    <h4 class="related-title">Presupuesto personal en 5 pasos</h4>
+                    <p class="related-autor">Pedro M.</p>
+                    <p class="related-meta">3.8K · hace 1 semana</p>
+                </div>
+                <button class="related-dots">⋮</button>
+            </div>
+
+            <div class="related-item" routerLink="/academia/ver-video">
+                <div class="related-thumb related-thumb--4">
+                    <span class="related-play">▶</span>
+                    <span class="related-dur">22:10</span>
+                </div>
+                <div class="related-info">
+                    <h4 class="related-title">Fondos de inversión: ¿cuál elegir?</h4>
+                    <p class="related-autor">Sofía L.</p>
+                    <p class="related-meta">9.1K · hace 2 semanas</p>
+                </div>
+                <button class="related-dots">⋮</button>
+            </div>
+
+            <div class="related-item" routerLink="/academia/ver-video">
+                <div class="related-thumb related-thumb--5">
+                    <span class="related-play">▶</span>
+                    <span class="related-dur">10:05</span>
+                </div>
+                <div class="related-info">
+                    <h4 class="related-title">Retos de ahorro: el método 52 semanas</h4>
+                    <p class="related-autor">Juan López</p>
+                    <p class="related-meta">6.3K · hace 1 mes</p>
+                </div>
+                <button class="related-dots">⋮</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleDesc() {
+        const txt = document.getElementById('descText');
+        const btn = document.getElementById('btnDescToggle');
+        if (!txt || !btn) return;
+        txt.classList.toggle('desc-expanded');
+        btn.textContent = txt.classList.contains('desc-expanded') ? 'Mostrar menos ▲' : '...más ▼';
+    }
+</script>

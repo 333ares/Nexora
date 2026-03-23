@@ -29,15 +29,14 @@
     <div class="td td-nombre">
       <div class="mov-avatar">{{ mov.tipo === 'ingreso' ? '💰' : '💸' }}</div>
       <div class="mov-name-wrap">
-        <span class="mov-nombre">{{ mov.descripcion || 'Sin descripción' }}</span>
-        <span class="mov-cat">{{ mov.categoria }}</span>
+        <span class="mov-nombre">{{ mov.categoria }}</span>
       </div>
     </div>
     <div class="td td-fecha">
       <span class="fecha-dia">{{ mov.fecha | date:'dd/MM/yyyy' }}</span>
       <span class="fecha-hora">{{ mov.fecha | date:'HH:mm' }}</span>
     </div>
-    <div class="td">{{ mov.categoria }}</div>
+    <div class="td">{{ mov.tipo === 'ingreso' ? 'Ingreso' : 'Gasto' }}</div>
     <div class="td td-desc"><span class="mov-desc-tabla">{{ mov.descripcion || '—' }}</span></div>
     <div class="td td-right">
       <span class="mov-importe" [class.ingreso-color]="mov.tipo === 'ingreso'"
@@ -46,8 +45,8 @@
       </span>
     </div>
     <div class="td td-acciones">
-      <button class="btn-accion btn-editar" title="Editar">✏️</button>
-      <button class="btn-accion btn-eliminar" title="Eliminar">🗑️</button>
+      <button class="btn-accion btn-editar" title="Editar" (click)="abrirModalEditar(mov)">✏️</button>
+      <button class="btn-accion btn-eliminar" title="Eliminar" (click)="abrirModalBorrar(mov.id)">🗑️</button>
     </div>
   </div>
   } @empty {
@@ -62,7 +61,7 @@
   <div class="modal-box" (click)="$event.stopPropagation()">
 
     <div class="modal-header">
-      <h2 class="modal-title">Nuevo movimiento</h2>
+      <h2 class="modal-title">{{ modoEdicion ? 'Editar movimiento' : 'Nuevo movimiento' }}</h2>
       <button class="modal-close" (click)="cerrarModal()">✕</button>
     </div>
 
@@ -97,24 +96,51 @@
       </div>
 
       <div class="modal-field">
+        <label>Fecha</label>
+        <input type="date" [(ngModel)]="nuevoMovimiento.fecha" (change)="onFechaChange()" class="modal-input" />
+      </div>
+
+      <div class="modal-field">
         <label>Descripción <span class="opcional">(opcional)</span></label>
-        <input type="text" placeholder="Ej: Compra supermercado" [(ngModel)]="nuevoMovimiento.descripcion"
-          class="modal-input" />
+        <input type="text" [(ngModel)]="nuevoMovimiento.descripcion" class="modal-input" />
       </div>
 
       @if (errorModal) {
-      <p class="modal-error">{{ errorModal }}</p>
-      }
-      @if (exitoModal) {
-      <p class="modal-exito">{{ exitoModal }}</p>
+      <pre class="modal-error">{{ errorModal }}</pre>
       }
     </div>
 
     <div class="modal-footer">
       <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
       <button class="btn-guardar" (click)="guardarMovimiento()" [disabled]="cargando">
-        {{ cargando ? 'Guardando...' : 'Guardar' }}
+        {{ cargando ? 'Guardando...' : (modoEdicion ? 'Actualizar' : 'Guardar') }}
       </button>
+    </div>
+
+  </div>
+</div>
+}
+
+<!-- MODAL CONFIRMAR BORRADO -->
+@if (modalBorrarAbierto) {
+<div class="modal-overlay" (click)="cerrarModalBorrar()">
+  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Eliminar movimiento</h2>
+      <button class="modal-close" (click)="cerrarModalBorrar()">✕</button>
+    </div>
+
+
+    <div class="modal-body">
+      <div class="borrar-icon">🗑️</div>
+      <p class="borrar-texto">¿Estás seguro de que quieres eliminar este movimiento? Esta acción no se puede deshacer.
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModalBorrar()">Cancelar</button>
+      <button class="btn-borrar" (click)="confirmarBorrar()">Eliminar</button>
     </div>
 
   </div>

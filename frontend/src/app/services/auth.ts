@@ -67,9 +67,20 @@ export class Auth {
   }
 
   // --- MOVIMIENTOS ---
-  apuntarMovimiento(datos: { tipo: string, cantidad: number, categoria: string, descripcion?: string }): Observable<any> {
+  apuntarMovimiento(datos: { tipo: string, cantidad: number, categoria: string, descripcion?: string, fecha?: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/movimiento`, datos, {
       headers: this.getHeaders()
+    });
+  }
+
+  actualizarMovimiento(datos: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/movimiento`, datos, { headers: this.getHeaders() });
+  }
+
+  borrarMovimimento(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/movimiento`, {
+      headers: this.getHeaders(),
+      body: { id }
     });
   }
 

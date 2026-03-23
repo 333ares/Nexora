@@ -88,7 +88,7 @@ export const routes: Routes = [
   {
     path: 'academia',
     component: Academia,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
       {
         path: '',

@@ -14,9 +14,10 @@ class MovimientosController extends Controller
         // Comprobamos que los datos del usuario son correctos
         $validator = Validator::make($request->all(), [
             'tipo' => 'required|in:ingreso,gasto',
-            'cantidad' => 'required|decimal:2',
+            'cantidad' => 'required|numeric|min:0.01',
             'categoria' => 'required|string',
             'descripcion' => 'nullable|string',
+            'fecha' => 'nullable|date',
         ]);
 
         // Si el validador falla, mostramos porque
@@ -44,7 +45,9 @@ class MovimientosController extends Controller
             'cantidad' => $cantidad,
             'categoria' => $request->categoria,
             'descripcion' => $request->descripcion,
-            'fecha' => Carbon::now(),
+            'fecha' => $request->fecha
+                ? Carbon::parse($request->fecha)  // Si viene con hora, la usa tal cual
+                : Carbon::now(),
             'usuario_id' => $request->user()->IDusuario,
         ]);
 
@@ -171,7 +174,7 @@ class MovimientosController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'tipo' => 'nullable|string',
-            'cantidad' => 'nullable|decimal:2',
+            'cantidad' => 'nullable|numeric|min:0.01',
             'categoria' => 'nullable|string',
             'descripcion' => 'nullable|string'
         ]);
@@ -243,20 +246,25 @@ class MovimientosController extends Controller
             ], 404);
         }
 
+        // Guardamos los datos ANTES de borrar
+        $tipo     = $movimiento->tipo;
+        $cantidad = $movimiento->cantidad;
+        $balance  = $request->user()->balance_total;
+
         // Borramos el movimiento
         $movimiento->delete();
+
+        // Revertimos el efecto que tuvo el movimiento sobre el saldo
+        $request->user()->update([
+            'balance_total' => $tipo === 'ingreso'
+                ? $balance - $cantidad // era un ingreso, lo quitamos
+                : $balance + $cantidad // era un gasto, lo devolvemos
+        ]);
 
         // Mensaje de éxito
         return response()->json([
             'message' => 'success',
             'movimiento' => 'El movimiento se ha borrado correctamente'
         ], 200);
-
-        $cantidad = $request->cantidad;
-        $balanceUsuario = $request->user()->balance_total;
-
-        $request->user()->update([
-            'balance_total' => $balanceUsuario - $cantidad
-        ]);
     }
 }
