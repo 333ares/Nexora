@@ -45,7 +45,9 @@ class MovimientosController extends Controller
             'cantidad' => $cantidad,
             'categoria' => $request->categoria,
             'descripcion' => $request->descripcion,
-            'fecha' => $request->fecha ? Carbon::parse($request->fecha) : Carbon::now(),
+            'fecha' => $request->fecha
+                ? Carbon::parse($request->fecha)  // Si viene con hora, la usa tal cual
+                : Carbon::now(),
             'usuario_id' => $request->user()->IDusuario,
         ]);
 
