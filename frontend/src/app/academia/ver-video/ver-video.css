@@ -682,4 +682,14 @@
   .related-list {
     grid-template-columns: 1fr;
   }
+
+  .btn-action-report {
+    color: #e74c3c;
+    border-color: rgba(231, 76, 60, 0.3);
+  }
+
+  .btn-action-report:hover {
+    background: rgba(231, 76, 60, 0.08);
+    border-color: #e74c3c;
+  }
 }
