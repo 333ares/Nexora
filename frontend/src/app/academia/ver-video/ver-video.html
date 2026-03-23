@@ -45,8 +45,10 @@
                     </div>
                     <button class="btn-action">↗ Compartir</button>
 
-                    <!-- BOTÓN REPORTAR ── abre el modal del padre -->
-                    <button class="btn-action btn-action-report" data-bs-toggle="modal" data-bs-target="#modalReportar"
+                    <!-- BOTÓN REPORTAR — abre modal -->
+                    <button class="btn-action btn-action-report"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalReportar"
                         title="Reportar este contenido">
                         🚩 Reportar
                     </button>
@@ -145,6 +147,46 @@
         </div>
     </div>
 
+</div>
+
+<!-- ══ MODAL: REPORTAR CONTENIDO ══ -->
+<div class="modal fade" id="modalReportar" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-custom">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title-custom">🚩 Reportar contenido</h5>
+        <button type="button" class="btn-close-custom" data-bs-dismiss="modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-subtitle">Ayúdanos a mantener la calidad de la Academia. Revisaremos tu reporte en menos de 24h.</p>
+        <div class="modal-field" style="margin-bottom:14px">
+          <label>Motivo del reporte</label>
+          <select>
+            <option value="">Selecciona un motivo...</option>
+            <option>Información incorrecta o engañosa</option>
+            <option>Contenido inapropiado</option>
+            <option>Spam o publicidad</option>
+            <option>Infracción de derechos de autor</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label>Descripción <span style="font-weight:400; color:#aaa">(opcional)</span></label>
+          <textarea placeholder="Explica brevemente el problema para que podamos revisarlo mejor..."></textarea>
+        </div>
+        <div class="report-notice">
+          <span class="report-notice-icon">ℹ️</span>
+          <p>Los reportes son anónimos. No se compartirá tu información con el autor del contenido.</p>
+        </div>
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <div class="modal-actions">
+          <button class="btn-cancel" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn-submit btn-submit-red" data-bs-dismiss="modal">Enviar reporte</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

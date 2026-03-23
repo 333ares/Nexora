@@ -30,9 +30,9 @@
         <button type="button" class="btn-close-custom" data-bs-dismiss="modal">✕</button>
       </div>
       <div class="modal-body">
-        <div class="modal-icono">✅</div>
-        <p class="modal-desc">Tu cuenta está actualmente <strong>no verificada</strong>. Verifica tu identidad para
-          desbloquear todas las funciones.</p>
+        <div class="verificar-icono">🪪</div>
+        <p class="verificar-desc">Verifica tu identidad para poder publicar contenido en la Academia y desbloquear todas
+          las funciones de creador.</p>
         <div class="modal-field">
           <label>Nombre completo</label>
           <input type="text" placeholder="Tu nombre real" />
@@ -41,11 +41,19 @@
           <label>Documento de identidad</label>
           <input type="text" placeholder="DNI / NIE / Pasaporte" />
         </div>
+        <div class="modal-field" style="margin-top:14px">
+          <label>Adjuntar documento</label>
+          <div class="upload-drop-zone upload-drop-zone--sm">
+            <span class="upload-icon" style="font-size:28px;">📎</span>
+            <p class="upload-text">Arrastra o <span class="upload-link">selecciona</span> una imagen</p>
+            <p class="upload-hint">JPG, PNG, PDF — máx. 10 MB</p>
+          </div>
+        </div>
       </div>
       <div class="modal-footer border-0 pt-0">
         <div class="modal-actions">
           <button class="btn-cancel" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn-submit" data-bs-dismiss="modal">Verificar →</button>
+          <button class="btn-submit" data-bs-dismiss="modal">Enviar verificación →</button>
         </div>
       </div>
     </div>
@@ -61,6 +69,7 @@
         <button type="button" class="btn-close-custom" data-bs-dismiss="modal">✕</button>
       </div>
       <div class="modal-body">
+        <p class="modal-subtitle">Comparte tu conocimiento financiero con la comunidad.</p>
         <div class="modal-tipo-tabs">
           <button class="tipo-tab tipo-tab-activo" onclick="activarTab(this)">🎬 Video</button>
           <button class="tipo-tab" onclick="activarTab(this)">📄 Documento</button>
@@ -101,41 +110,6 @@
         <div class="modal-actions">
           <button class="btn-cancel" data-bs-dismiss="modal">Cancelar</button>
           <button class="btn-submit" data-bs-dismiss="modal">Publicar contenido →</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: REPORTAR CONTENIDO -->
-<div class="modal fade" id="modalReportar" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content modal-custom">
-      <div class="modal-header border-0 pb-0">
-        <h5 class="modal-title-custom">🚩 Reportar contenido</h5>
-        <button type="button" class="btn-close-custom" data-bs-dismiss="modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <p class="modal-subtitle">Ayúdanos a mantener la calidad de la Academia.</p>
-        <div class="modal-field" style="margin-bottom:14px">
-          <label>Motivo del reporte</label>
-          <select>
-            <option>Información incorrecta</option>
-            <option>Contenido inapropiado</option>
-            <option>Spam o publicidad</option>
-            <option>Derechos de autor</option>
-            <option>Otro</option>
-          </select>
-        </div>
-        <div class="modal-field">
-          <label>Descripción (opcional)</label>
-          <textarea placeholder="Explica brevemente el problema..."></textarea>
-        </div>
-      </div>
-      <div class="modal-footer border-0 pt-0">
-        <div class="modal-actions">
-          <button class="btn-cancel" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn-submit btn-submit-red" data-bs-dismiss="modal">Enviar reporte</button>
         </div>
       </div>
     </div>
@@ -204,8 +178,8 @@
         <button type="button" class="btn-close-custom" data-bs-dismiss="modal">✕</button>
       </div>
       <div class="modal-body" style="text-align:center">
-        <div class="modal-icono">⚠️</div>
-        <p class="modal-desc">¿Estás seguro de que quieres eliminar este contenido?<br>
+        <div class="verificar-icono">⚠️</div>
+        <p class="verificar-desc">¿Estás seguro de que quieres eliminar este contenido?<br>
           <strong>Esta acción no se puede deshacer.</strong>
         </p>
       </div>
