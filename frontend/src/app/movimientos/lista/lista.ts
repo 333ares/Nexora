@@ -35,7 +35,9 @@ export class Lista implements OnInit {
     tipo: 'ingreso',
     cantidad: null as number | null,
     categoria: '',
-    descripcion: ''
+    descripcion: '',
+    fecha: '',
+    fechaHora: ''
   };
 
   constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
@@ -77,14 +79,29 @@ export class Lista implements OnInit {
 
   // Abre el modal en modo creación
   abrirModal() {
+    const ahora = new Date();
+    const año = ahora.getFullYear();
+    const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+    const dia = String(ahora.getDate()).padStart(2, '0');
+    const hora = String(ahora.getHours()).padStart(2, '0');
+    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+
     this.modoEdicion = false;
     this.movimientoEditandoId = null;
-    this.nuevoMovimiento = { tipo: 'ingreso', cantidad: null, categoria: '', descripcion: '' };
+    this.nuevoMovimiento = {
+      tipo: 'ingreso',
+      cantidad: null,
+      categoria: '',
+      descripcion: '',
+      fecha: `${año}-${mes}-${dia}`,              // para el input date
+      fechaHora: `${año}-${mes}-${dia}T${hora}:${minutos}` // para el backend
+    };
     this.cantidadDisplay = '';
     this.errorModal = '';
     this.exitoModal = '';
     this.modalAbierto = true;
   }
+
 
   // Abre el modal en modo edición, precargando los datos del movimiento
   abrirModalEditar(mov: any) {
@@ -94,12 +111,21 @@ export class Lista implements OnInit {
       tipo: mov.tipo,
       cantidad: mov.cantidad,
       categoria: mov.categoria,
-      descripcion: mov.descripcion || ''
+      descripcion: mov.descripcion || '',
+      fecha: mov.fecha,
+      fechaHora: mov.fechaHora
     };
     this.cantidadDisplay = Number(mov.cantidad).toFixed(2);
     this.errorModal = '';
     this.exitoModal = '';
     this.modalAbierto = true;
+  }
+
+  onFechaChange() {
+    const ahora = new Date();
+    const hora = String(ahora.getHours()).padStart(2, '0');
+    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+    this.nuevoMovimiento.fechaHora = `${this.nuevoMovimiento.fecha}T${hora}:${minutos}`;
   }
 
   // Cierra el modal y resetea el estado
@@ -140,28 +166,29 @@ export class Lista implements OnInit {
 
     if (this.modoEdicion && this.movimientoEditandoId !== null) {
       // Modo edición: enviamos PUT con el id del movimiento
-      this.authService.actualizarMovimiento({
-        id: this.movimientoEditandoId,
+      this.authService.apuntarMovimiento({
         tipo: this.nuevoMovimiento.tipo,
         cantidad: this.nuevoMovimiento.cantidad,
         categoria: this.nuevoMovimiento.categoria,
-        descripcion: this.nuevoMovimiento.descripcion
-      }).subscribe({
-        next: () => {
-          this.cargando = false;
-          this.cerrarModal();
-          this.cargarMovimientos();
-        },
-        error: (err) => {
-          this.cargando = false;
-          const errores = err.error?.errors;
-          if (typeof errores === 'object' && errores !== null) {
-            this.errorModal = Object.values(errores).flat().join(', ');
-          } else {
-            this.errorModal = errores || 'Error al actualizar el movimiento.';
+        descripcion: this.nuevoMovimiento.descripcion,
+        fecha: this.nuevoMovimiento.fechaHora  // ← fechaHora en lugar de fecha
+      })
+        .subscribe({
+          next: () => {
+            this.cargando = false;
+            this.cerrarModal();
+            this.cargarMovimientos();
+          },
+          error: (err) => {
+            this.cargando = false;
+            const errores = err.error?.errors;
+            if (typeof errores === 'object' && errores !== null) {
+              this.errorModal = Object.values(errores).flat().join(', ');
+            } else {
+              this.errorModal = errores || 'Error al actualizar el movimiento.';
+            }
           }
-        }
-      });
+        });
     } else {
       // Modo creación: enviamos POST con los datos del formulario
       this.authService.apuntarMovimiento({

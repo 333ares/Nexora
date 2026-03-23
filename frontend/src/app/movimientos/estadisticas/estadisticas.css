@@ -1,0 +1,139 @@
+/* ══ ESTADÍSTICAS ══ */
+.grid-estadisticas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.stats-grande {
+  grid-column: 1 / -1;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-box {
+  background: #f8fdf5;
+  border-radius: 14px;
+  padding: 20px;
+  border: 1.5px solid #e8f5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-box-ingreso {
+  border-color: #B3E29A;
+}
+
+.stat-box-gasto {
+  border-color: #ffcdd2;
+}
+
+.stat-box-label {
+  font-size: 14px;
+  color: #999;
+  font-family: 'Lato';
+  font-weight: 600;
+}
+
+.stat-box-valor {
+  font-size: 32px;
+  font-weight: 800;
+  font-family: 'Onest';
+  line-height: 1.1;
+}
+
+.stat-box-delta {
+  font-size: 13px;
+  font-family: 'Lato';
+  color: #aaa;
+}
+
+.barras-grandes .barra-track {
+  height: 150px;
+}
+
+.cat-item {
+  margin-bottom: 14px;
+}
+
+.cat-item:last-child {
+  margin-bottom: 0;
+}
+
+.cat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.cat-nombre {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Onest';
+  color: #1a1a1a;
+}
+
+/* ══ DONUT CHART ══ */
+.donut-card {
+  grid-column: span 1;
+}
+
+.donut-layout {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.donut-svg-wrap {
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.10));
+}
+
+.donut-path {
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.donut-path:hover {
+  opacity: 0.8;
+}
+
+.donut-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.donut-legend-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.donut-legend-label {
+  flex: 1;
+  font-size: 14px;
+  font-family: 'Onest';
+  font-weight: 600;
+  color: #333;
+}
+
+.donut-legend-pct {
+  font-size: 16px;
+  font-weight: 800;
+  font-family: 'Onest';
+}
