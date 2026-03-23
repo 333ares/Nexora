@@ -97,7 +97,7 @@
 
       <div class="modal-field">
         <label>Fecha</label>
-        <input type="date" [(ngModel)]="nuevoMovimiento.fecha" class="modal-input" />
+        <input type="date" [(ngModel)]="nuevoMovimiento.fecha" (change)="onFechaChange()" class="modal-input" />
       </div>
 
       <div class="modal-field">
