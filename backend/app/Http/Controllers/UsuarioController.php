@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
-    public function listarInfo(Request $request, $id) 
+    public function listarInfo(Request $request, $id)
     {
         // Ahora ya puedes usar $id para buscar al usuario
         $usuario = \App\Models\Usuario::find($id);
@@ -107,5 +107,39 @@ class UsuarioController extends Controller
         }
 
         return response()->json($usuarios, 200);
+    }
+
+    public function verificarUsuario(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'linkedin' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $usuario = $request->user();
+
+        if (!$usuario) {
+            return response()->json([
+                'message' => 'error',
+                'usuario' => 'No existe ningún usuario con ese ID'
+            ], 404);
+        }
+
+        $linkedin = $request->user()->linkedin;
+
+        // Actualizamos datos
+        $usuario->update($linkedin);
+
+        // Mostramos usuario actualizado
+        return response()->json([
+            'message' => 'success',
+            'usuario' => $usuario
+        ], 200);
     }
 }
