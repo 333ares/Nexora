@@ -17,13 +17,15 @@ class Reto extends Model
 
     // Campos que permite llenar masivamente desde el formulario/API
     protected $fillable = [
+        'titulo',    
         'activo',
         'cumplido',
         'cantidad',
         'fecha_inicio',
         'fecha_final',
         //'duracion',
-        'IDusuario'
+        'IDusuario',
+        'user_id'
     ];
 
     /**

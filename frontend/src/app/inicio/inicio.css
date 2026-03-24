@@ -78,7 +78,7 @@ nav {
 
 .nav-links a {
   font-family: 'Lato', sans-serif;
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 400;
   color: var(--text-mid);
   text-decoration: none;
@@ -100,7 +100,7 @@ nav {
 .btn-nav-secondary {
   font-family: 'Onest', sans-serif;
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: var(--green-mid);
   background: var(--mint);
   border: 1.5px solid var(--mint-border);
@@ -116,7 +116,7 @@ nav {
 .btn-nav-primary {
   font-family: 'Onest', sans-serif;
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: #fff;
   background: linear-gradient(135deg, var(--green-mid), var(--green-light));
   border: none;
@@ -205,7 +205,7 @@ nav {
   border: 1px solid rgba(255,255,255,0.7);
   border-radius: 999px;
   padding: 6px 14px;
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--green-dark);
   letter-spacing: 0.06em;
@@ -228,7 +228,7 @@ nav {
 }
 
 .hero-subtitle {
-  font-size: 1.05rem;
+  font-size: 20px;
   line-height: 1.7;
   color: var(--text-mid);
   margin-bottom: 36px;
@@ -317,7 +317,7 @@ section {
 }
 
 .section-eyebrow {
-  font-size: 0.78rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -350,7 +350,7 @@ section {
 .btn-link {
   font-family: 'Onest', sans-serif;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--green-mid);
   text-decoration: none;
   padding: 12px 24px;
@@ -398,7 +398,7 @@ section {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-size: 0.98rem;
+  font-size: 1rem;
   color: var(--text-dark);
 }
 
@@ -411,7 +411,7 @@ section {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 
 .stats-cards {
@@ -430,15 +430,14 @@ section {
 
 .stat-card .number {
   font-family: 'Onest', sans-serif;
-  font-weight: 900;
-  font-size: 2.2rem;
+  font-size: 20px;
   color: var(--green-mid);
   line-height: 1;
   margin-bottom: 6px;
 }
 
 .stat-card .label {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--text-muted);
   line-height: 1.4;
 }
@@ -498,7 +497,7 @@ section {
 }
 
 .func-card p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-muted);
   line-height: 1.6;
 }
@@ -542,7 +541,7 @@ section {
 .plan-preview-badge {
   font-family: 'Onest', sans-serif;
   font-weight: 800;
-  font-size: 0.72rem;
+  font-size: 1rem;
   letter-spacing: 0.1em;
   padding: 4px 14px;
   border-radius: 999px;
@@ -563,7 +562,7 @@ section {
 
 .plan-preview-price {
   margin-bottom: 12px;
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: var(--text-muted);
 }
 .big-price {
@@ -574,7 +573,7 @@ section {
 }
 
 .plan-preview-card p {
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: var(--text-muted);
   line-height: 1.5;
 }
@@ -631,7 +630,7 @@ section {
 }
 
 .benefit-card p {
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: rgba(255,255,255,0.75);
   line-height: 1.6;
 }
@@ -672,7 +671,7 @@ section {
 .newsletter-input {
   flex: 1;
   font-family: 'Lato', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--text-dark);
   background: var(--mint);
   border: 1.5px solid var(--mint-border);
@@ -688,7 +687,7 @@ section {
 .btn-newsletter {
   font-family: 'Onest', sans-serif;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: white;
   background: linear-gradient(135deg, var(--green-mid), var(--green-light));
   border: none;
@@ -742,7 +741,7 @@ section {
   text-align: left;
   font-family: 'Onest', sans-serif;
   font-weight: 600;
-  font-size: 0.97rem;
+  font-size: 1rem;
   color: var(--text-dark);
   list-style: none;
 }
@@ -759,7 +758,7 @@ section {
   justify-content: center;
   flex-shrink: 0;
   transition: transform 0.3s, background 0.2s;
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--green-mid);
 }
 
@@ -770,18 +769,10 @@ section {
 }
 
 .faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.2s;
   padding: 0 20px 18px;
-  font-size: 0.93rem;
+  font-size: 1rem;
   color: var(--text-muted);
   line-height: 1.7;
-}
-
-.faq-item.open .faq-answer {
-  max-height: 300px;
-  padding: 0 20px 18px;
 }
 
 /* ── ABOUT PREVIEW ──────────────────────────────────── */
@@ -830,7 +821,7 @@ section {
 }
 
 .adda-sub-mini {
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: var(--text-muted);
   margin-top: 4px;
 }
@@ -869,7 +860,7 @@ section {
 
 .contact-email {
   font-family: 'Lato', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--green-mid);
   text-decoration: none;
   font-weight: 600;
@@ -902,7 +893,7 @@ section {
 }
 
 .adda-sub {
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: var(--text-muted);
   margin-top: 4px;
 }
@@ -948,13 +939,13 @@ section {
 .team-card h4 {
   font-family: 'Onest', sans-serif;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--text-dark);
   margin-bottom: 4px;
 }
 
 .team-card .role {
-  font-size: 0.82rem;
+  font-size: 1rem;
   color: var(--text-muted);
 }
 
@@ -981,14 +972,14 @@ footer {
 .footer-brand .nav-logo span { color: #78C550; }
 
 .footer-brand p {
-  font-size: 0.88rem;
+  font-size: 1rem;
   line-height: 1.7;
 }
 
 .footer-col h5 {
   font-family: 'Onest', sans-serif;
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: white;
   margin-bottom: 14px;
   text-transform: uppercase;
@@ -997,7 +988,7 @@ footer {
 
 .footer-col a {
   display: block;
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: rgba(255,255,255,0.6);
   text-decoration: none;
   margin-bottom: 8px;
@@ -1014,7 +1005,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.82rem;
+  font-size: 1rem;
 }
 
 .footer-bottom .contact a {
