@@ -12,21 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('retos', function (Blueprint $table) {
-            $table->id('IDreto'); // Clave primaria
-            $table->boolean('activo')->default(true); //El reto está activo por defecto.
-            $table->boolean('cumplido')->default(false); //No se ha cumplido a menos que se marque lo contrario
+            $table->id('IDreto'); // Tu clave primaria
+            $table->string('titulo');
+            $table->string('emoji')->nullable();
             $table->decimal('cantidad', 15, 2);
-            $table->date('fecha_inicio');
+            $table->date('fecha_inicio')->useCurrent();
             $table->date('fecha_final');
+            $table->boolean('activo')->default(true);
+            $table->boolean('cumplido')->default(false);
             
-            // Calcula la duracion si es necesario, o la guardamos como entero
-            //$table->integer('duracion')->comment('Duración en días');
-
-            //Clave Foranea hacia tabla usuarios
-            $table->foreignId('IDusuario')
-                ->constrained('usuarios', 'IDusuario')
+            // 1. Creamos la columna
+            $table->unsignedBigInteger('IDusuario');
+            
+            // 2. Creamos la relación (Asumiendo que tu tabla de usuarios se llama 'usuarios' y su id es 'IDusuario')
+            $table->foreign('IDusuario')
+                ->references('IDusuario')
+                ->on('usuarios')
                 ->onDelete('cascade');
-
+                
             $table->timestamps();
         });
     }
