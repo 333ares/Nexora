@@ -17,22 +17,12 @@ class Reto extends Model
 
     // Campos que permite llenar masivamente desde el formulario/API
     protected $fillable = [
-        'titulo',    
+        'titulo',
         'activo',
         'cumplido',
         'cantidad',
         'fecha_inicio',
         'fecha_final',
-        //'duracion',
-        'IDusuario',
-        'user_id'
+        'IDusuario'
     ];
-
-    /**
-     * Relación: Un Reto pertenece a un Usuario.
-     */
-    public function usuario()
-    {
-        return $this->belongsTo(Usuario::class, 'IDusuario', 'IDusuario');
-    }
 }

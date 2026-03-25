@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Reto; // Importas el modelo para poder guardar
-use Carbon\Carbon; // Asegúrate de importar Carbon arriba
+use App\Models\Reto;
+use Carbon\Carbon; 
 
 class RetoController extends Controller
 {
     public function store(Request $request) {
-        // 1. Validamos solo lo que el usuario SÍ puede tocar
+        // Validamos solo lo que el usuario SÍ puede tocar
         $validated = $request->validate([
             'titulo'    => 'required|string|min:3',
             'cantidad'  => 'required|numeric|min:1',
