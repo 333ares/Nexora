@@ -1,111 +1,98 @@
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Onest:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow-y: auto;
+/* ── VARIABLES COPIADAS DE TU INICIO ────────────────── */
+:host {
+  display: block;
+  --green-dark:   #2d7a0f;
+  --green-mid:    #4E9C25;
+  --green-light:  #78C550;
+  --green-bright: #ABDE91;
+  --mint:         #d8eed8;
+  --mint-border:  #c8e0c8;
+  --text-mid:     #3a5a20;
 }
 
-app-root {
-    display: block;
-    min-height: 100vh;
+/* ── NAV ESTILO INICIO ─────────────────────────────── */
+nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(960px, calc(100% - 32px));
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--mint-border);
+  border-radius: 999px;
+  padding: 10px 20px 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  box-shadow: 0 4px 24px rgba(78,156,37,0.12);
 }
 
-/* ══ HEADER ══ */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    padding: 14px 40px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.logo2 {
-    width: 75px;
-    filter: brightness(0) saturate(100%) invert(37%) sepia(91%) saturate(345%) hue-rotate(63deg) brightness(91%) contrast(88%);
+.nav-logo span {
+  font-family: 'Onest', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--green-mid) !important; /* Forzamos el color de tu inicio */
+  letter-spacing: 0.04em;
 }
 
-.header-brand {
-    grid-column: 1;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    justify-self: start;
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.brand-icon {
-    font-size: 24px;
-    display: flex;
-    align-items: center;
+.nav-links a {
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-mid);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
 }
 
-.brand-text {
-    display: flex;
-    flex-direction: column;
+.nav-links a:hover, 
+.nav-links a.active { /* El estado activo ahora se ve como el hover del inicio */
+  background: var(--mint);
+  color: var(--green-dark);
 }
 
-.brand-name {
-    font-size: 17px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.2;
+.nav-cta {
+  display: flex;
+  gap: 8px;
 }
 
-.brand-sub {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.7);
-    font-family: 'Lato';
-    font-weight: 300;
+.btn-nav-primary {
+  font-family: 'Onest', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff !important;
+  background: linear-gradient(135deg, var(--green-mid), var(--green-light));
+  border: none;
+  border-radius: 999px;
+  padding: 8px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 12px rgba(78,156,37,0.35);
+  transition: all 0.2s;
 }
 
-.header-nav {
-    grid-column: 2;
-    display: flex;
-    gap: 2px;
-    background: #f1f3f0;
-    border-radius: 50px;
-    padding: 4px 6px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    justify-self: center;
-}
-
-.nav-item {
-    padding: 8px 22px;
-    border-radius: 50px;
-    border: none;
-    background: transparent;
-    color: #555;
-    font-family: 'Onest';
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-}
-
-.nav-item:hover {
-    color: #3a8a1a;
-    background: rgba(255, 255, 255, 0.5);
-}
-
-.nav-item.active {
-    background: #fff;
-    color: #3a8a1a;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.header::after {
-    content: "";
-    grid-column: 3;
+.btn-nav-primary:hover {
+  box-shadow: 0 4px 20px rgba(78,156,37,0.5);
+  transform: translateY(-1px);
 }
