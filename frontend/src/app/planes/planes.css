@@ -81,12 +81,12 @@
 }
 
 /* ══════════════════════════════════════════════
-   BLOQUE WHY — separado, fondo verde menta con borde
+   BLOQUE WHY — fondo claro para accesibilidad WCAG AA
 ══════════════════════════════════════════════ */
 .why-block {
-  background: linear-gradient(135deg, #B3E29A 0%, #78C550);
+  background: #f4faf0;
   border-radius: 24px;
-  border: 1.5px solid #5ab55a;
+  border: 1.5px solid #c8e0c8;
   overflow: hidden;
 }
 
@@ -355,61 +355,68 @@
 
 
 /* ══════════════════════════════════════════════
-   SECCIÓN ¿POR QUÉ? — dentro de .why-block
-   Fondos verdosos como estaban originalmente
+   SECCIÓN ¿POR QUÉ? — fondo claro, texto oscuro
+   Cumple WCAG AA (ratio mínimo 4.5:1)
 ══════════════════════════════════════════════ */
 .why-section {
   padding: 36px 32px 40px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(6px);
+  background: transparent;
+  backdrop-filter: none;
 }
+
 .why-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 900;
-  color: #fff;
+  color: #1a2e0f;
   margin: 0;
 }
+
 .why-subtitle {
   font-size: 16px;
-  color: rgba(255,255,255,0.85);
+  color: #4a6a35;
   margin: -8px 0 0;
 }
+
 .why-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gap);
 }
+
 .why-item {
-  background: rgba(255,255,255,0.18);
+  background: #ffffff;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid #c8e0c8;
   padding: 22px 18px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
 .why-icon {
   width: 42px;
   height: 42px;
-  background: rgba(255,255,255,0.3);
+  background: #e8f5e9;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #4E9C25;
 }
+
 .why-item__title {
   font-size: 16px;
   font-weight: 800;
-  color: #fff;
+  color: #1a2e0f;
   margin: 0;
 }
+
 .why-item__desc {
   font-size: 16px;
-  color: rgba(255,255,255,0.82);
+  color: #4a5568;
   margin: 0;
   line-height: 1.5;
 }
