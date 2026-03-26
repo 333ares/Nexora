@@ -24,38 +24,38 @@ class RetoController extends Controller
     public function crearReto(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'titulo'       => 'required|string|max:255',
-            'cantidad'     => 'required|numeric|min:0.01',
+            'titulo' => 'required|string|max:255',
+            'cantidad' => 'required|numeric|min:0.01',
             'fecha_inicio' => 'required|date',
-            'fecha_final'  => 'required|date|after:fecha_inicio',
+            'fecha_final' => 'required|date|after:fecha_inicio',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'error',
-                'errors'  => $validator->errors()
+                'errors' => $validator->errors()
             ], 400);
         }
 
         $reto = Reto::create([
-            'titulo'       => $request->titulo,
-            'cantidad'     => $request->cantidad,
+            'titulo' => $request->titulo,
+            'cantidad' => $request->cantidad,
             'fecha_inicio' => Carbon::parse($request->fecha_inicio),
-            'fecha_final'  => Carbon::parse($request->fecha_final),
-            'cumplido'     => false,
-            'usuario_id'   => $request->user()->IDusuario,
+            'fecha_final' => Carbon::parse($request->fecha_final),
+            'cumplido' => false,
+            'usuario_id' => $request->user()->IDusuario,
         ]);
 
         if (!$reto) {
             return response()->json([
                 'message' => 'error',
-                'errors'  => 'No se ha podido crear el reto'
+                'errors' => 'No se ha podido crear el reto'
             ], 400);
         }
 
         return response()->json([
             'message' => 'Reto creado correctamente',
-            'reto'    => $reto
+            'reto' => $reto
         ], 201);
     }
 
@@ -68,7 +68,7 @@ class RetoController extends Controller
         if (count($retos) <= 0) {
             return response()->json([
                 'message' => 'error',
-                'errors'  => 'No tienes retos creados'
+                'errors' => 'No tienes retos creados'
             ], 400);
         }
 
@@ -77,7 +77,7 @@ class RetoController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'retos'   => $retos
+            'retos' => $retos
         ], 200);
     }
 
@@ -90,7 +90,7 @@ class RetoController extends Controller
         if (!$reto) {
             return response()->json([
                 'message' => 'error',
-                'errors'  => 'Reto no encontrado'
+                'errors' => 'Reto no encontrado'
             ], 404);
         }
 
@@ -99,24 +99,24 @@ class RetoController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'reto'    => $reto
+            'reto' => $reto
         ], 200);
     }
 
     public function actualizarReto(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id'           => 'required|integer',
-            'titulo'       => 'nullable|string|max:255',
-            'cantidad'     => 'nullable|numeric|min:0.01',
+            'id' => 'required|integer',
+            'titulo' => 'nullable|string|max:255',
+            'cantidad' => 'nullable|numeric|min:0.01',
             'fecha_inicio' => 'nullable|date',
-            'fecha_final'  => 'nullable|date|after:fecha_inicio',
+            'fecha_final' => 'nullable|date|after:fecha_inicio',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'error',
-                'errors'  => $validator->errors()
+                'errors' => $validator->errors()
             ], 400);
         }
 
@@ -127,7 +127,7 @@ class RetoController extends Controller
         if (!$reto) {
             return response()->json([
                 'message' => 'error',
-                'errors'  => 'Reto no encontrado'
+                'errors' => 'Reto no encontrado'
             ], 404);
         }
 
@@ -146,7 +146,7 @@ class RetoController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'reto'    => $reto
+            'reto' => $reto
         ], 200);
     }
 
@@ -159,7 +159,7 @@ class RetoController extends Controller
         if (!$reto) {
             return response()->json([
                 'message' => 'error',
-                'errors'  => 'No existe ningún reto con ese ID'
+                'errors' => 'No existe ningún reto con ese ID'
             ], 404);
         }
 
@@ -167,7 +167,7 @@ class RetoController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'reto'    => 'El reto se ha borrado correctamente'
+            'reto' => 'El reto se ha borrado correctamente'
         ], 200);
     }
 }
