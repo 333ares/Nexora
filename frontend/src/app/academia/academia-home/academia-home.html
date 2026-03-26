@@ -10,16 +10,11 @@
       </svg>
       <input type="text" class="toolbar-search-input" placeholder="Buscar cursos, guías, tutoriales..."
         aria-label="Buscar contenido" />
+      
     </div>
     <div class="toolbar-actions">
-      <button class="toolbar-btn-ghost" data-bs-toggle="modal" data-bs-target="#modalVerificar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-          <circle cx="12" cy="7" r="4" />
-        </svg>
-        Mi perfil
-      </button>
-      <button class="toolbar-btn-primary" data-bs-toggle="modal" data-bs-target="#modalSubir">
+     
+      <button class="toolbar-btn-primary" (click)="abrirVerificacion()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
           <polyline points="17 8 12 3 7 8" />
@@ -71,7 +66,7 @@
             <div class="slide-cta">
               <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">▶</span>Ver
                 ahora</a>
-              
+
             </div>
           </div>
           <div class="slide-visual">
@@ -121,7 +116,7 @@
             <div class="slide-cta">
               <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">📖</span>Leer
                 guía</a>
-              
+
             </div>
           </div>
           <div class="slide-visual">
@@ -174,7 +169,7 @@
             <div class="slide-cta">
               <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">▶</span>Ver
                 ahora</a>
-              
+
             </div>
           </div>
           <div class="slide-visual">
@@ -224,7 +219,7 @@
             <div class="slide-cta">
               <a class="btn-slide-play" routerLink="/academia/ver-video"><span class="btn-play-icon">▶</span>Ver
                 ahora</a>
-              
+
             </div>
           </div>
           <div class="slide-visual">
@@ -506,3 +501,71 @@
     el.classList.add('pill-active');
   }
 </script>
+
+<!-- MODAL VERIFICAR — controlado por Angular -->
+<div class="modal-overlay" *ngIf="mostrarModalVerificar" (click)="cerrarVerificacion()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="modal-box-header">
+      <div class="modal-box-title-row">
+        <span class="modal-box-icon">🪪</span>
+        <h5 class="modal-box-title">Verifica tu cuenta</h5>
+      </div>
+      <button class="modal-box-close" (click)="cerrarVerificacion()">✕</button>
+    </div>
+
+    <!-- Aviso -->
+    <div class="modal-box-aviso">
+      <div class="modal-box-aviso-left">
+        <span>⚠️</span>
+      </div>
+      <div class="modal-box-aviso-right">
+        <p class="modal-box-aviso-title">Información importante</p>
+        <p class="modal-box-aviso-text">La falsedad de datos puede implicar la <strong>suspensión permanente</strong>
+          de tu cuenta. Asegúrate de que toda la información proporcionada es verídica.</p>
+      </div>
+    </div>
+
+    <!-- LinkedIn -->
+    <div class="modal-box-field">
+      <label>
+        <svg class="linkedin-ico" viewBox="0 0 24 24" width="14" height="14">
+          <path fill="#0A66C2"
+            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+        </svg>
+        Enlace a LinkedIn
+      </label>
+      <input type="url" placeholder="https://linkedin.com/in/tu-perfil" [(ngModel)]="linkedinUrl" />
+    </div>
+
+    <!-- Checkbox -->
+    <div class="modal-box-check">
+      <label class="modal-box-check-label">
+        <input type="checkbox" [(ngModel)]="declarado" />
+        <span class="modal-box-checkmark"></span>
+        <span>Declaro que la información proporcionada es veraz y autorizo su verificación.</span>
+      </label>
+    </div>
+
+    <!-- Error -->
+    <div class="modal-box-error" *ngIf="linkedinError">
+      <span>{{ linkedinError }}</span>
+      <button (click)="linkedinError = ''">✕</button>
+    </div>
+
+    <!-- Acciones -->
+    <div class="modal-box-actions">
+      <button class="modal-box-btn-cancel" (click)="cerrarVerificacion()">Cancelar</button>
+      <button class="modal-box-btn-submit" (click)="enviarVerificacion()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"
+          style="margin-right:6px">
+          <path d="M22 2L11 13" />
+          <path d="M22 2l-7 20-4-9-9-4 20-7z" />
+        </svg>
+        Enviar verificación
+      </button>
+    </div>
+
+  </div>
+</div>

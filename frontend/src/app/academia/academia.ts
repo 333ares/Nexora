@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 import { Auth } from '../services/auth';
 
 declare var bootstrap: any;
@@ -8,7 +9,7 @@ declare var bootstrap: any;
 @Component({
   selector: 'app-academia',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, FormsModule, NgIf],
   templateUrl: './academia.html',
   styleUrl: './academia.css'
 })
