@@ -52,68 +52,115 @@ class RetoController extends Controller
         ], 201);
     }
 
-    public function index()
+    public function listarRetos(Request $request)
     {
-        // Obtenemos todos los retos
-        $retos = \App\Models\Reto::all();
-        return response()->json($retos, 200);
-    }
+        $retos = Reto::where('IDusuario', $request->user()->IDusuario)
+            ->orderBy('fecha_inicio', 'desc')
+            ->get();
 
-    public function actualizarReto(Request $request)
-    {
-        // Valida que nos envíe el ID del reto y los campos a cambiar
-        $validated = $request->validate([
-            'IDreto'       => 'required|exists:retos,IDreto',
-            'cantidad'     => 'sometimes|numeric',
-            'fecha_inicio' => 'sometimes|date',
-            'fecha_final'  => 'sometimes|date|after:fecha_inicio',
-            'activo'       => 'sometimes|boolean',
-            'cumplido'     => 'sometimes|boolean',
-        ]);
-
-        //Busca el registro usando Eloquent
-        $reto = \App\Models\Reto::find($request->IDreto);
-
-        // Actualiza con los datos validados
-        $reto->update($validated);
+        if (count($retos) <= 0) {
+            return response()->json([
+                'message' => 'error',
+                'errors'  => 'No tienes retos creados'
+            ], 400);
+        }
 
         return response()->json([
-            'message' => 'Reto actualizado con éxito vía Eloquent',
-            'reto' => $reto
+            'message' => 'success',
+            'retos'   => $retos
         ], 200);
     }
 
-    public function verReto(Request $request)
+    public function verInfoReto(Request $request)
     {
-        // Valida que el IDreto esté presente en el JSON
-        $request->validate([
-            'IDreto' => 'required|exists:retos,IDreto'
-        ]);
+        $reto = Reto::where('IDreto', $request->id)
+            ->where('IDusuario', $request->user()->IDusuario)
+            ->first();
 
-        // Busca el reto usando Eloquent
-        // findOrFail detiene la ejecución si no existe
-        $reto = \App\Models\Reto::findOrFail($request->IDreto);
-
-        // Carga los datos del usuario dueño del reto
-        // $reto->load('usuario');
-        return response()->json($reto, 200);
+        if (!$reto) {
+            return response()->json([
+                'message' => 'error',
+                'errors'  => 'Reto no encontrado'
+            ], 404);
+        } else {
+            return response()->json([
+                'message' => 'success',
+                'reto'    => $reto
+            ], 200);
+        }
     }
 
-    public function eliminarReto(Request $request)
+
+    public function actualizarReto(Request $request)
     {
-        //Valida que el IDreto esté en el JSON
-        $request->validate([
-            'IDreto' => 'required|exists:retos,IDreto'
+        $validator = Validator::make($request->all(), [
+            'id'           => 'required|integer',
+            'titulo'       => 'nullable|string|max:255',
+            'cantidad'     => 'nullable|numeric|min:0.01',
+            'activo'       => 'nullable|boolean',
+            'cumplido'     => 'nullable|boolean',
+            'fecha_inicio' => 'nullable|date',
+            'fecha_final'  => 'nullable|date',
         ]);
 
-        //Busca el reto con Eloquent
-        $reto = \App\Models\Reto::findOrFail($request->IDreto);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'error',
+                'errors'  => $validator->errors()
+            ], 400);
+        }
 
-        //Elimina el registro
+        $reto = Reto::where('IDreto', $request->id)
+            ->where('IDusuario', $request->user()->IDusuario)
+            ->first();
+
+        if (!$reto) {
+            return response()->json([
+                'message' => 'error',
+                'errors'  => 'Reto no encontrado'
+            ], 404);
+        }
+
+        $datos = $request->only([
+            'titulo',
+            'cantidad',
+            'activo',
+            'cumplido',
+            'fecha_inicio',
+            'fecha_final',
+        ]);
+
+        // Si se marca como cumplido, lo desactivamos automáticamente
+        if (isset($datos['cumplido']) && $datos['cumplido']) {
+            $datos['activo'] = false;
+        }
+
+        $reto->update($datos);
+
+        return response()->json([
+            'message' => 'success',
+            'reto'    => $reto
+        ], 200);
+    }
+
+    public function borrarReto(Request $request)
+    {
+        $reto = Reto::where('IDreto', $request->id)
+            ->where('IDusuario', $request->user()->IDusuario)
+            ->first();
+
+        if (!$reto) {
+            return response()->json([
+                'message' => 'error',
+                'errors'  => 'No existe ningún reto con ese ID'
+            ], 404);
+        }
+
         $reto->delete();
 
         return response()->json([
-            'message' => 'Reto eliminado correctamente'
+            'message' => 'success',
+            'reto'    => 'El reto se ha borrado correctamente'
         ], 200);
     }
 }
