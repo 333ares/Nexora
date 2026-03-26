@@ -25,4 +25,8 @@ class Reto extends Model
         'fecha_final',
         'IDusuario'
     ];
+    protected $attributes = [
+        'activo' => true,
+        'cumplido' => false
+    ];
 }
