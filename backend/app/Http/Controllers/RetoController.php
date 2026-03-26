@@ -4,36 +4,52 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reto;
-use Carbon\Carbon; 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class RetoController extends Controller
 {
-    public function store(Request $request) {
-        // Validamos solo lo que el usuario SÍ puede tocar
-        $validated = $request->validate([
-            'titulo'    => 'required|string|min:3',
-            'cantidad'  => 'required|numeric|min:1',
-            'emoji'     => 'nullable|string',
-            'IDusuario' => 'required|exists:usuarios,IDusuario',
+    public function crearReto(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'titulo'       => 'required|string|max:255',
+            'cantidad'     => 'required|numeric|min:0.01',
+            'fecha_inicio' => 'nullable|date',
+            'fecha_final'  => 'nullable|date|after_or_equal:fecha_inicio',
         ]);
 
-        // 2. Definimos los valores automáticos (Sysdate y +1 mes)
-        $fechaInicio = Carbon::now(); // Fecha actual del sistema
-        $fechaFinal  = $fechaInicio->copy()->addMonth(); // Exactamente un mes después
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'error',
+                'errors'  => $validator->errors()
+            ], 400);
+        }
 
-        // 3. Creamos el registro con los estados por defecto
         $reto = Reto::create([
-            'titulo'       => $validated['titulo'],
-            'cantidad'     => $validated['cantidad'],
-            'emoji'        => $validated['emoji'] ?? '🎯',
-            'IDusuario'    => $validated['IDusuario'],
-            'fecha_inicio' => $fechaInicio,
-            'fecha_final'  => $fechaFinal,
-            'activo'       => true,  // Forzado por defecto
-            'cumplido'     => false, // Forzado por defecto
+            'titulo'       => $request->titulo,
+            'cantidad'     => $request->cantidad,
+            'fecha_inicio' => $request->fecha_inicio
+                ? Carbon::parse($request->fecha_inicio)
+                : Carbon::now(),
+            'fecha_final'  => $request->fecha_final
+                ? Carbon::parse($request->fecha_final)
+                : null,
+            'activo'       => true,
+            'cumplido'     => false,
+            'IDusuario'    => $request->user()->IDusuario,
         ]);
 
-        return response()->json($reto, 201);
+        if (!$reto) {
+            return response()->json([
+                'message' => 'error',
+                'errors'  => 'No se ha podido crear el reto'
+            ], 400);
+        }
+
+        return response()->json([
+            'message' => 'Reto creado correctamente',
+            'reto'    => $reto
+        ], 201);
     }
 
     public function index()
@@ -42,8 +58,8 @@ class RetoController extends Controller
         $retos = \App\Models\Reto::all();
         return response()->json($retos, 200);
     }
-    
-    public function actualizarReto (Request $request)
+
+    public function actualizarReto(Request $request)
     {
         // Valida que nos envíe el ID del reto y los campos a cambiar
         $validated = $request->validate([
