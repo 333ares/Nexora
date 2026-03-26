@@ -17,7 +17,6 @@ return new class extends Migration
             $table->decimal('cantidad', 15, 2);
             $table->date('fecha_inicio');
             $table->date('fecha_final');
-            $table->boolean('activo');
             $table->boolean('cumplido');
             $table->foreignId('usuario_id');
             $table->timestamps();
