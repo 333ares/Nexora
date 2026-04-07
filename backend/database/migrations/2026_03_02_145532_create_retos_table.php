@@ -12,24 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('retos', function (Blueprint $table) {
-            $table->id('IDreto'); // Tu clave primaria
+            $table->id('IDreto');
             $table->string('titulo');
-            $table->string('emoji')->nullable();
             $table->decimal('cantidad', 15, 2);
-            $table->date('fecha_inicio')->useCurrent();
+            $table->date('fecha_inicio');
             $table->date('fecha_final');
-            $table->boolean('activo')->default(true);
-            $table->boolean('cumplido')->default(false);
-            
-            // 1. Creamos la columna
-            $table->unsignedBigInteger('IDusuario');
-            
-            // 2. Creamos la relación (Asumiendo que tu tabla de usuarios se llama 'usuarios' y su id es 'IDusuario')
-            $table->foreign('IDusuario')
-                ->references('IDusuario')
-                ->on('usuarios')
-                ->onDelete('cascade');
-                
+            $table->boolean('cumplido');
+            $table->foreignId('usuario_id');
             $table->timestamps();
         });
     }

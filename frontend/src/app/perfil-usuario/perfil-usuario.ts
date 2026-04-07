@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-perfil-usuario',
   standalone: true,
-  imports: [FormsModule, RouterLink ],
+  imports: [FormsModule, RouterLink],
   templateUrl: './perfil-usuario.html',
   styleUrl: './perfil-usuario.css'
 })
@@ -16,6 +16,7 @@ export class PerfilUsuario implements OnInit {
   showPassword = false;
   successMessage = '';
   errorMessage = '';
+  movimientos: any[] = [];
 
   nombre = '';
   apellidos = '';
@@ -23,7 +24,7 @@ export class PerfilUsuario implements OnInit {
   email = '';
   password = '';
 
-  constructor(private authService: Auth, private router: Router) { }
+  constructor(private authService: Auth, private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     const usuario = this.authService.getUsuario();
@@ -115,6 +116,22 @@ export class PerfilUsuario implements OnInit {
   // Navega a la pantalla de planes de suscripción
   onUpgrade(): void {
     this.router.navigate(['/planes']);
+  }
+
+  cargarHistorialMovimientos(): void {
+    this.authService.getHistorialMovimientos().subscribe({
+      next: (response) => {
+        this.movimientos = response.movimientos;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          this.movimientos = [];
+        } else {
+          console.error('Error al obtener el historial:', err);
+        }
+      }
+    });
   }
 
 }
