@@ -47,8 +47,8 @@
 </div>
 
 @if (mostrarPopup) {
-<div class="modal-overlay">
-  <div class="modal-box">
+<div class="modal-overlay" (click)="cerrarModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
 
     <div class="modal-header">
       <h2 class="modal-title">Nuevo reto</h2>
@@ -56,28 +56,36 @@
     </div>
 
     <form [formGroup]="retoForm" (ngSubmit)="guardarReto()">
-      <div class="modal-content-wrapper">
 
-        <div class="modal-field">
-          <label>¿Qué quieres lograr?</label>
-          <input type="text" formControlName="titulo" placeholder="Ej: Viaje a Japón" class="modal-input">
-        </div>
-
-        <div class="modal-field">
-          <label>Cantidad (€)</label>
-          <input type="number" formControlName="cantidad" placeholder="0.00" class="modal-input">
-        </div>
+      <div class="modal-field">
+        <label>¿Qué quieres lograr?</label>
+        <input type="text" formControlName="titulo" placeholder="Ej: Viaje a Japón" class="modal-input" />
       </div>
 
-  </div>
+      <div class="modal-field">
+        <label>Cantidad (€)</label>
+        <input type="number" formControlName="cantidad" placeholder="0.00" class="modal-input" />
+      </div>
 
-  <div class="modal-footer">
-    <button type="button" class="btn-footer-cancel" (click)="cerrarModal()">Cancelar</button>
-    <button type="submit" class="btn-footer-save" [disabled]="retoForm.invalid">
-      Guardar
-    </button>
+      <div class="modal-field">
+        <label>Fecha de fin</label>
+        <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
+        @if (retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
+        <p class="modal-error">La fecha de fin no puede ser anterior a hoy.</p>
+        }
+      </div>
+
+      @if (errorModal) {
+      <p class="modal-error">{{ errorModal }}</p>
+      }
+
+      <div class="modal-footer">
+        <button type="button" class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+        <button type="submit" class="btn-guardar">Guardar</button>
+      </div>
+
+    </form>
+
   </div>
-  </form>
-</div>
 </div>
 }
