@@ -25,27 +25,71 @@
 <div class="modal fade" id="modalVerificar" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content modal-custom">
+
+      <!-- Header -->
       <div class="modal-header border-0 pb-0">
-        <h5 class="modal-title-custom">👤 Verificar cuenta</h5>
+        <div class="modal-title-row">
+          <span class="modal-title-icon">🪪</span>
+          <h5 class="modal-title-custom">Verifica tu cuenta</h5>
+        </div>
         <button type="button" class="btn-close-custom" data-bs-dismiss="modal">✕</button>
       </div>
+
       <div class="modal-body">
-        <div class="modal-icono">✅</div>
-        <p class="modal-desc">Tu cuenta está actualmente <strong>no verificada</strong>. Verifica tu identidad para
-          desbloquear todas las funciones.</p>
-        <div class="modal-field">
-          <label>Nombre completo</label>
-          <input type="text" placeholder="Tu nombre real" />
+
+        <!-- Aviso corporativo -->
+        <div class="verificar-aviso">
+          <div class="verificar-aviso-left">
+            <span class="verificar-aviso-icon">⚠️</span>
+          </div>
+          <div class="verificar-aviso-right">
+            <p class="verificar-aviso-title">Información importante</p>
+            <p class="verificar-aviso-text">La falsedad de datos puede implicar la <strong>suspensión permanente</strong>
+              de tu cuenta. Asegúrate de que toda la información proporcionada es verídica.</p>
+          </div>
         </div>
-        <div class="modal-field" style="margin-top:14px">
-          <label>Documento de identidad</label>
-          <input type="text" placeholder="DNI / NIE / Pasaporte" />
+
+        <!-- LinkedIn -->
+        <div class="modal-field" style="margin-top:20px">
+          <label>
+            <svg class="linkedin-icon" viewBox="0 0 24 24" width="14" height="14">
+              <path fill="#0A66C2"
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+            Enlace a LinkedIn
+          </label>
+          <input type="url" placeholder="https://linkedin.com/in/tu-perfil" [(ngModel)]="linkedinUrl" />
         </div>
+
+        <!-- Checkbox declaración -->
+        <div class="verificar-check" style="margin-top:18px">
+          <label class="check-label">
+            <input type="checkbox" [(ngModel)]="declarado" />
+            <span class="check-custom"></span>
+            <span class="check-text">Declaro que la información proporcionada es veraz y autorizo su
+              verificación.</span>
+          </label>
+        </div>
+
+        <!-- Error -->
+        <div class="alert-error" *ngIf="linkedinError" style="margin-top:14px">
+          <span>{{ linkedinError }}</span>
+          <button class="alert-close" (click)="linkedinError = ''">✕</button>
+        </div>
+
       </div>
+
       <div class="modal-footer border-0 pt-0">
         <div class="modal-actions">
           <button class="btn-cancel" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn-submit" data-bs-dismiss="modal">Verificar →</button>
+          <button class="btn-submit" (click)="enviarVerificacion()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"
+              style="margin-right:6px">
+              <path d="M22 2L11 13" />
+              <path d="M22 2l-7 20-4-9-9-4 20-7z" />
+            </svg>
+            Enviar verificación
+          </button>
         </div>
       </div>
     </div>
@@ -57,18 +101,42 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content modal-custom">
       <div class="modal-header border-0 pb-0">
-        <h5 class="modal-title-custom">📤 Subir contenido</h5>
+        <div class="modal-title-row">
+          <span class="modal-title-icon">📤</span>
+          <h5 class="modal-title-custom">Subir contenido</h5>
+        </div>
         <button type="button" class="btn-close-custom" data-bs-dismiss="modal">✕</button>
       </div>
       <div class="modal-body">
+        <p class="modal-subtitle">Comparte tu conocimiento financiero con la comunidad.</p>
+
+        <!-- Tipo de contenido tabs -->
         <div class="modal-tipo-tabs">
-          <button class="tipo-tab tipo-tab-activo" onclick="activarTab(this)">🎬 Video</button>
-          <button class="tipo-tab" onclick="activarTab(this)">📄 Documento</button>
+          <button class="tipo-tab tipo-tab-activo" onclick="activarTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18">
+              <polygon points="23 7 16 12 23 17 23 7" />
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+            </svg>
+            Video
+          </button>
+          <button class="tipo-tab" onclick="activarTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+            </svg>
+            Documento
+          </button>
         </div>
+
+        <!-- Nombre del contenido -->
         <div class="modal-field" style="margin-bottom:14px">
-          <label>Título</label>
-          <input type="text" placeholder="Nombre del contenido" />
+          <label>Nombre del contenido</label>
+          <input type="text" placeholder="Ej: Cómo ahorrar el 30% de tu sueldo" />
         </div>
+
+        <!-- Fila: Categoría + Acceso -->
         <div class="modal-row">
           <div class="modal-field">
             <label>Categoría</label>
@@ -87,12 +155,22 @@
             </select>
           </div>
         </div>
+
+        <!-- Descripción -->
         <div class="modal-field" style="margin-bottom:14px">
           <label>Descripción</label>
-          <textarea placeholder="Describe el contenido..."></textarea>
+          <textarea placeholder="Describe brevemente de qué trata tu contenido..."></textarea>
         </div>
+
+        <!-- Zona de carga -->
         <div class="upload-drop-zone">
-          <span class="upload-icon">📁</span>
+          <div class="upload-drop-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#72c54b" stroke-width="1.5" width="36" height="36">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
           <p class="upload-text">Arrastra tu archivo aquí o <span class="upload-link">selecciona uno</span></p>
           <p class="upload-hint">MP4, PDF, DOCX — máx. 500 MB</p>
         </div>
@@ -100,42 +178,15 @@
       <div class="modal-footer border-0 pt-0">
         <div class="modal-actions">
           <button class="btn-cancel" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn-submit" data-bs-dismiss="modal">Publicar contenido →</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: REPORTAR CONTENIDO -->
-<div class="modal fade" id="modalReportar" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content modal-custom">
-      <div class="modal-header border-0 pb-0">
-        <h5 class="modal-title-custom">🚩 Reportar contenido</h5>
-        <button type="button" class="btn-close-custom" data-bs-dismiss="modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <p class="modal-subtitle">Ayúdanos a mantener la calidad de la Academia.</p>
-        <div class="modal-field" style="margin-bottom:14px">
-          <label>Motivo del reporte</label>
-          <select>
-            <option>Información incorrecta</option>
-            <option>Contenido inapropiado</option>
-            <option>Spam o publicidad</option>
-            <option>Derechos de autor</option>
-            <option>Otro</option>
-          </select>
-        </div>
-        <div class="modal-field">
-          <label>Descripción (opcional)</label>
-          <textarea placeholder="Explica brevemente el problema..."></textarea>
-        </div>
-      </div>
-      <div class="modal-footer border-0 pt-0">
-        <div class="modal-actions">
-          <button class="btn-cancel" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn-submit btn-submit-red" data-bs-dismiss="modal">Enviar reporte</button>
+          <button class="btn-submit" data-bs-dismiss="modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"
+              style="margin-right:6px">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            Publicar contenido
+          </button>
         </div>
       </div>
     </div>
@@ -204,8 +255,8 @@
         <button type="button" class="btn-close-custom" data-bs-dismiss="modal">✕</button>
       </div>
       <div class="modal-body" style="text-align:center">
-        <div class="modal-icono">⚠️</div>
-        <p class="modal-desc">¿Estás seguro de que quieres eliminar este contenido?<br>
+        <div class="verificar-icono">⚠️</div>
+        <p class="verificar-desc">¿Estás seguro de que quieres eliminar este contenido?<br>
           <strong>Esta acción no se puede deshacer.</strong>
         </p>
       </div>

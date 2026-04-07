@@ -1,6 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Onest:wght@100..900&display=swap');
 
+/* ══════════════════════════════════════
+   HOST — fondo verde (igual que perfil)
+   ══════════════════════════════════════ */
+:host {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
+  font-family: 'Onest', 'Lato', sans-serif;
+  padding: 110px 40px 40px;
+  box-sizing: border-box;
+}
+
+/* ══════════════════════════════════════
+   CARD CONTENEDOR — estilo perfil
+   ══════════════════════════════════════ */
+.academia-card {
+  --gap: 24px;
+  width: 100%;
+  max-width: 1300px;
+  background: #D8EED8;
+  border-radius: 24px;
+  padding: var(--gap);
+  box-shadow: 0 16px 56px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
 /* ══ TOOLBAR ══ */
 .toolbar {
   display: flex;
@@ -16,22 +45,20 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: #fff;
+  border: 1.5px solid #c8c8c8;
   border-radius: 50px;
   padding: 12px 20px;
-  backdrop-filter: blur(12px);
   transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .toolbar-search:focus-within {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.55);
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(78, 156, 37, 0.12);
 }
 
 .toolbar-search-icon {
-  color: rgba(255, 255, 255, 0.55);
+  color: #aaa;
   flex-shrink: 0;
   width: 18px;
 }
@@ -42,18 +69,18 @@
   background: transparent;
   font-size: 14px;
   font-family: 'Lato';
-  color: #fff;
+  color: #222;
   outline: none;
 }
 
 .toolbar-search-input::placeholder {
-  color: rgba(255, 255, 255, 0.45);
+  color: #bbb;
 }
 
 .toolbar-search-kbd {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #bbb;
+  border: 1px solid #ddd;
   border-radius: 6px;
   padding: 2px 7px;
   white-space: nowrap;
@@ -70,21 +97,20 @@
   align-items: center;
   gap: 7px;
   padding: 11px 20px;
-  border: 1.5px solid rgba(255, 255, 255, 0.32);
+  border: 1.5px solid #B3E29A;
   border-radius: 50px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.9);
+  background: #fff;
+  color: #2e7d32;
   font-family: 'Onest';
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  backdrop-filter: blur(8px);
   transition: all 0.2s;
 }
 
 .toolbar-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.55);
+  background: #bee2ab;
+  border-color: #4caf50;
   transform: translateY(-1px);
 }
 
@@ -95,19 +121,19 @@
   padding: 11px 24px;
   border: none;
   border-radius: 50px;
-  background: #fff;
-  color: #2d6e0f;
+  background: linear-gradient(135deg, #4E9C25, #78C550);
+  color: #fff;
   font-family: 'Onest';
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(78, 156, 37, 0.35);
   transition: all 0.25s;
 }
 
 .toolbar-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25), 0 0 0 4px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 28px rgba(78, 156, 37, 0.45);
 }
 
 .toolbar-btn-primary:active {
@@ -131,7 +157,7 @@
 .carousel-wrap {
   position: relative;
   margin-bottom: 48px;
-  border-radius: 26px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 28px 72px rgba(0, 0, 0, 0.32);
   animation: fadeUp 0.6s ease 0.1s both;
@@ -867,9 +893,6 @@
 
 /* ══════════════════════════════════════
    POPULAR AHORA
-   Los radios p1/p2 están dentro de
-   .popular-section, ANTES de .pop-slider-wrap
-   y de .pop-dots, así que ~ sigue funcionando
    ══════════════════════════════════════ */
 .pop-radio {
   display: none;
@@ -898,7 +921,7 @@
 .popular-title {
   font-size: 22px;
   font-weight: 900;
-  color: #fff;
+  color: #1a3d0a;
   font-family: 'Onest';
   letter-spacing: -0.02em;
 }
@@ -911,35 +934,34 @@
 .pill {
   padding: 7px 16px;
   border-radius: 20px;
-  border: 1.5px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.68);
+  border: 1.5px solid #B3E29A;
+  background: #fff;
+  color: #2e7d32;
   font-family: 'Onest';
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  backdrop-filter: blur(6px);
   transition: all 0.2s;
 }
 
 .pill:hover {
-  background: rgba(255, 255, 255, 0.18);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.38);
+  background: #bee2ab;
+  border-color: #4caf50;
+  color: #1a3d0a;
 }
 
 .pill-active {
-  background: #fff;
-  color: #2d6e0f;
+  background: linear-gradient(135deg, #4E9C25, #78C550);
+  color: #fff;
   border-color: transparent;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 4px 12px rgba(78, 156, 37, 0.3);
 }
 
 .popular-ver-todo {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: rgba(255, 255, 255, 0.65);
+  color: #4E9C25;
   font-family: 'Onest';
   font-size: 13px;
   font-weight: 700;
@@ -948,7 +970,7 @@
 }
 
 .popular-ver-todo:hover {
-  color: #fff;
+  color: #2d6e0f;
   gap: 9px;
 }
 
@@ -1032,7 +1054,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  background: #B3E29A;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: block;
@@ -1042,8 +1064,8 @@
 #p2:checked~.pop-dots label:nth-child(2) {
   width: 26px;
   border-radius: 4px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+  background: #4E9C25;
+  box-shadow: 0 2px 8px rgba(78, 156, 37, 0.35);
 }
 
 
@@ -1346,6 +1368,15 @@
 }
 
 @media (max-width: 768px) {
+  :host {
+    padding: 90px 16px 20px;
+  }
+
+  .academia-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
   .toolbar {
     flex-direction: column;
     align-items: stretch;
@@ -1380,4 +1411,326 @@
   .pop-arrow--prev {
     left: 4px;
   }
+}
+
+/* ══════════════════════════════════════
+   MODAL VERIFICAR — Angular *ngIf
+   ══════════════════════════════════════ */
+
+/* Overlay (backdrop) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalOverlayIn 0.2s ease;
+}
+
+@keyframes modalOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Modal box */
+.modal-box {
+  background: #fff;
+  border-radius: 20px;
+  width: 92%;
+  max-width: 480px;
+  padding: 28px 32px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.28);
+  font-family: 'Onest', 'Lato', sans-serif;
+  animation: modalBoxIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalBoxIn {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Header */
+.modal-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-box-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-box-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.modal-box-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a1a1a;
+  font-family: 'Onest';
+  margin: 0;
+}
+
+.modal-box-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #a0a0a0;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.modal-box-close:hover {
+  color: #333;
+  background: #f0f0f0;
+}
+
+/* Aviso warning */
+.modal-box-aviso {
+  display: flex;
+  gap: 14px;
+  background: linear-gradient(135deg, #fffbeb, #fff4d6);
+  border: 1px solid #ffe0a3;
+  border-radius: 12px;
+  padding: 16px 18px;
+  align-items: flex-start;
+}
+
+.modal-box-aviso-left {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: #fff3cd;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.modal-box-aviso-right {
+  flex: 1;
+}
+
+.modal-box-aviso-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #92400e;
+  font-family: 'Onest';
+  margin: 0 0 3px;
+}
+
+.modal-box-aviso-text {
+  font-size: 13px;
+  color: #a16207;
+  font-family: 'Lato';
+  line-height: 1.5;
+  margin: 0;
+}
+
+.modal-box-aviso-text strong {
+  color: #854d0e;
+}
+
+/* LinkedIn icon */
+.linkedin-ico {
+  vertical-align: -2px;
+  margin-right: 4px;
+}
+
+/* Form field */
+.modal-box-field {
+  margin-top: 20px;
+}
+
+.modal-box-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  color: #222;
+  font-family: 'Onest';
+  margin-bottom: 8px;
+}
+
+.modal-box-field input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Lato';
+  color: #333;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.modal-box-field input::placeholder {
+  color: #aaa;
+}
+
+.modal-box-field input:focus {
+  border-color: #72c54b;
+  box-shadow: 0 0 0 3px rgba(114, 197, 75, 0.12);
+}
+
+/* Checkbox */
+.modal-box-check {
+  margin-top: 18px;
+}
+
+.modal-box-check-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  font-family: 'Lato';
+  font-size: 13px;
+  color: #444;
+  line-height: 1.5;
+  user-select: none;
+}
+
+.modal-box-check-label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.modal-box-checkmark {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #d0d0d0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: #fff;
+  margin-top: 1px;
+}
+
+.modal-box-check-label:hover .modal-box-checkmark {
+  border-color: #72c54b;
+}
+
+.modal-box-check-label input:checked + .modal-box-checkmark {
+  background: linear-gradient(135deg, #95d57b, #72c54b);
+  border-color: #72c54b;
+}
+
+.modal-box-check-label input:checked + .modal-box-checkmark::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 11px;
+  border: solid white;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+  margin-bottom: 2px;
+}
+
+/* Error */
+.modal-box-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  border: 1px solid #fca5a5;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-family: 'Lato';
+  color: #991b1b;
+  margin-top: 14px;
+  animation: modalErrorIn 0.25s ease;
+}
+
+@keyframes modalErrorIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-box-error button {
+  background: none;
+  border: none;
+  color: #b91c1c;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.modal-box-error button:hover {
+  background: rgba(185, 28, 28, 0.1);
+}
+
+/* Actions */
+.modal-box-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal-box-btn-cancel {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  font-family: 'Onest';
+  color: #444;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.modal-box-btn-cancel:hover {
+  border-color: #ccc;
+  background: #fafafa;
+}
+
+.modal-box-btn-submit {
+  flex: 1;
+  padding: 14px;
+  background: linear-gradient(to bottom, #95d57b, #72c54b);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  font-family: 'Onest';
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box-btn-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(114, 197, 75, 0.3);
+}
+
+.modal-box-btn-submit:active {
+  transform: scale(0.97);
 }
