@@ -43,10 +43,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('ingresoMensual', [EstadisticasController::class, 'ingresoMensual']);
     Route::get('ingresoMensualCat', [EstadisticasController::class, 'ingresoMensualPorCategoria']);
 
-    // Esta línea conecta la URL /api/retos con la función store del controlador
-    Route::post('/reto', [RetoController::class, 'store']);
-    Route::get('/reto', [RetoController::class, 'verReto']);
-    Route::get('/retos', [RetoController::class, 'index']);
+    // Retos
+    Route::post('/reto', [RetoController::class, 'crearReto']);
+    Route::get('/retos', [RetoController::class, 'listarRetos']);
+    Route::get('/reto', [RetoController::class, 'verInfoReto']);
     Route::put('/reto', [RetoController::class, 'actualizarReto']);
-    Route::delete('/reto', [RetoController::class, 'eliminarReto']);
+    Route::delete('/reto', [RetoController::class, 'borrarReto']);
 });
