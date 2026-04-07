@@ -84,6 +84,26 @@ export class Auth {
     });
   }
 
+  // --- RETOS ---
+  getRetos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/retos`, { headers: this.getHeaders() });
+  }
+
+  crearReto(datos: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reto`, datos, { headers: this.getHeaders() });
+  }
+
+  actualizarReto(datos: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/reto`, datos, { headers: this.getHeaders() });
+  }
+
+  borrarReto(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/reto`, {
+      headers: this.getHeaders(),
+      body: { id }
+    });
+  }
+
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
     localStorage.setItem('token', token);
