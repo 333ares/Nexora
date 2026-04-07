@@ -257,8 +257,6 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.modal-body {}
-
 .modal-field {
     margin-bottom: 16px;
 }
@@ -343,11 +341,6 @@
 
 .btn-guardar:active {
     transform: scale(0.97);
-}
-
-.btn-guardar:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
 }
 
 @keyframes fadeIn {
