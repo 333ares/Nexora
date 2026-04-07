@@ -1,108 +1,237 @@
-<div class="admin-header">
-    <h2 class="section-title">Administrar contenido</h2>
-    <div class="admin-actions">
-        <select class="stat-select">
-            <option>Todos los tipos</option>
-            <option>Video</option>
-            <option>Documento</option>
+<!-- ══ CONTENEDOR CARD ══ -->
+<div class="admin-card">
+
+  <!-- TOOLBAR -->
+  <div class="admin-toolbar">
+    <div class="admin-toolbar-left">
+      <h2 class="admin-title">Mis contenidos</h2>
+      <div class="admin-filters">
+        <select class="admin-select">
+          <option>Todos los tipos</option>
+          <option>Video</option>
+          <option>Documento</option>
         </select>
-        <select class="stat-select">
-            <option>Todas las categorías</option>
-            <option>Ahorro</option>
-            <option>Inversión</option>
-            <option>Presupuesto</option>
+        <select class="admin-select">
+          <option>Todas las categorías</option>
+          <option>Ahorro</option>
+          <option>Inversión</option>
+          <option>Presupuesto</option>
         </select>
+      </div>
     </div>
+    <button class="admin-btn-primary" (click)="abrirModalSubir()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15">
+        <line x1="12" y1="5" x2="12" y2="19" />
+        <line x1="5" y1="12" x2="19" y2="12" />
+      </svg>
+      Nuevo contenido
+    </button>
+  </div>
+
+  <!-- STATS -->
+  <div class="admin-stats-row">
+    <div class="admin-stat-card">
+      <span class="admin-stat-icon">📊</span>
+      <div>
+        <div class="admin-stat-value">4</div>
+        <div class="admin-stat-label">Total publicados</div>
+      </div>
+    </div>
+    <div class="admin-stat-card">
+      <span class="admin-stat-icon">👁</span>
+      <div>
+        <div class="admin-stat-value">26.5K</div>
+        <div class="admin-stat-label">Visualizaciones</div>
+      </div>
+    </div>
+    <div class="admin-stat-card">
+      <span class="admin-stat-icon">⭐</span>
+      <div>
+        <div class="admin-stat-value">4.8</div>
+        <div class="admin-stat-label">Valoración media</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="admin-table-card">
+    <div class="tabla-header-admin">
+      <span class="th">Contenido</span>
+      <span class="th">Tipo</span>
+      <span class="th">Categoría</span>
+      <span class="th">Visualizaciones</span>
+      <span class="th">Estado</span>
+      <span class="th th-right">Acciones</span>
+    </div>
+
+    <div class="tabla-row-admin">
+      <div class="td td-nombre">
+        <div class="mov-avatar avatar-green">🎬</div>
+        <div class="mov-name-wrap">
+          <span class="mov-nombre">Cómo ahorrar el 30% de tu sueldo</span>
+          <span class="mov-cat">12 mar 2025</span>
+        </div>
+      </div>
+      <div class="td"><span class="badge badge-video-tag">🎬 Video</span></div>
+      <div class="td">Ahorro</div>
+      <div class="td">10.4K</div>
+      <div class="td"><span class="badge badge-ok">Publicado</span></div>
+      <div class="td td-acciones">
+        <button class="btn-accion" title="Editar">✏️</button>
+        <button class="btn-accion btn-accion-red" title="Eliminar">🗑️</button>
+      </div>
+    </div>
+
+    <div class="tabla-row-admin">
+      <div class="td td-nombre">
+        <div class="mov-avatar avatar-blue">📄</div>
+        <div class="mov-name-wrap">
+          <span class="mov-nombre">Guía de Inversión para Principiantes</span>
+          <span class="mov-cat">10 mar 2025</span>
+        </div>
+      </div>
+      <div class="td"><span class="badge badge-doc-tag">📄 Doc</span></div>
+      <div class="td">Inversión</div>
+      <div class="td">5.2K</div>
+      <div class="td"><span class="badge badge-ok">Publicado</span></div>
+      <div class="td td-acciones">
+        <button class="btn-accion" title="Editar">✏️</button>
+        <button class="btn-accion btn-accion-red" title="Eliminar">🗑️</button>
+      </div>
+    </div>
+
+    <div class="tabla-row-admin">
+      <div class="td td-nombre">
+        <div class="mov-avatar avatar-purple">🎬</div>
+        <div class="mov-name-wrap">
+          <span class="mov-nombre">Presupuesto personal en 5 pasos</span>
+          <span class="mov-cat">5 mar 2025</span>
+        </div>
+      </div>
+      <div class="td"><span class="badge badge-video-tag">🎬 Video</span></div>
+      <div class="td">Presupuesto</div>
+      <div class="td">3.8K</div>
+      <div class="td"><span class="badge badge-pen">Borrador</span></div>
+      <div class="td td-acciones">
+        <button class="btn-accion" title="Editar">✏️</button>
+        <button class="btn-accion btn-accion-red" title="Eliminar">🗑️</button>
+      </div>
+    </div>
+
+    <div class="tabla-row-admin">
+      <div class="td td-nombre">
+        <div class="mov-avatar avatar-orange">📊</div>
+        <div class="mov-name-wrap">
+          <span class="mov-nombre">Plantilla de Gastos Mensual</span>
+          <span class="mov-cat">1 mar 2025</span>
+        </div>
+      </div>
+      <div class="td"><span class="badge badge-doc-tag">📄 Doc</span></div>
+      <div class="td">Presupuesto</div>
+      <div class="td">7.1K</div>
+      <div class="td"><span class="badge badge-ok">Publicado</span></div>
+      <div class="td td-acciones">
+        <button class="btn-accion" title="Editar">✏️</button>
+        <button class="btn-accion btn-accion-red" title="Eliminar">🗑️</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<div class="card card-white">
-    <div class="tabla-header-admin">
-        <span class="th">Contenido</span>
-        <span class="th">Tipo</span>
-        <span class="th">Categoría</span>
-        <span class="th">Visualizaciones</span>
-        <span class="th">Estado</span>
-        <span class="th th-right">Acciones</span>
+<!-- ══ MODAL SUBIR CONTENIDO — Angular *ngIf ══ -->
+<div class="modal-overlay" *ngIf="mostrarModalSubir" (click)="cerrarModalSubir()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="modal-box-header">
+      <div class="modal-box-title-row">
+        <span class="modal-box-icon">📤</span>
+        <h5 class="modal-box-title">Subir contenido</h5>
+      </div>
+      <button class="modal-box-close" (click)="cerrarModalSubir()">✕</button>
     </div>
 
-    <div class="tabla-row-admin">
-        <div class="td td-nombre">
-            <div class="mov-avatar avatar-green">🎬</div>
-            <div class="mov-name-wrap">
-                <span class="mov-nombre">Cómo ahorrar el 30% de tu sueldo</span>
-                <span class="mov-cat">12 mar 2025</span>
-            </div>
-        </div>
-        <div class="td"><span class="badge badge-video-tag">🎬 Video</span></div>
-        <div class="td">Ahorro</div>
-        <div class="td">10.4K</div>
-        <div class="td"><span class="badge badge-ok">Publicado</span></div>
-        <div class="td td-acciones">
-            <button class="btn-accion" title="Editar" data-bs-toggle="modal"
-                data-bs-target="#modalModificar">✏️</button>
-            <button class="btn-accion btn-accion-red" title="Eliminar" data-bs-toggle="modal"
-                data-bs-target="#modalEliminar">🗑️</button>
-        </div>
+    <p class="modal-box-subtitle">Comparte tu conocimiento financiero con la comunidad.</p>
+
+    <!-- Tipo de archivo (Video / Documento) -->
+    <div class="modal-tipo-tabs">
+      <button class="tipo-tab" [class.tipo-tab-activo]="nuevoTipoArchivo === 'video'"
+        (click)="seleccionarTipo('video')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18">
+          <polygon points="23 7 16 12 23 17 23 7" />
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+        </svg>
+        Video
+      </button>
+      <button class="tipo-tab" [class.tipo-tab-activo]="nuevoTipoArchivo === 'documento'"
+        (click)="seleccionarTipo('documento')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+        </svg>
+        Documento
+      </button>
     </div>
 
-    <div class="tabla-row-admin">
-        <div class="td td-nombre">
-            <div class="mov-avatar avatar-blue">📄</div>
-            <div class="mov-name-wrap">
-                <span class="mov-nombre">Guía de Inversión para Principiantes</span>
-                <span class="mov-cat">10 mar 2025</span>
-            </div>
-        </div>
-        <div class="td"><span class="badge badge-doc-tag">📄 Doc</span></div>
-        <div class="td">Inversión</div>
-        <div class="td">5.2K</div>
-        <div class="td"><span class="badge badge-ok">Publicado</span></div>
-        <div class="td td-acciones">
-            <button class="btn-accion" title="Editar" data-bs-toggle="modal"
-                data-bs-target="#modalModificar">✏️</button>
-            <button class="btn-accion btn-accion-red" title="Eliminar" data-bs-toggle="modal"
-                data-bs-target="#modalEliminar">🗑️</button>
-        </div>
+    <!-- Título -->
+    <div class="modal-box-field">
+      <label>Título del contenido</label>
+      <input type="text" placeholder="Ej: Cómo ahorrar el 30% de tu sueldo" [(ngModel)]="nuevoTitulo" />
     </div>
 
-    <div class="tabla-row-admin">
-        <div class="td td-nombre">
-            <div class="mov-avatar avatar-purple">🎬</div>
-            <div class="mov-name-wrap">
-                <span class="mov-nombre">Presupuesto personal en 5 pasos</span>
-                <span class="mov-cat">5 mar 2025</span>
-            </div>
-        </div>
-        <div class="td"><span class="badge badge-video-tag">🎬 Video</span></div>
-        <div class="td">Presupuesto</div>
-        <div class="td">3.8K</div>
-        <div class="td"><span class="badge badge-pen">Borrador</span></div>
-        <div class="td td-acciones">
-            <button class="btn-accion" title="Editar" data-bs-toggle="modal"
-                data-bs-target="#modalModificar">✏️</button>
-            <button class="btn-accion btn-accion-red" title="Eliminar" data-bs-toggle="modal"
-                data-bs-target="#modalEliminar">🗑️</button>
-        </div>
+    <!-- Categoría -->
+    <div class="modal-box-field">
+      <label>Categoría</label>
+      <select [(ngModel)]="nuevoCategoria">
+        <option value="Ahorro">Ahorro</option>
+        <option value="Inversión">Inversión</option>
+        <option value="Presupuesto">Presupuesto</option>
+        <option value="Finanzas personales">Finanzas personales</option>
+      </select>
     </div>
 
-    <div class="tabla-row-admin">
-        <div class="td td-nombre">
-            <div class="mov-avatar avatar-orange">📊</div>
-            <div class="mov-name-wrap">
-                <span class="mov-nombre">Plantilla de Gastos Mensual</span>
-                <span class="mov-cat">1 mar 2025</span>
-            </div>
-        </div>
-        <div class="td"><span class="badge badge-doc-tag">📄 Doc</span></div>
-        <div class="td">Presupuesto</div>
-        <div class="td">7.1K</div>
-        <div class="td"><span class="badge badge-ok">Publicado</span></div>
-        <div class="td td-acciones">
-            <button class="btn-accion" title="Editar" data-bs-toggle="modal"
-                data-bs-target="#modalModificar">✏️</button>
-            <button class="btn-accion btn-accion-red" title="Eliminar" data-bs-toggle="modal"
-                data-bs-target="#modalEliminar">🗑️</button>
-        </div>
+    <!-- Descripción -->
+    <div class="modal-box-field">
+      <label>Descripción</label>
+      <textarea placeholder="Describe brevemente de qué trata tu contenido..." [(ngModel)]="nuevoDescripcion"></textarea>
     </div>
 
+    <!-- Drop zone -->
+    <div class="upload-drop-zone">
+      <div class="upload-drop-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#72c54b" stroke-width="1.5" width="36" height="36">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="17 8 12 3 7 8" />
+          <line x1="12" y1="3" x2="12" y2="15" />
+        </svg>
+      </div>
+      <p class="upload-text">Arrastra tu archivo aquí o <span class="upload-link">selecciona uno</span></p>
+      <p class="upload-hint" *ngIf="nuevoTipoArchivo === 'video'">MP4, MOV, AVI — máx. 500 MB</p>
+      <p class="upload-hint" *ngIf="nuevoTipoArchivo === 'documento'">PDF, DOCX, PPTX — máx. 100 MB</p>
+    </div>
+
+    <!-- Error -->
+    <div class="modal-box-error" *ngIf="subirError">
+      <span>{{ subirError }}</span>
+      <button (click)="subirError = ''">✕</button>
+    </div>
+
+    <!-- Acciones -->
+    <div class="modal-box-actions">
+      <button class="modal-box-btn-cancel" (click)="cerrarModalSubir()">Cancelar</button>
+      <button class="modal-box-btn-submit" (click)="publicarContenido()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"
+          style="margin-right:6px">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="17 8 12 3 7 8" />
+          <line x1="12" y1="3" x2="12" y2="15" />
+        </svg>
+        Publicar contenido
+      </button>
+    </div>
+
+  </div>
 </div>

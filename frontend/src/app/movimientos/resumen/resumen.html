@@ -1,16 +1,22 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
 <div class="grid-main">
 
   <div class="col-left">
 
     <div class="card card-white">
+
       <div class="balance-top">
         <span class="balance-label">Saldo banco</span>
+        <i class="bi bi-bank" style="font-size: 1.5rem;"></i>
+        
       </div>
-      <div class="balance-amount">{{ balanceTotal | number:'1.2-2' }} €</div>
+      <div class="balance-amount">{{ balanceTotal | number:'1.2-2' }} € </div>
     </div>
 
+
     <div class="card card-white">
-      <p class="section-title">Retos de ahorro</p>
+      <p class="section-title">Hisotrial de retos de ahorro</p>
       <div class="reto-item">
         <div class="reto-top">
           <div class="reto-icon-wrap">🚗</div>
@@ -37,20 +43,20 @@
       <div class="card card-stat">
         <div class="stat-top">
           <span class="stat-label">Total ingresos</span>
-          <div class="stat-icon stat-icon-green">💰</div>
+          <div class="stat-icon stat-icon-green"><i class="bi bi-arrow-up"></i></div>
         </div>
         <div class="stat-amount ingreso-color">{{ ingresoMensual | number:'1.2-2' }} €</div>
       </div>
       <div class="card card-stat">
         <div class="stat-top">
           <span class="stat-label">Total gastos</span>
-          <div class="stat-icon stat-icon-red">💸</div>
+          <div class="stat-icon stat-icon-red"><i class="bi bi-arrow-down"></i></div>
         </div>
         <div class="stat-amount gasto-color">{{ gastoMensual | number:'1.2-2' }} €</div>
       </div>
       <div class="card card-stat">
         <div class="stat-top">
-          <span class="stat-label">Límite mensual</span>
+          <span class="stat-label">Reto actual </span><i class="bi bi-clipboard-data" style="font-size: 1.5rem;"></i>
         </div>
         <div class="limit-row">
           <span class="limit-amount">547,49 €</span>
