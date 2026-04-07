@@ -1,9 +1,14 @@
 /* Overlay y Box principal */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  display: flex; justify-content: center; align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 1000;
   backdrop-filter: blur(2px);
 }
@@ -14,13 +19,14 @@
   max-width: 440px;
   border-radius: 24px;
   padding: 24px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 /* Header */
 .modal-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .modal-title {
@@ -31,12 +37,17 @@
 }
 
 .modal-close {
-  background: none; border: none; font-size: 20px; color: #999; cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
 }
 
 /* El contenedor de los campos (el efecto de profundidad) */
 .modal-content-wrapper {
-  background: #fcfcfc; /* Un gris casi blanco para que resalte el input */
+  background: #fcfcfc;
+  /* Un gris casi blanco para que resalte el input */
   padding: 20px;
   border-radius: 18px;
   border: 1px solid #f0f0f0;
@@ -44,11 +55,16 @@
 }
 
 /* Campos e Inputs */
-.modal-field { margin-bottom: 16px; }
+.modal-field {
+  margin-bottom: 16px;
+}
 
 .modal-field label {
-  display: block; font-weight: 700; font-size: 14px;
-  color: #333; margin-bottom: 8px;
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
 }
 
 .modal-input {
@@ -62,11 +78,15 @@
   outline: none;
 }
 
-.modal-input:focus { border-color: #a8d68d; }
+.modal-input:focus {
+  border-color: #a8d68d;
+}
 
 /* Botones inferiores (EXACTOS a la imagen) */
 .modal-footer {
-  display: flex; gap: 12px; justify-content: space-between;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
 }
 
 .btn-footer-cancel {
@@ -83,7 +103,8 @@
 .btn-footer-save {
   flex: 1.5;
   padding: 14px;
-  background: #a8d68d; /* Verde pastel de la imagen */
+  background: #a8d68d;
+  /* Verde pastel de la imagen */
   border: none;
   border-radius: 14px;
   color: #fff;
@@ -92,8 +113,17 @@
   cursor: pointer;
 }
 
-.btn-footer-save:disabled { background: #d0e8c4; cursor: not-allowed; }
+.btn-footer-save:disabled {
+  background: #d0e8c4;
+  cursor: not-allowed;
+}
 
 /* Auxiliares */
-.row-flex { display: flex; gap: 12px; }
-.flex-1 { flex: 1; }
+.row-flex {
+  display: flex;
+  gap: 12px;
+}
+
+.flex-1 {
+  flex: 1;
+}
