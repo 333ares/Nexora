@@ -1,11 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-resumen',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './resumen.html',
   styleUrl: './resumen.css'
 })
