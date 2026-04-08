@@ -218,6 +218,7 @@ export class Lista implements OnInit {
   // --- CONFIRMAR BORRADO ---
   modalBorrarAbierto = false;
   movimientoBorrandoId: number | null = null;
+  cargandoBorrar = false;
 
   abrirModalBorrar(id: number) {
     this.movimientoBorrandoId = id;
@@ -227,11 +228,14 @@ export class Lista implements OnInit {
   cerrarModalBorrar() {
     this.modalBorrarAbierto = false;
     this.movimientoBorrandoId = null;
+    this.cargandoBorrar = false;
   }
 
   confirmarBorrar() {
     if (this.movimientoBorrandoId === null) return;
 
+    this.cargandoBorrar = true;
+    
     this.authService.borrarMovimimento(this.movimientoBorrandoId).subscribe({
       next: () => {
         this.cerrarModalBorrar();

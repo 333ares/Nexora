@@ -343,6 +343,11 @@
     transform: scale(0.97);
 }
 
+.btn-guardar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0

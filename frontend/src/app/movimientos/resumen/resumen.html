@@ -9,7 +9,7 @@
       <div class="balance-top">
         <span class="balance-label">Saldo banco</span>
         <i class="bi bi-bank" style="font-size: 1.5rem;"></i>
-        
+
       </div>
       <div class="balance-amount">{{ balanceTotal | number:'1.2-2' }} € </div>
     </div>
@@ -197,9 +197,7 @@
       }
 
       @empty {
-      <div class="tabla-row">
-        <span>No hay movimientos registrados</span>
-      </div>
+      <div class="empty-state">No hay movimientos registrados</div>
       }
     </div>
   </div>

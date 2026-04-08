@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-perfil-usuario',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, CommonModule],
   templateUrl: './perfil-usuario.html',
   styleUrl: './perfil-usuario.css'
 })
@@ -34,6 +35,7 @@ export class PerfilUsuario implements OnInit {
       this.usuario = usuario.usuario ?? '';
       this.email = usuario.email ?? '';
     }
+    this.cargarHistorialMovimientos();
   }
 
   togglePassword(): void {
@@ -133,5 +135,19 @@ export class PerfilUsuario implements OnInit {
       }
     });
   }
+
+  getCategoriaClass(categoria: string): string {
+  const mapa: { [key: string]: string } = {
+    'Ocio': 'tx-dot--ocio',
+    'Supervivencia': 'tx-dot--supervivencia',
+    'Cultura': 'tx-dot--cultura',
+    'Extras o imprevistos': 'tx-dot--imprevistos',
+    'Nómina': 'tx-dot--income',
+    'Capital (Alquileres)': 'tx-dot--income',
+    'Negocios y ventas': 'tx-dot--income',
+    'Otros': 'tx-dot--income',
+  };
+  return mapa[categoria] ?? 'tx-dot--income';
+}
 
 }

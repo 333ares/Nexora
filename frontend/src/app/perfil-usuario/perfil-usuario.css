@@ -382,9 +382,18 @@
    RECUADRO MIS TRANSACCIONES
  */
 .transactions-box {
-  padding: 10px 24px;
+  padding: 24px 22px;
   display: flex;
   flex-direction: column;
+  height: 70%;
+}
+
+.tx-empty {
+  text-align: center;
+  color: #aaa;
+  font-size: 14px;
+  padding: 24px 0;
+  font-family: 'Lato', sans-serif;
 }
 
 /* Cabecera: título + botón flecha */
