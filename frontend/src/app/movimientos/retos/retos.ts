@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RetosService } from '../../services/retos.service'; 
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { RetosService } from '../../services/retos.service';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+
+// Validador personalizado: fecha_final no puede ser anterior a hoy
+function fechaNoAnteriorAHoy(control: AbstractControl): ValidationErrors | null {
+  if (!control.value) return null;
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const fechaFin = new Date(control.value);
+  return fechaFin < hoy ? { fechaAnterior: true } : null;
+}
 
 @Component({
   selector: 'app-retos',
@@ -13,79 +22,74 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 export class Retos implements OnInit {
   listaDeRetos: any[] = [];
   retoForm: FormGroup;
-  
-  // Usaremos esta variable para el Popup (asegúrate que en el HTML ponga *ngIf="mostrarPopup")
-  mostrarPopup: boolean = false; 
+  mostrarPopup: boolean = false;
+  errorModal: string = '';
+
+  // Fecha mínima para el input date (hoy en formato YYYY-MM-DD)
+  fechaMinima: string = new Date().toISOString().split('T')[0];
 
   constructor(private retosService: RetosService) {
-  this.retoForm = new FormGroup({
-    // Solo pedimos 3 cosas, sin reglas raras
-    titulo: new FormControl('', Validators.required),
-    emoji: new FormControl('🎯', Validators.required),
-    cantidad: new FormControl('', [Validators.required, Validators.min(0.01)]), // 0.01 por si pones céntimos
-    IDusuario: new FormControl(1) // Fijo y sin validador
-  });
-}
+    this.retoForm = new FormGroup({
+      titulo: new FormControl('', Validators.required),
+      cantidad: new FormControl('', [Validators.required, Validators.min(0.01)]),
+      fecha_final: new FormControl('', [Validators.required, fechaNoAnteriorAHoy]),
+      fecha_inicio: new FormControl(new Date().toISOString().split('T')[0]),
+      IDusuario: new FormControl(1)
+    });
+  }
 
   ngOnInit(): void {
     this.cargarRetos();
   }
 
-  // Centralizamos la carga de retos
   cargarRetos() {
     this.retosService.getRetos().subscribe({
       next: (data: any) => {
         this.listaDeRetos = data;
-        console.log('Retos cargados: ', data);
       },
       error: (err: any) => console.error('Fallo al conectar con Laravel', err)
     });
   }
 
-  // Lógica del Popup
   abrirModal() {
+    this.errorModal = '';
+    this.retoForm.reset({
+      fecha_inicio: new Date().toISOString().split('T')[0],
+      IDusuario: 1
+    });
     this.mostrarPopup = true;
   }
 
   cerrarModal() {
     this.mostrarPopup = false;
-    // Reseteamos el formulario al cerrar para que esté limpio la próxima vez
-    this.retoForm.reset({ 
-      emoji: '🎯', 
-      IDusuario: 1, 
-      fecha_inicio: new Date().toISOString().split('T')[0] 
+    this.errorModal = '';
+    this.retoForm.reset({
+      fecha_inicio: new Date().toISOString().split('T')[0],
+      IDusuario: 1
     });
   }
 
-  // Función única para guardar (fusionada y corregida)
   guardarReto() {
-  // Añadimos este console.log para ver qué pasa si falla
-  if (this.retoForm.invalid) {
-    console.error('❌ El formulario es inválido. Mira qué campo falla:');
-    console.log('- Errores Título:', this.retoForm.get('titulo')?.errors);
-    console.log('- Errores Cantidad:', this.retoForm.get('cantidad')?.errors);
-    console.log('- Estado general:', this.retoForm.value);
-    alert('Revisa la consola (F12), hay un campo inválido.');
-    return; // Detenemos la ejecución aquí
+    if (this.retoForm.invalid) {
+      this.retoForm.markAllAsTouched();
+      this.errorModal = 'Revisa los campos obligatorios.';
+      return;
+    }
+
+    this.errorModal = '';
+    this.retosService.crearReto(this.retoForm.value).subscribe({
+      next: () => {
+        this.cerrarModal();
+        this.cargarRetos();
+      },
+      error: (err) => {
+        const errores = err.error?.errors;
+        if (typeof errores === 'object' && errores !== null) {
+          this.errorModal = Object.values(errores).flat().join(', ');
+        } else {
+          this.errorModal = err.error?.message || 'Error al guardar el reto.';
+        }
+      }
+    });
   }
-
-  // Si es válido, enviamos a Laravel
-  console.log('✅ Formulario válido, enviando:', this.retoForm.value);
-  this.retosService.crearReto(this.retoForm.value).subscribe({
-    next: (res) => {
-      console.log('¡Guardado!', res);
-      this.cerrarModal();
-      this.cargarRetos();
-    },
-    error: (err) => console.error('Error de Laravel:', err)
-  });
-}
-
-  // Mantenemos esta por si tu botón viejo todavía la llama, 
-  // pero ahora simplemente abre el modal profesional
-  crearNuevoReto() {
-    this.abrirModal();
-  }
-
-  
 }
