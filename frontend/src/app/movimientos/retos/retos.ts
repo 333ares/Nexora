@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
 import {
@@ -39,7 +39,7 @@ export class Retos implements OnInit {
 
   fechaMinima: string = new Date().toISOString().split('T')[0];
 
-  constructor(private Auth: Auth) {
+  constructor(private Auth: Auth, private cdr: ChangeDetectorRef) {
     this.retoForm = new FormGroup({
       titulo: new FormControl('', Validators.required),
       fecha_final: new FormControl('', [Validators.required, fechaNoAnteriorAHoy]),
@@ -51,10 +51,15 @@ export class Retos implements OnInit {
   }
 
   cargarRetos() {
-    console.log('Token:', this.Auth.getToken());
     this.Auth.getRetos().subscribe({
-      next: (res: any) => { this.listaDeRetos = res.retos ?? res ?? []; },
-      error: () => { this.listaDeRetos = []; }
+      next: (res: any) => {
+        this.listaDeRetos = res.retos ?? res ?? [];
+        this.cdr.detectChanges()
+      },
+      error: (err) => {
+        this.listaDeRetos = [];
+        this.cdr.detectChanges()
+      }
     });
   }
 
