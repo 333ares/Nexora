@@ -26,8 +26,8 @@ class RetoController extends Controller
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string|max:255',
             'cantidad' => 'required|numeric|min:0.01',
-            'fecha_inicio' => 'required|date|date_format:d/m/Y',
-            'fecha_final' => 'required|date|date_format:d/m/Y|after:fecha_inicio',
+            'fecha_inicio' => 'required|date',
+            'fecha_final'  => 'required|date|after:fecha_inicio',
         ]);
 
         if ($validator->fails()) {
@@ -71,9 +71,6 @@ class RetoController extends Controller
                 'errors' => 'No tienes retos creados'
             ], 400);
         }
-
-        // Comprobamos el cumplimiento de cada reto antes de devolverlos
-        $retos = $retos->map(fn($reto) => $this->comprobarCumplimiento($reto));
 
         return response()->json([
             'message' => 'success',

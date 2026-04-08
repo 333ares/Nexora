@@ -12,31 +12,47 @@
       </div>
     </div>
 
+    @for (reto of listaDeRetos; track reto.IDreto) {
     <div class="card card-white reto-card">
       <div class="reto-card-top">
-        <div class="reto-card-icon">🚗</div>
+        <div class="reto-card-icon">🎯</div>
         <div class="reto-card-info">
-          <span class="reto-card-nombre">Comprar coche</span>
-          <span class="reto-card-desc">Inicio: 01/01/2023 · Fin: 01/01/2026</span>
+          <span class="reto-card-nombre">{{ reto.titulo }}</span>
+          <span class="reto-card-desc">
+            Inicio: {{ reto.fecha_inicio | date:'dd/MM/yyyy' }} ·
+            Fin: {{ reto.fecha_final | date:'dd/MM/yyyy' }}
+          </span>
         </div>
+        @if (reto.cumplido) {
+        <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> Cumplido</span>
+        } @else {
         <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
+        }
       </div>
 
       <div class="reto-card-meta-row">
         <div class="reto-card-meta-item">
           <span class="reto-card-meta-label">Cantidad (meta)</span>
-          <span class="reto-card-meta-val ingreso-color">25.000,00 €</span>
+          <span class="reto-card-meta-val ingreso-color">
+            {{ reto.cantidad | number:'1.2-2' }} €
+          </span>
         </div>
       </div>
 
       <div class="reto-bar-track" style="height:10px; margin-top: 10px;">
-        <div class="reto-bar-fill" style="width:20%"></div>
+        <div class="reto-bar-fill" style="width:0%"></div>
       </div>
 
-      <div style="margin-top:18px;display:flex;justify-content:flex-end;">
-        <button class="btn-abandonar">Abandonar reto</button>
+      <div style="margin-top:18px; display:flex; justify-content:flex-end;">
+        <button class="btn-abandonar" (click)="abrirModalBorrar(reto.IDreto)">Abandonar reto</button>
       </div>
     </div>
+    } @empty {
+    <div class="card card-white">
+      <div class="empty-state">No tienes retos creados. ¡Empieza uno!</div>
+    </div>
+    }
+
   </div>
 
   <div class="retos-col-right">
@@ -63,14 +79,17 @@
       </div>
 
       <div class="modal-field">
-        <label>Cantidad (€)</label>
-        <input type="number" formControlName="cantidad" placeholder="0.00" class="modal-input" />
+        <label>Cantidad</label>
+        <input type="text" inputmode="decimal" placeholder="0.00" #cantidadInput [value]="cantidadDisplay"
+          (input)="cantidadDisplay = cantidadInput.value" (blur)="formatearCantidad(cantidadInput)"
+          class="modal-input" />
       </div>
 
       <div class="modal-field">
         <label>Fecha de fin</label>
         <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
-        @if (retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
+        @if (retoForm.get('fecha_final')?.touched &&
+        retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
         <p class="modal-error">La fecha de fin no puede ser anterior a hoy.</p>
         }
       </div>
@@ -80,11 +99,39 @@
       }
 
       <div class="modal-footer">
-        <button type="button" class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
-        <button type="submit" class="btn-guardar">Guardar</button>
+        <button type="button" class="btn-cancelar" (click)="cerrarModal()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-guardar" [disabled]="cargando">
+          {{ cargando ? 'Guardando...' : 'Guardar' }}
+        </button>
       </div>
 
     </form>
+  </div>
+</div>
+}
+
+@if (modalBorrarAbierto) {
+<div class="modal-overlay" (click)="cerrarModalBorrar()">
+  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Abandonar reto</h2>
+      <button class="modal-close" (click)="cerrarModalBorrar()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="borrar-icon">🏳️</div>
+      <p class="borrar-texto">¿Estás seguro de que quieres abandonar este reto? Esta acción no se puede deshacer.</p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModalBorrar()">Cancelar</button>
+      <button class="btn-borrar" (click)="confirmarBorrar()" [disabled]="cargandoBorrar">
+        {{ cargandoBorrar ? 'Abandonando...' : 'Abandonar' }}
+      </button>
+    </div>
 
   </div>
 </div>
