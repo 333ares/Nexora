@@ -72,9 +72,6 @@ class RetoController extends Controller
             ], 400);
         }
 
-        // Comprobamos el cumplimiento de cada reto antes de devolverlos
-        $retos = $retos->map(fn($reto) => $this->comprobarCumplimiento($reto));
-
         return response()->json([
             'message' => 'success',
             'retos' => $retos

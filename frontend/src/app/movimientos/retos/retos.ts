@@ -1,15 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RetosService } from '../../services/retos.service';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Auth } from '../../services/auth';
+import {
+  ReactiveFormsModule, FormGroup, FormControl,
+  Validators, AbstractControl, ValidationErrors
+} from '@angular/forms';
 
-// Validador personalizado: fecha_final no puede ser anterior a hoy
 function fechaNoAnteriorAHoy(control: AbstractControl): ValidationErrors | null {
   if (!control.value) return null;
   const hoy = new Date();
   hoy.setHours(0, 0, 0, 0);
   const fechaFin = new Date(control.value);
   return fechaFin < hoy ? { fechaAnterior: true } : null;
+}
+
+function formatearFechaParaLaravel(fechaISO: string): string {
+  const [año, mes, dia] = fechaISO.split('-');
+  return `${dia}/${mes}/${año}`;
 }
 
 @Component({
@@ -22,19 +29,20 @@ function fechaNoAnteriorAHoy(control: AbstractControl): ValidationErrors | null 
 export class Retos implements OnInit {
   listaDeRetos: any[] = [];
   retoForm: FormGroup;
-  mostrarPopup: boolean = false;
-  errorModal: string = '';
+  mostrarPopup = false;
+  errorModal = '';
+  cargando = false;
 
-  // Fecha mínima para el input date (hoy en formato YYYY-MM-DD)
+  // igual que en calendario
+  cantidadDisplay: string = '';
+  cantidadValor: number | null = null;
+
   fechaMinima: string = new Date().toISOString().split('T')[0];
 
-  constructor(private retosService: RetosService) {
+  constructor(private Auth: Auth) {
     this.retoForm = new FormGroup({
       titulo: new FormControl('', Validators.required),
-      cantidad: new FormControl('', [Validators.required, Validators.min(0.01)]),
       fecha_final: new FormControl('', [Validators.required, fechaNoAnteriorAHoy]),
-      fecha_inicio: new FormControl(new Date().toISOString().split('T')[0]),
-      IDusuario: new FormControl(1)
     });
   }
 
@@ -43,52 +51,111 @@ export class Retos implements OnInit {
   }
 
   cargarRetos() {
-    this.retosService.getRetos().subscribe({
-      next: (data: any) => {
-        this.listaDeRetos = data;
-      },
-      error: (err: any) => console.error('Fallo al conectar con Laravel', err)
+    console.log('Token:', this.Auth.getToken());
+    this.Auth.getRetos().subscribe({
+      next: (res: any) => { this.listaDeRetos = res.retos ?? res ?? []; },
+      error: () => { this.listaDeRetos = []; }
     });
+  }
+
+  // Igual que en calendario
+  formatearCantidad(input: HTMLInputElement) {
+    const valor = parseFloat(this.cantidadDisplay.replace(',', '.'));
+    if (!isNaN(valor) && valor > 0) {
+      this.cantidadValor = valor;
+      this.cantidadDisplay = valor.toFixed(2);
+      input.value = valor.toFixed(2);
+    } else {
+      this.cantidadValor = null;
+      this.cantidadDisplay = '';
+      input.value = '';
+    }
   }
 
   abrirModal() {
     this.errorModal = '';
-    this.retoForm.reset({
-      fecha_inicio: new Date().toISOString().split('T')[0],
-      IDusuario: 1
-    });
+    this.cantidadDisplay = '';
+    this.cantidadValor = null;
+    this.retoForm.reset();
     this.mostrarPopup = true;
   }
 
   cerrarModal() {
     this.mostrarPopup = false;
     this.errorModal = '';
-    this.retoForm.reset({
-      fecha_inicio: new Date().toISOString().split('T')[0],
-      IDusuario: 1
-    });
+    this.cantidadDisplay = '';
+    this.cantidadValor = null;
+    this.retoForm.reset();
   }
 
   guardarReto() {
+    // Validamos cantidad manualmente (ya no está en el FormGroup)
+    if (!this.cantidadValor || this.cantidadValor <= 0) {
+      this.errorModal = 'Introduce una cantidad válida.';
+      return;
+    }
+
     if (this.retoForm.invalid) {
       this.retoForm.markAllAsTouched();
       this.errorModal = 'Revisa los campos obligatorios.';
       return;
     }
 
+    const hoyISO = new Date().toISOString().split('T')[0];
+
+    const payload = {
+      titulo: this.retoForm.value.titulo,
+      cantidad: this.cantidadValor,
+      fecha_inicio: formatearFechaParaLaravel(hoyISO),
+      fecha_final: formatearFechaParaLaravel(this.retoForm.value.fecha_final),
+    };
+
+    this.cargando = true;
     this.errorModal = '';
-    this.retosService.crearReto(this.retoForm.value).subscribe({
+
+    this.Auth.crearReto(payload).subscribe({
       next: () => {
+        this.cargando = false;
         this.cerrarModal();
         this.cargarRetos();
       },
       error: (err) => {
+        this.cargando = false;
         const errores = err.error?.errors;
         if (typeof errores === 'object' && errores !== null) {
           this.errorModal = Object.values(errores).flat().join(', ');
         } else {
           this.errorModal = err.error?.message || 'Error al guardar el reto.';
         }
+      }
+    });
+  }
+
+  // --- BORRAR RETO ---
+  modalBorrarAbierto = false;
+  retoBorrandoId: number | null = null;
+
+  abrirModalBorrar(id: number) {
+    this.retoBorrandoId = id;
+    this.modalBorrarAbierto = true;
+  }
+
+  cerrarModalBorrar() {
+    this.modalBorrarAbierto = false;
+    this.retoBorrandoId = null;
+  }
+
+  confirmarBorrar() {
+    if (this.retoBorrandoId === null) return;
+
+    this.Auth.borrarReto(this.retoBorrandoId).subscribe({
+      next: () => {
+        this.cerrarModalBorrar();
+        this.cargarRetos();
+      },
+      error: (err) => {
+        console.error('Error al borrar el reto:', err);
+        this.cerrarModalBorrar();
       }
     });
   }
