@@ -139,6 +139,7 @@ export class Retos implements OnInit {
   // --- BORRAR RETO ---
   modalBorrarAbierto = false;
   retoBorrandoId: number | null = null;
+  cargandoBorrar = false;
 
   abrirModalBorrar(id: number) {
     this.retoBorrandoId = id;
@@ -148,10 +149,13 @@ export class Retos implements OnInit {
   cerrarModalBorrar() {
     this.modalBorrarAbierto = false;
     this.retoBorrandoId = null;
+    this.cargandoBorrar = false;
   }
 
   confirmarBorrar() {
     if (this.retoBorrandoId === null) return;
+
+    this.cargandoBorrar = true;
 
     this.Auth.borrarReto(this.retoBorrandoId).subscribe({
       next: () => {
