@@ -1,7 +1,5 @@
-<!-- SIDEBAR + LAYOUT WRAPPER -->
 <div class="admin-layout">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
@@ -27,10 +25,8 @@
     </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <main class="admin-main">
 
-    <!-- TOPBAR -->
     <header class="topbar">
       <div class="topbar-title">
         @if (vistaActual === 'cuentas') { <span>Gestión de cuentas de usuario</span> }
@@ -41,11 +37,9 @@
       </div>
     </header>
 
-    <!-- VISTA: CUENTAS DE USUARIO-->
     @if (vistaActual === 'cuentas') {
       <div class="content-area">
 
-        <!-- Stats row -->
         <div class="stats-row">
           <div class="stat-pill">
             <span class="stat-num">{{ usuarios.length }}</span>
@@ -59,13 +53,8 @@
             <span class="stat-num">{{ usuariosBloqueados }}</span>
             <span class="stat-lbl">Bloqueados</span>
           </div>
-          <div class="stat-pill stat-pill--grey">
-            <span class="stat-num">{{ usuariosInactivos }}</span>
-            <span class="stat-lbl">Inactivos</span>
-          </div>
         </div>
 
-        <!-- Filtros -->
         <div class="toolbar">
           <input class="search-input" type="text" placeholder="Buscar por usuario, nombre o email…"
                  [(ngModel)]="busquedaUsuario" />
@@ -73,11 +62,9 @@
             <button class="filter-tab" [class.active]="filtroUsuario === 'todos'" (click)="filtroUsuario = 'todos'">Todos</button>
             <button class="filter-tab" [class.active]="filtroUsuario === 'Activo'" (click)="filtroUsuario = 'Activo'">Activos</button>
             <button class="filter-tab" [class.active]="filtroUsuario === 'Bloqueado'" (click)="filtroUsuario = 'Bloqueado'">Bloqueados</button>
-            <button class="filter-tab" [class.active]="filtroUsuario === 'Inactivo'" (click)="filtroUsuario = 'Inactivo'">Inactivos</button>
           </div>
         </div>
 
-        <!-- Tabla usuarios -->
         <div class="table-wrap">
           <table class="admin-table">
             <thead>
@@ -94,7 +81,7 @@
             </thead>
             <tbody>
               @for (u of usuariosFiltrados; track u.id) {
-                <tr [class.row-blocked]="u.estado === 'Bloqueado'" [class.row-inactive]="u.estado === 'Inactivo'">
+                <tr [class.row-blocked]="u.estado === 'Bloqueado'">
                   <td class="td-id">#{{ u.id }}</td>
                   <td class="td-user">
                     <div class="user-avatar">{{ u.usuario.charAt(0).toUpperCase() }}</div>
@@ -116,11 +103,9 @@
                   <td class="td-actions">
                     @if (u.estado !== 'Bloqueado') {
                       <button class="action-btn action-btn--warn" (click)="bloquearUsuario(u)" title="Bloquear cuenta">🔒</button>
-                    }
-                    @if (u.estado === 'Bloqueado') {
+                    } @else {
                       <button class="action-btn action-btn--green" (click)="desbloquearUsuario(u)" title="Desbloquear cuenta">🔓</button>
                     }
-                    <button class="action-btn action-btn--info" (click)="abrirDetalleUsuario(u)" title="Ver detalles">👁</button>
                     <button class="action-btn action-btn--danger" (click)="confirmarEliminarUsuario(u)" title="Eliminar cuenta">🗑</button>
                   </td>
                 </tr>
@@ -134,11 +119,9 @@
       </div>
     }
 
-    <!-- VISTA: ACADEMIA / CONTENIDO-->
     @if (vistaActual === 'contenido') {
       <div class="content-area">
 
-        <!-- Stats row -->
         <div class="stats-row">
           <div class="stat-pill">
             <span class="stat-num">{{ contenidos.length }}</span>
@@ -152,13 +135,8 @@
             <span class="stat-num">{{ contenidosVerificados }}</span>
             <span class="stat-lbl">Verificados</span>
           </div>
-          <div class="stat-pill stat-pill--grey">
-            <span class="stat-num">{{ contenidosOcultos }}</span>
-            <span class="stat-lbl">Ocultos</span>
-          </div>
         </div>
 
-        <!-- Filtros -->
         <div class="toolbar">
           <input class="search-input" type="text" placeholder="Buscar por título o autor…"
                  [(ngModel)]="busquedaContenido" />
@@ -166,11 +144,9 @@
             <button class="filter-tab" [class.active]="filtroContenido === 'todos'" (click)="filtroContenido = 'todos'">Todos</button>
             <button class="filter-tab" [class.active]="filtroContenido === 'Pendiente'" (click)="filtroContenido = 'Pendiente'">Pendientes</button>
             <button class="filter-tab" [class.active]="filtroContenido === 'Verificado'" (click)="filtroContenido = 'Verificado'">Verificados</button>
-            <button class="filter-tab" [class.active]="filtroContenido === 'Oculto'" (click)="filtroContenido = 'Oculto'">Ocultos</button>
           </div>
         </div>
 
-        <!-- Tabla contenido -->
         <div class="table-wrap">
           <table class="admin-table">
             <thead>
@@ -186,7 +162,7 @@
             </thead>
             <tbody>
               @for (c of contenidosFiltrados; track c.id) {
-                <tr [class.row-blocked]="c.estado === 'Oculto'">
+                <tr>
                   <td class="td-id">#{{ c.id }}</td>
                   <td class="td-titulo">
                     <span class="tipo-icon">{{ c.tipo === 'video' ? '🎬' : c.tipo === 'pdf' ? '📄' : '📝' }}</span>
@@ -203,12 +179,7 @@
                   <td class="td-actions">
                     @if (c.estado === 'Pendiente') {
                       <button class="action-btn action-btn--green" (click)="verificarContenido(c)" title="Verificar contenido">✔</button>
-                      <button class="action-btn action-btn--warn" (click)="ocultarContenido(c)" title="Ocultar contenido">🙈</button>
                     }
-                    @if (c.estado === 'Oculto') {
-                      <button class="action-btn action-btn--green" (click)="verificarContenido(c)" title="Restaurar y verificar">✔</button>
-                    }
-                    <button class="action-btn action-btn--info" (click)="abrirDetalleContenido(c)" title="Ver detalles">👁</button>
                     <button class="action-btn action-btn--danger" (click)="confirmarEliminarContenido(c)" title="Eliminar contenido">🗑</button>
                   </td>
                 </tr>
@@ -225,80 +196,6 @@
   </main>
 </div>
 
-<!-- MODAL: DETALLE USUARIO-->
-@if (modalUsuario) {
-  <div class="modal-overlay" (click)="cerrarModales()">
-    <div class="modal" (click)="$event.stopPropagation()">
-      <div class="modal-header">
-        <h3>Detalle de usuario</h3>
-        <button class="modal-close" (click)="cerrarModales()">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="detail-avatar">{{ usuarioSeleccionado!.usuario.charAt(0).toUpperCase() }}</div>
-        <div class="detail-grid">
-          <div class="detail-row"><span class="detail-label">ID</span><span>#{{ usuarioSeleccionado!.id }}</span></div>
-          <div class="detail-row"><span class="detail-label">Usuario</span><span>{{ usuarioSeleccionado!.usuario }}</span></div>
-          <div class="detail-row"><span class="detail-label">Nombre</span><span>{{ usuarioSeleccionado!.nombre }} {{ usuarioSeleccionado!.apellidos }}</span></div>
-          <div class="detail-row"><span class="detail-label">Email</span><span>{{ usuarioSeleccionado!.email }}</span></div>
-          <div class="detail-row"><span class="detail-label">Rol</span><span>{{ usuarioSeleccionado!.rol }}</span></div>
-          <div class="detail-row"><span class="detail-label">Rango</span><span>{{ usuarioSeleccionado!.rango }}</span></div>
-          <div class="detail-row"><span class="detail-label">Estado</span>
-            <span class="estado-dot" [ngClass]="'estado--' + usuarioSeleccionado!.estado.toLowerCase()">{{ usuarioSeleccionado!.estado }}</span>
-          </div>
-          <div class="detail-row"><span class="detail-label">LinkedIn</span>
-            <span>{{ usuarioSeleccionado!.linkedin || '—' }}</span>
-          </div>
-          <div class="detail-row"><span class="detail-label">Balance</span><span>{{ usuarioSeleccionado!.balance_total }} €</span></div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        @if (usuarioSeleccionado!.estado !== 'Bloqueado') {
-          <button class="btn-modal btn-modal--warn" (click)="bloquearUsuario(usuarioSeleccionado!); cerrarModales()">🔒 Bloquear</button>
-        }
-        @if (usuarioSeleccionado!.estado === 'Bloqueado') {
-          <button class="btn-modal btn-modal--green" (click)="desbloquearUsuario(usuarioSeleccionado!); cerrarModales()">🔓 Desbloquear</button>
-        }
-        <button class="btn-modal btn-modal--danger" (click)="confirmarEliminarUsuario(usuarioSeleccionado!); cerrarModales()">🗑 Eliminar</button>
-        <button class="btn-modal btn-modal--ghost" (click)="cerrarModales()">Cerrar</button>
-      </div>
-    </div>
-  </div>
-}
-
-<!-- MODAL: DETALLE CONTENIDO-->
-@if (modalContenido) {
-  <div class="modal-overlay" (click)="cerrarModales()">
-    <div class="modal" (click)="$event.stopPropagation()">
-      <div class="modal-header">
-        <h3>Detalle de contenido</h3>
-        <button class="modal-close" (click)="cerrarModales()">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="detail-grid">
-          <div class="detail-row"><span class="detail-label">ID</span><span>#{{ contenidoSeleccionado!.id }}</span></div>
-          <div class="detail-row"><span class="detail-label">Título</span><span>{{ contenidoSeleccionado!.titulo }}</span></div>
-          <div class="detail-row"><span class="detail-label">Tipo</span><span>{{ contenidoSeleccionado!.tipo }}</span></div>
-          <div class="detail-row"><span class="detail-label">Autor</span><span>{{ contenidoSeleccionado!.autor }}</span></div>
-          <div class="detail-row"><span class="detail-label">Fecha</span><span>{{ contenidoSeleccionado!.fecha }}</span></div>
-          <div class="detail-row"><span class="detail-label">Descripción</span><span>{{ contenidoSeleccionado!.descripcion }}</span></div>
-          <div class="detail-row"><span class="detail-label">Estado</span>
-            <span class="estado-dot" [ngClass]="'estado--' + contenidoSeleccionado!.estado.toLowerCase()">{{ contenidoSeleccionado!.estado }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        @if (contenidoSeleccionado!.estado === 'Pendiente') {
-          <button class="btn-modal btn-modal--green" (click)="verificarContenido(contenidoSeleccionado!); cerrarModales()">✔ Verificar</button>
-          <button class="btn-modal btn-modal--warn" (click)="ocultarContenido(contenidoSeleccionado!); cerrarModales()">🙈 Ocultar</button>
-        }
-        <button class="btn-modal btn-modal--danger" (click)="confirmarEliminarContenido(contenidoSeleccionado!); cerrarModales()">🗑 Eliminar</button>
-        <button class="btn-modal btn-modal--ghost" (click)="cerrarModales()">Cerrar</button>
-      </div>
-    </div>
-  </div>
-}
-
-<!-- MODAL: CONFIRMACIÓN ELIMINAR -->
 @if (modalConfirmar) {
   <div class="modal-overlay" (click)="cerrarModales()">
     <div class="modal modal--sm" (click)="$event.stopPropagation()">
@@ -318,7 +215,6 @@
   </div>
 }
 
-<!-- TOAST -->
 @if (toastVisible) {
   <div class="toast" [class.toast--error]="toastError">{{ toastMsg }}</div>
 }
