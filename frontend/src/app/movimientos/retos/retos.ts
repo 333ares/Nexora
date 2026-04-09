@@ -5,7 +5,6 @@ import {
   ReactiveFormsModule, FormGroup, FormControl,
   Validators, AbstractControl, ValidationErrors
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 
 function fechaNoAnteriorAHoy(control: AbstractControl): ValidationErrors | null {
   if (!control.value) return null;
@@ -23,7 +22,7 @@ function formatearFechaParaLaravel(fechaISO: string): string {
 @Component({
   selector: 'app-retos',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './retos.html',
   styleUrl: './retos.css'
 })
