@@ -5,14 +5,14 @@ import {
   ReactiveFormsModule, FormGroup, FormControl,
   Validators, AbstractControl, ValidationErrors
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 
 function fechaNoAnteriorAHoy(control: AbstractControl): ValidationErrors | null {
   if (!control.value) return null;
-  const hoy = new Date();
-  hoy.setHours(0, 0, 0, 0);
+  const manana = new Date();
+  manana.setHours(0, 0, 0, 0);
+  manana.setDate(manana.getDate() + 1); // mínimo mañana
   const fechaFin = new Date(control.value);
-  return fechaFin < hoy ? { fechaAnterior: true } : null;
+  return fechaFin < manana ? { fechaAnterior: true } : null;
 }
 
 function formatearFechaParaLaravel(fechaISO: string): string {
@@ -23,7 +23,7 @@ function formatearFechaParaLaravel(fechaISO: string): string {
 @Component({
   selector: 'app-retos',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './retos.html',
   styleUrl: './retos.css'
 })
@@ -38,7 +38,12 @@ export class Retos implements OnInit {
   cantidadDisplay: string = '';
   cantidadValor: number | null = null;
 
-  fechaMinima: string = new Date().toISOString().split('T')[0];
+  // minimo que el reto dure hasta mañana
+  fechaMinima: string = (() => {
+    const manana = new Date();
+    manana.setDate(manana.getDate() + 1);
+    return manana.toISOString().split('T')[0];
+  })();
 
   constructor(private Auth: Auth, private cdr: ChangeDetectorRef) {
     this.retoForm = new FormGroup({

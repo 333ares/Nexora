@@ -90,7 +90,7 @@
         <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
         @if (retoForm.get('fecha_final')?.touched &&
         retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
-        <p class="modal-error">La fecha de fin no puede ser anterior a hoy.</p>
+        <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
         }
       </div>
 

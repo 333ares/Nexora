@@ -104,6 +104,14 @@ export class Auth {
     });
   }
 
+  aportarAReto(id: number, cantidad: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reto/aportar`, { id, cantidad }, { headers: this.getHeaders() });
+  }
+
+  retirarDeReto(id: number, cantidad: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reto/retirar`, { id, cantidad }, { headers: this.getHeaders() });
+  }
+
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
     localStorage.setItem('token', token);
