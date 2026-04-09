@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id('IDreto');
             $table->string('titulo');
             $table->decimal('cantidad', 15, 2);
+            $table->decimal('cantidad_actual', 15, 2);
             $table->date('fecha_inicio');
             $table->date('fecha_final');
             $table->boolean('cumplido');
+            $table->boolean('activo');
             $table->foreignId('usuario_id');
             $table->timestamps();
         });
