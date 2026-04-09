@@ -140,7 +140,8 @@
 
     <div class="modal-footer">
       <button class="btn-cancelar" (click)="cerrarModalBorrar()">Cancelar</button>
-      <button class="btn-borrar" (click)="confirmarBorrar()">Eliminar</button>
+      <button class="btn-borrar" (click)="confirmarBorrar()" [disabled]="cargandoBorrar">{{ cargandoBorrar ? 'Eliminando...' :
+        'Eliminar' }}</button>
     </div>
 
   </div>

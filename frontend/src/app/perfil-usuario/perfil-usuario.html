@@ -133,70 +133,26 @@
             </svg>
           </button>
         </div>
+
         <div class="tx-list">
+          @for (mov of movimientos.slice(0, 5); track mov.id) {
           <div class="tx-item">
             <div class="tx-left">
-              <div class="tx-dot tx-dot--ocio"></div>
+              <div class="tx-dot" [ngClass]="getCategoriaClass(mov.categoria)"></div>
               <div class="tx-info">
-                <span class="tx-type">Gasto</span>
-                <span class="tx-category">Ocio</span>
+                <span class="tx-type">{{ mov.tipo === 'ingreso' ? 'Ingreso' : 'Gasto' }}</span>
+                <span class="tx-category">{{ mov.categoria }}</span>
               </div>
             </div>
-            <span class="chip chip--red">-18€</span>
+            <span class="chip" [ngClass]="mov.tipo === 'ingreso' ? 'chip--green' : 'chip--red'">
+              {{ mov.tipo === 'ingreso' ? '+' : '-' }}{{ mov.cantidad | number:'1.2-2' }}€
+            </span>
           </div>
-          <div class="tx-item">
-            <div class="tx-left">
-              <div class="tx-dot tx-dot--supervivencia"></div>
-              <div class="tx-info">
-                <span class="tx-type">Gasto</span>
-                <span class="tx-category">Supervivencia</span>
-              </div>
-            </div>
-            <span class="chip chip--red">-48€</span>
-          </div>
-          <div class="tx-item">
-            <div class="tx-left">
-              <div class="tx-dot tx-dot--cultura"></div>
-              <div class="tx-info">
-                <span class="tx-type">Gasto</span>
-                <span class="tx-category">Cultura</span>
-              </div>
-            </div>
-            <span class="chip chip--red">-22€</span>
-          </div>
-          <div class="tx-item">
-            <div class="tx-left">
-              <div class="tx-dot tx-dot--imprevistos"></div>
-              <div class="tx-info">
-                <span class="tx-type">Gasto</span>
-                <span class="tx-category">Imprevistos</span>
-              </div>
-            </div>
-            <span class="chip chip--red">-75€</span>
-          </div>
-          <div class="tx-item">
-            <div class="tx-left">
-              <div class="tx-dot tx-dot--income"></div>
-              <div class="tx-info">
-                <span class="tx-type">Ingreso</span>
-                <span class="tx-category">Nómina</span>
-              </div>
-            </div>
-            <span class="chip chip--green">+1.200€</span>
-          </div>
-          <div class="tx-item">
-            <div class="tx-left">
-              <div class="tx-dot tx-dot--cultura"></div>
-              <div class="tx-info">
-                <span class="tx-type">Gasto</span>
-                <span class="tx-category">Cultura</span>
-              </div>
-            </div>
-            <span class="chip chip--red">-15€</span>
-          </div>
+          } @empty {
+          <div class="tx-empty">No tienes movimientos registrados</div>
+          }
         </div>
       </div>
-      <!-- FIN recuadro transacciones -->
 
     </div>
     <!-- FIN COLUMNA DERECHA -->

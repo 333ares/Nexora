@@ -8,31 +8,19 @@
 
       <div class="balance-top">
         <span class="balance-label">Saldo banco</span>
-        <i class="bi bi-bank" style="font-size: 1.5rem;"></i>
-        
+
       </div>
       <div class="balance-amount">{{ balanceTotal | number:'1.2-2' }} € </div>
     </div>
 
-
-    <div class="card card-white">
-      <p class="section-title">Hisotrial de retos de ahorro</p>
-      <div class="reto-item">
-        <div class="reto-top">
-          <div class="reto-icon-wrap">🚗</div>
-          <div class="reto-info">
-            <span class="reto-nombre">Comprar coche</span>
-            <span class="reto-sub">5.000 € de 25.000 €</span>
-          </div>
-        </div>
-        <div class="reto-progress-row">
-          <span class="reto-actual">5.000,00 €</span>
-          <span class="reto-meta">25.000,00 €</span>
-        </div>
-        <div class="reto-bar-track">
-          <div class="reto-bar-fill" style="width:20%"></div>
-        </div>
-      </div>
+    <div class="card card-white reto-info-card">
+      <i class="bi bi-piggy-bank"></i>
+      <p class="section-title" style="margin-bottom: 8px;">Retos de ahorro</p>
+      <p class="reto-info-desc">
+        Define objetivos de ahorro y haz seguimiento de tu progreso.
+        Pon una meta, una fecha límite y comprueba cómo te acercas a ella cada mes.
+      </p>
+      <button class="btn-ir-retos" routerLink="/retos">Ver mis retos →</button>
     </div>
 
   </div>
@@ -56,7 +44,7 @@
       </div>
       <div class="card card-stat">
         <div class="stat-top">
-          <span class="stat-label">Reto actual </span><i class="bi bi-clipboard-data" style="font-size: 1.5rem;"></i>
+          <span class="stat-label">Reto actual </span>
         </div>
         <div class="limit-row">
           <span class="limit-amount">547,49 €</span>
@@ -197,9 +185,7 @@
       }
 
       @empty {
-      <div class="tabla-row">
-        <span>No hay movimientos registrados</span>
-      </div>
+      <div class="empty-state">No hay movimientos registrados</div>
       }
     </div>
   </div>

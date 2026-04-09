@@ -22,7 +22,7 @@ class Reto extends Model
         'cantidad',
         'fecha_inicio',
         'fecha_final',
-        'IDusuario'
+        'usuario_id'
     ];
     protected $attributes = [
         'cumplido' => false
