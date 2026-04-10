@@ -4,15 +4,9 @@
       <div class="retos-tabs">
         <button class="reto-vista-tab" [class.active]="vistaActiva === 'activos'" (click)="vistaActiva = 'activos'">
           <i class="bi bi-bullseye"></i> Reto actual
-          @if (retosActivos.length > 0) {
-          <span class="tab-badge">{{ retosActivos.length }}</span>
-          }
         </button>
         <button class="reto-vista-tab" [class.active]="vistaActiva === 'historial'" (click)="vistaActiva = 'historial'">
           <i class="bi bi-journal-text"></i> Historial
-          @if (retosHistorial.length > 0) {
-          <span class="tab-badge tab-badge--historial">{{ retosHistorial.length }}</span>
-          }
         </button>
         <button (click)="abrirModal()" class="btn-mas" style="margin-left:auto;">+ Nuevo reto</button>
       </div>
