@@ -24,27 +24,58 @@
           </span>
         </div>
         @if (reto.cumplido) {
-        <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> Cumplido</span>
+          <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> Cumplido</span>
+        } @else if (reto.activo) {
+          <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
         } @else {
-        <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
+          <span class="badge badge-inactivo"><i class="bi bi-x-circle"></i> Expirado</span>
         }
       </div>
 
       <div class="reto-card-meta-row">
         <div class="reto-card-meta-item">
-          <span class="reto-card-meta-label">Cantidad (meta)</span>
+          <span class="reto-card-meta-label">Ahorrado</span>
           <span class="reto-card-meta-val ingreso-color">
+            {{ reto.cantidad_actual | number:'1.2-2' }} €
+          </span>
+        </div>
+        <div class="reto-card-meta-item">
+          <span class="reto-card-meta-label">Meta</span>
+          <span class="reto-card-meta-val">
             {{ reto.cantidad | number:'1.2-2' }} €
+          </span>
+        </div>
+        <div class="reto-card-meta-item">
+          <span class="reto-card-meta-label">Progreso</span>
+          <span class="reto-card-meta-val">
+            {{ progreso(reto) }}%
           </span>
         </div>
       </div>
 
-      <div class="reto-bar-track" style="height:10px; margin-top: 10px;">
-        <div class="reto-bar-fill" style="width:0%"></div>
+      <div class="reto-bar-track">
+        <div
+          class="reto-bar-fill"
+          [class.reto-bar-fill--cumplido]="reto.cumplido"
+          [style.width.%]="progreso(reto)">
+        </div>
       </div>
 
-      <div style="margin-top:18px; display:flex; justify-content:flex-end;">
-        <button class="btn-abandonar" (click)="abrirModalBorrar(reto.IDreto)">Abandonar reto</button>
+      <div class="reto-card-actions">
+        @if (reto.activo && !reto.cumplido) {
+          <button class="btn-aportar" (click)="abrirModalAportar(reto)">
+            <i class="bi bi-plus-circle"></i> Aportar
+          </button>
+          <button class="btn-retirar" (click)="abrirModalRetirar(reto)" [disabled]="reto.cantidad_actual <= 0">
+            <i class="bi bi-dash-circle"></i> Retirar
+          </button>
+          <button class="btn-editar" (click)="abrirModalEditar(reto)">
+            <i class="bi bi-pencil"></i> Editar
+          </button>
+        }
+        <button class="btn-abandonar" (click)="abrirModalBorrar(reto.IDreto)">
+          @if (reto.cumplido || !reto.activo) { Eliminar } @else { Abandonar reto }
+        </button>
       </div>
     </div>
     } @empty {
@@ -62,6 +93,7 @@
   </div>
 </div>
 
+<!-- MODAL: NUEVO RETO -->
 @if (mostrarPopup) {
 <div class="modal-overlay" (click)="cerrarModal()">
   <div class="modal-box" (click)="$event.stopPropagation()">
@@ -79,7 +111,7 @@
       </div>
 
       <div class="modal-field">
-        <label>Cantidad</label>
+        <label>Cantidad objetivo</label>
         <input type="text" inputmode="decimal" placeholder="0.00" #cantidadInput [value]="cantidadDisplay"
           (input)="cantidadDisplay = cantidadInput.value" (blur)="formatearCantidad(cantidadInput)"
           class="modal-input" />
@@ -88,20 +120,17 @@
       <div class="modal-field">
         <label>Fecha de fin</label>
         <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
-        @if (retoForm.get('fecha_final')?.touched &&
-        retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
-        <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
+        @if (retoForm.get('fecha_final')?.touched && retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
+          <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
         }
       </div>
 
       @if (errorModal) {
-      <p class="modal-error">{{ errorModal }}</p>
+        <p class="modal-error">{{ errorModal }}</p>
       }
 
       <div class="modal-footer">
-        <button type="button" class="btn-cancelar" (click)="cerrarModal()">
-          Cancelar
-        </button>
+        <button type="button" class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
         <button type="submit" class="btn-guardar" [disabled]="cargando">
           {{ cargando ? 'Guardando...' : 'Guardar' }}
         </button>
@@ -112,6 +141,7 @@
 </div>
 }
 
+<!-- MODAL: ABANDONAR / BORRAR RETO -->
 @if (modalBorrarAbierto) {
 <div class="modal-overlay" (click)="cerrarModalBorrar()">
   <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
@@ -133,6 +163,133 @@
       </button>
     </div>
 
+  </div>
+</div>
+}
+
+<!-- MODAL: APORTAR DINERO -->
+@if (modalAportarAbierto) {
+<div class="modal-overlay" (click)="cerrarModalAportar()">
+  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Aportar al reto</h2>
+      <button class="modal-close" (click)="cerrarModalAportar()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="modal-subtitle">{{ retoAportandoTitulo }}</p>
+      <div class="modal-field">
+        <label>Cantidad a aportar</label>
+        <input
+          type="text"
+          inputmode="decimal"
+          placeholder="0.00"
+          #aportarInput
+          [value]="aportarDisplay"
+          (input)="aportarDisplay = aportarInput.value"
+          (blur)="formatearAportar(aportarInput)"
+          class="modal-input" />
+      </div>
+      @if (errorAportar) {
+        <p class="modal-error">{{ errorAportar }}</p>
+      }
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModalAportar()">Cancelar</button>
+      <button class="btn-guardar" (click)="confirmarAportar()" [disabled]="cargandoAportar">
+        {{ cargandoAportar ? 'Aportando...' : 'Aportar' }}
+      </button>
+    </div>
+
+  </div>
+</div>
+}
+
+<!-- MODAL: RETIRAR DINERO -->
+@if (modalRetirarAbierto) {
+<div class="modal-overlay" (click)="cerrarModalRetirar()">
+  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Retirar del reto</h2>
+      <button class="modal-close" (click)="cerrarModalRetirar()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="modal-subtitle">{{ retoRetirandoTitulo }}</p>
+      <p class="modal-hint">Disponible: <strong>{{ retoRetirandoMax | number:'1.2-2' }} €</strong></p>
+      <div class="modal-field">
+        <label>Cantidad a retirar</label>
+        <input
+          type="text"
+          inputmode="decimal"
+          placeholder="0.00"
+          #retirarInput
+          [value]="retirarDisplay"
+          (input)="retirarDisplay = retirarInput.value"
+          (blur)="formatearRetirar(retirarInput)"
+          class="modal-input" />
+      </div>
+      @if (errorRetirar) {
+        <p class="modal-error">{{ errorRetirar }}</p>
+      }
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModalRetirar()">Cancelar</button>
+      <button class="btn-retirar-confirm" (click)="confirmarRetirar()" [disabled]="cargandoRetirar">
+        {{ cargandoRetirar ? 'Retirando...' : 'Retirar' }}
+      </button>
+    </div>
+
+  </div>
+</div>
+}
+
+<!-- MODAL: EDITAR RETO -->
+@if (modalEditarAbierto) {
+<div class="modal-overlay" (click)="cerrarModalEditar()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Editar reto</h2>
+      <button class="modal-close" (click)="cerrarModalEditar()">✕</button>
+    </div>
+
+    <form [formGroup]="editarForm" (ngSubmit)="confirmarEditar()">
+
+      <div class="modal-field">
+        <label>Título</label>
+        <input type="text" formControlName="titulo" class="modal-input" />
+      </div>
+
+      <div class="modal-field">
+        <label>Cantidad objetivo (€)</label>
+        <input type="number" formControlName="cantidad" min="0.01" step="0.01" class="modal-input" />
+      </div>
+
+      <div class="modal-field">
+        <label>Fecha de fin</label>
+        <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
+        @if (editarForm.get('fecha_final')?.touched && editarForm.get('fecha_final')?.errors?.['fechaAnterior']) {
+          <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
+        }
+      </div>
+
+      @if (errorEditar) {
+        <p class="modal-error">{{ errorEditar }}</p>
+      }
+
+      <div class="modal-footer">
+        <button type="button" class="btn-cancelar" (click)="cerrarModalEditar()">Cancelar</button>
+        <button type="submit" class="btn-guardar" [disabled]="cargandoEditar">
+          {{ cargandoEditar ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </div>
+
+    </form>
   </div>
 </div>
 }

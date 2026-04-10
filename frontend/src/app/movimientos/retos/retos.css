@@ -181,6 +181,133 @@
   cursor: not-allowed;
 }
 
+/* Badge estado inactivo/expirado */
+.badge-inactivo {
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  /* reutiliza el padding/border-radius de .badge */
+}
+
+/* Barra de progreso */
+.reto-bar-track {
+  height: 10px;
+  background: #f0f0f0;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.reto-bar-fill {
+  height: 100%;
+  background: var(--color-ingreso, #22c55e);
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+
+.reto-bar-fill--cumplido {
+  background: #f59e0b;
+  /* dorado cuando está cumplido */
+}
+
+/* Fila de acciones en la tarjeta */
+.reto-card-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Botón Aportar */
+.btn-aportar {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-aportar:hover {
+  background: #bbf7d0;
+}
+
+/* Botón Retirar (en tarjeta) */
+.btn-retirar {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #fef3c7;
+  color: #b45309;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-retirar:hover:not(:disabled) {
+  background: #fde68a;
+}
+
+.btn-retirar:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Botón Editar */
+.btn-editar {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-editar:hover {
+  background: #dbeafe;
+}
+
+/* Botón confirmar retirada en modal */
+.btn-retirar-confirm {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #fbbf24;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-retirar-confirm:hover:not(:disabled) {
+  background: #f59e0b;
+}
+
+.btn-retirar-confirm:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Subtítulo y pista dentro del modal */
+.modal-subtitle {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.modal-hint {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0
