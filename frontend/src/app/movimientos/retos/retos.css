@@ -48,6 +48,26 @@
   cursor: pointer;
 }
 
+/* Historial */
+.tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 99px;
+  background: var(--color-ingreso, #22c55e);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.tab-badge--historial {
+  background: #6b7280;
+}
+
 /* Campos */
 .modal-field {
   margin-bottom: 16px;
@@ -216,7 +236,7 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
 }
 
 /* Botón Aportar */

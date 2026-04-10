@@ -29,10 +29,23 @@ function formatearFechaParaLaravel(fechaISO: string): string {
 })
 export class Retos implements OnInit {
   listaDeRetos: any[] = [];
+  vistaActiva: 'activos' | 'historial' = 'activos';
   retoForm: FormGroup;
   mostrarPopup = false;
   errorModal = '';
   cargando = false;
+
+  get retosActivos(): any[] {
+    return this.listaDeRetos.filter(r => r.activo && !r.cumplido);
+  }
+
+  get retosHistorial(): any[] {
+    return this.listaDeRetos.filter(r => !r.activo || r.cumplido);
+  }
+
+  get retosVisibles(): any[] {
+    return this.vistaActiva === 'activos' ? this.retosActivos : this.retosHistorial;
+  }
 
   cantidadDisplay: string = '';
   cantidadValor: number | null = null;
