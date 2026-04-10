@@ -234,9 +234,9 @@
 .reto-card-actions {
   margin-top: 18px;
   display: flex;
-  gap: 8px;
+  gap: 15px;
   flex-wrap: wrap;
-  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 /* Botón Aportar */
