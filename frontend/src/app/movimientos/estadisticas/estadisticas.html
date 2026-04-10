@@ -1,85 +1,36 @@
 <div class="grid-estadisticas">
 
-  <div class="card card-white stats-grande">
-    <div class="stats-grid">
-      <div class="stat-box stat-box-ingreso">
-        <span class="stat-box-label">Total ingresos</span>
-        <span class="stat-box-valor ingreso-color">{{ ingresoMensual | number:'1.2-2' }} €</span>
-      </div>
-      <div class="stat-box stat-box-gasto">
-        <span class="stat-box-label">Total gastos</span>
-        <span class="stat-box-valor gasto-color">{{ gastoMensual | number:'1.2-2' }} €</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-box-label">Saldo neto</span>
-        <span class="stat-box-valor">{{ balanceTotal | number:'1.2-2' }} €</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-box-label">Tasa de ahorro</span>
-        <span class="stat-box-valor ingreso-color">82%</span>
-      </div>
-    </div>
+  <!-- RESUMEN -->
+  <div class="card stats">
+    <p>Balance: {{ balanceTotal }} €</p>
+    <p>Ingresos: {{ ingresoMensual }} €</p>
+    <p>Gastos: {{ gastoMensual }} €</p>
+    <p>Ahorro: {{ tasaAhorro | number:'1.0-0' }}%</p>
   </div>
 
-  <div class="card card-white donut-card">
-    <p class="section-title">Gastos por categoría</p>
-    <div class="donut-layout">
-      <div class="donut-svg-wrap">
-        <svg width="160" height="160" viewBox="0 0 160 160">
-          <path class="donut-path" fill="#e74c3c"
-            d="M 80 20 A 60 60 0 0 1 131.96 110 L 104.18 93.5 A 38 38 0 0 0 80 42 Z" />
-          <path class="donut-path" fill="#f39c12"
-            d="M 131.96 110 A 60 60 0 0 1 28.04 110 L 55.82 93.5 A 38 38 0 0 0 104.18 93.5 Z" />
-          <path class="donut-path" fill="#e67e22"
-            d="M 28.04 110 A 60 60 0 0 1 80 20 L 80 42 A 38 38 0 0 0 55.82 93.5 Z" />
-        </svg>
-      </div>
-      <div class="donut-legend">
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#e74c3c"></span>
-          <span class="donut-legend-label">Supervivencia</span>
-          <span class="donut-legend-pct gasto-color">48%</span>
-        </div>
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#f39c12"></span>
-          <span class="donut-legend-label">Extras</span>
-          <span class="donut-legend-pct gasto-color">34%</span>
-        </div>
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#e67e22"></span>
-          <span class="donut-legend-label">Ocio</span>
-          <span class="donut-legend-pct gasto-color">18%</span>
-        </div>
-      </div>
-    </div>
+  <!-- INSIGHTS -->
+  <div class="card">
+    <h3>Insights</h3>
+    <p>📉 Más gastado en: <b>{{ categoriaTopGasto }}</b></p>
+    <p>📅 Mes con más gasto: <b>{{ mesMasGasto }}</b></p>
+    <p>📈 Mes con más ingreso: <b>{{ mesMasIngreso }}</b></p>
   </div>
 
-  <div class="card card-white donut-card">
-    <p class="section-title">Ingresos por categoría</p>
-    <div class="donut-layout">
-      <div class="donut-svg-wrap">
-        <svg width="160" height="160" viewBox="0 0 160 160">
-          <path class="donut-path" fill="#27ae60" d="M 80 20 A 60 60 0 1 1 79.99 20 L 79.99 42 A 38 38 0 1 0 80 42 Z" />
-        </svg>
-      </div>
-      <div class="donut-legend">
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#27ae60"></span>
-          <span class="donut-legend-label">Sueldo</span>
-          <span class="donut-legend-pct ingreso-color">58%</span>
-        </div>
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#2ecc71"></span>
-          <span class="donut-legend-label">Alquileres</span>
-          <span class="donut-legend-pct ingreso-color">31%</span>
-        </div>
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#16a085"></span>
-          <span class="donut-legend-label">Negocios</span>
-          <span class="donut-legend-pct ingreso-color">11%</span>
-        </div>
-      </div>
-    </div>
+  <!-- DONUTS -->
+  <div class="card">
+    <h3>Gastos por categoría</h3>
+    <canvas id="gastoDonut"></canvas>
+  </div>
+
+  <div class="card">
+    <h3>Ingresos por categoría</h3>
+    <canvas id="ingresoDonut"></canvas>
+  </div>
+
+  <!-- COMPARATIVA -->
+  <div class="card">
+    <h3>Ingresos vs Gastos</h3>
+    <canvas id="comparativaChart"></canvas>
   </div>
 
 </div>
