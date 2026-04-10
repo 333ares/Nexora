@@ -39,7 +39,7 @@ class RetoController extends Controller
             'titulo' => 'required|string|max:255',
             'cantidad' => 'required|numeric|min:0.01',
             'fecha_inicio' => 'required|date',
-            'fecha_final' => 'required|date|after:fecha_inicio',
+            'fecha_final' => 'required|date|after:today',
         ]);
 
         if ($validator->fails()) {
@@ -233,7 +233,7 @@ class RetoController extends Controller
             'titulo' => 'nullable|string|max:255',
             'cantidad' => 'nullable|numeric|min:0.01',
             'fecha_inicio' => 'nullable|date',
-            'fecha_final' => 'nullable|date|after:fecha_inicio',
+            'fecha_final' => 'nullable|date|after:today',
         ]);
 
         if ($validator->fails()) {
