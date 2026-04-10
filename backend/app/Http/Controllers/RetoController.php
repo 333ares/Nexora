@@ -133,6 +133,13 @@ class RetoController extends Controller
             ], 400);
         }
 
+        if ($request->user()->balance_total <= $request->cantidad) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'No tienes dinero suficiente para aportarlo al reto'
+            ], 400);
+        }
+
         // Creamos el movimiento de gasto
         Movimientos::create([
             'tipo' => 'gasto',
