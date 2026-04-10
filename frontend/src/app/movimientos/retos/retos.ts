@@ -259,7 +259,7 @@ export class Retos implements OnInit {
   abrirModalRetirar(reto: any) {
     this.retoRetirandoId = reto.IDreto;
     this.retoRetirandoTitulo = reto.titulo;
-    this.retoRetirandoMax = reto.cantidad_actual;
+    this.retoRetirandoMax = parseFloat(reto.cantidad_actual);
     this.retirarDisplay = '';
     this.retirarValor = null;
     this.errorRetirar = '';
