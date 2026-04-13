@@ -17,7 +17,7 @@ class MovimientosFactory extends Factory
     public function definition(): array
     {
         // Definimos los grupos según tus reglas
-        $categoriasIngreso = ['Nomina', 'Capital y alquileres', 'Negocios y ventas', 'Ootros'];
+        $categoriasIngreso = ['Nomina', 'Capital y alquileres', 'Negocios y ventas', 'Otros'];
         $categoriasGasto = ['Ocio', 'Supervivencia', 'Cultura', 'Extras o imprevistos'];
 
         // Elegimos el tipo primero
