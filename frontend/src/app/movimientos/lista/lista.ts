@@ -132,10 +132,8 @@ export class Lista implements OnInit {
       cantidad: null,
       categoria: '',
       descripcion: '',
-      fecha: `${año}-${mes}-${dia}`,              // para el input date
-      fechaHora: `${año}-${mes}-${dia}T${hora}:${minutos}` // para el backend
-      fecha: `${año}-${mes}-${dia}`,
-      fechaHora: `${año}-${mes}-${dia}T${hora}:${minutos}`
+      fecha: `${año}-${mes}-${dia}`, // input date
+      fechaHora: `${año}-${mes}-${dia}T${hora}:${minutos}` // backend
     };
     this.cantidadDisplay = '';
     this.errorModal = '';
@@ -155,7 +153,6 @@ export class Lista implements OnInit {
       descripcion: mov.descripcion || '',
       fecha: mov.fecha,
       fechaHora: mov.fechaHora
-      fechaHora: mov.fecha
     };
     this.cantidadDisplay = Number(mov.cantidad).toFixed(2);
     this.errorModal = '';
