@@ -17,6 +17,44 @@ export class Lista implements OnInit {
   movimientosFiltrados: any[] = [];
   filtroActivo: string = 'todos';
 
+  // --- PAGINACIÓN ---
+  paginaActual = 1;
+  itemsPorPagina = 10;
+
+  get totalPaginas(): number {
+    return Math.ceil(this.movimientosFiltrados.length / this.itemsPorPagina);
+  }
+
+  get movimientosPaginados(): any[] {
+    const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+    return this.movimientosFiltrados.slice(inicio, inicio + this.itemsPorPagina);
+  }
+
+  get paginas(): number[] {
+    const total = this.totalPaginas;
+    const actual = this.paginaActual;
+    const rango: number[] = [];
+
+    if (total <= 5) {
+      for (let i = 1; i <= total; i++) rango.push(i);
+    } else {
+      rango.push(1);
+      if (actual > 3) rango.push(-1); // ellipsis
+      for (let i = Math.max(2, actual - 1); i <= Math.min(total - 1, actual + 1); i++) {
+        rango.push(i);
+      }
+      if (actual < total - 2) rango.push(-1); // ellipsis
+      rango.push(total);
+    }
+    return rango;
+  }
+
+  irAPagina(p: number) {
+    if (p < 1 || p > this.totalPaginas) return;
+    this.paginaActual = p;
+    this.cdr.detectChanges();
+  }
+
   // --- ESTADO MODAL ---
   modalAbierto = false;
   modoEdicion = false;
@@ -65,6 +103,7 @@ export class Lista implements OnInit {
   // Filtra los movimientos por tipo: todos, ingreso o gasto
   filtrar(tipo: string) {
     this.filtroActivo = tipo;
+    this.paginaActual = 1; // ← resetea a página 1 al filtrar
     this.movimientosFiltrados = tipo === 'todos'
       ? this.movimientos
       : this.movimientos.filter(m => m.tipo === tipo);
@@ -95,6 +134,8 @@ export class Lista implements OnInit {
       descripcion: '',
       fecha: `${año}-${mes}-${dia}`,              // para el input date
       fechaHora: `${año}-${mes}-${dia}T${hora}:${minutos}` // para el backend
+      fecha: `${año}-${mes}-${dia}`,
+      fechaHora: `${año}-${mes}-${dia}T${hora}:${minutos}`
     };
     this.cantidadDisplay = '';
     this.errorModal = '';
@@ -114,6 +155,7 @@ export class Lista implements OnInit {
       descripcion: mov.descripcion || '',
       fecha: mov.fecha,
       fechaHora: mov.fechaHora
+      fechaHora: mov.fecha
     };
     this.cantidadDisplay = Number(mov.cantidad).toFixed(2);
     this.errorModal = '';
@@ -166,36 +208,39 @@ export class Lista implements OnInit {
 
     if (this.modoEdicion && this.movimientoEditandoId !== null) {
       // Modo edición: enviamos PUT con el id del movimiento
-      this.authService.apuntarMovimiento({
+      // ← corregido: usa actualizarMovimiento (PUT) con el id
+      this.authService.actualizarMovimiento({
+        id: this.movimientoEditandoId,
         tipo: this.nuevoMovimiento.tipo,
         cantidad: this.nuevoMovimiento.cantidad,
         categoria: this.nuevoMovimiento.categoria,
         descripcion: this.nuevoMovimiento.descripcion,
-        fecha: this.nuevoMovimiento.fechaHora  // ← fechaHora en lugar de fecha
-      })
-        .subscribe({
-          next: () => {
-            this.cargando = false;
-            this.cerrarModal();
-            this.cargarMovimientos();
-          },
-          error: (err) => {
-            this.cargando = false;
-            const errores = err.error?.errors;
-            if (typeof errores === 'object' && errores !== null) {
-              this.errorModal = Object.values(errores).flat().join(', ');
-            } else {
-              this.errorModal = errores || 'Error al actualizar el movimiento.';
-            }
+        fecha: this.nuevoMovimiento.fechaHora
+      }).subscribe({
+        next: () => {
+          this.cargando = false;
+          this.cerrarModal();
+          this.cargarMovimientos();
+        },
+        error: (err) => {
+          this.cargando = false;
+          const errores = err.error?.errors;
+          if (typeof errores === 'object' && errores !== null) {
+            this.errorModal = Object.values(errores).flat().join(', ');
+          } else {
+            this.errorModal = errores || 'Error al actualizar el movimiento.';
           }
-        });
+          this.cdr.detectChanges();
+        }
+      });
     } else {
       // Modo creación: enviamos POST con los datos del formulario
       this.authService.apuntarMovimiento({
         tipo: this.nuevoMovimiento.tipo,
         cantidad: this.nuevoMovimiento.cantidad,
         categoria: this.nuevoMovimiento.categoria,
-        descripcion: this.nuevoMovimiento.descripcion
+        descripcion: this.nuevoMovimiento.descripcion,
+        fecha: this.nuevoMovimiento.fechaHora
       }).subscribe({
         next: () => {
           this.cargando = false;
@@ -210,6 +255,7 @@ export class Lista implements OnInit {
           } else {
             this.errorModal = errores || 'Error al añadir el movimiento.';
           }
+          this.cdr.detectChanges();
         }
       });
     }
@@ -233,9 +279,7 @@ export class Lista implements OnInit {
 
   confirmarBorrar() {
     if (this.movimientoBorrandoId === null) return;
-
     this.cargandoBorrar = true;
-    
     this.authService.borrarMovimimento(this.movimientoBorrandoId).subscribe({
       next: () => {
         this.cerrarModalBorrar();
