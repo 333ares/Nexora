@@ -84,8 +84,6 @@
             </div>
           </div>
 
-
-
           @if (successMessage) {
           <div class="alert-success">
             {{ successMessage }}
@@ -100,10 +98,57 @@
           }
 
           <div class="action-row">
-            <button type="button" class="btn-save" (click)="onGuardar()">Guardar cambios</button>
-            <button type="button" class="btn-logout" (click)="onLogout()">Cerrar sesión</button>
-            <button type="button" class="btn-delete" (click)="onDelete()">Eliminar cuenta</button>
+            <button type="button" class="btn-save" (click)="onGuardar()"
+              [disabled]="isSaving || isLoggingOut || isDeleting">
+              @if (isSaving) {
+              <span class="spinner"></span> Guardando...
+              } @else {
+              Guardar cambios
+              }
+            </button>
+
+            <button type="button" class="btn-logout" (click)="onLogout()"
+              [disabled]="isSaving || isLoggingOut || isDeleting">
+              @if (isLoggingOut) {
+              <span class="spinner"></span> Cerrando sesión...
+              } @else {
+              Cerrar sesión
+              }
+            </button>
+
+            <button type="button" class="btn-delete" (click)="onDelete()"
+              [disabled]="isSaving || isLoggingOut || isDeleting">
+              @if (isDeleting) {
+              <span class="spinner"></span> Eliminando...
+              } @else {
+              Eliminar cuenta
+              }
+            </button>
           </div>
+
+          <!-- Modal de confirmación -->
+          @if (showDeleteModal) {
+          <div class="modal-overlay" (click)="cancelDelete()">
+            <div class="modal-box" (click)="$event.stopPropagation()">
+              <div class="modal-icon">🗑️</div>
+              <h3 class="modal-title">¿Eliminar cuenta?</h3>
+              <p class="modal-desc">
+                Esta acción es irreversible. Se borrarán todos tus datos,
+                movimientos y configuración permanentemente.
+              </p>
+              <div class="modal-actions">
+                <button class="btn-modal-cancel" (click)="cancelDelete()">Cancelar</button>
+                <button class="btn-modal-confirm" (click)="confirmDelete()" [disabled]="isDeleting">
+                  @if (isDeleting) {
+                  <span class="spinner"></span> Eliminando...
+                  } @else {
+                  Sí, eliminar
+                  }
+                </button>
+              </div>
+            </div>
+          </div>
+          }
         </div>
 
       </div>

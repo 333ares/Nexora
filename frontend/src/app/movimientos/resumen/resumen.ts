@@ -42,7 +42,13 @@ export class Resumen implements OnInit {
   cargarHistorialMovimientos(): void {
     this.authService.getHistorialMovimientos().subscribe({
       next: (response) => {
-        this.movimientos = response.movimientos;
+        const todos = response.movimientos ?? [];
+
+        // Ordenar por fecha DESC (más recientes primero) y coger solo 4
+        this.movimientos = todos
+          .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
+          .slice(0, 4);
+
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -54,7 +60,7 @@ export class Resumen implements OnInit {
       }
     });
   }
-  
+
   cargarIngresoMensual(): void {
     this.authService.getIngresoMensual().subscribe({
       next: (response) => {
@@ -90,4 +96,6 @@ export class Resumen implements OnInit {
       }
     });
   }
+
+
 }

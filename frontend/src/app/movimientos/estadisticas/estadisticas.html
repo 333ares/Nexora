@@ -1,84 +1,145 @@
 <div class="grid-estadisticas">
 
+  <!--  KPIs  -->
   <div class="card card-white stats-grande">
     <div class="stats-grid">
       <div class="stat-box stat-box-ingreso">
         <span class="stat-box-label">Total ingresos</span>
         <span class="stat-box-valor ingreso-color">{{ ingresoMensual | number:'1.2-2' }} €</span>
+        <span class="stat-box-delta">Este mes</span>
       </div>
       <div class="stat-box stat-box-gasto">
         <span class="stat-box-label">Total gastos</span>
         <span class="stat-box-valor gasto-color">{{ gastoMensual | number:'1.2-2' }} €</span>
+        <span class="stat-box-delta">Este mes</span>
       </div>
       <div class="stat-box">
         <span class="stat-box-label">Saldo neto</span>
-        <span class="stat-box-valor">{{ balanceTotal | number:'1.2-2' }} €</span>
+        <span class="stat-box-valor" [ngClass]="balanceTotal >= 0 ? 'ingreso-color' : 'gasto-color'">
+          {{ balanceTotal | number:'1.2-2' }} €
+        </span>
+        <span class="stat-box-delta">Acumulado histórico</span>
       </div>
       <div class="stat-box">
         <span class="stat-box-label">Tasa de ahorro</span>
-        <span class="stat-box-valor ingreso-color">82%</span>
+        <span class="stat-box-valor ingreso-color">{{ tasaAhorro }}%</span>
+        <span class="stat-box-delta">Este mes</span>
       </div>
     </div>
   </div>
 
+  <!--  GRÁFICO INGRESOS VS GASTOS MENSUAL  -->
+  <div class="card card-white stats-grande">
+    <p class="section-title">Evolución mensual</p>
+    <p class="section-subtitle">Ingresos vs gastos de los últimos meses</p>
+    <div class="chart-legend-row">
+      <span class="chart-legend-item">
+        <span class="chart-legend-dot" style="background:#27ae60"></span>Ingresos
+      </span>
+      <span class="chart-legend-item">
+        <span class="chart-legend-dot" style="background:#d94f4f"></span>Gastos
+      </span>
+    </div>
+    <div class="bar-chart-container">
+      <canvas #barChart></canvas>
+    </div>
+  </div>
+
+  <!--  DONUT GASTOS POR CATEGORÍA  -->
   <div class="card card-white donut-card">
     <p class="section-title">Gastos por categoría</p>
+    <p class="section-subtitle">Desglose del mes actual</p>
     <div class="donut-layout">
       <div class="donut-svg-wrap">
-        <svg width="160" height="160" viewBox="0 0 160 160">
-          <path class="donut-path" fill="#e74c3c"
-            d="M 80 20 A 60 60 0 0 1 131.96 110 L 104.18 93.5 A 38 38 0 0 0 80 42 Z" />
-          <path class="donut-path" fill="#f39c12"
-            d="M 131.96 110 A 60 60 0 0 1 28.04 110 L 55.82 93.5 A 38 38 0 0 0 104.18 93.5 Z" />
-          <path class="donut-path" fill="#e67e22"
-            d="M 28.04 110 A 60 60 0 0 1 80 20 L 80 42 A 38 38 0 0 0 55.82 93.5 Z" />
-        </svg>
+        <canvas #donutGasto width="150" height="150"></canvas>
       </div>
       <div class="donut-legend">
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#e74c3c"></span>
-          <span class="donut-legend-label">Supervivencia</span>
-          <span class="donut-legend-pct gasto-color">48%</span>
+        <div class="donut-legend-item" *ngFor="let item of gastosPorCategoria; let i = index">
+          <span class="donut-legend-dot" [style.background]="gastoColores[i]"></span>
+          <span class="donut-legend-label">{{ item.categoria }}</span>
+          <div style="text-align:right">
+            <div class="donut-legend-pct gasto-color">{{ getPct(item.total, totalGastos) }}%</div>
+            <div class="donut-legend-sub">{{ item.total | number:'1.2-2' }} €</div>
+          </div>
         </div>
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#f39c12"></span>
-          <span class="donut-legend-label">Extras</span>
-          <span class="donut-legend-pct gasto-color">34%</span>
-        </div>
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#e67e22"></span>
-          <span class="donut-legend-label">Ocio</span>
-          <span class="donut-legend-pct gasto-color">18%</span>
+        <div *ngIf="gastosPorCategoria.length === 0" class="empty-state">
+          Sin gastos registrados
         </div>
       </div>
     </div>
   </div>
 
+  <!--  DONUT INGRESOS POR CATEGORÍA  -->
   <div class="card card-white donut-card">
     <p class="section-title">Ingresos por categoría</p>
+    <p class="section-subtitle">Desglose del mes actual</p>
     <div class="donut-layout">
       <div class="donut-svg-wrap">
-        <svg width="160" height="160" viewBox="0 0 160 160">
-          <path class="donut-path" fill="#27ae60" d="M 80 20 A 60 60 0 1 1 79.99 20 L 79.99 42 A 38 38 0 1 0 80 42 Z" />
-        </svg>
+        <canvas #donutIngreso width="150" height="150"></canvas>
       </div>
       <div class="donut-legend">
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#27ae60"></span>
-          <span class="donut-legend-label">Sueldo</span>
-          <span class="donut-legend-pct ingreso-color">58%</span>
+        <div class="donut-legend-item" *ngFor="let item of ingresosPorCategoria; let i = index">
+          <span class="donut-legend-dot" [style.background]="ingresoColores[i]"></span>
+          <span class="donut-legend-label">{{ item.categoria }}</span>
+          <div style="text-align:right">
+            <div class="donut-legend-pct ingreso-color">{{ getPct(item.total, totalIngresos) }}%</div>
+            <div class="donut-legend-sub">{{ item.total | number:'1.2-2' }} €</div>
+          </div>
         </div>
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#2ecc71"></span>
-          <span class="donut-legend-label">Alquileres</span>
-          <span class="donut-legend-pct ingreso-color">31%</span>
-        </div>
-        <div class="donut-legend-item">
-          <span class="donut-legend-dot" style="background:#16a085"></span>
-          <span class="donut-legend-label">Negocios</span>
-          <span class="donut-legend-pct ingreso-color">11%</span>
+        <div *ngIf="ingresosPorCategoria.length === 0" class="empty-state">
+          Sin ingresos registrados
         </div>
       </div>
+    </div>
+  </div>
+
+  <!--  RANKING GASTOS  -->
+  <div class="card card-white">
+    <p class="section-title">Ranking de gastos</p>
+    <p class="section-subtitle">Categorías con más gasto este mes</p>
+    <div class="ranking-list">
+      <div class="ranking-item" *ngFor="let item of gastosPorCategoria; let i = index">
+        <div class="ranking-top">
+          <div class="ranking-nombre">
+            <span class="ranking-badge" [style.background]="gastoColores[i]"></span>
+            {{ item.categoria }}
+          </div>
+          <span class="ranking-valor gasto-color">{{ item.total | number:'1.2-2' }} €</span>
+        </div>
+        <div class="barra-track">
+          <div class="barra-fill" [style.width]="getPct(item.total, gastosPorCategoria[0]?.total ?? 0) + '%'"
+            [style.background]="gastoColores[i]">
+          </div>
+        </div>
+        <div class="ranking-sub">{{ item.cantidad_movimientos }} movimiento{{ item.cantidad_movimientos !== 1 ? 's' : ''
+          }}</div>
+      </div>
+      <div *ngIf="gastosPorCategoria.length === 0" class="empty-state">Sin datos de gastos</div>
+    </div>
+  </div>
+
+  <!--  RANKING INGRESOS  -->
+  <div class="card card-white">
+    <p class="section-title">Ranking de ingresos</p>
+    <p class="section-subtitle">Categorías con más ingreso este mes</p>
+    <div class="ranking-list">
+      <div class="ranking-item" *ngFor="let item of ingresosPorCategoria; let i = index">
+        <div class="ranking-top">
+          <div class="ranking-nombre">
+            <span class="ranking-badge" [style.background]="ingresoColores[i]"></span>
+            {{ item.categoria }}
+          </div>
+          <span class="ranking-valor ingreso-color">{{ item.total | number:'1.2-2' }} €</span>
+        </div>
+        <div class="barra-track">
+          <div class="barra-fill" [style.width]="getPct(item.total, ingresosPorCategoria[0]?.total ?? 0) + '%'"
+            [style.background]="ingresoColores[i]">
+          </div>
+        </div>
+        <div class="ranking-sub">{{ item.cantidad_movimientos }} movimiento{{ item.cantidad_movimientos !== 1 ? 's' : ''
+          }}</div>
+      </div>
+      <div *ngIf="ingresosPorCategoria.length === 0" class="empty-state">Sin datos de ingresos</div>
     </div>
   </div>
 
