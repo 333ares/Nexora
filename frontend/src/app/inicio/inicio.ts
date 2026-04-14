@@ -23,7 +23,7 @@ export class Inicio {
     {
       id: 0,
       pregunta: '¿Nexora es gratuito?',
-      respuesta: 'Sí, el plan Free es completamente gratuito y sin límite de tiempo. Podrás registrar gastos e ingresos, visualizar el contenido de la academia y participar en los retos mensuales.'
+      respuesta: 'Sí, el plan Free es completamente gratuito y sin límite de tiempo. Podrás registrar gastos e ingresos, participar en el foro y en los retos mensuales.'
     },
     {
       id: 1,

@@ -28,7 +28,7 @@ export class Faqs {
       id: 1,
       categoria: 'planes',
       pregunta: '¿Nexora es gratuito?',
-      respuesta: 'Sí, el plan Free es completamente gratuito y sin límite de tiempo. Podrás registrar gastos e ingresos, visualizar el contenido de la academia y participar en los retos mensuales.'
+      respuesta: 'Sí, el plan Free es completamente gratuito y sin límite de tiempo. Podrás registrar gastos e ingresos, participar en el foro y en los retos mensuales.'
     },
     {
       id: 2,
@@ -45,8 +45,8 @@ export class Faqs {
     {
       id: 4,
       categoria: 'funcionalidades',
-      pregunta: '¿Quién sube el contenido de la academia?',
-      respuesta: 'Profesionales del ámbito económico y financiero que se registran en Nexora como creadores de contenido. Todo el material pasa por un proceso de validación para garantizar su calidad.'
+      pregunta: '¿Quién puede participar en el foro?',
+      respuesta: 'Cualquier usuario registrado en Nexora puede hacer preguntas, responder a las dudas de otros y debatir sobre economía y finanzas personales.'
     },
     {
       id: 5,
@@ -82,7 +82,7 @@ export class Faqs {
       id: 10,
       categoria: 'general',
       pregunta: '¿Hay período de prueba gratuito?',
-      respuesta: 'El plan Free es gratuito para siempre y no requiere tarjeta. Te permite registrar gastos, acceder a la academia y participar en retos mensuales sin coste alguno.'
+      respuesta: 'El plan Free es gratuito para siempre y no requiere tarjeta. Te permite registrar gastos, participar en el foro y en retos mensuales sin coste alguno.'
     },
     {
       id: 11,
