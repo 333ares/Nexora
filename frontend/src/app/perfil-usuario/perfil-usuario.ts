@@ -66,6 +66,8 @@ export class PerfilUsuario implements OnInit {
         this.successMessage = 'Cambios guardados correctamente';
         this.errorMessage = '';
         this.password = '';
+        this.cdr.detectChanges();
+
       },
       error: (error: any) => {
         const errors = error.error?.errors;
@@ -77,6 +79,7 @@ export class PerfilUsuario implements OnInit {
           this.errorMessage = 'Error al guardar los cambios';
         }
         this.successMessage = '';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -137,17 +140,17 @@ export class PerfilUsuario implements OnInit {
   }
 
   getCategoriaClass(categoria: string): string {
-  const mapa: { [key: string]: string } = {
-    'Ocio': 'tx-dot--ocio',
-    'Supervivencia': 'tx-dot--supervivencia',
-    'Cultura': 'tx-dot--cultura',
-    'Extras o imprevistos': 'tx-dot--imprevistos',
-    'Nómina': 'tx-dot--income',
-    'Capital (Alquileres)': 'tx-dot--income',
-    'Negocios y ventas': 'tx-dot--income',
-    'Otros': 'tx-dot--income',
-  };
-  return mapa[categoria] ?? 'tx-dot--income';
-}
+    const mapa: { [key: string]: string } = {
+      'Ocio': 'tx-dot--ocio',
+      'Supervivencia': 'tx-dot--supervivencia',
+      'Cultura': 'tx-dot--cultura',
+      'Extras o imprevistos': 'tx-dot--imprevistos',
+      'Nómina': 'tx-dot--income',
+      'Capital (Alquileres)': 'tx-dot--income',
+      'Negocios y ventas': 'tx-dot--income',
+      'Otros': 'tx-dot--income',
+    };
+    return mapa[categoria] ?? 'tx-dot--income';
+  }
 
 }
