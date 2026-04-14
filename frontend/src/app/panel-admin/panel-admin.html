@@ -1,41 +1,23 @@
 <div class="admin-layout">
-
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
-           alt="Nexora" width="36" height="36" style="object-fit:contain;" />
-      <span>NEXORA</span>
-    </div>
-
-    <div class="sidebar-section-label">Panel Admin</div>
-
-    <nav class="sidebar-nav">
-      <button class="nav-item" [class.active]="vistaActual === 'cuentas'" (click)="cambiarVista('cuentas')">
-        <span class="nav-icon">👤</span>
-        <span>Cuentas de usuario</span>
-      </button>
-      <button class="nav-item" [class.active]="vistaActual === 'contenido'" (click)="cambiarVista('contenido')">
-        <span class="nav-icon">🎓</span>
-        <span>Academia</span>
-      </button>
-    </nav>
-
-    <div class="sidebar-footer">
-      <a routerLink="/login" class="btn-logout">← Salir</a>
-    </div>
-  </aside>
-
-  <main class="admin-main">
-
-    <header class="topbar">
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">
+        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+             alt="Nexora" width="36" height="36" style="object-fit:contain;" />
+        <span>NEXORA</span>
+      </div>
       <div class="topbar-title">
         @if (vistaActual === 'cuentas') { <span>Gestión de cuentas de usuario</span> }
-        @if (vistaActual === 'contenido') { <span>Gestión de contenido — Academia</span> }
       </div>
-      <div class="topbar-meta">
-        <span class="admin-badge">Administrador</span>
-      </div>
-    </header>
+    </div>
+    
+    <div class="topbar-right">
+      <span class="admin-badge">Administrador</span>
+      <a routerLink="/login" class="btn-logout">Salir →</a>
+    </div>
+  </header>
+
+  <main class="admin-main">
 
     @if (vistaActual === 'cuentas') {
       <div class="content-area">
@@ -112,80 +94,6 @@
               }
               @if (usuariosFiltrados.length === 0) {
                 <tr><td colspan="8" class="empty-row">No se han encontrado usuarios con ese criterio.</td></tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      </div>
-    }
-
-    @if (vistaActual === 'contenido') {
-      <div class="content-area">
-
-        <div class="stats-row">
-          <div class="stat-pill">
-            <span class="stat-num">{{ contenidos.length }}</span>
-            <span class="stat-lbl">Contenidos totales</span>
-          </div>
-          <div class="stat-pill stat-pill--orange">
-            <span class="stat-num">{{ contenidosPendientes }}</span>
-            <span class="stat-lbl">Pendientes revisión</span>
-          </div>
-          <div class="stat-pill stat-pill--green">
-            <span class="stat-num">{{ contenidosVerificados }}</span>
-            <span class="stat-lbl">Verificados</span>
-          </div>
-        </div>
-
-        <div class="toolbar">
-          <input class="search-input" type="text" placeholder="Buscar por título o autor…"
-                 [(ngModel)]="busquedaContenido" />
-          <div class="filter-tabs">
-            <button class="filter-tab" [class.active]="filtroContenido === 'todos'" (click)="filtroContenido = 'todos'">Todos</button>
-            <button class="filter-tab" [class.active]="filtroContenido === 'Pendiente'" (click)="filtroContenido = 'Pendiente'">Pendientes</button>
-            <button class="filter-tab" [class.active]="filtroContenido === 'Verificado'" (click)="filtroContenido = 'Verificado'">Verificados</button>
-          </div>
-        </div>
-
-        <div class="table-wrap">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Tipo</th>
-                <th>Autor</th>
-                <th>Fecha subida</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (c of contenidosFiltrados; track c.id) {
-                <tr>
-                  <td class="td-id">#{{ c.id }}</td>
-                  <td class="td-titulo">
-                    <span class="tipo-icon">{{ c.tipo === 'video' ? '🎬' : c.tipo === 'pdf' ? '📄' : '📝' }}</span>
-                    {{ c.titulo }}
-                  </td>
-                  <td><span class="badge badge--tipo">{{ c.tipo }}</span></td>
-                  <td>{{ c.autor }}</td>
-                  <td class="td-fecha">{{ c.fecha }}</td>
-                  <td>
-                    <span class="estado-dot" [ngClass]="'estado--' + c.estado.toLowerCase()">
-                      {{ c.estado }}
-                    </span>
-                  </td>
-                  <td class="td-actions">
-                    @if (c.estado === 'Pendiente') {
-                      <button class="action-btn action-btn--green" (click)="verificarContenido(c)" title="Verificar contenido">✔</button>
-                    }
-                    <button class="action-btn action-btn--danger" (click)="confirmarEliminarContenido(c)" title="Eliminar contenido">🗑</button>
-                  </td>
-                </tr>
-              }
-              @if (contenidosFiltrados.length === 0) {
-                <tr><td colspan="7" class="empty-row">No se ha encontrado contenido con ese criterio.</td></tr>
               }
             </tbody>
           </table>
