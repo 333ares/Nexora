@@ -47,6 +47,19 @@ export class Retos implements OnInit {
     return this.vistaActiva === 'activos' ? this.retosActivos : this.retosHistorial;
   }
 
+  get totalAhorrado(): number {
+    return this.listaDeRetos.reduce((sum, reto) => sum + (parseFloat(reto.cantidad_actual) || 0), 0);
+  }
+
+  get totalObjetivo(): number {
+    return this.listaDeRetos.reduce((sum, reto) => sum + (parseFloat(reto.cantidad) || 0), 0);
+  }
+
+  get progresoGlobal(): number {
+    if (this.totalObjetivo <= 0) return 0;
+    return Math.min(100, Math.round((this.totalAhorrado / this.totalObjetivo) * 100));
+  }
+
   cantidadDisplay: string = '';
   cantidadValor: number | null = null;
 
