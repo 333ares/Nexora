@@ -122,11 +122,18 @@ export class Resumen implements OnInit, OnDestroy {
     return Math.min(100, Math.round((reto.cantidad_actual / reto.cantidad) * 100));
   }
 
+  dropdownOpen = false;
+
   seleccionarReto(id: number) {
+    this.dropdownOpen = false;
     this.retoSeleccionadoId = id;
     localStorage.setItem('retoSeleccionadoId', String(id));
 
     const activos = this.listaRetos.filter(r => r.activo && !r.cumplido);
     this.retoActual = activos.find(r => r.IDreto === id) ?? null;
+  }
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
   }
 }

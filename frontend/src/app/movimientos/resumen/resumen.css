@@ -193,25 +193,6 @@
     background: #d7efd0;
 }
 
-.reto-select {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-.reto-select:hover {
-    border-color: #78C550;
-}
-
-.reto-select:focus {
-    outline: none;
-    border-color: #4E9C25;
-}
-
 .select-icon {
     font-size: 16px;
     color: #4E9C25;
@@ -226,6 +207,38 @@
     width: 100%;
 }
 
-.reto-select option {
-    padding: 10px;
+.dropdown-menu {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    min-width: 220px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    padding: 6px;
+    z-index: 50;
+}
+
+.dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.dropdown-item:hover {
+    background: #f5f5f5;
+}
+
+.item-title {
+    color: #333;
+}
+
+.item-amount {
+    color: #78C550;
+    font-weight: 600;
 }
