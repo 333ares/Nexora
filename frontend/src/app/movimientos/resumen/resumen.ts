@@ -44,10 +44,10 @@ export class Resumen implements OnInit {
       next: (response) => {
         const todos = response.movimientos ?? [];
 
-        // Ordenar por fecha DESC (más recientes primero) y coger solo 5
+        // Ordenar por fecha DESC (más recientes primero) y coger solo 4
         this.movimientos = todos
           .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
-          .slice(0, 5);
+          .slice(0, 4);
 
         this.cdr.detectChanges();
       },

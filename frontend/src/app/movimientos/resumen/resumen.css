@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 13px;
 }
 
 .bi-piggy-bank {
@@ -34,4 +34,9 @@
 
 .btn-ir-retos:active {
     transform: scale(0.97);
+}
+
+.bi-chat-dots {
+    color: #78C550;
+    font-size: 30px;
 }
