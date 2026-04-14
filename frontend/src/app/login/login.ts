@@ -73,24 +73,19 @@ export class Login implements OnInit, OnDestroy {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
+  isLoading = false;
 
   onLogin() {
+    this.isLoading = true;
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
-        console.log('LOGIN OK', response);
-
-        // guardamos token
         this.authService.saveToken(response.token);
-
-        // redirigir
-        this.router.navigate(['/movimientos']);
-
         this.authService.saveUsuario(response.usuario);
+        this.router.navigate(['/movimientos']);
       },
       error: (error) => {
-        console.error(error);
+        this.isLoading = false;
         if (typeof error.error?.errors === 'object') {
-          // Extraer el primer error si es un objeto (Laravel style)
           const firstErrorKey = Object.keys(error.error.errors)[0];
           this.errorMessage = error.error.errors[firstErrorKey][0];
         } else {
@@ -99,4 +94,5 @@ export class Login implements OnInit, OnDestroy {
       }
     });
   }
+
 }

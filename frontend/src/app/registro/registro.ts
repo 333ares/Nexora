@@ -29,11 +29,15 @@ export class Registro implements OnInit, OnDestroy {
     });
   }
 
+  isLoading = false;
+
   onSubmit() {
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
       return;
     }
+
+    this.isLoading = true;
 
     const datos = {
       nombre: this.formulario.value.nombre,
@@ -48,9 +52,8 @@ export class Registro implements OnInit, OnDestroy {
         this.router.navigate(['/login'], { state: { registrado: true } });
       },
       error: (error) => {
-        console.error(error);
+        this.isLoading = false;
         if (typeof error.error?.errors === 'object') {
-          // Extraer el primer error if es un objeto (Laravel style)
           const firstErrorKey = Object.keys(error.error.errors)[0];
           this.errorMessage = error.error.errors[firstErrorKey][0];
         } else {
@@ -59,6 +62,7 @@ export class Registro implements OnInit, OnDestroy {
       }
     });
   }
+
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
