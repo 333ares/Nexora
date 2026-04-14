@@ -31,6 +31,9 @@ export class Resumen implements OnInit, OnDestroy {
   ingresoMensual = 0;
   gastoMensual = 0;
   movimientos: any[] = [];
+  retoActual: any = null;
+  retoSeleccionadoId: number | null = null;
+  listaRetos: any[] = [];
 
   private gastosMensuales: MesStat[] = [];
   private ingresosMensuales: MesStat[] = [];
@@ -42,13 +45,15 @@ export class Resumen implements OnInit, OnDestroy {
       balance: this.authService.getBalanceTotal(),
       gastos: this.authService.getGastoMensual(),
       ingresos: this.authService.getIngresoMensual(),
-      historial: this.authService.getHistorialMovimientos()
+      historial: this.authService.getHistorialMovimientos(),
+      retos: this.authService.getRetos()
     }).subscribe({
-      next: ({ balance, gastos, ingresos, historial }) => {
+      next: ({ balance, gastos, ingresos, historial, retos }) => {
         this.balanceTotal = parseFloat(balance.balance_total);
         this.gastoMensual = parseFloat(gastos.data.gasto_mes_actual);
         this.ingresoMensual = parseFloat(ingresos.data.ingreso_mes_actual);
-
+        const guardado = localStorage.getItem('retoSeleccionadoId');
+        this.retoSeleccionadoId = guardado ? Number(guardado) : null;
         this.gastosMensuales = [...gastos.data.gastos_mensuales].reverse();
         this.ingresosMensuales = [...ingresos.data.ingresos_mensuales].reverse();
 
@@ -56,6 +61,19 @@ export class Resumen implements OnInit, OnDestroy {
         this.movimientos = todos
           .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
           .slice(0, 4);
+
+        const listaRetos = retos.retos ?? retos ?? [];
+        this.listaRetos = listaRetos;
+
+        const activos = listaRetos.filter((r: any) => r.activo && !r.cumplido);
+
+        if (activos.length === 0) {
+          this.retoActual = null;
+        } else {
+          // si hay selección previa
+          const seleccionado = activos.find((r: any) => r.IDreto === this.retoSeleccionadoId);
+          this.retoActual = seleccionado ?? activos[0];
+        }
 
         this.cdr.detectChanges();
         setTimeout(() => this.renderBarChart(), 0);
@@ -97,5 +115,18 @@ export class Resumen implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  progreso(reto: any): number {
+    if (!reto?.cantidad || reto.cantidad <= 0) return 0;
+    return Math.min(100, Math.round((reto.cantidad_actual / reto.cantidad) * 100));
+  }
+
+  seleccionarReto(id: number) {
+    this.retoSeleccionadoId = id;
+    localStorage.setItem('retoSeleccionadoId', String(id));
+
+    const activos = this.listaRetos.filter(r => r.activo && !r.cumplido);
+    this.retoActual = activos.find(r => r.IDreto === id) ?? null;
   }
 }

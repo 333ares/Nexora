@@ -55,15 +55,45 @@
       </div>
       <div class="card card-stat">
         <div class="stat-top">
-          <span class="stat-label">Reto actual </span>
+          <span class="stat-label">
+            {{ retoActual?.titulo || 'Reto actual' }}
+          </span>
         </div>
+        @if (listaRetos.length > 0) {
+        <select (change)="seleccionarReto($any($event.target).value)" [value]="retoActual?.IDreto"
+          style="margin-top:6px; width:100%; padding:4px; border-radius:6px;">
+          @for (reto of listaRetos; track reto.IDreto) {
+          @if (reto.activo && !reto.cumplido) {
+          <option [value]="reto.IDreto">
+            {{ reto.titulo }}
+          </option>
+          }
+          }
+        </select>
+        }
+        @if (retoActual) {
+
         <div class="limit-row">
-          <span class="limit-amount">547,49 €</span>
-          <span class="limit-meta">/ 2.000,00 €</span>
+          <span class="limit-amount">
+            {{ retoActual.cantidad_actual | number:'1.2-2' }} €
+          </span>
+          <span class="limit-meta">
+            / {{ retoActual.cantidad | number:'1.2-2' }} €
+          </span>
         </div>
+
         <div class="limit-bar-track">
-          <div class="limit-bar-fill" style="width:27%"></div>
+          <div class="limit-bar-fill" [style.width.%]="progreso(retoActual)">
+          </div>
         </div>
+
+        } @else {
+
+        <div class="empty-state" style="padding: 10px 0;">
+          No tienes retos activos
+        </div>
+
+        }
       </div>
     </div>
 
