@@ -69,7 +69,7 @@ export const routes: Routes = [
   {
     path: 'movimientos',
     component: Movimientos,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
       { path: 'resumen', component: Resumen },
       { path: 'lista', component: Lista },
