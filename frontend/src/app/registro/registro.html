@@ -138,7 +138,13 @@
       </div>
       }
 
-      <button type="submit" class="btn-login">Registrarse</button>
+      <button type="submit" class="btn-register" [disabled]="isLoading">
+        @if (isLoading) {
+        <span class="spinner"></span> Registrando...
+        } @else {
+        Registrarse
+        }
+      </button>
 
     </form>
 

@@ -193,7 +193,8 @@ form {
   font-size: 12px;
 }
 
-.alert-error, .alert-success {
+.alert-error,
+.alert-success {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -350,4 +351,28 @@ form {
 /* Dot activo */
 .dot.active {
   background: #fff;
+}
+
+/* Botón de carga */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.btn-login:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
