@@ -378,9 +378,8 @@ input::placeholder {
 }
 
 .btn-register:disabled {
-  opacity: 1;
+  opacity: 0.6;
   cursor: not-allowed;
-  filter: brightness(0.88);
 }
 
 .spinner {
