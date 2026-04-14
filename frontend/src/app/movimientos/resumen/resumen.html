@@ -55,100 +55,83 @@
       </div>
       <div class="card card-stat">
         <div class="stat-top">
-          <span class="stat-label">Reto actual </span>
+          <div class="reto-title-row">
+            <span class="stat-label">
+              {{ retoActual?.titulo || 'Reto actual' }}
+            </span>
+
+            @if (listaRetos.length > 0) {
+            <div class="select-wrapper" (click)="toggleDropdown()">
+
+              <i class="bi bi-chevron-down select-icon"></i>
+
+              @if (dropdownOpen) {
+              <div class="dropdown-menu">
+
+                @for (reto of listaRetos; track reto.IDreto) {
+                @if (reto.activo && !reto.cumplido) {
+
+                <div class="dropdown-item" (click)="seleccionarReto(reto.IDreto); $event.stopPropagation()">
+
+                  <span class="item-title">
+                    {{ reto.titulo }}
+                  </span>
+
+                  <span class="item-amount">
+                    {{ reto.cantidad | number:'1.0-0' }} €
+                  </span>
+
+                </div>
+                }
+                }
+
+              </div>
+              }
+
+            </div>
+            }
+          </div>
         </div>
+        @if (retoActual) {
+
         <div class="limit-row">
-          <span class="limit-amount">547,49 €</span>
-          <span class="limit-meta">/ 2.000,00 €</span>
+          <span class="limit-amount">
+            {{ retoActual.cantidad_actual | number:'1.2-2' }} €
+          </span>
+          <span class="limit-meta">
+            / {{ retoActual.cantidad | number:'1.2-2' }} €
+          </span>
         </div>
+
         <div class="limit-bar-track">
-          <div class="limit-bar-fill" style="width:27%"></div>
+          <div class="limit-bar-fill" [style.width.%]="progreso(retoActual)">
+          </div>
         </div>
+
+        } @else {
+
+        <div class="empty-state" style="padding: 10px 0;">
+          No tienes retos activos
+        </div>
+
+        }
       </div>
     </div>
 
     <div class="card card-white">
       <div class="grafica-header">
-        <span class="section-title" style="margin:0;">Gráfica mensual</span>
-        <div class="grafica-nav">
-          <button class="cal-nav">‹</button>
-          <span class="grafica-mes">Mar 2024</span>
-          <button class="cal-nav">›</button>
+        <span class="section-title" style="margin:0;">Evolución mensual</span>
+        <div class="chart-legend-row" style="margin:0;">
+          <span class="chart-legend-item">
+            <span class="chart-legend-dot" style="background:#27ae60"></span>Ingresos
+          </span>
+          <span class="chart-legend-item">
+            <span class="chart-legend-dot" style="background:#d94f4f"></span>Gastos
+          </span>
         </div>
       </div>
-      <div class="barras">
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:35%"></div>
-          </div>
-          <span class="barra-label">Ene</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:64%"></div>
-          </div>
-          <span class="barra-label">Feb</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track barra-track-active">
-            <div class="barra-fill barra-fill-active" style="height:100%"></div>
-          </div>
-          <span class="barra-label barra-label-active">Mar</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:45%"></div>
-          </div>
-          <span class="barra-label">Abr</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:55%"></div>
-          </div>
-          <span class="barra-label">May</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:96%"></div>
-          </div>
-          <span class="barra-label">Jun</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:37%"></div>
-          </div>
-          <span class="barra-label">Jul</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:68%"></div>
-          </div>
-          <span class="barra-label">Ago</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:56%"></div>
-          </div>
-          <span class="barra-label">Sep</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:86%"></div>
-          </div>
-          <span class="barra-label">Oct</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:51%"></div>
-          </div>
-          <span class="barra-label">Nov</span>
-        </div>
-        <div class="barra-col">
-          <div class="barra-track">
-            <div class="barra-fill" style="height:100%"></div>
-          </div>
-          <span class="barra-label">Dic</span>
-        </div>
+      <div class="bar-chart-container">
+        <canvas #barChart></canvas>
       </div>
     </div>
 

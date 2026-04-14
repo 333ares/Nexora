@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
 import {
@@ -35,6 +35,9 @@ export class Retos implements OnInit {
   errorModal = '';
   cargando = false;
 
+  @ViewChild('retosSlider', { static: false }) retosSlider!: ElementRef<HTMLDivElement>;
+  sliderIndex = 0;
+
   get retosActivos(): any[] {
     return this.listaDeRetos.filter(r => r.activo && !r.cumplido);
   }
@@ -45,6 +48,23 @@ export class Retos implements OnInit {
 
   get retosVisibles(): any[] {
     return this.vistaActiva === 'activos' ? this.retosActivos : this.retosHistorial;
+  }
+
+  get totalAhorrado(): number {
+    return this.listaDeRetos.reduce((sum, reto) => sum + (parseFloat(reto.cantidad_actual) || 0), 0);
+  }
+
+  get totalObjetivo(): number {
+    return this.listaDeRetos.reduce((sum, reto) => sum + (parseFloat(reto.cantidad) || 0), 0);
+  }
+
+  get progresoGlobal(): number {
+    if (this.totalObjetivo <= 0) return 0;
+    return Math.min(100, Math.round((this.totalAhorrado / this.totalObjetivo) * 100));
+  }
+
+  get sliderIndices(): number[] {
+    return Array.from({ length: this.retosVisibles.length }, (_, i) => i);
   }
 
   cantidadDisplay: string = '';
@@ -71,10 +91,12 @@ export class Retos implements OnInit {
     this.Auth.getRetos().subscribe({
       next: (res: any) => {
         this.listaDeRetos = res.retos ?? res ?? [];
+        this.sliderIndex = 0;
         this.cdr.detectChanges();
       },
       error: () => {
         this.listaDeRetos = [];
+        this.sliderIndex = 0;
         this.cdr.detectChanges();
       }
     });
@@ -83,6 +105,41 @@ export class Retos implements OnInit {
   progreso(reto: any): number {
     if (!reto.cantidad || reto.cantidad <= 0) return 0;
     return Math.min(100, Math.round((reto.cantidad_actual / reto.cantidad) * 100));
+  }
+
+  cambiarVista(vista: 'activos' | 'historial') {
+    this.vistaActiva = vista;
+    this.sliderIndex = 0;
+    this.cdr.detectChanges();
+    setTimeout(() => this.scrollToSlide(), 0);
+  }
+
+  sliderAnterior() {
+    if (this.retosVisibles.length > 0) {
+      this.sliderIndex = (this.sliderIndex - 1 + this.retosVisibles.length) % this.retosVisibles.length;
+      this.scrollToSlide();
+    }
+  }
+
+  sliderSiguiente() {
+    if (this.retosVisibles.length > 0) {
+      this.sliderIndex = (this.sliderIndex + 1) % this.retosVisibles.length;
+      this.scrollToSlide();
+    }
+  }
+
+  sliderIr(index: number) {
+    this.sliderIndex = index;
+    this.scrollToSlide();
+  }
+
+  private scrollToSlide() {
+    if (!this.retosSlider) return;
+    const scrollLeft = this.sliderIndex * this.retosSlider.nativeElement.offsetWidth;
+    this.retosSlider.nativeElement.scrollTo({
+      left: scrollLeft,
+      behavior: 'smooth'
+    });
   }
 
   formatearCantidad(input: HTMLInputElement) {
