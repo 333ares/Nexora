@@ -1,7 +1,19 @@
-import { Component, OnInit, ChangeDetectorRef, } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
 import { RouterLink } from '@angular/router';
+import { Chart, registerables } from 'chart.js';
+import { forkJoin } from 'rxjs';
+
+Chart.register(...registerables);
+
+const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+interface MesStat {
+  año: number;
+  mes: number;
+  total: number;
+}
 
 @Component({
   selector: 'app-resumen',
@@ -10,92 +22,80 @@ import { RouterLink } from '@angular/router';
   templateUrl: './resumen.html',
   styleUrl: './resumen.css'
 })
+export class Resumen implements OnInit, OnDestroy {
 
-export class Resumen implements OnInit {
-  balanceTotal: number = 0.00;
-  ingresoMensual: number = 0.00;
-  gastoMensual: number = 0.00;
+  @ViewChild('barChart') barChartRef!: ElementRef<HTMLCanvasElement>;
+  private chartInstance: Chart | null = null;
+
+  balanceTotal = 0;
+  ingresoMensual = 0;
+  gastoMensual = 0;
   movimientos: any[] = [];
+
+  private gastosMensuales: MesStat[] = [];
+  private ingresosMensuales: MesStat[] = [];
 
   constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.cargarBalanceTotal();
-    this.cargarIngresoMensual();
-    this.cargarGastoMensual();
-    this.cargarHistorialMovimientos();
-  }
+    forkJoin({
+      balance: this.authService.getBalanceTotal(),
+      gastos: this.authService.getGastoMensual(),
+      ingresos: this.authService.getIngresoMensual(),
+      historial: this.authService.getHistorialMovimientos()
+    }).subscribe({
+      next: ({ balance, gastos, ingresos, historial }) => {
+        this.balanceTotal = parseFloat(balance.balance_total);
+        this.gastoMensual = parseFloat(gastos.data.gasto_mes_actual);
+        this.ingresoMensual = parseFloat(ingresos.data.ingreso_mes_actual);
 
-  cargarBalanceTotal(): void {
-    this.authService.getBalanceTotal().subscribe({
-      next: (response) => {
-        console.log('Respuesta:', response);
-        this.balanceTotal = parseFloat(response.balance_total);
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error al obtener el balance total:', err);
-      }
-    });
-  }
+        this.gastosMensuales = [...gastos.data.gastos_mensuales].reverse();
+        this.ingresosMensuales = [...ingresos.data.ingresos_mensuales].reverse();
 
-  cargarHistorialMovimientos(): void {
-    this.authService.getHistorialMovimientos().subscribe({
-      next: (response) => {
-        const todos = response.movimientos ?? [];
-
-        // Ordenar por fecha DESC (más recientes primero) y coger solo 4
+        const todos = historial.movimientos ?? [];
         this.movimientos = todos
           .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
           .slice(0, 4);
 
         this.cdr.detectChanges();
+        setTimeout(() => this.renderBarChart(), 0);
       },
-      error: (err) => {
-        if (err.status === 400) {
-          this.movimientos = [];
-        } else {
-          console.error('Error al obtener el historial:', err);
+      error: (err) => console.error('Error cargando resumen:', err)
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.chartInstance?.destroy();
+  }
+
+  private renderBarChart(): void {
+    if (!this.barChartRef?.nativeElement) return;
+    this.chartInstance?.destroy();
+
+    const labels = this.ingresosMensuales.map(i => `${MESES[i.mes - 1]} ${i.año}`);
+    const dataIngresos = this.ingresosMensuales.map(i => i.total);
+    const dataGastos = this.ingresosMensuales.map(i =>
+      this.gastosMensuales.find(g => g.año === i.año && g.mes === i.mes)?.total ?? 0
+    );
+
+    this.chartInstance = new Chart(this.barChartRef.nativeElement, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Ingresos', data: dataIngresos, backgroundColor: '#59b881', borderRadius: 6, barPercentage: 0.4 },
+          { label: 'Gastos', data: dataGastos, backgroundColor: '#e27d7d', borderRadius: 6, barPercentage: 0.4 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 11, family: 'Lato' }, color: '#999' } },
+          y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11 }, color: '#999', callback: v => v + ' €' } }
         }
       }
     });
   }
-
-  cargarIngresoMensual(): void {
-    this.authService.getIngresoMensual().subscribe({
-      next: (response) => {
-        console.log('Respuesta:', response);
-        this.ingresoMensual = parseFloat(response.data.ingreso_mes_actual);
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        if (err.status === 404) {
-          this.ingresoMensual = 0;
-          this.cdr.detectChanges();
-        } else {
-          console.error('Error al obtener el ingreso mensual:', err);
-        }
-      }
-    });
-  }
-
-  cargarGastoMensual(): void {
-    this.authService.getGastoMensual().subscribe({
-      next: (response) => {
-        console.log('Respuesta:', response);
-        this.gastoMensual = parseFloat(response.data.gasto_mes_actual);
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        if (err.status === 404) {
-          this.gastoMensual = 0;
-          this.cdr.detectChanges();
-        } else {
-          console.error('Error al obtener el gasto mensual:', err);
-        }
-      }
-    });
-  }
-
-
 }
