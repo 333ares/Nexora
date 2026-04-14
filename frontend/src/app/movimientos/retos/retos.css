@@ -1,3 +1,7 @@
+/* ══ HOST ══ */
+:host {
+  display: block;
+  position: static;
 .card {
   background: #f0faf0;
   border-radius: 24px;
@@ -13,16 +17,16 @@
 /* Overlay y Box */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(2px);
+  z-index: 99999;
   animation: fadeIn 0.2s ease;
 }
 
@@ -32,8 +36,11 @@
   max-width: 440px;
   border-radius: 24px;
   padding: 32px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  animation: slideUp 0.25s ease;
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 24px 48px rgba(0, 0, 0, 0.14),
+    0 40px 80px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Header */
@@ -58,6 +65,12 @@
   font-size: 20px;
   color: #999;
   cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.modal-close:hover {
+  color: #555;
+  transform: scale(1.15);
 }
 
 /* Historial */
@@ -97,19 +110,20 @@
 .modal-input {
   width: 100%;
   padding: 12px 14px;
-  border: 1.5px solid #d3d3d3;
+  border: 1.5px solid #e0e0e0;
   border-radius: 10px;
   font-size: 14px;
   font-family: 'Lato', sans-serif;
   color: #333;
   background: #fff;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.25s, box-shadow 0.25s;
   box-sizing: border-box;
 }
 
 .modal-input:focus {
-  border-color: #4caf50;
+  border-color: #4E9C25;
+  box-shadow: 0 0 0 3px rgba(78, 156, 37, 0.1);
 }
 
 .modal-error {
@@ -117,6 +131,7 @@
   font-size: 13px;
   font-family: 'Lato', sans-serif;
   margin-top: 6px;
+  animation: fadeIn 0.2s ease;
 }
 
 /* Footer */
@@ -129,7 +144,7 @@
 .btn-cancelar {
   flex: 1;
   padding: 12px;
-  border: 1.5px solid #d3d3d3;
+  border: 1.5px solid #e0e0e0;
   border-radius: 12px;
   background: #fff;
   font-size: 15px;
@@ -137,17 +152,18 @@
   font-family: 'Onest', sans-serif;
   color: #555;
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
 
 .btn-cancelar:hover {
   border-color: #aaa;
+  background: #fafafa;
 }
 
 .btn-guardar {
   flex: 2;
   padding: 12px;
-  background: linear-gradient(to bottom, #B3E29A, #78C550);
+  background: linear-gradient(135deg, #4E9C25, #78C550);
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -156,6 +172,12 @@
   font-family: 'Onest', sans-serif;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(78, 156, 37, 0.3);
+}
+
+.btn-guardar:hover {
+  box-shadow: 0 6px 20px rgba(78, 156, 37, 0.4);
+  transform: translateY(-1px);
 }
 
 .btn-guardar:active {
@@ -165,6 +187,7 @@
 .btn-guardar:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 /*  MODAL BORRAR  */
@@ -176,6 +199,7 @@
   font-size: 40px;
   text-align: center;
   margin-bottom: 12px;
+  animation: subtleBounce 0.6s ease 0.2s both;
 }
 
 .borrar-texto {
@@ -189,7 +213,7 @@
 .btn-borrar {
   flex: 2;
   padding: 12px;
-  background: linear-gradient(to bottom, #ff8a8a, #e74c3c);
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -198,10 +222,12 @@
   font-family: 'Onest';
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(231, 76, 60, 0.3);
 }
 
 .btn-borrar:hover {
-  background: linear-gradient(to bottom, #e74c3c, #c0392b);
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+  transform: translateY(-1px);
 }
 
 .btn-borrar:active {
@@ -211,6 +237,7 @@
 .btn-borrar:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* Badge estado inactivo/expirado */
@@ -218,7 +245,6 @@
   background: #f3f4f6;
   color: #6b7280;
   border: 1px solid #d1d5db;
-  /* reutiliza el padding/border-radius de .badge */
 }
 
 /* Barra de progreso */
@@ -235,11 +261,11 @@
   background: var(--color-ingreso, #22c55e);
   border-radius: 99px;
   transition: width 0.5s ease;
+  animation: growWidth 1s ease 0.3s both;
 }
 
 .reto-bar-fill--cumplido {
   background: #f59e0b;
-  /* dorado cuando está cumplido */
 }
 
 /* Fila de acciones en la tarjeta */
@@ -249,6 +275,7 @@
   gap: 15px;
   flex-wrap: wrap;
   justify-content: flex-end;
+  animation: fadeIn 0.4s ease 0.3s both;
 }
 
 /* Botón Aportar */
@@ -261,11 +288,13 @@
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .btn-aportar:hover {
   background: #bbf7d0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.15);
 }
 
 /* Botón Retirar (en tarjeta) */
@@ -278,11 +307,13 @@
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .btn-retirar:hover:not(:disabled) {
   background: #fde68a;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(180, 83, 9, 0.15);
 }
 
 .btn-retirar:disabled {
@@ -300,11 +331,13 @@
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .btn-editar:hover {
   background: #dbeafe;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
 }
 
 /* Botón confirmar retirada en modal */
@@ -316,11 +349,12 @@
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .btn-retirar-confirm:hover:not(:disabled) {
   background: #f59e0b;
+  transform: translateY(-1px);
 }
 
 .btn-retirar-confirm:disabled {
@@ -341,27 +375,30 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0
-  }
-
-  to {
-    opacity: 1
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @keyframes slideUp {
   from {
     transform: translateY(20px);
-    opacity: 0
+    opacity: 0;
   }
-
   to {
-    transform: translateY(0);
-    opacity: 1
+    transform: none;
+    opacity: 1;
   }
 }
 
+@keyframes subtleBounce {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-6px); }
+  60%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes growWidth {
+  from { width: 0%; }
 /*  RESUMEN STATS  */
 .resumen-stats {
   display: flex;
