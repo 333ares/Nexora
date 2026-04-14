@@ -173,3 +173,59 @@
     color: #78C550;
     font-size: 30px;
 }
+
+.select-wrapper {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: #E8F5E4;
+    /* verde suave */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.select-wrapper:hover {
+    background: #d7efd0;
+}
+
+.reto-select {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.reto-select:hover {
+    border-color: #78C550;
+}
+
+.reto-select:focus {
+    outline: none;
+    border-color: #4E9C25;
+}
+
+.select-icon {
+    font-size: 16px;
+    color: #4E9C25;
+    /* verde principal */
+    pointer-events: none;
+}
+
+.reto-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.reto-select option {
+    padding: 10px;
+}

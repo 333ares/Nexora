@@ -55,22 +55,30 @@
       </div>
       <div class="card card-stat">
         <div class="stat-top">
-          <span class="stat-label">
-            {{ retoActual?.titulo || 'Reto actual' }}
-          </span>
+          <div class="reto-title-row">
+            <span class="stat-label">
+              {{ retoActual?.titulo || 'Reto actual' }}
+            </span>
+
+            @if (listaRetos.length > 0) {
+            <div class="select-wrapper">
+              <select class="reto-select" (change)="seleccionarReto(+$any($event.target).value)"
+                [value]="retoActual?.IDreto">
+
+                @for (reto of listaRetos; track reto.IDreto) {
+                @if (reto.activo && !reto.cumplido) {
+                <option [value]="reto.IDreto">
+                  {{ reto.titulo }}
+                </option>
+                }
+                }
+              </select>
+
+              <i class="bi bi-chevron-down select-icon"></i>
+            </div>
+            }
+          </div>
         </div>
-        @if (listaRetos.length > 0) {
-        <select (change)="seleccionarReto($any($event.target).value)" [value]="retoActual?.IDreto"
-          style="margin-top:6px; width:100%; padding:4px; border-radius:6px;">
-          @for (reto of listaRetos; track reto.IDreto) {
-          @if (reto.activo && !reto.cumplido) {
-          <option [value]="reto.IDreto">
-            {{ reto.titulo }}
-          </option>
-          }
-          }
-        </select>
-        }
         @if (retoActual) {
 
         <div class="limit-row">
