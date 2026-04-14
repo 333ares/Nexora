@@ -2,88 +2,110 @@
   <div class="retos-col-left">
     <div class="card card-white retos-header-card">
       <div class="retos-tabs">
-        <button class="reto-vista-tab" [class.active]="vistaActiva === 'activos'" (click)="vistaActiva = 'activos'">
+        <button class="reto-vista-tab" [class.active]="vistaActiva === 'activos'" (click)="cambiarVista('activos')">
           <i class="bi bi-bullseye"></i> Reto actual
         </button>
-        <button class="reto-vista-tab" [class.active]="vistaActiva === 'historial'" (click)="vistaActiva = 'historial'">
+        <button class="reto-vista-tab" [class.active]="vistaActiva === 'historial'" (click)="cambiarVista('historial')">
           <i class="bi bi-journal-text"></i> Historial
         </button>
         <button (click)="abrirModal()" class="btn-mas" style="margin-left:auto;">+ Nuevo reto</button>
       </div>
     </div>
 
-    @for (reto of retosVisibles; track reto.IDreto) {
-    <div class="card card-white reto-card">
-      <div class="reto-card-top">
-        <div class="reto-card-icon">🎯</div>
-        <div class="reto-card-info">
-          <span class="reto-card-nombre">{{ reto.titulo }}</span>
-          <span class="reto-card-desc">
-            Inicio: {{ reto.fecha_inicio | date:'dd/MM/yyyy' }} ·
-            Fin: {{ reto.fecha_final | date:'dd/MM/yyyy' }}
-          </span>
+    <div class="retos-slider-wrapper">
+      <button class="slider-btn slider-btn--prev" (click)="sliderAnterior()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <div class="retos-slider" #retosSlider>
+        @for (reto of retosVisibles; track reto.IDreto) {
+        <div class="card card-white reto-card reto-card-slider">
+          <div class="reto-card-top">
+            <div class="reto-card-icon">🎯</div>
+            <div class="reto-card-info">
+              <span class="reto-card-nombre">{{ reto.titulo }}</span>
+              <span class="reto-card-desc">
+                Inicio: {{ reto.fecha_inicio | date:'dd/MM/yyyy' }} ·
+                Fin: {{ reto.fecha_final | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+            @if (reto.cumplido) {
+            <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> Cumplido</span>
+            } @else if (reto.activo) {
+            <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
+            } @else {
+            <span class="badge badge-inactivo"><i class="bi bi-x-circle"></i> Expirado</span>
+            }
+          </div>
+
+          <div class="reto-card-meta-row">
+            <div class="reto-card-meta-item">
+              <span class="reto-card-meta-label">Ahorrado</span>
+              <span class="reto-card-meta-val ingreso-color">
+                {{ reto.cantidad_actual | number:'1.2-2' }} €
+              </span>
+            </div>
+            <div class="reto-card-meta-item">
+              <span class="reto-card-meta-label">Meta</span>
+              <span class="reto-card-meta-val">
+                {{ reto.cantidad | number:'1.2-2' }} €
+              </span>
+            </div>
+            <div class="reto-card-meta-item">
+              <span class="reto-card-meta-label">Progreso</span>
+              <span class="reto-card-meta-val">
+                {{ progreso(reto) }}%
+              </span>
+            </div>
+          </div>
+
+          <div class="reto-bar-track">
+            <div class="reto-bar-fill" [class.reto-bar-fill--cumplido]="reto.cumplido" [style.width.%]="progreso(reto)">
+            </div>
+          </div>
+
+          <div class="reto-card-actions">
+            @if (reto.activo && !reto.cumplido) {
+            <button class="btn-aportar" (click)="abrirModalAportar(reto)">
+              <i class="bi bi-plus-circle"></i> Aportar
+            </button>
+            <button class="btn-retirar" (click)="abrirModalRetirar(reto)" [disabled]="reto.cantidad_actual <= 0">
+              <i class="bi bi-dash-circle"></i> Retirar
+            </button>
+            <button class="btn-editar" (click)="abrirModalEditar(reto)">
+              <i class="bi bi-pencil"></i> Editar
+            </button>
+            }
+            <button class="btn-abandonar" (click)="abrirModalBorrar(reto.IDreto)">
+              @if (reto.cumplido || !reto.activo) { Eliminar } @else { Abandonar reto }
+            </button>
+          </div>
         </div>
-        @if (reto.cumplido) {
-        <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> Cumplido</span>
-        } @else if (reto.activo) {
-        <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
-        } @else {
-        <span class="badge badge-inactivo"><i class="bi bi-x-circle"></i> Expirado</span>
+        } @empty {
+        <div class="card card-white">
+          <div class="empty-state">
+            @if (vistaActiva === 'activos') {
+            No tienes retos activos. ¡Empieza uno!
+            } @else {
+            Todavía no hay retos en el historial.
+            }
+          </div>
+        </div>
         }
       </div>
 
-      <div class="reto-card-meta-row">
-        <div class="reto-card-meta-item">
-          <span class="reto-card-meta-label">Ahorrado</span>
-          <span class="reto-card-meta-val ingreso-color">
-            {{ reto.cantidad_actual | number:'1.2-2' }} €
-          </span>
-        </div>
-        <div class="reto-card-meta-item">
-          <span class="reto-card-meta-label">Meta</span>
-          <span class="reto-card-meta-val">
-            {{ reto.cantidad | number:'1.2-2' }} €
-          </span>
-        </div>
-        <div class="reto-card-meta-item">
-          <span class="reto-card-meta-label">Progreso</span>
-          <span class="reto-card-meta-val">
-            {{ progreso(reto) }}%
-          </span>
-        </div>
-      </div>
-
-      <div class="reto-bar-track">
-        <div class="reto-bar-fill" [class.reto-bar-fill--cumplido]="reto.cumplido" [style.width.%]="progreso(reto)">
-        </div>
-      </div>
-
-      <div class="reto-card-actions">
-        @if (reto.activo && !reto.cumplido) {
-        <button class="btn-aportar" (click)="abrirModalAportar(reto)">
-          <i class="bi bi-plus-circle"></i> Aportar
-        </button>
-        <button class="btn-retirar" (click)="abrirModalRetirar(reto)" [disabled]="reto.cantidad_actual <= 0">
-          <i class="bi bi-dash-circle"></i> Retirar
-        </button>
-        <button class="btn-editar" (click)="abrirModalEditar(reto)">
-          <i class="bi bi-pencil"></i> Editar
-        </button>
-        }
-        <button class="btn-abandonar" (click)="abrirModalBorrar(reto.IDreto)">
-          @if (reto.cumplido || !reto.activo) { Eliminar } @else { Abandonar reto }
-        </button>
-      </div>
+      <button class="slider-btn slider-btn--next" (click)="sliderSiguiente()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
     </div>
-    } @empty {
-    <div class="card card-white">
-      <div class="empty-state">
-        @if (vistaActiva === 'activos') {
-        No tienes retos activos. ¡Empieza uno!
-        } @else {
-        Todavía no hay retos en el historial.
-        }
-      </div>
+
+    @if (retosVisibles.length > 1) {
+    <div class="slider-dots">
+      @for (j of sliderIndices; track j) {
+      <span class="slider-dot" [class.active]="sliderIndex === j" 
+        (click)="sliderIr(j)"></span>
+      }
+      <span class="slider-count">{{ sliderIndex + 1 }} / {{ retosVisibles.length }}</span>
     </div>
     }
 
