@@ -278,8 +278,8 @@ input::placeholder {
   line-height: 1;
 }
 
-/* Botón principal de login */
-.btn-login {
+/* Botón principal de registro */
+.btn-register {
   width: 100%;
   padding: 13px;
   background: linear-gradient(to bottom, #B3E29A, #78C550);
@@ -295,7 +295,7 @@ input::placeholder {
 }
 
 /* Efecto al hacer click */
-.btn-login:active {
+.btn-register:active {
   transform: scale(0.98);
 }
 
@@ -368,4 +368,33 @@ input::placeholder {
   align-items: center;
   justify-content: center;
   padding: 0;
+}
+
+.btn-register {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-register:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+  filter: brightness(0.88);
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
