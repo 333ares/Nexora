@@ -2,17 +2,17 @@
   <div class="retos-col-left">
     <div class="card card-white retos-header-card">
       <div class="retos-tabs">
-        <button class="reto-vista-tab active">
+        <button class="reto-vista-tab" [class.active]="vistaActiva === 'activos'" (click)="vistaActiva = 'activos'">
           <i class="bi bi-bullseye"></i> Reto actual
         </button>
-        <button class="reto-vista-tab">
+        <button class="reto-vista-tab" [class.active]="vistaActiva === 'historial'" (click)="vistaActiva = 'historial'">
           <i class="bi bi-journal-text"></i> Historial
         </button>
         <button (click)="abrirModal()" class="btn-mas" style="margin-left:auto;">+ Nuevo reto</button>
       </div>
     </div>
 
-    @for (reto of listaDeRetos; track reto.IDreto) {
+    @for (reto of retosVisibles; track reto.IDreto) {
     <div class="card card-white reto-card">
       <div class="reto-card-top">
         <div class="reto-card-icon">🎯</div>
@@ -24,11 +24,11 @@
           </span>
         </div>
         @if (reto.cumplido) {
-          <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> Cumplido</span>
+        <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> Cumplido</span>
         } @else if (reto.activo) {
-          <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
+        <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
         } @else {
-          <span class="badge badge-inactivo"><i class="bi bi-x-circle"></i> Expirado</span>
+        <span class="badge badge-inactivo"><i class="bi bi-x-circle"></i> Expirado</span>
         }
       </div>
 
@@ -54,24 +54,21 @@
       </div>
 
       <div class="reto-bar-track">
-        <div
-          class="reto-bar-fill"
-          [class.reto-bar-fill--cumplido]="reto.cumplido"
-          [style.width.%]="progreso(reto)">
+        <div class="reto-bar-fill" [class.reto-bar-fill--cumplido]="reto.cumplido" [style.width.%]="progreso(reto)">
         </div>
       </div>
 
       <div class="reto-card-actions">
         @if (reto.activo && !reto.cumplido) {
-          <button class="btn-aportar" (click)="abrirModalAportar(reto)">
-            <i class="bi bi-plus-circle"></i> Aportar
-          </button>
-          <button class="btn-retirar" (click)="abrirModalRetirar(reto)" [disabled]="reto.cantidad_actual <= 0">
-            <i class="bi bi-dash-circle"></i> Retirar
-          </button>
-          <button class="btn-editar" (click)="abrirModalEditar(reto)">
-            <i class="bi bi-pencil"></i> Editar
-          </button>
+        <button class="btn-aportar" (click)="abrirModalAportar(reto)">
+          <i class="bi bi-plus-circle"></i> Aportar
+        </button>
+        <button class="btn-retirar" (click)="abrirModalRetirar(reto)" [disabled]="reto.cantidad_actual <= 0">
+          <i class="bi bi-dash-circle"></i> Retirar
+        </button>
+        <button class="btn-editar" (click)="abrirModalEditar(reto)">
+          <i class="bi bi-pencil"></i> Editar
+        </button>
         }
         <button class="btn-abandonar" (click)="abrirModalBorrar(reto.IDreto)">
           @if (reto.cumplido || !reto.activo) { Eliminar } @else { Abandonar reto }
@@ -80,7 +77,13 @@
     </div>
     } @empty {
     <div class="card card-white">
-      <div class="empty-state">No tienes retos creados. ¡Empieza uno!</div>
+      <div class="empty-state">
+        @if (vistaActiva === 'activos') {
+        No tienes retos activos. ¡Empieza uno!
+        } @else {
+        Todavía no hay retos en el historial.
+        }
+      </div>
     </div>
     }
 
@@ -121,12 +124,12 @@
         <label>Fecha de fin</label>
         <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
         @if (retoForm.get('fecha_final')?.touched && retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
-          <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
+        <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
         }
       </div>
 
       @if (errorModal) {
-        <p class="modal-error">{{ errorModal }}</p>
+      <p class="modal-error">{{ errorModal }}</p>
       }
 
       <div class="modal-footer">
@@ -181,18 +184,11 @@
       <p class="modal-subtitle">{{ retoAportandoTitulo }}</p>
       <div class="modal-field">
         <label>Cantidad a aportar</label>
-        <input
-          type="text"
-          inputmode="decimal"
-          placeholder="0.00"
-          #aportarInput
-          [value]="aportarDisplay"
-          (input)="aportarDisplay = aportarInput.value"
-          (blur)="formatearAportar(aportarInput)"
-          class="modal-input" />
+        <input type="text" inputmode="decimal" placeholder="0.00" #aportarInput [value]="aportarDisplay"
+          (input)="aportarDisplay = aportarInput.value" (blur)="formatearAportar(aportarInput)" class="modal-input" />
       </div>
       @if (errorAportar) {
-        <p class="modal-error">{{ errorAportar }}</p>
+      <p class="modal-error">{{ errorAportar }}</p>
       }
     </div>
 
@@ -222,18 +218,11 @@
       <p class="modal-hint">Disponible: <strong>{{ retoRetirandoMax | number:'1.2-2' }} €</strong></p>
       <div class="modal-field">
         <label>Cantidad a retirar</label>
-        <input
-          type="text"
-          inputmode="decimal"
-          placeholder="0.00"
-          #retirarInput
-          [value]="retirarDisplay"
-          (input)="retirarDisplay = retirarInput.value"
-          (blur)="formatearRetirar(retirarInput)"
-          class="modal-input" />
+        <input type="text" inputmode="decimal" placeholder="0.00" #retirarInput [value]="retirarDisplay"
+          (input)="retirarDisplay = retirarInput.value" (blur)="formatearRetirar(retirarInput)" class="modal-input" />
       </div>
       @if (errorRetirar) {
-        <p class="modal-error">{{ errorRetirar }}</p>
+      <p class="modal-error">{{ errorRetirar }}</p>
       }
     </div>
 
@@ -274,12 +263,12 @@
         <label>Fecha de fin</label>
         <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
         @if (editarForm.get('fecha_final')?.touched && editarForm.get('fecha_final')?.errors?.['fechaAnterior']) {
-          <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
+        <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
         }
       </div>
 
       @if (errorEditar) {
-        <p class="modal-error">{{ errorEditar }}</p>
+      <p class="modal-error">{{ errorEditar }}</p>
       }
 
       <div class="modal-footer">

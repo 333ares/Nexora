@@ -232,6 +232,51 @@
   cursor: not-allowed;
 }
 
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 0 8px;
+}
+
+.pag-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Onest', sans-serif;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pag-btn:hover:not(:disabled) {
+  border-color: #78C550;
+  color: #78C550;
+}
+
+.pag-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pag-activa {
+  background: linear-gradient(to bottom, #B3E29A, #78C550);
+  border-color: transparent;
+  color: #fff !important;
+}
+
+.pag-ellipsis {
+  font-size: 16px;
+  color: #aaa;
+  padding: 0 4px;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0

@@ -66,6 +66,14 @@ export class Auth {
     return this.http.get(`${this.apiUrl}/movimientos`, { headers: this.getHeaders() });
   }
 
+  getIngresoMensualPorCategoria(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/ingresoMensualCat`, { headers: this.getHeaders() });
+  }
+
+  getGastoMensualPorCategoria(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/gastoMensualCat`, { headers: this.getHeaders() });
+  }
+
   // --- MOVIMIENTOS ---
   apuntarMovimiento(datos: { tipo: string, cantidad: number, categoria: string, descripcion?: string, fecha?: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/movimiento`, datos, {
