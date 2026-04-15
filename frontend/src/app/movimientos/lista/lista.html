@@ -1,5 +1,6 @@
 <div class="card card-white">
 
+  <!-- Acciones tabla de movimientos -->
   <div class="historial-header">
     <span class="section-title" style="margin:0;">Movimientos</span>
     <div class="historial-actions">
@@ -13,7 +14,7 @@
     </div>
   </div>
 
-  <!-- tabla igual que antes -->
+  <!-- Campos de la tabla -->
   <div class="tabla-header-mov">
     <span class="th">Nombre</span>
     <span class="th">Fecha</span>
@@ -23,7 +24,8 @@
     <span class="th th-right">Acciones</span>
   </div>
 
-  @for (mov of movimientosFiltrados; track mov.id) {
+  <!-- Lista de movimientos -->
+  @for (mov of movimientosPaginados; track mov.id) {
   <div class="tabla-row tabla-row-mov" [class.row-ingreso]="mov.tipo === 'ingreso'"
     [class.row-gasto]="mov.tipo === 'gasto'">
     <div class="td td-nombre">
@@ -53,6 +55,22 @@
   <div class="empty-state">No hay movimientos registrados</div>
   }
 
+  <!-- Paginación -->
+  @if (totalPaginas > 1) {
+  <div class="paginacion">
+    <button class="pag-btn" (click)="irAPagina(paginaActual - 1)" [disabled]="paginaActual === 1">‹</button>
+
+    @for (p of paginas; track $index) {
+    @if (p === -1) {
+    <span class="pag-ellipsis">…</span>
+    } @else {
+    <button class="pag-btn" [class.pag-activa]="p === paginaActual" (click)="irAPagina(p)">{{ p }}</button>
+    }
+    }
+
+    <button class="pag-btn" (click)="irAPagina(paginaActual + 1)" [disabled]="paginaActual === totalPaginas">›</button>
+  </div>
+  }
 </div>
 
 <!-- POPUP -->
@@ -140,7 +158,8 @@
 
     <div class="modal-footer">
       <button class="btn-cancelar" (click)="cerrarModalBorrar()">Cancelar</button>
-      <button class="btn-borrar" (click)="confirmarBorrar()" [disabled]="cargandoBorrar">{{ cargandoBorrar ? 'Eliminando...' :
+      <button class="btn-borrar" (click)="confirmarBorrar()" [disabled]="cargandoBorrar">{{ cargandoBorrar ?
+        'Eliminando...' :
         'Eliminar' }}</button>
     </div>
 

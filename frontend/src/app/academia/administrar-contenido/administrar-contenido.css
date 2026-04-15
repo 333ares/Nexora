@@ -590,10 +590,15 @@
     gap: 8px;
   }
 
-  .admin-card {
-    padding: 16px;
-    border-radius: 20px;
-  }
+.admin-card {
+  width: 100%;
+  background: transparent;
+  border-radius: 0;
+  padding: 24px;
+  box-shadow: none;
+  box-sizing: border-box;
+  animation: fadeUp 0.5s ease both;
+}
 
   .modal-box {
     padding: 20px;

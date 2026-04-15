@@ -63,7 +63,7 @@
 .page-wrapper {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 24px 0px 50px;
+  padding: 0px 0px 50px;
 }
 
 /* ════════════════════════════════
@@ -539,9 +539,11 @@
     padding: 20px 16px 0;
   }
 
-  .page-wrapper {
-    padding: 20px 16px 40px;
-  }
+.page-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0px 0px 50px; /* ← quita el 24px de arriba */
+}
 
   .bienvenida {
     font-size: 24px;

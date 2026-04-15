@@ -2,54 +2,110 @@
   <div class="retos-col-left">
     <div class="card card-white retos-header-card">
       <div class="retos-tabs">
-        <button class="reto-vista-tab active">
+        <button class="reto-vista-tab" [class.active]="vistaActiva === 'activos'" (click)="cambiarVista('activos')">
           <i class="bi bi-bullseye"></i> Reto actual
         </button>
-        <button class="reto-vista-tab">
+        <button class="reto-vista-tab" [class.active]="vistaActiva === 'historial'" (click)="cambiarVista('historial')">
           <i class="bi bi-journal-text"></i> Historial
         </button>
         <button (click)="abrirModal()" class="btn-mas" style="margin-left:auto;">+ Nuevo reto</button>
       </div>
     </div>
 
-    @for (reto of listaDeRetos; track reto.IDreto) {
-    <div class="card card-white reto-card">
-      <div class="reto-card-top">
-        <div class="reto-card-icon">🎯</div>
-        <div class="reto-card-info">
-          <span class="reto-card-nombre">{{ reto.titulo }}</span>
-          <span class="reto-card-desc">
-            Inicio: {{ reto.fecha_inicio | date:'dd/MM/yyyy' }} ·
-            Fin: {{ reto.fecha_final | date:'dd/MM/yyyy' }}
-          </span>
+    <div class="retos-slider-wrapper">
+      <button class="slider-btn slider-btn--prev" (click)="sliderAnterior()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <div class="retos-slider" #retosSlider>
+        @for (reto of retosVisibles; track reto.IDreto) {
+        <div class="card card-white reto-card reto-card-slider">
+          <div class="reto-card-top">
+            <div class="reto-card-icon">🎯</div>
+            <div class="reto-card-info">
+              <span class="reto-card-nombre">{{ reto.titulo }}</span>
+              <span class="reto-card-desc">
+                Inicio: {{ reto.fecha_inicio | date:'dd/MM/yyyy' }} ·
+                Fin: {{ reto.fecha_final | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+            @if (reto.cumplido) {
+            <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> Cumplido</span>
+            } @else if (reto.activo) {
+            <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
+            } @else {
+            <span class="badge badge-inactivo"><i class="bi bi-x-circle"></i> Expirado</span>
+            }
+          </div>
+
+          <div class="reto-card-meta-row">
+            <div class="reto-card-meta-item">
+              <span class="reto-card-meta-label">Ahorrado</span>
+              <span class="reto-card-meta-val ingreso-color">
+                {{ reto.cantidad_actual | number:'1.2-2' }} €
+              </span>
+            </div>
+            <div class="reto-card-meta-item">
+              <span class="reto-card-meta-label">Meta</span>
+              <span class="reto-card-meta-val">
+                {{ reto.cantidad | number:'1.2-2' }} €
+              </span>
+            </div>
+            <div class="reto-card-meta-item">
+              <span class="reto-card-meta-label">Progreso</span>
+              <span class="reto-card-meta-val">
+                {{ progreso(reto) }}%
+              </span>
+            </div>
+          </div>
+
+          <div class="reto-bar-track">
+            <div class="reto-bar-fill" [class.reto-bar-fill--cumplido]="reto.cumplido" [style.width.%]="progreso(reto)">
+            </div>
+          </div>
+
+          <div class="reto-card-actions">
+            @if (reto.activo && !reto.cumplido) {
+            <button class="btn-aportar" (click)="abrirModalAportar(reto)">
+              <i class="bi bi-plus-circle"></i> Aportar
+            </button>
+            <button class="btn-retirar" (click)="abrirModalRetirar(reto)" [disabled]="reto.cantidad_actual <= 0">
+              <i class="bi bi-dash-circle"></i> Retirar
+            </button>
+            <button class="btn-editar" (click)="abrirModalEditar(reto)">
+              <i class="bi bi-pencil"></i> Editar
+            </button>
+            }
+            <button class="btn-abandonar" (click)="abrirModalBorrar(reto.IDreto)">
+              @if (reto.cumplido || !reto.activo) { Eliminar } @else { Abandonar reto }
+            </button>
+          </div>
         </div>
-        @if (reto.cumplido) {
-        <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> Cumplido</span>
-        } @else {
-        <span class="badge badge-activo"><i class="bi bi-check2-square"></i> Activo</span>
+        } @empty {
+        <div class="card card-white">
+          <div class="empty-state">
+            @if (vistaActiva === 'activos') {
+            No tienes retos activos. ¡Empieza uno!
+            } @else {
+            Todavía no hay retos en el historial.
+            }
+          </div>
+        </div>
         }
       </div>
 
-      <div class="reto-card-meta-row">
-        <div class="reto-card-meta-item">
-          <span class="reto-card-meta-label">Cantidad (meta)</span>
-          <span class="reto-card-meta-val ingreso-color">
-            {{ reto.cantidad | number:'1.2-2' }} €
-          </span>
-        </div>
-      </div>
-
-      <div class="reto-bar-track" style="height:10px; margin-top: 10px;">
-        <div class="reto-bar-fill" style="width:0%"></div>
-      </div>
-
-      <div style="margin-top:18px; display:flex; justify-content:flex-end;">
-        <button class="btn-abandonar" (click)="abrirModalBorrar(reto.IDreto)">Abandonar reto</button>
-      </div>
+      <button class="slider-btn slider-btn--next" (click)="sliderSiguiente()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
     </div>
-    } @empty {
-    <div class="card card-white">
-      <div class="empty-state">No tienes retos creados. ¡Empieza uno!</div>
+
+    @if (retosVisibles.length > 1) {
+    <div class="slider-dots">
+      @for (j of sliderIndices; track j) {
+      <span class="slider-dot" [class.active]="sliderIndex === j" 
+        (click)="sliderIr(j)"></span>
+      }
+      <span class="slider-count">{{ sliderIndex + 1 }} / {{ retosVisibles.length }}</span>
     </div>
     }
 
@@ -57,11 +113,28 @@
 
   <div class="retos-col-right">
     <div class="card card-white">
-      <p class="section-title">Resumen</p>
+      <p class="section-title">Resumen mensual</p>
+      <div class="resumen-stats">
+        <div class="resumen-item">
+          <span class="label">Ahorro total</span>
+          <span class="value">{{ totalAhorrado }} €</span>
+        </div>
+
+        <div class="resumen-item">
+          <span class="label">Metas totales</span>
+          <span class="value">{{ totalObjetivo }} €</span>
+        </div>
+
+        <div class="resumen-item">
+          <span class="label">Progreso global</span>
+          <span class="value">{{ progresoGlobal }}%</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- MODAL: NUEVO RETO -->
 @if (mostrarPopup) {
 <div class="modal-overlay" (click)="cerrarModal()">
   <div class="modal-box" (click)="$event.stopPropagation()">
@@ -79,7 +152,7 @@
       </div>
 
       <div class="modal-field">
-        <label>Cantidad</label>
+        <label>Cantidad objetivo</label>
         <input type="text" inputmode="decimal" placeholder="0.00" #cantidadInput [value]="cantidadDisplay"
           (input)="cantidadDisplay = cantidadInput.value" (blur)="formatearCantidad(cantidadInput)"
           class="modal-input" />
@@ -88,9 +161,8 @@
       <div class="modal-field">
         <label>Fecha de fin</label>
         <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
-        @if (retoForm.get('fecha_final')?.touched &&
-        retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
-        <p class="modal-error">La fecha de fin no puede ser anterior a hoy.</p>
+        @if (retoForm.get('fecha_final')?.touched && retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
+        <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
         }
       </div>
 
@@ -99,9 +171,7 @@
       }
 
       <div class="modal-footer">
-        <button type="button" class="btn-cancelar" (click)="cerrarModal()">
-          Cancelar
-        </button>
+        <button type="button" class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
         <button type="submit" class="btn-guardar" [disabled]="cargando">
           {{ cargando ? 'Guardando...' : 'Guardar' }}
         </button>
@@ -112,6 +182,7 @@
 </div>
 }
 
+<!-- MODAL: ABANDONAR / BORRAR RETO -->
 @if (modalBorrarAbierto) {
 <div class="modal-overlay" (click)="cerrarModalBorrar()">
   <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
@@ -133,6 +204,119 @@
       </button>
     </div>
 
+  </div>
+</div>
+}
+
+<!-- MODAL: APORTAR DINERO -->
+@if (modalAportarAbierto) {
+<div class="modal-overlay" (click)="cerrarModalAportar()">
+  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Aportar al reto</h2>
+      <button class="modal-close" (click)="cerrarModalAportar()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="modal-subtitle">{{ retoAportandoTitulo }}</p>
+      <div class="modal-field">
+        <label>Cantidad a aportar</label>
+        <input type="text" inputmode="decimal" placeholder="0.00" #aportarInput [value]="aportarDisplay"
+          (input)="aportarDisplay = aportarInput.value" (blur)="formatearAportar(aportarInput)" class="modal-input" />
+      </div>
+      @if (errorAportar) {
+      <p class="modal-error">{{ errorAportar }}</p>
+      }
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModalAportar()">Cancelar</button>
+      <button class="btn-guardar" (click)="confirmarAportar()" [disabled]="cargandoAportar">
+        {{ cargandoAportar ? 'Aportando...' : 'Aportar' }}
+      </button>
+    </div>
+
+  </div>
+</div>
+}
+
+<!-- MODAL: RETIRAR DINERO -->
+@if (modalRetirarAbierto) {
+<div class="modal-overlay" (click)="cerrarModalRetirar()">
+  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Retirar del reto</h2>
+      <button class="modal-close" (click)="cerrarModalRetirar()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="modal-subtitle">{{ retoRetirandoTitulo }}</p>
+      <p class="modal-hint">Disponible: <strong>{{ retoRetirandoMax | number:'1.2-2' }} €</strong></p>
+      <div class="modal-field">
+        <label>Cantidad a retirar</label>
+        <input type="text" inputmode="decimal" placeholder="0.00" #retirarInput [value]="retirarDisplay"
+          (input)="retirarDisplay = retirarInput.value" (blur)="formatearRetirar(retirarInput)" class="modal-input" />
+      </div>
+      @if (errorRetirar) {
+      <p class="modal-error">{{ errorRetirar }}</p>
+      }
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModalRetirar()">Cancelar</button>
+      <button class="btn-retirar-confirm" (click)="confirmarRetirar()" [disabled]="cargandoRetirar">
+        {{ cargandoRetirar ? 'Retirando...' : 'Retirar' }}
+      </button>
+    </div>
+
+  </div>
+</div>
+}
+
+<!-- MODAL: EDITAR RETO -->
+@if (modalEditarAbierto) {
+<div class="modal-overlay" (click)="cerrarModalEditar()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Editar reto</h2>
+      <button class="modal-close" (click)="cerrarModalEditar()">✕</button>
+    </div>
+
+    <form [formGroup]="editarForm" (ngSubmit)="confirmarEditar()">
+
+      <div class="modal-field">
+        <label>Título</label>
+        <input type="text" formControlName="titulo" class="modal-input" />
+      </div>
+
+      <div class="modal-field">
+        <label>Cantidad objetivo (€)</label>
+        <input type="number" formControlName="cantidad" min="0.01" step="0.01" class="modal-input" />
+      </div>
+
+      <div class="modal-field">
+        <label>Fecha de fin</label>
+        <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
+        @if (editarForm.get('fecha_final')?.touched && editarForm.get('fecha_final')?.errors?.['fechaAnterior']) {
+        <p class="modal-error">La fecha de fin debe ser al menos mañana.</p>
+        }
+      </div>
+
+      @if (errorEditar) {
+      <p class="modal-error">{{ errorEditar }}</p>
+      }
+
+      <div class="modal-footer">
+        <button type="button" class="btn-cancelar" (click)="cerrarModalEditar()">Cancelar</button>
+        <button type="submit" class="btn-guardar" [disabled]="cargandoEditar">
+          {{ cargandoEditar ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </div>
+
+    </form>
   </div>
 </div>
 }
