@@ -1,28 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Onest:wght@100..900&display=swap');
 
-/* ── VARIABLES DE TU PANTALLA DE INICIO ── */
-:host {
-  display: block;
-  --green-dark:   #2d7a0f;
-  --green-mid:    #4E9C25;
-  --green-light:  #78C550;
-  --green-bright: #ABDE91;
-  --mint:         #d8eed8;
-  --mint-border:  #c8e0c8;
-  --text-mid:     #3a5a20;
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-y: auto;
 }
 
-/* ── ANIMACIONES (Estilo Foro) ── */
-@keyframes navFadeDown {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -25px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
+app-root {
+    display: block;
+    min-height: 100vh;
 }
 
 /* ══ HEADER ══ */
@@ -68,58 +57,32 @@
     z-index: 1;
 }
 
-/* ── NAVEGACIÓN FLOTANTE ── */
-nav {
-  position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(960px, calc(100% - 32px));
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1.5px solid var(--mint-border);
-  border-radius: 999px;
-  padding: 10px 20px 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 1000;
-  box-shadow: 0 4px 24px rgba(78, 156, 37, 0.12);
-  /* Animación de entrada al cargar */
-  animation: navFadeDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+.logo2 {
+    width: 75px;
 }
 
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
-.nav-logo span {
-  font-family: 'Onest', sans-serif;
-  font-weight: 800;
-  font-size: 1.15rem;
-  color: var(--green-mid) !important; /* Color fijo para evitar oscurecimiento */
-  letter-spacing: 0.04em;
+.brand-icon {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.brand-text {
+    display: flex;
+    flex-direction: column;
 }
 
-.nav-links a {
-  font-family: 'Lato', sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--text-mid);
-  text-decoration: none;
-  padding: 6px 14px;
-  border-radius: 999px;
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+.brand-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
 }
 
 .brand-sub {
