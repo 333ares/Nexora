@@ -12,7 +12,6 @@ import { Retos } from './movimientos/retos/retos';
 import { Lista } from './movimientos/lista/lista';
 import { Resumen } from './movimientos/resumen/resumen';
 import { Inicio } from './inicio/inicio';
-import { LoginGuard } from './guards/login-guard';
 import { Servicios } from './servicios/servicios';
 import { AcercaDe } from './acerca-de/acerca-de';
 import { Faqs } from './faqs/faqs';
@@ -59,7 +58,7 @@ export const routes: Routes = [
   {
     path: 'login', //es lo que aparece en la URL.
     component: Login, // Login es el componente que se mostrará
-    canActivate: [LoginGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'perfil',
@@ -69,7 +68,7 @@ export const routes: Routes = [
   {
     path: 'registro',
     component: Registro,
-    canActivate: [LoginGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'movimientos',
