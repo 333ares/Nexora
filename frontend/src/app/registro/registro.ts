@@ -2,6 +2,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -19,7 +20,8 @@ export class Registro implements OnInit, OnDestroy {
   showPassword = false;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private authService: Auth, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: Auth, private router: Router, private cdr: ChangeDetectorRef
+  ) {
     this.formulario = this.fb.group({
       nombre: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
@@ -53,6 +55,7 @@ export class Registro implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.isLoading = false;
+        this.cdr.detectChanges();
         if (typeof error.error?.errors === 'object') {
           const firstErrorKey = Object.keys(error.error.errors)[0];
           this.errorMessage = error.error.errors[firstErrorKey][0];
@@ -62,7 +65,6 @@ export class Registro implements OnInit, OnDestroy {
       }
     });
   }
-
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -89,6 +91,7 @@ export class Registro implements OnInit, OnDestroy {
 
   next() {
     this.currentIndex = (this.currentIndex + 1) % this.quotes.length;
+    this.cdr.detectChanges();
   }
 
   goTo(i: number) {
