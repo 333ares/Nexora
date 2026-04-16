@@ -69,6 +69,7 @@
 .quotes-track {
   display: flex;
   will-change: transform;
+  transition: transform 0.5s ease;
 }
 
 /* Cada slide ocupa el 100% del ancho */
