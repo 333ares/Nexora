@@ -1,84 +1,140 @@
 <!-- NAV -->
-<nav>
-  <a routerLink="/inicio" class="nav-logo">
-    <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Nexora" width="36" height="36" style="object-fit: contain;" />
+<nav role="navigation" aria-label="Navegación principal">
+  <a routerLink="/inicio" class="nav-logo" aria-label="Ir a inicio">
+    <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Logo de Nexora" width="36" height="36" style="object-fit: contain;" />
     <span>NEXORA</span>
   </a>
-  <div class="nav-links">
+
+  <div class="nav-links" aria-label="Enlaces de navegación">
     <a routerLink="/servicios">Servicios</a>
     <a routerLink="/planes">Planes</a>
     <a routerLink="/faqs">FAQ</a>
     <a routerLink="/acerca-de">Nosotros</a>
-    <a routerLink="/contacto" class="active">Contacto</a>
+    <a routerLink="/contacto" class="active" aria-current="page">Contacto</a>
   </div>
-  <div class="nav-cta">
+
+  <div class="nav-cta" aria-label="Acciones de usuario">
     <a routerLink="/login" class="btn-nav-secondary">Acceder</a>
     <a routerLink="/registro" class="btn-nav-primary">Registrarse →</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="page-hero">
-  <div class="page-hero-pattern"></div>
+<section class="page-hero" role="banner" aria-label="Sección de contacto">
+  <div class="page-hero-pattern" aria-hidden="true"></div>
   <div class="container">
     <p class="section-eyebrow">Contacto</p>
     <h1 class="page-hero-title">¿Hablamos?</h1>
-    <p class="page-hero-subtitle">Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos lo antes posible.</p>
+    <p class="page-hero-subtitle">
+      Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos lo antes posible.
+    </p>
   </div>
 </section>
 
 <!-- CONTACT CONTENT -->
-<section class="contact-section">
+<section class="contact-section" aria-label="Formulario de contacto y información">
   <div class="container">
     <div class="contact-grid">
 
       <!-- FORMULARIO -->
       <div class="contact-form-wrap">
         <h2>Envíanos un mensaje</h2>
+
         @if (enviado) {
-          <div class="success-message">
-            <span>✓</span> ¡Mensaje enviado correctamente! Te responderemos pronto.
+          <div class="success-message" role="status" aria-live="polite">
+            <span aria-hidden="true">✓</span>
+            ¡Mensaje enviado correctamente! Te responderemos pronto.
           </div>
         }
-        <form (submit)="enviarFormulario(); $event.preventDefault()">
+
+        <form (submit)="enviarFormulario(); $event.preventDefault()" aria-label="Formulario de contacto">
+          
           <div class="form-group">
             <label for="nombre">Nombre completo</label>
-            <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" placeholder="Tu nombre" required />
+            <input 
+              type="text" 
+              id="nombre" 
+              [(ngModel)]="nombre" 
+              name="nombre" 
+              placeholder="Tu nombre" 
+              required 
+              autocomplete="name"
+              aria-required="true"
+            />
           </div>
+
           <div class="form-group">
             <label for="email">Correo electrónico</label>
-            <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="tu@correo.com" required />
+            <input 
+              type="email" 
+              id="email" 
+              [(ngModel)]="email" 
+              name="email" 
+              placeholder="tu@correo.com" 
+              required 
+              autocomplete="email"
+              aria-required="true"
+            />
           </div>
+
           <div class="form-group">
             <label for="asunto">Asunto</label>
-            <input type="text" id="asunto" [(ngModel)]="asunto" name="asunto" placeholder="¿En qué podemos ayudarte?" required />
+            <input 
+              type="text" 
+              id="asunto" 
+              [(ngModel)]="asunto" 
+              name="asunto" 
+              placeholder="¿En qué podemos ayudarte?" 
+              required 
+              aria-required="true"
+            />
           </div>
+
           <div class="form-group">
             <label for="mensaje">Mensaje</label>
-            <textarea id="mensaje" [(ngModel)]="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." rows="5" required></textarea>
+            <textarea 
+              id="mensaje" 
+              [(ngModel)]="mensaje" 
+              name="mensaje" 
+              placeholder="Escribe tu mensaje aquí..." 
+              rows="5" 
+              required
+              aria-required="true"
+            ></textarea>
           </div>
-          <button type="submit" class="btn-submit">Enviar mensaje →</button>
+
+          <button type="submit" class="btn-submit">
+            Enviar mensaje →
+          </button>
+
         </form>
       </div>
 
       <!-- INFO LATERAL -->
-      <div class="contact-info">
+      <div class="contact-info" aria-label="Información de contacto">
+        
         <div class="info-card">
           <h3>Email</h3>
-          <a href="mailto:contacto@nexora.app">contacto&#64;nexora.app</a>
+          <a href="mailto:contacto@nexora.app" aria-label="Enviar correo a Nexora">
+            contacto&#64;nexora.app
+          </a>
         </div>
+
         <div class="info-card">
           <h3>Ubicación</h3>
           <p>España</p>
         </div>
+
         <div class="info-card">
           <h3>Horario de atención</h3>
           <p>Lunes a viernes<br>9:00 — 18:00 CET</p>
         </div>
+
         <div class="info-card">
           <h3>Tiempo de respuesta</h3>
           <p>Respondemos en menos de 24 horas laborables.</p>
         </div>
+
       </div>
 
     </div>
@@ -86,30 +142,42 @@
 </section>
 
 <!-- FOOTER -->
-<footer>
+<footer role="contentinfo" aria-label="Pie de página">
   <div class="footer-inner">
+
     <div class="footer-brand">
-      <a routerLink="/inicio" class="nav-logo">
-        <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Nexora" width="32" height="32" style="object-fit: contain;" />
+      <a routerLink="/inicio" class="nav-logo" aria-label="Ir a inicio">
+        <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Logo de Nexora" width="32" height="32" style="object-fit: contain;" />
         <span>NEXORA</span>
       </a>
-      <p>Plataforma de gestión de gastos y hábitos financieros. Desarrollada por el equipo ADDA.</p>
+      <p>
+        Plataforma de gestión de gastos y hábitos financieros. Desarrollada por el equipo ADDA.
+      </p>
     </div>
-    <div class="footer-col">
+
+    <div class="footer-col" aria-label="Enlaces de producto">
       <h5>Producto</h5>
       <a routerLink="/servicios">Servicios</a>
       <a routerLink="/planes">Planes</a>
     </div>
-    <div class="footer-col">
+
+    <div class="footer-col" aria-label="Enlaces de empresa">
       <h5>Empresa</h5>
       <a routerLink="/acerca-de">Acerca de ADDA</a>
       <a routerLink="/faqs">FAQ</a>
       <a routerLink="/contacto">Contacto</a>
       <a routerLink="/politica-privacidad">Política de privacidad</a>
     </div>
+
   </div>
+
   <div class="footer-bottom">
     <span>© 2025 Nexora. Todos los derechos reservados.</span>
-    <span class="contact-foot">¿Preguntas? <a href="mailto:contacto@nexora.app">contacto&#64;nexora.app</a></span>
+    <span class="contact-foot">
+      ¿Preguntas?
+      <a href="mailto:contacto@nexora.app" aria-label="Enviar correo de soporte">
+        contacto&#64;nexora.app
+      </a>
+    </span>
   </div>
 </footer>
