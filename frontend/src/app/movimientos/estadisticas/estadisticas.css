@@ -3,7 +3,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  padding: 24px;
 }
 
 /* KPIs y gráfico de barras ocupan las 2 columnas */
