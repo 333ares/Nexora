@@ -1,3 +1,103 @@
+/* ══ CARDS GENERALES ══ */
+/* Las cards flotan sobre el fondo #F2F6EE con sombra sutil */
+.card-white {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(78, 156, 37, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+/* ══ CARD DE SALDO — ELEMENTO ANCLA VISUAL ══ */
+.card-saldo {
+    background: linear-gradient(135deg, #3a8c1a 0%, #4E9C25 40%, #78C550 100%);
+    border-radius: 22px;
+    padding: 28px 26px 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(78, 156, 37, 0.35), 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    color: #fff;
+}
+
+/* Círculos decorativos */
+.card-saldo::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    pointer-events: none;
+}
+
+.card-saldo::after {
+    content: "";
+    position: absolute;
+    bottom: -50px;
+    right: 40px;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+}
+
+.card-saldo .saldo-circle-sm {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.10);
+    pointer-events: none;
+}
+
+.card-saldo .balance-label {
+    font-size: 13px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.card-saldo .balance-amount {
+    font-size: 38px;
+    font-weight: 800;
+    font-family: 'Onest', sans-serif;
+    color: #fff;
+    margin-top: 8px;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ══ STATS CARDS CON COLOR SEMÁNTICO ══ */
+.card-stat {
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+    border: 1px solid transparent;
+    padding: 18px 20px;
+}
+
+.card-stat-ingresos {
+    background: #EAF5DE;
+    border-color: rgba(78, 156, 37, 0.15);
+}
+
+.card-stat-gastos {
+    background: #FDEAEA;
+    border-color: rgba(220, 60, 60, 0.12);
+}
+
+.card-stat-reto {
+    background: #fff;
+    border-color: #eee;
+}
+
+/* ══ GRÁFICO — JERARQUÍA TEMPORAL ══ */
 .grafica-header {
     display: flex;
     justify-content: space-between;
@@ -78,28 +178,34 @@
     border-color: #78C550;
 }
 
+/* Barras anteriores al mes actual: 60% opacidad */
 .barra-fill {
     width: 100%;
     background: linear-gradient(to top, #78C550, #B3E29A);
     border-radius: 6px;
     transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0.65;
+    opacity: 0.60;
+    /* meses pasados más tenues */
 }
 
+/* Mes actual: opacidad 1, color más saturado */
 .barra-fill.barra-fill-active {
     opacity: 1;
-    background: linear-gradient(to top, #4E9C25, #78C550);
+    background: linear-gradient(to top, #3a8c1a, #4E9C25);
+    box-shadow: 0 -4px 12px rgba(78, 156, 37, 0.3);
 }
 
 .barra-label {
     font-size: 11px;
-    color: #888;
+    color: #aaa;
     font-family: 'Lato';
+    transition: color 0.2s;
 }
 
 .barra-label.barra-label-active {
     color: #4E9C25;
-    font-weight: 700;
+    font-weight: 800;
+    font-size: 12px;
 }
 
 .bar-chart-container {
@@ -131,6 +237,7 @@
     display: inline-block;
 }
 
+/* ══ CARDS RETO / FORO ══ */
 .reto-info-card {
     display: flex;
     flex-direction: column;
@@ -191,6 +298,7 @@
     animation: subtleBounce 0.6s ease;
 }
 
+/* ══ DROPDOWN RETO ══ */
 .select-wrapper {
     position: relative;
     width: 36px;
@@ -198,7 +306,6 @@
     border-radius: 50%;
     flex-shrink: 0;
     background: #E8F5E4;
-    /* verde suave */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -213,7 +320,6 @@
 .select-icon {
     font-size: 16px;
     color: #4E9C25;
-    /* verde principal */
     pointer-events: none;
 }
 
@@ -247,6 +353,7 @@
     cursor: pointer;
     transition: background 0.2s;
 }
+
 .dropdown-item:hover {
     background: #f5f5f5;
 }
@@ -258,4 +365,64 @@
 .item-amount {
     color: #78C550;
     font-weight: 600;
+}
+
+/* ══ MOVIMIENTOS — AVATARES CON COLOR, IMPORTES GRANDES ══ */
+
+/* Avatar con fondo semántico */
+.mov-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.row-ingreso .mov-avatar {
+    background: #E0F5D4;
+    box-shadow: 0 2px 6px rgba(78, 156, 37, 0.15);
+}
+
+.row-gasto .mov-avatar {
+    background: #FDEAEA;
+    box-shadow: 0 2px 6px rgba(220, 60, 60, 0.12);
+}
+
+/* Importes más grandes y en negrita */
+.mov-importe {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    font-family: 'Onest', sans-serif;
+    letter-spacing: -0.3px;
+}
+
+.ingreso-color {
+    color: #3a8c1a !important;
+}
+
+.gasto-color {
+    color: #d94040 !important;
+}
+
+/* "Ver todos →" al final de la lista */
+.ver-todos-link {
+    display: block;
+    text-align: right;
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Onest', sans-serif;
+    color: #4E9C25;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s, gap 0.2s;
+    letter-spacing: 0.2px;
+}
+
+.ver-todos-link:hover {
+    color: #3a8c1a;
+    text-decoration: underline;
 }

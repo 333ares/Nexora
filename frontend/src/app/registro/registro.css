@@ -121,33 +121,6 @@
   background: #fff;
 }
 
-/*---FIN CARRUSEL---*/
-/* QUEDA DECIDIR SI FINALMENT USAREMOS ESTAS PROPIEDADES
-.quotes-track-wrapper {
-  overflow: hidden;
-  width: 100%;
-}
-
-.quotes-track {
-  display: flex;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.quote-slide {
-  min-width: 100%;
-  box-sizing: border-box;
-}
-
-.left-panel img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; */
-/* recorta sin deformar */
-/*
-  display: block;
-}
-*/
-
 /* --- PANEL DERECHO -> FORMULARIO --- */
 .right-panel {
   flex: 1;

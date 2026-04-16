@@ -172,4 +172,12 @@ export class PerfilUsuario implements OnInit {
     return mapa[categoria] ?? 'tx-dot--income';
   }
 
+  getAvatarUrl(): string {
+    if (!this.nombre) return '';
+
+    const nombreLimpio = encodeURIComponent(this.nombre.trim());
+
+    return `https://ui-avatars.com/api/?name=${nombreLimpio}&background=random`;
+  }
+
 }

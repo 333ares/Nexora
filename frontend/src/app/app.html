@@ -1,24 +1,43 @@
 @if (showHeader) {
 <header class="header">
+
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <!-- BRAND -->
     <div class="header-brand">
+
+        <!-- Icon / Logo -->
         <div class="brand-icon">
-            <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
-                alt="Fincan.io logo" width="56" height="56" />
+            <img src="https://i.postimg.cc/RFGT0P0K/Chat-GPT-Image-15-abr-2026-17-09-39.png" alt="Fincan.io logo"
+                width="56" height="56" />
         </div>
+
+        <!-- Text logo -->
         <div class="brand-text">
-            <img src="https://image2url.com/r2/default/images/1773067082329-3d49e8f6-224a-40ce-a605-7a951779f07c.png"
-                alt="Logo Nexora letras" class="logo2" />
+            <img src="https://i.postimg.cc/1tMKzWz4/Chat-GPT-Image-15-abr-2026-17-11-47.png" alt="Logo Nexora letras"
+                class="logo2" />
         </div>
+
     </div>
 
+    <!-- NAVIGATION -->
     <nav class="header-nav">
-        <button class="nav-item" routerLink="/academia" routerLinkActive="active">Academia</button>
-        <button class="nav-item" routerLink="/movimientos" routerLinkActive="active">Movimientos</button>
-        <button class="nav-item" routerLink="/perfil" routerLinkActive="active">Perfil</button>
+        <button class="nav-item" routerLink="/academia" routerLinkActive="active">
+            Academia
+        </button>
+
+        <button class="nav-item" routerLink="/movimientos" routerLinkActive="active">
+            Movimientos
+        </button>
+
+        <button class="nav-item" routerLink="/perfil" routerLinkActive="active">
+            Perfil
+        </button>
     </nav>
+
 </header>
 }
 
+<!-- ROUTER CONTENT -->
 <router-outlet></router-outlet>
