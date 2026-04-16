@@ -21,6 +21,7 @@ import { Academia } from './academia/academia';
 import { VerVideo } from './academia/ver-video/ver-video';
 import { AdministrarContenido } from './academia/administrar-contenido/administrar-contenido';
 import { AcademiaHome } from './academia/academia-home/academia-home';
+import { PanelAdmin } from './panel-admin/panel-admin';
 
 export const routes: Routes = [
   {
@@ -50,6 +51,10 @@ export const routes: Routes = [
   {
     path: 'politica-privacidad',
     component: PoliticaPrivacidad,
+  },
+  {
+    path: 'panel-admin',
+    component: PanelAdmin,
   },
   {
     path: 'login', //es lo que aparece en la URL.

@@ -119,16 +119,16 @@ nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width:
 }
 .chat-bubble--kiro strong { font-weight: 700; }
 
-/* Academia card */
-.academia-card { display: flex; flex-direction: column; gap: 10px; }
+/* Foro card */
+.foro-card { display: flex; flex-direction: column; gap: 10px; }
 .content-tag {
   display: inline-block; font-family: 'Onest', sans-serif; font-weight: 700;
   font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase;
   background: white; color: var(--green-mid);
   padding: 4px 12px; border-radius: 999px; width: fit-content;
 }
-.academia-card h4 { font-family: 'Onest', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text-dark); }
-.academia-card p { font-size: 1rem; color: var(--text-mid); line-height: 1.6; }
+.foro-card h4 { font-family: 'Onest', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text-dark); }
+.foro-card p { font-size: 1rem; color: var(--text-mid); line-height: 1.6; }
 .content-meta { font-size: 1rem; color: var(--text-muted); }
 
 /* Retos card */
