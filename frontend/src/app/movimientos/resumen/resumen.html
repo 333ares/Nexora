@@ -4,13 +4,13 @@
 
   <div class="col-left">
 
-    <div class="card card-white">
-
+    <!-- CARD SALDO: gradiente verde con círculos decorativos -->
+    <div class="card card-saldo">
+      <div class="saldo-circle-sm"></div>
       <div class="balance-top">
         <span class="balance-label">Saldo banco</span>
-
       </div>
-      <div class="balance-amount">{{ balanceTotal | number:'1.2-2' }} € </div>
+      <div class="balance-amount">{{ balanceTotal | number:'1.2-2' }} €</div>
     </div>
 
     <div class="card card-white reto-info-card">
@@ -39,21 +39,27 @@
   <div class="col-right">
 
     <div class="grid-top-right">
-      <div class="card card-stat">
+
+      <!-- STAT INGRESOS: fondo verde suave -->
+      <div class="card card-stat card-stat-ingresos">
         <div class="stat-top">
           <span class="stat-label">Total ingresos</span>
           <div class="stat-icon stat-icon-green"><i class="bi bi-arrow-up"></i></div>
         </div>
         <div class="stat-amount ingreso-color">{{ ingresoMensual | number:'1.2-2' }} €</div>
       </div>
-      <div class="card card-stat">
+
+      <!-- STAT GASTOS: fondo rojo suave -->
+      <div class="card card-stat card-stat-gastos">
         <div class="stat-top">
           <span class="stat-label">Total gastos</span>
           <div class="stat-icon stat-icon-red"><i class="bi bi-arrow-down"></i></div>
         </div>
         <div class="stat-amount gasto-color">{{ gastoMensual | number:'1.2-2' }} €</div>
       </div>
-      <div class="card card-stat">
+
+      <!-- STAT RETO: blanco neutro -->
+      <div class="card card-stat card-stat-reto">
         <div class="stat-top">
           <div class="reto-title-row">
             <span class="stat-label">
@@ -116,8 +122,10 @@
 
         }
       </div>
+
     </div>
 
+    <!-- GRÁFICO EVOLUCIÓN MENSUAL -->
     <div class="card card-white">
       <div class="grafica-header">
         <span class="section-title" style="margin:0;">Evolución mensual</span>
@@ -135,6 +143,7 @@
       </div>
     </div>
 
+    <!-- ÚLTIMOS MOVIMIENTOS -->
     <div class="card card-white">
       <div class="historial-header">
         <span class="section-title" style="margin:0;">Últimos movimientos</span>
@@ -151,6 +160,7 @@
         [class.row-gasto]="mov.tipo === 'gasto'">
 
         <div class="td td-nombre">
+          <!-- Avatar con fondo semántico verde/rojo -->
           <div class="mov-avatar">{{ mov.tipo === 'ingreso' ? '💰' : '💸' }}</div>
           <div class="mov-name-wrap">
             <span class="mov-nombre">{{ mov.categoria }}</span>
@@ -162,6 +172,7 @@
           <span class="fecha-hora">{{ mov.fecha | date:'HH:mm' }}</span>
         </div>
 
+        <!-- Importe grande y en negrita -->
         <div class="td td-right">
           <span class="mov-importe" [class.ingreso-color]="mov.tipo === 'ingreso'"
             [class.gasto-color]="mov.tipo === 'gasto'">
@@ -181,5 +192,10 @@
       @empty {
       <div class="empty-state">No hay movimientos registrados</div>
       }
+
+      <!-- "Ver todos →" al pie de la lista -->
+      <a class="ver-todos-link" routerLink="/movimientos/lista">Ver todos →</a>
     </div>
+
   </div>
+</div>

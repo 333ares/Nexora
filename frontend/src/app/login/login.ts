@@ -2,8 +2,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  Inject,
-  PLATFORM_ID
+  ChangeDetectorRef
 } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { NgClass, isPlatformBrowser } from '@angular/common';
@@ -18,61 +17,21 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./login.css'],
 })
 export class Login implements OnInit, OnDestroy {
-
   showPassword = false;
-
-  quotes = [
-    { text: '"El precio es lo que pagas, el valor es lo que recibes"', author: '– Warren Buffett' },
-    { text: '"Comprar por impulso es pagar por ansiedad"', author: '– Antonie de Saint-Exupéry' },
-    { text: '"La inversión en conocimiento paga el mejor interés"', author: '– Benjamin Franklin' },
-    { text: '"El dinero es un buen sirviente pero un mal amo"', author: '– Francis Bacon' },
-    { text: '"Nunca gastes tu dinero antes de ganarlo"', author: '– Thomas Jefferson' },
-  ];
-
   currentIndex = 0;
-  private intervalId?: ReturnType<typeof setInterval>;
+  successMessage: string = '';
+  private timer: any;
+  email: string = '';
+  password: string = '';
+  errorMessage: string = '';
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private authService: Auth,
-    private router: Router
-  ) {
+  constructor(private authService: Auth, private router: Router, private cdr: ChangeDetectorRef) {
     const nav = this.router.getCurrentNavigation();
     if (nav?.extras?.state?.['registrado']) {
       this.successMessage = 'Te has registrado correctamente, inicia sesión';
     }
   }
 
-  successMessage: string = '';
-
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.intervalId = setInterval(() => {
-        this.currentIndex =
-          this.currentIndex + 1 >= this.quotes.length
-            ? 0
-            : this.currentIndex + 1;
-      }, 3000);
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
-
-  goTo(index: number): void {
-    this.currentIndex = index;
-  }
-
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
-  }
-
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
   isLoading = false;
 
   onLogin() {
@@ -85,6 +44,7 @@ export class Login implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.isLoading = false;
+        this.cdr.detectChanges();
         if (typeof error.error?.errors === 'object') {
           const firstErrorKey = Object.keys(error.error.errors)[0];
           this.errorMessage = error.error.errors[firstErrorKey][0];
@@ -95,4 +55,32 @@ export class Login implements OnInit, OnDestroy {
     });
   }
 
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  quotes = [
+    { text: '"El precio es lo que pagas, el valor es lo que recibes"', author: '– Warren Buffett' },
+    { text: '"Comprar por impulso es pagar por ansiedad"', author: '– Antonie de Saint-Exupéry' },
+    { text: '"La inversión en conocimiento paga el mejor interés"', author: '– Benjamin Franklin' },
+    { text: '"El dinero es un buen sirviente pero un mal amo"', author: '– Francis Bacon' },
+    { text: '"Nunca gastes tu dinero antes de ganarlo"', author: '– Thomas Jefferson' },
+  ];
+
+  ngOnInit(): void {
+    this.timer = setInterval(() => this.next(), 4000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.timer);
+  }
+
+  next() {
+    this.currentIndex = (this.currentIndex + 1) % this.quotes.length;
+    this.cdr.detectChanges();
+  }
+
+  goTo(index: number): void {
+    this.currentIndex = index;
+  }
 }
