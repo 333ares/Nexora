@@ -54,6 +54,7 @@ export const routes: Routes = [
   {
     path: 'panel-admin',
     component: PanelAdmin,
+    //canActivate: [AuthGuard]
   },
   {
     path: 'login', //es lo que aparece en la URL.
@@ -92,7 +93,7 @@ export const routes: Routes = [
   {
     path: 'academia',
     component: Academia,
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
