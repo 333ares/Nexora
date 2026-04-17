@@ -307,6 +307,11 @@
   padding: 0 4px;
 }
 
+.bi {
+  color: #4E9C25;
+  font-size: 21px;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

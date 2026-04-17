@@ -43,8 +43,8 @@ export class Login implements OnInit, OnDestroy {
         this.router.navigate(['/movimientos']);
       },
       error: (error) => {
-        this.isLoading = false;
         this.cdr.detectChanges();
+        this.isLoading = false;
         if (typeof error.error?.errors === 'object') {
           const firstErrorKey = Object.keys(error.error.errors)[0];
           this.errorMessage = error.error.errors[firstErrorKey][0];

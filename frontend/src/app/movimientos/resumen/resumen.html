@@ -161,7 +161,25 @@
 
         <div class="td td-nombre">
           <!-- Avatar con fondo semántico verde/rojo -->
-          <div class="mov-avatar">{{ mov.tipo === 'ingreso' ? '💰' : '💸' }}</div>
+          <div class="mov-avatar">
+            @if (mov.categoria === 'Nomina') {
+            <i class="bi bi-cash-stack"></i>
+            } @else if (mov.categoria === 'Capital y alquileres') {
+            <i class="bi bi-house-add"></i>
+            } @else if (mov.categoria === 'Negocios y ventas') {
+            <i class="bi bi-briefcase"></i>
+            } @else if (mov.categoria === 'Otros') {
+            <i class="bi bi-bookmark-plus"></i>
+            } @else if (mov.categoria === 'Ocio') {
+            <i class="bi bi-people"></i>
+            } @else if (mov.categoria === 'Supervivencia') {
+            <i class="bi bi-basket2"></i>
+            } @else if (mov.categoria === 'Cultura') {
+            <i class="bi bi-book"></i>
+            } @else if (mov.categoria === 'Extras o imprevistos') {
+            <i class="bi bi-bookmark-dash"></i>
+            }
+          </div>
           <div class="mov-name-wrap">
             <span class="mov-nombre">{{ mov.categoria }}</span>
           </div>

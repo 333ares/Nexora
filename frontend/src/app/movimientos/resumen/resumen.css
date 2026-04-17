@@ -246,6 +246,11 @@
     animation: fadeInUp 0.5s ease 0.2s both;
 }
 
+.bi {
+    color: #4E9C25;
+    font-size: 21px;
+}
+
 .bi-piggy-bank {
     color: #4E9C25;
     font-size: 30px;
