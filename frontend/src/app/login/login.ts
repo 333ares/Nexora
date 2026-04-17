@@ -38,9 +38,16 @@ export class Login implements OnInit, OnDestroy {
     this.isLoading = true;
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
+        // Guardamos el token del usuario y a este en localstorage
         this.authService.saveToken(response.token);
         this.authService.saveUsuario(response.usuario);
-        this.router.navigate(['/movimientos']);
+
+        // Se redirige en base a si eres admin o usuario normal
+        if (response.usuario?.id === 1) {
+          this.router.navigate(['/panel-admin']);
+        } else {
+          this.router.navigate(['/movimientos']);
+        }
       },
       error: (error) => {
         this.cdr.detectChanges();
