@@ -109,6 +109,23 @@ export class Lista implements OnInit {
       : this.movimientos.filter(m => m.tipo === tipo);
   }
 
+  // Descripciones de ayuda por categoría
+  private readonly categoriaHints: Record<string, string> = {
+    'Nómina': 'Tu salario mensual, pagas extra o ingresos por trabajo por cuenta ajena.',
+    'Capital (Alquileres)': 'Rentas de inmuebles, dividendos, intereses de cuentas o inversiones.',
+    'Negocios y ventas': 'Ingresos de tu empresa, freelance, venta de productos o servicios propios.',
+    'Otros': 'Premios, herencias, devoluciones de impuestos u otros ingresos puntuales.',
+    'Ocio': 'Salir a cenar, bares, conciertos, viajes, deportes o entretenimiento.',
+    'Supervivencia': 'Alimentación, alquiler, facturas, transporte, ropa básica o medicamentos.',
+    'Cultura': 'Libros, cursos, museos, suscripciones de streaming o formación.',
+    'Extras o imprevistos': 'Reparaciones, multas, gastos médicos inesperados o cualquier imprevisto.'
+  };
+
+  // Devuelve el hint de una categoría o cadena vacía si no existe
+  getCategoriaHint(categoria: string): string {
+    return this.categoriaHints[categoria] ?? '';
+  }
+
   // Devuelve las categorías según el tipo de movimiento seleccionado
   get categoriasActuales(): string[] {
     return this.nuevoMovimiento.tipo === 'ingreso'

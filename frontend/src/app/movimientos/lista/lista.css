@@ -1,10 +1,10 @@
-/* ══ HOST ══ */
+/*  HOST  */
 :host {
   display: block;
   position: static;
 }
 
-/* ══ MODAL ══ */
+/*  MODAL  */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -208,7 +208,7 @@
   box-shadow: none;
 }
 
-/* ══ MODAL BORRAR ══ */
+/*  MODAL BORRAR  */
 .modal-box-sm {
   max-width: 400px;
 }
@@ -258,7 +258,29 @@
   box-shadow: none;
 }
 
-/* ══ PAGINACIÓN ══ */
+/*  CATEGORIA HINT  */
+.categoria-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: #fffbea;
+  border: 1.5px solid #f5e08a;
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: 'Lato', sans-serif;
+  color: #7a6010;
+  line-height: 1.5;
+  animation: fadeIn 0.2s ease;
+}
+
+.categoria-hint-icon {
+  flex-shrink: 0;
+  font-size: 14px;
+  margin-top: 1px;
+}
+
 .paginacion {
   display: flex;
   justify-content: center;
@@ -307,7 +329,7 @@
   padding: 0 4px;
 }
 
-.bi {
+.icono-mov {
   color: #4E9C25;
   font-size: 21px;
 }

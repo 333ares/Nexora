@@ -251,6 +251,11 @@
     font-size: 21px;
 }
 
+.bi-arrow-up,
+.bi-arrow-down {
+    color: #fff;
+}
+
 .bi-piggy-bank {
     color: #4E9C25;
     font-size: 30px;
