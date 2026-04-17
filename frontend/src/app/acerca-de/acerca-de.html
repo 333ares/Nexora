@@ -1,158 +1,214 @@
 <!-- NAV -->
-<nav>
-  <a routerLink="/inicio" class="nav-logo">
-    <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="36" height="36" style="object-fit: contain;" />
+<nav role="navigation" aria-label="Navegación principal">
+  <a routerLink="/inicio" class="nav-logo" aria-label="Ir a la página de inicio">
+    <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+      alt="Logo de Nexora" width="36" height="36" style="object-fit: contain;" />
     <span>NEXORA</span>
   </a>
-  <div class="nav-links">
-    <a routerLink="/servicios">Servicios</a>
-    <a routerLink="/planes">Planes</a>
-    <a routerLink="/faqs">FAQ</a>
-    <a routerLink="/acerca-de" class="active">Nosotros</a>
-    <a routerLink="/contacto">Contacto</a>
+
+  <div class="nav-links" role="menubar">
+    <a routerLink="/servicios" role="menuitem">Servicios</a>
+    <a routerLink="/planes" role="menuitem">Planes</a>
+    <a routerLink="/faqs" role="menuitem">FAQ</a>
+    <a routerLink="/acerca-de" class="active" aria-current="page" role="menuitem">Nosotros</a>
+    <a routerLink="/contacto" role="menuitem">Contacto</a>
   </div>
-  <div class="nav-cta">
+
+  <div class="nav-cta" aria-label="Acciones de usuario">
     <a routerLink="/login" class="btn-nav-secondary">Acceder</a>
     <a routerLink="/registro" class="btn-nav-primary">Registrarse →</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="page-hero">
-  <div class="page-hero-pattern"></div>
-  <div class="container">
-    <p class="section-eyebrow">Conócenos</p>
-    <h1 class="page-hero-title">Acerca de <em>ADDA</em></h1>
-    <p class="page-hero-subtitle">Somos el equipo de desarrolladores web detrás de Nexora. Creamos herramientas que transforman la relación de las personas con sus finanzas.</p>
-  </div>
-</section>
+<main id="contenido-principal">
 
-<!-- MISIÓN Y VISIÓN -->
-<section class="mission-section">
-  <div class="container">
-    <div class="mission-grid">
-      <div class="mission-card">
-        <h2>Nuestra misión</h2>
-        <p>Democratizar la educación financiera y proporcionar herramientas accesibles que permitan a cualquier persona tomar el control de sus finanzas personales, independientemente de su experiencia previa.</p>
-      </div>
-      <div class="mission-card">
-        <h2>Nuestra visión</h2>
-        <p>Ser la plataforma líder en gestión financiera personal en habla hispana, creando una comunidad donde los usuarios mejoren sus hábitos económicos con el apoyo de tecnología inteligente y contenido profesional.</p>
+  <!-- HERO -->
+  <section class="page-hero" role="region" aria-labelledby="hero-title">
+    <div class="page-hero-pattern" aria-hidden="true"></div>
+    <div class="container">
+      <p class="section-eyebrow">Conócenos</p>
+      <h1 id="hero-title" class="page-hero-title">Acerca de <em>ADDA</em></h1>
+      <p class="page-hero-subtitle">
+        Somos el equipo de desarrolladores web detrás de Nexora. Creamos herramientas que transforman la relación de las
+        personas con sus finanzas.
+      </p>
+    </div>
+  </section>
+
+  <!-- MISIÓN Y VISIÓN -->
+  <section class="mission-section" role="region" aria-labelledby="mision-title">
+    <div class="container">
+      <h2 id="mision-title" class="sr-only">Misión y visión</h2>
+
+      <div class="mission-grid">
+        <div class="mission-card">
+          <h3>Nuestra misión</h3>
+          <p>
+            Democratizar la educación financiera y proporcionar herramientas accesibles que permitan a cualquier persona
+            tomar el control de sus finanzas personales, independientemente de su experiencia previa.
+          </p>
+        </div>
+
+        <div class="mission-card">
+          <h3>Nuestra visión</h3>
+          <p>
+            Ser la plataforma líder en gestión financiera personal en habla hispana, creando una comunidad donde los
+            usuarios mejoren sus hábitos económicos con el apoyo de tecnología inteligente y contenido profesional.
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- VALORES -->
-<section class="values-section">
-  <div class="container">
-    <h2 class="section-title-center">Nuestros valores</h2>
-    <p class="section-subtitle-center">Los principios que guían cada decisión que tomamos.</p>
-    <div class="values-grid">
-      <div class="value-card">
-        <h3>Privacidad</h3>
-        <p>Tus datos financieros son sagrados. Nunca los compartimos con terceros ni los usamos para publicidad.</p>
-      </div>
-      <div class="value-card">
-        <h3>Accesibilidad</h3>
-        <p>Creemos que la educación financiera debe ser accesible para todos. Por eso ofrecemos un plan gratuito sin límite de tiempo.</p>
-      </div>
-      <div class="value-card">
-        <h3>Innovación</h3>
-        <p>Integramos inteligencia artificial con Kiro para ofrecer recomendaciones personalizadas y una experiencia única.</p>
-      </div>
-      <div class="value-card">
-        <h3>Transparencia</h3>
-        <p>Precios claros, sin costes ocultos. Comunicación honesta con nuestra comunidad en todo momento.</p>
+  <!-- VALORES -->
+  <section class="values-section" role="region" aria-labelledby="valores-title">
+    <div class="container">
+      <h2 id="valores-title" class="section-title-center">Nuestros valores</h2>
+      <p class="section-subtitle-center">Los principios que guían cada decisión que tomamos.</p>
+
+      <div class="values-grid">
+        <div class="value-card" tabindex="0">
+          <h3>Privacidad</h3>
+          <p>Tus datos financieros son sagrados. Nunca los compartimos con terceros ni los usamos para publicidad.</p>
+        </div>
+
+        <div class="value-card" tabindex="0">
+          <h3>Accesibilidad</h3>
+          <p>Creemos que la educación financiera debe ser accesible para todos. Por eso ofrecemos un plan gratuito sin
+            límite de tiempo.</p>
+        </div>
+
+        <div class="value-card" tabindex="0">
+          <h3>Innovación</h3>
+          <p>Integramos inteligencia artificial con Kiro para ofrecer recomendaciones personalizadas y una experiencia
+            única.</p>
+        </div>
+
+        <div class="value-card" tabindex="0">
+          <h3>Transparencia</h3>
+          <p>Precios claros, sin costes ocultos. Comunicación honesta con nuestra comunidad en todo momento.</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- EQUIPO -->
-<section class="team-section">
-  <div class="container">
-    <div class="team-header">
-      <p class="section-eyebrow">Detrás de Nexora</p>
-      <div class="adda-logo">
-        <div class="adda-text">ADDA</div>
-        <div class="adda-sub">El equipo de desarrolladores web que construye Nexora</div>
+  <!-- EQUIPO -->
+  <section class="team-section" role="region" aria-labelledby="equipo-title">
+    <div class="container">
+
+      <div class="team-header">
+        <p class="section-eyebrow">Detrás de Nexora</p>
+        <h2 id="equipo-title" class="sr-only">Equipo ADDA</h2>
+
+        <div class="adda-logo">
+          <div class="adda-text">ADDA</div>
+          <div class="adda-sub">El equipo de desarrolladores web que construye Nexora</div>
+        </div>
+      </div>
+
+      <div class="team-grid">
+
+        <article class="team-card" tabindex="0">
+          <div class="team-avatar av-a1" aria-hidden="true">A</div>
+          <h3>Alejandro Crespo</h3>
+          <div class="role">Desarrollador Web</div>
+          <p class="team-bio">Comprometido con la calidad de código y la experiencia de usuario que define a Nexora.</p>
+        </article>
+
+        <article class="team-card" tabindex="0">
+          <div class="team-avatar av-d1" aria-hidden="true">D</div>
+          <h3>Dayron Varsendan</h3>
+          <div class="role">Desarrollador Web</div>
+          <p class="team-bio">Especializado en arquitectura frontend y creación de interfaces atractivas y funcionales.
+          </p>
+        </article>
+
+        <article class="team-card" tabindex="0">
+          <div class="team-avatar av-d2" aria-hidden="true">D</div>
+          <h3>Dani Alcaraz</h3>
+          <div class="role">Desarrollador Web</div>
+          <p class="team-bio">Enfocado en el backend robusto y en la integración de sistemas que dan vida a Nexora.</p>
+        </article>
+
+        <article class="team-card" tabindex="0">
+          <div class="team-avatar av-a2" aria-hidden="true">A</div>
+          <h3>Ares Gomez</h3>
+          <div class="role">Desarrollador Web</div>
+          <p class="team-bio">Apasionado por la innovación tecnológica y la creación de soluciones financieras
+            accesibles.</p>
+        </article>
+
       </div>
     </div>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar av-a1">A</div>
-        <h4>Alejandro Crespo</h4>
-        <div class="role">Desarrollador Web</div>
-        <p class="team-bio">Comprometido con la calidad de código y la experiencia de usuario que define a Nexora.</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar av-d1">D</div>
-        <h4>Dayron Varsendan</h4>
-        <div class="role">Desarrollador Web</div>
-        <p class="team-bio">Especializado en arquitectura frontend y creación de interfaces atractivas y funcionales.</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar av-d2">D</div>
-        <h4>Dani Alcaraz</h4>
-        <div class="role">Desarrollador Web</div>
-        <p class="team-bio">Enfocado en el backend robusto y en la integración de sistemas que dan vida a Nexora.</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar av-a2">A</div>
-        <h4>Ares Gomez</h4>
-        <div class="role">Desarrollador Web</div>
-        <p class="team-bio">Apasionado por la innovación tecnológica y la creación de soluciones financieras accesibles.</p>
+  </section>
+
+  <!-- STORY -->
+  <section class="story-section" role="region" aria-labelledby="historia-title">
+    <div class="container">
+
+      <div class="story-grid">
+
+        <div class="story-text">
+          <p class="section-eyebrow">Nuestra historia</p>
+          <h2 id="historia-title" class="story-title">¿Cómo nació Nexora?</h2>
+
+          <p>Nexora surgió de una necesidad real: queríamos una herramienta que no solo registrara gastos, sino que nos
+            ayudara a entender nuestros hábitos financieros y mejorarlos.</p>
+
+          <p>Inspirados por el método japonés Kakebo, decidimos crear una plataforma moderna que combinara el registro
+            monitorizado de movimientos con contenido educativo creado por profesionales del sector económico.</p>
+
+          <p>Hoy, Nexora integra inteligencia artificial con Kiro, ofrece retos mensuales que fomentan buenos hábitos y
+            conecta a los usuarios a través de nuestro foro sobre economía y finanzas.</p>
+        </div>
+
+        <div class="story-logo" aria-hidden="true">
+          <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+            alt="Logo de Nexora" class="story-logo-img" />
+        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- NEXORA STORY -->
-<section class="story-section">
-  <div class="container">
-    <div class="story-grid">
-      <div class="story-text">
-        <p class="section-eyebrow">Nuestra historia</p>
-        <h2 class="story-title">¿Cómo nació Nexora?</h2>
-        <p>Nexora surgió de una necesidad real: queríamos una herramienta que no solo registrara gastos, sino que nos ayudara a entender nuestros hábitos financieros y mejorarlos.</p>
-        <p>Inspirados por el método japonés Kakebo, decidimos crear una plataforma moderna que combinara el registro monitorizado de movimientos con contenido educativo creado por profesionales del sector económico.</p>
-        <p>Hoy, Nexora integra inteligencia artificial con Kiro, ofrece retos mensuales que fomentan buenos hábitos y conecta a los usuarios a través de nuestro foro sobre economía y finanzas.</p>
-      </div>
-      <div class="story-logo">
-        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" class="story-logo-img" />
-      </div>
-    </div>
-  </div>
-</section>
-
-
+</main>
 
 <!-- FOOTER -->
-<footer>
+<footer role="contentinfo" aria-label="Pie de página">
   <div class="footer-inner">
+
     <div class="footer-brand">
-      <a routerLink="/inicio" class="nav-logo">
-        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="32" height="32" style="object-fit: contain;" />
+      <a routerLink="/inicio" class="nav-logo" aria-label="Ir a inicio">
+        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+          alt="Logo de Nexora" width="32" height="32" style="object-fit: contain;" />
         <span>NEXORA</span>
       </a>
       <p>Plataforma de gestión de gastos y hábitos financieros. Desarrollada por el equipo ADDA.</p>
     </div>
-    <div class="footer-col">
+
+    <div class="footer-col" aria-label="Enlaces de producto">
       <h5>Producto</h5>
       <a routerLink="/servicios">Servicios</a>
       <a routerLink="/planes">Planes</a>
     </div>
-    <div class="footer-col">
+
+    <div class="footer-col" aria-label="Enlaces de empresa">
       <h5>Empresa</h5>
       <a routerLink="/acerca-de">Acerca de ADDA</a>
       <a routerLink="/faqs">FAQ</a>
       <a routerLink="/contacto">Contacto</a>
       <a routerLink="/politica-privacidad">Política de privacidad</a>
     </div>
+
   </div>
+
   <div class="footer-bottom">
     <span>© 2025 Nexora. Todos los derechos reservados.</span>
-    <span class="contact">¿Preguntas? <a href="mailto:contacto@nexora.app">contacto&#64;nexora.app</a></span>
+    <span class="contact">
+      ¿Preguntas?
+      <a href="mailto:contacto@nexora.app" aria-label="Enviar correo de soporte">
+        contacto&#64;nexora.app
+      </a>
+    </span>
   </div>
 </footer>

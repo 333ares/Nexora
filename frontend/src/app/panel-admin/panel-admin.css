@@ -472,6 +472,12 @@
   font-weight: 500;
 }
 
+.btn-modal--success {
+  background: var(--green-mid);
+  color: white;
+  box-shadow: 0 4px 14px rgba(78, 156, 37, 0.3);
+}
+
 /* ── TOAST ───────────────────────────────────────────── */
 .toast {
   position: fixed;
