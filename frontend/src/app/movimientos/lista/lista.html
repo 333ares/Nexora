@@ -129,6 +129,13 @@
           <option [value]="cat">{{ cat }}</option>
           }
         </select>
+
+        @if (nuevoMovimiento.categoria && getCategoriaHint(nuevoMovimiento.categoria)) {
+        <div class="categoria-hint">
+          <span class="categoria-hint-icon">💡</span>
+          <span>{{ getCategoriaHint(nuevoMovimiento.categoria) }}</span>
+        </div>
+        }
       </div>
 
       <div class="modal-field">
