@@ -120,6 +120,9 @@ export class Auth {
     return this.http.post(`${this.apiUrl}/reto/retirar`, { id, cantidad }, { headers: this.getHeaders() });
   }
 
+  // --- ADMIN ---
+  
+
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
     localStorage.setItem('token', token);
