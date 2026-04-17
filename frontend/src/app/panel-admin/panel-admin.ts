@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
@@ -15,7 +14,7 @@ export interface Usuario {
 @Component({
   selector: 'app-panel-admin',
   standalone: true,
-  imports: [RouterLink, FormsModule, NgClass],
+  imports: [ FormsModule, NgClass],
   templateUrl: './panel-admin.html',
   styleUrl: './panel-admin.css',
 })
