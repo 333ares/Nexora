@@ -1,51 +1,62 @@
 <!-- NAV -->
-<nav>
-  <a routerLink="/inicio" class="nav-logo">
-    <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="36" height="36" style="object-fit: contain;" />
+<nav role="navigation" aria-label="Navegación principal">
+  <a routerLink="/inicio" class="nav-logo" aria-label="Ir a la página de inicio">
+    <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+      alt="Logo de Nexora" width="36" height="36" style="object-fit: contain;" />
     <span>NEXORA</span>
   </a>
-  <div class="nav-links">
-    <a routerLink="/servicios" class="active">Servicios</a>
-    <a routerLink="/planes">Planes</a>
-    <a routerLink="/faqs">FAQ</a>
-    <a routerLink="/acerca-de">Nosotros</a>
-    <a routerLink="/contacto">Contacto</a>
+  <div class="nav-links" role="menubar">
+    <a routerLink="/servicios" class="active" role="menuitem" aria-current="page">Servicios</a>
+    <a routerLink="/planes" role="menuitem">Planes</a>
+    <a routerLink="/faqs" role="menuitem">FAQ</a>
+    <a routerLink="/acerca-de" role="menuitem">Nosotros</a>
+    <a routerLink="/contacto" role="menuitem">Contacto</a>
   </div>
-  <div class="nav-cta">
+  <div class="nav-cta" aria-label="Acciones de usuario">
     <a routerLink="/login" class="btn-nav-secondary">Acceder</a>
     <a routerLink="/registro" class="btn-nav-primary">Registrarse →</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="page-hero">
-  <div class="page-hero-pattern"></div>
+<section class="page-hero" role="region" aria-labelledby="servicios-title">
+  <div class="page-hero-pattern" aria-hidden="true"></div>
   <div class="container">
     <p class="section-eyebrow">Lo que ofrecemos</p>
-    <h1 class="page-hero-title">Nuestros servicios</h1>
-    <p class="page-hero-subtitle">Nexora combina herramientas potentes con contenido profesional para que tomes el control total de tus finanzas.</p>
+    <h1 id="servicios-title" class="page-hero-title">Nuestros servicios</h1>
+    <p class="page-hero-subtitle">Nexora combina herramientas potentes con contenido profesional para que tomes el
+      control total de tus finanzas.</p>
   </div>
 </section>
 
 <!-- SERVICIOS PRINCIPALES -->
-<section class="services-main">
+<section class="services-main" role="main">
   <div class="container">
+
     <div class="service-block">
       <div class="service-text">
         <h2>Registro de gastos e ingresos</h2>
-        <p>Registra todos tus movimientos financieros en segundos. Categoriza gastos e ingresos, añade notas y tenlos siempre organizados y accesibles desde cualquier dispositivo.</p>
+        <p>Registra todos tus movimientos financieros en segundos...</p>
         <ul>
           <li>Añade movimientos de forma rápida e intuitiva</li>
           <li>Categorización automática por tipo de gasto</li>
           <li>Historial completo siempre disponible</li>
-     
         </ul>
       </div>
-      <div class="service-visual">
+      <div class="service-visual" aria-label="Resumen de gastos e ingresos">
         <div class="service-visual-card">
-          <div class="mini-stat"><span class="mini-stat-label">Gastos este mes</span><span class="mini-stat-value">-342 €</span></div>
-          <div class="mini-stat"><span class="mini-stat-label">Ingresos este mes</span><span class="mini-stat-value text-green">+1.850 €</span></div>
-          <div class="mini-stat"><span class="mini-stat-label">Balance</span><span class="mini-stat-value text-green">+1.508 €</span></div>
+          <div class="mini-stat">
+            <span class="mini-stat-label">Gastos este mes</span>
+            <span class="mini-stat-value" aria-label="Menos 342 euros">-342 €</span>
+          </div>
+          <div class="mini-stat">
+            <span class="mini-stat-label">Ingresos este mes</span>
+            <span class="mini-stat-value text-green" aria-label="Más 1850 euros">+1.850 €</span>
+          </div>
+          <div class="mini-stat">
+            <span class="mini-stat-label">Balance</span>
+            <span class="mini-stat-value text-green" aria-label="Balance positivo de 1508 euros">+1.508 €</span>
+          </div>
         </div>
       </div>
     </div>
@@ -53,22 +64,22 @@
     <div class="service-block service-block--reverse">
       <div class="service-text">
         <h2>Estadísticas avanzadas</h2>
-        <p>Visualiza tendencias, categorías y la evolución de tu economía con gráficas claras y detalladas. Entiende a dónde va tu dinero y toma decisiones más inteligentes.</p>
+        <p>Visualiza tendencias...</p>
         <ul>
           <li>Gráficas de evolución mensual y anual</li>
           <li>Desglose por categorías de gasto</li>
           <li>Comparativas entre períodos</li>
         </ul>
       </div>
-      <div class="service-visual">
+      <div class="service-visual" aria-label="Gráfica de gastos mensuales">
         <div class="service-visual-card stats-card">
           <div class="bar-chart">
-            <div class="bar" style="height: 40%;"><span>Ene</span></div>
-            <div class="bar" style="height: 65%;"><span>Feb</span></div>
-            <div class="bar" style="height: 55%;"><span>Mar</span></div>
-            <div class="bar bar--highlight" style="height: 80%;"><span>Abr</span></div>
-            <div class="bar" style="height: 45%;"><span>May</span></div>
-            <div class="bar" style="height: 70%;"><span>Jun</span></div>
+            <div class="bar" style="height: 40%;" aria-label="Enero 40%"><span>Ene</span></div>
+            <div class="bar" style="height: 65%;" aria-label="Febrero 65%"><span>Feb</span></div>
+            <div class="bar" style="height: 55%;" aria-label="Marzo 55%"><span>Mar</span></div>
+            <div class="bar bar--highlight" style="height: 80%;" aria-label="Abril 80%"><span>Abr</span></div>
+            <div class="bar" style="height: 45%;" aria-label="Mayo 45%"><span>May</span></div>
+            <div class="bar" style="height: 70%;" aria-label="Junio 70%"><span>Jun</span></div>
           </div>
         </div>
       </div>
@@ -77,18 +88,18 @@
     <div class="service-block">
       <div class="service-text">
         <h2>Kiro — Consejero financiero con IA</h2>
-        <p>Tu asistente financiero personal disponible 24/7. Kiro analiza tus hábitos de gasto y te ofrece recomendaciones personalizadas para ahorrar más y gastar mejor.</p>
+        <p>Tu asistente financiero personal...</p>
         <ul>
-          <li>Respuestas instantáneas a tus dudas financieras</li>
-          <li>Recomendaciones personalizadas de ahorro</li>
-          <li>Análisis inteligente de tus patrones de gasto</li>
+          <li>Respuestas instantáneas</li>
+          <li>Recomendaciones personalizadas</li>
+          <li>Análisis inteligente</li>
         </ul>
       </div>
-      <div class="service-visual">
+      <div class="service-visual" aria-label="Chat con asistente Kiro">
         <div class="service-visual-card chat-card">
           <div class="chat-bubble chat-bubble--user">¿Cómo puedo reducir mis gastos en ocio?</div>
           <div class="chat-bubble chat-bubble--kiro">
-            <strong>Kiro:</strong> Según tus datos, gastas un 28% en ocio. Te sugiero establecer un presupuesto semanal de 40€ y usar la regla 50/30/20.
+            <strong>Kiro:</strong> Según tus datos...
           </div>
         </div>
       </div>
@@ -97,18 +108,18 @@
     <div class="service-block service-block--reverse">
       <div class="service-text">
         <h2>Foro de economía</h2>
-        <p>Interactúa con otros usuarios en nuestro foro especializado. Haz preguntas, resuelve las dudas de otros o debate sobre economía y finanzas personales.</p>
+        <p>Interactúa con otros usuarios...</p>
         <ul>
-          <li>Preguntas y respuestas estructuradas</li>
-          <li>Debates sobre actualidad económica</li>
+          <li>Preguntas y respuestas</li>
+          <li>Debates económicos</li>
           <li>Aprende de la comunidad</li>
         </ul>
       </div>
-      <div class="service-visual">
+      <div class="service-visual" aria-label="Ejemplo de publicación en foro">
         <div class="service-visual-card foro-card">
           <div class="content-tag">Pregunta</div>
-          <h4>¿Cuál es la mejor estrategia para invertir los primeros ahorros?</h4>
-          <p>Tengo unos ahorros y me gustaría saber cómo empezar a invertirlos de forma segura...</p>
+          <h4>¿Cuál es la mejor estrategia para invertir?</h4>
+          <p>Tengo unos ahorros...</p>
           <div class="content-meta">Por Carlos Gómez · 5 respuestas</div>
         </div>
       </div>
@@ -117,38 +128,39 @@
     <div class="service-block">
       <div class="service-text">
         <h2>Retos mensuales</h2>
-        <p>Cada mes, Puedes proponerte retos financieros pensados para ayudarte a tomar conciencia de tus gastos y mejorar tus hábitos económicos de forma progresiva y divertida.</p>
+        <p>Cada mes puedes proponerte retos...</p>
         <ul>
-          <li>Retos concretos y alcanzables</li>
-          <li>Seguimiento de tu progreso</li>
-          <li>Mejora tus hábitos sin esfuerzo</li>
+          <li>Retos alcanzables</li>
+          <li>Seguimiento</li>
+          <li>Mejora hábitos</li>
         </ul>
       </div>
-      <div class="service-visual">
+      <div class="service-visual" aria-label="Ejemplo de retos financieros">
         <div class="service-visual-card retos-card">
           <div class="reto-mini">
-            <div><strong>Coche nuevo</strong><br><span class="reto-desc">5000/10000</span></div>
+            <div><strong>Coche nuevo</strong><br><span class="reto-desc">5000 de 10000 euros</span></div>
           </div>
           <div class="reto-mini">
-            <div><strong>Ahorra el 10% de tu sueldo</strong><br><span class="reto-desc">Destina el 10% al ahorro</span></div>
+            <div><strong>Ahorra el 10% de tu sueldo</strong><br><span class="reto-desc">Destina el 10% al ahorro</span>
+            </div>
           </div>
-          
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
-
 <!-- FOOTER -->
-<footer>
+<footer role="contentinfo" aria-label="Pie de página">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a routerLink="/inicio" class="nav-logo">
-        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="32" height="32" style="object-fit: contain;" />
+      <a routerLink="/inicio" class="nav-logo" aria-label="Ir a inicio">
+        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+          alt="Logo de Nexora" width="32" height="32" style="object-fit: contain;" />
         <span>NEXORA</span>
       </a>
-      <p>Plataforma de gestión de gastos y hábitos financieros. Desarrollada por el equipo ADDA.</p>
+      <p>Plataforma de gestión de gastos y hábitos financieros.</p>
     </div>
     <div class="footer-col">
       <h5>Producto</h5>
@@ -165,6 +177,11 @@
   </div>
   <div class="footer-bottom">
     <span>© 2025 Nexora. Todos los derechos reservados.</span>
-    <span class="contact">¿Preguntas? <a href="mailto:contacto@nexora.app">contacto&#64;nexora.app</a></span>
+    <span class="contact">
+      ¿Preguntas?
+      <a href="mailto:contacto@nexora.app" aria-label="Enviar email a soporte">
+        contacto&#64;nexora.app
+      </a>
+    </span>
   </div>
 </footer>

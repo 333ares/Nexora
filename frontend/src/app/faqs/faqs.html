@@ -1,50 +1,66 @@
 <!-- NAV -->
-<nav>
-  <a routerLink="/inicio" class="nav-logo">
-    <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="36" height="36" style="object-fit: contain;" />
+<nav role="navigation" aria-label="Navegación principal">
+  <a routerLink="/inicio" class="nav-logo" aria-label="Ir a inicio">
+    <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Logo de Nexora" width="36" height="36" style="object-fit: contain;" />
     <span>NEXORA</span>
   </a>
-  <div class="nav-links">
-    <a routerLink="/servicios">Servicios</a>
-    <a routerLink="/planes">Planes</a>
-    <a routerLink="/faqs" class="active">FAQ</a>
-    <a routerLink="/acerca-de">Nosotros</a>
-    <a routerLink="/contacto">Contacto</a>
+
+  <div class="nav-links" role="menubar">
+    <a routerLink="/servicios" role="menuitem">Servicios</a>
+    <a routerLink="/planes" role="menuitem">Planes</a>
+    <a routerLink="/faqs" class="active" aria-current="page" role="menuitem">FAQ</a>
+    <a routerLink="/acerca-de" role="menuitem">Nosotros</a>
+    <a routerLink="/contacto" role="menuitem">Contacto</a>
   </div>
-  <div class="nav-cta">
+
+  <div class="nav-cta" aria-label="Acciones de usuario">
     <a routerLink="/login" class="btn-nav-secondary">Acceder</a>
     <a routerLink="/registro" class="btn-nav-primary">Registrarse →</a>
   </div>
 </nav>
 
+<main id="contenido-principal">
+
 <!-- HERO -->
-<section class="page-hero">
-  <div class="page-hero-pattern"></div>
+<section class="page-hero" role="region" aria-labelledby="faq-title">
+  <div class="page-hero-pattern" aria-hidden="true"></div>
   <div class="container">
     <p class="section-eyebrow">Centro de ayuda</p>
-    <h1 class="page-hero-title">Preguntas frecuentes</h1>
-    <p class="page-hero-subtitle">Encuentra respuestas rápidas a las dudas más comunes sobre Nexora, planes, funcionalidades y seguridad.</p>
+    <h1 id="faq-title" class="page-hero-title">Preguntas frecuentes</h1>
+    <p class="page-hero-subtitle">
+      Encuentra respuestas rápidas a las dudas más comunes sobre Nexora, planes, funcionalidades y seguridad.
+    </p>
   </div>
 </section>
 
-
-
 <!-- FAQ LIST -->
-<section class="faq-content">
+<section class="faq-content" role="region" aria-labelledby="faq-list-title">
   <div class="container">
+    <h2 id="faq-list-title" class="sr-only">Listado de preguntas frecuentes</h2>
+
     <div class="faq-list">
       @for (item of faqItems; track item.id) {
         <details class="faq-item">
-          <summary class="faq-question">
+          <summary class="faq-question" aria-expanded="false">
             <div class="faq-q-left">
-              <span class="faq-cat-dot" [attr.data-cat]="item.categoria"></span>
-              {{ item.pregunta }}
+              <span 
+                class="faq-cat-dot" 
+                [attr.data-cat]="item.categoria"
+                aria-hidden="true"
+              ></span>
+              <span>{{ item.pregunta }}</span>
             </div>
-            <span class="faq-chevron">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+
+            <span class="faq-chevron" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
             </span>
           </summary>
-          <div class="faq-answer">{{ item.respuesta }}</div>
+
+          <div class="faq-answer" role="region">
+            {{ item.respuesta }}
+          </div>
         </details>
       }
     </div>
@@ -52,41 +68,55 @@
 </section>
 
 <!-- CTA -->
-<section class="faq-cta">
+<section class="faq-cta" role="region" aria-labelledby="cta-title">
   <div class="container">
     <div class="cta-box">
-      <h2>¿No encuentras lo que buscas?</h2>
+      <h2 id="cta-title">¿No encuentras lo que buscas?</h2>
       <p>Escríbenos y te responderemos lo antes posible.</p>
-      <a routerLink="/contacto" class="btn-primary">Contactar →</a>
+      <a routerLink="/contacto" class="btn-primary" aria-label="Ir a la página de contacto">
+        Contactar →
+      </a>
     </div>
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
-<footer>
+<footer role="contentinfo" aria-label="Pie de página">
   <div class="footer-inner">
+
     <div class="footer-brand">
-      <a routerLink="/inicio" class="nav-logo">
-        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="32" height="32" style="object-fit: contain;" />
+      <a routerLink="/inicio" class="nav-logo" aria-label="Ir a inicio">
+        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Logo de Nexora" width="32" height="32" style="object-fit: contain;" />
         <span>NEXORA</span>
       </a>
       <p>Plataforma de gestión de gastos y hábitos financieros. Desarrollada por el equipo ADDA.</p>
     </div>
-    <div class="footer-col">
+
+    <div class="footer-col" aria-label="Enlaces de producto">
       <h5>Producto</h5>
       <a routerLink="/servicios">Servicios</a>
       <a routerLink="/planes">Planes</a>
     </div>
-    <div class="footer-col">
+
+    <div class="footer-col" aria-label="Enlaces de empresa">
       <h5>Empresa</h5>
       <a routerLink="/acerca-de">Acerca de ADDA</a>
       <a routerLink="/faqs">FAQ</a>
       <a routerLink="/contacto">Contacto</a>
       <a routerLink="/politica-privacidad">Política de privacidad</a>
     </div>
+
   </div>
+
   <div class="footer-bottom">
     <span>© 2025 Nexora. Todos los derechos reservados.</span>
-    <span class="contact">¿Preguntas? <a href="mailto:contacto@nexora.app">contacto&#64;nexora.app</a></span>
+    <span class="contact">
+      ¿Preguntas?
+      <a href="mailto:contacto@nexora.app" aria-label="Enviar correo a soporte">
+        contacto&#64;nexora.app
+      </a>
+    </span>
   </div>
 </footer>
