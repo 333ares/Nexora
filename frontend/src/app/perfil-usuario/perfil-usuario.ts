@@ -96,12 +96,12 @@ export class PerfilUsuario implements OnInit {
       next: () => {
         this.authService.removeToken();
         this.authService.removeUsuario();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/inicio']);
       },
       error: () => {
         this.authService.removeToken();
         this.authService.removeUsuario();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/inicio']);
       }
     });
   }
@@ -123,12 +123,12 @@ export class PerfilUsuario implements OnInit {
       next: () => {
         this.authService.removeToken();
         this.authService.removeUsuario();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/inicio']);
       },
       error: () => {
         this.authService.removeToken();
         this.authService.removeUsuario();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/inicio']);
       }
     });
   }
