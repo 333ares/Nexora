@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\EstadisticasController;
@@ -51,4 +52,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/reto', [RetoController::class, 'borrarReto']);
     Route::post('/reto/aportar', [RetoController::class, 'aportarDinero']);
     Route::post('/reto/retirar', [RetoController::class, 'retirarDinero']);
+
+    // Admin
+    Route::get('/admin/usuarios', [AdminController::class, 'listarUsuarios']);
+    Route::post('/admin/bloquear', [AdminController::class, 'bloquearUsuario']);
+    Route::post('/admin/desbloquear', [AdminController::class, 'desbloquearUsuario']);
+    Route::delete('/admin/usuario', [AdminController::class, 'eliminarUsuario']);
 });
