@@ -59,7 +59,6 @@ export const routes: Routes = [
   {
     path: 'login', //es lo que aparece en la URL.
     component: Login, // Login es el componente que se mostrará
-    canActivate: [AuthGuard]
   },
   {
     path: 'perfil',
