@@ -16,7 +16,7 @@ class AdminController extends Controller
         // Solo el admin tiene el id 1
         if ($admin == 1) {
             // Coger todos los usuarios
-            $usuarios = Usuario::all();
+            $usuarios = Usuario::where('IDusuario', '!=', 1)->get();
 
             // Si no hay usuarios, devolver un mensaje de error
             if (count($usuarios) <= 0) {
@@ -115,7 +115,7 @@ class AdminController extends Controller
 
             // Devolver el usuario desbloqueado
             return response()->json([
-                'message' => 'success', 
+                'message' => 'success',
                 'usuario' => $usuario
             ], 200);
         } else {
