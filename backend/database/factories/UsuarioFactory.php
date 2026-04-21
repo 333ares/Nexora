@@ -13,7 +13,6 @@ class UsuarioFactory extends Factory
 {
     public function definition(): array
     {
-        $email = "user@gmail.com";
         $password = "12345!";
 
         return [
@@ -21,8 +20,19 @@ class UsuarioFactory extends Factory
             'nombre' => fake()->name(),
             'apellidos' => fake()->lastName(),
             'balance_total' => fake()->randomFloat(2, 0, 1000),
-            'email' => $email,
-            'password' => Hash::make($password)
+            'email' => 'user@gmail.com',
+            'password' => Hash::make($password),
+            'estado' => 'activo'
         ];
+    }
+
+    public function admin(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'usuario' => 'admin',
+                'email' => 'admin@gmail.com'
+            ];
+        });
     }
 }

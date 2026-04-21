@@ -16,7 +16,6 @@ class MovimientosFactory extends Factory
      */
     public function definition(): array
     {
-        // Definimos los grupos según tus reglas
         $categoriasIngreso = ['Nomina', 'Capital y alquileres', 'Negocios y ventas', 'Otros'];
         $categoriasGasto = ['Ocio', 'Supervivencia', 'Cultura', 'Extras o imprevistos'];
 
@@ -32,7 +31,7 @@ class MovimientosFactory extends Factory
                 : $this->faker->randomElement($categoriasGasto),
             'fecha' => $this->faker->dateTimeBetween('-3 months', 'now'),
             'descripcion' => $this->faker->sentence(4),
-            'usuario_id' => 1, // Cambia esto si tienes lógica de usuarios dinámica
+            'usuario_id' => 1
         ];
     }
 }

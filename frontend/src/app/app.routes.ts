@@ -3,6 +3,7 @@ import { Login } from './login/login';
 import { PerfilUsuario } from './perfil-usuario/perfil-usuario';
 import { Registro } from './registro/registro';
 import { AuthGuard } from './guards/auth-guard';
+import { AdminGuard } from './guards/admin-guard';
 import { Planes } from './planes/planes';
 import { Movimientos } from './movimientos/movimientos';
 import { Contacto } from './contacto/contacto';
@@ -16,11 +17,8 @@ import { Servicios } from './servicios/servicios';
 import { AcercaDe } from './acerca-de/acerca-de';
 import { Faqs } from './faqs/faqs';
 import { PoliticaPrivacidad } from './politica-privacidad/politica-privacidad';
-import { Academia } from './academia/academia';
-import { VerVideo } from './academia/ver-video/ver-video';
-import { AdministrarContenido } from './academia/administrar-contenido/administrar-contenido';
-import { AcademiaHome } from './academia/academia-home/academia-home';
 import { PanelAdmin } from './panel-admin/panel-admin';
+import { Foro } from './foro/foro';
 
 export const routes: Routes = [
   {
@@ -54,7 +52,7 @@ export const routes: Routes = [
   {
     path: 'panel-admin',
     component: PanelAdmin,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'login', //es lo que aparece en la URL.
@@ -68,6 +66,11 @@ export const routes: Routes = [
   {
     path: 'registro',
     component: Registro,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'foro',
+    component: Foro,
     canActivate: [AuthGuard]
   },
   {
@@ -88,25 +91,6 @@ export const routes: Routes = [
     path: 'contacto',
     component: Contacto,
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'academia',
-    component: Academia,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        component: AcademiaHome,          // pantalla principal (slider + popular)
-      },
-      {
-        path: 'ver-video',
-        component: VerVideo,              // vista detalle de video (estilo YouTube)
-      },
-      {
-        path: 'administrar',
-        component: AdministrarContenido,  // gestión de contenido propio
-      },
-    ],
   },
   {
     path: '',

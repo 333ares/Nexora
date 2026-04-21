@@ -16,17 +16,6 @@ return new class extends Migration
             $table->longText('texto'); //String soporta hasta 255 caracteres, pero los chunks tienen mas de esa cifra.
             $table->longText('embedding'); //Porque contiene arrays de numeros tipo 0.123...
             $table->string('fuente', 255);
-
-            // Clave Foránea hacia USUARIOS
-            $table->foreignId('IDusuario')
-                ->constrained('usuarios', 'IDusuario')
-                ->onDelete('cascade');
-
-            // Clave Foránea hacia ACADEMIA
-            $table->foreignId('IDcontenido')
-                ->constrained('academia', 'IDcontenido')
-                ->onDelete('cascade');
-
             $table->timestamps();
         });
     }
