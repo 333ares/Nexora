@@ -88,12 +88,12 @@ class AuthController extends Controller
             'message' => 'Inicio de sesión correcto',
             'token' => $token,
             'usuario' => [
-                'id'        => $usuario->IDusuario,
-                'usuario'   => $usuario->usuario,
-                'nombre'    => $usuario->nombre,
+                'id' => $usuario->IDusuario,
+                'usuario' => $usuario->usuario,
+                'nombre' => $usuario->nombre,
                 'apellidos' => $usuario->apellidos,
-                'email'     => $usuario->email,
-                'estado'    => $usuario->estado,
+                'email' => $usuario->email,
+                'estado' => $usuario->estado,
             ]
         ], 200);
     }
