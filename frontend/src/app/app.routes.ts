@@ -3,6 +3,7 @@ import { Login } from './login/login';
 import { PerfilUsuario } from './perfil-usuario/perfil-usuario';
 import { Registro } from './registro/registro';
 import { AuthGuard } from './guards/auth-guard';
+import { AdminGuard } from './guards/admin-guard';
 import { Planes } from './planes/planes';
 import { Movimientos } from './movimientos/movimientos';
 import { Contacto } from './contacto/contacto';
@@ -54,7 +55,7 @@ export const routes: Routes = [
   {
     path: 'panel-admin',
     component: PanelAdmin,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'login', //es lo que aparece en la URL.
