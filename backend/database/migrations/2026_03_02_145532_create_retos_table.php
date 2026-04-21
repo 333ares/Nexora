@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('fecha_final');
             $table->boolean('cumplido');
             $table->boolean('activo');
-            $table->foreignId('usuario_id');
+            $table->foreignId('usuario_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

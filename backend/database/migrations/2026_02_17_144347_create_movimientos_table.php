@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('categoria');
             $table->dateTime('fecha');
             $table->string('descripcion')->nullable();
-            $table->foreignId('usuario_id');
+            $table->foreignId('usuario_id')->onDelete('cascade'); //Relacion con usuarios, si se borra el usuario se borran sus movimientos
             $table->timestamps();
         });
     }
