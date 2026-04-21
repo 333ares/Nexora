@@ -5,7 +5,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { NgClass, isPlatformBrowser } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Auth } from '../services/auth';
 import { FormsModule } from '@angular/forms';
 
@@ -46,7 +46,12 @@ export class Login implements OnInit, OnDestroy {
         if (Number(response.usuario?.id) === 1) {
           this.router.navigate(['/panel-admin']);
         } else {
-          this.router.navigate(['/movimientos']);
+          // Si el usuario está bloqueado, se redirige a la página de bloqueo
+          if (response.usuario?.estado === 'bloqueado') {
+            this.router.navigate(['/usuario-bloqueado']);
+          } else {
+            this.router.navigate(['/movimientos']);
+          }
         }
       },
       error: (error) => {
