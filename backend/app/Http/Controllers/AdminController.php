@@ -11,7 +11,7 @@ class AdminController extends Controller
     public function listarUsuarios(Request $request)
     {
         // Coger el id del admin
-        $admin = $request->user()->id;
+        $admin = $request->user()->IDusuario;
 
         // Solo el admin tiene el id 1
         if ($admin == 1) {
@@ -42,7 +42,7 @@ class AdminController extends Controller
 
     public function bloquearUsuario(Request $request)
     {
-        $admin = $request->user()->id;
+        $admin = $request->user()->IDusuario;
 
         if ($admin == 1) {
             // Validar que el user_id es un entero y que existe en la base de datos
@@ -87,7 +87,7 @@ class AdminController extends Controller
 
     public function desbloquearUsuario(Request $request)
     {
-        $admin = $request->user()->id;
+        $admin = $request->user()->IDusuario;
 
         if ($admin == 1) {
             $validator = Validator::make($request->all(), [
@@ -128,7 +128,7 @@ class AdminController extends Controller
 
     public function eliminarUsuario(Request $request)
     {
-        $admin = $request->user()->id;
+        $admin = $request->user()->IDusuario;
 
         if ($admin == 1) {
             $validator = Validator::make($request->all(), [
