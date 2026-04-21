@@ -3,22 +3,24 @@
     <div class="topbar-left">
       <div class="topbar-logo">
         <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
-             alt="Nexora" width="36" height="36" />
+          alt="Nexora" width="36" height="36" />
         <span>NEXORA</span>
       </div>
       <div class="topbar-title">
         <span>Panel de Administración</span>
       </div>
     </div>
-    
+
     <div class="topbar-right">
       <span class="admin-badge">Administrador</span>
-      <button class="btn-logout">Cerrar sesión →</button>
+      <button class="btn-logout" (click)="cerrarSesion()">Cerrar sesión →</button>
     </div>
   </header>
 
   <main class="admin-main">
     <div class="content-area">
+
+      <!-- STATS -->
       <div class="stats-row">
         <div class="stat-pill">
           <span class="stat-num">{{ usuarios.length }}</span>
@@ -34,16 +36,21 @@
         </div>
       </div>
 
+      <!-- TOOLBAR -->
       <div class="toolbar">
         <input class="search-input" type="text" placeholder="Buscar por usuario, nombre o email…"
-               [(ngModel)]="busquedaUsuario" />
+          [(ngModel)]="busquedaUsuario" />
         <div class="filter-tabs">
-          <button class="filter-tab" [class.active]="filtroUsuario === 'todos'" (click)="filtroUsuario = 'todos'">Todos</button>
-          <button class="filter-tab" [class.active]="filtroUsuario === 'Activo'" (click)="filtroUsuario = 'Activo'">Activos</button>
-          <button class="filter-tab" [class.active]="filtroUsuario === 'Bloqueado'" (click)="filtroUsuario = 'Bloqueado'">Bloqueados</button>
+          <button class="filter-tab" [class.active]="filtroUsuario === 'todos'"
+            (click)="filtroUsuario = 'todos'">Todos</button>
+          <button class="filter-tab" [class.active]="filtroUsuario === 'activo'"
+            (click)="filtroUsuario = 'activo'">Activos</button>
+          <button class="filter-tab" [class.active]="filtroUsuario === 'bloqueado'"
+            (click)="filtroUsuario = 'bloqueado'">Bloqueados</button>
         </div>
       </div>
 
+      <!-- TABLE -->
       <div class="table-wrap">
         <table class="admin-table">
           <thead>
@@ -57,60 +64,80 @@
             </tr>
           </thead>
           <tbody>
+            @if (cargando) {
+            <tr>
+              <td colspan="6" class="empty-row">Cargando usuarios…</td>
+            </tr>
+            } @else if (usuariosFiltrados.length === 0) {
+            <tr>
+              <td colspan="6" class="empty-row">No se encontraron usuarios.</td>
+            </tr>
+            } @else {
             @for (u of usuariosFiltrados; track u.id) {
-              <tr [class.row-blocked]="u.estado === 'Bloqueado'">
-                <td class="td-id">{{ u.id }}</td>
-                <td class="td-user">
-                  <div class="user-avatar">{{ u.usuario.charAt(0).toUpperCase() }}</div>
-                  <span>{{ u.usuario }}</span>
-                </td>
-                <td>{{ u.nombre }} {{ u.apellidos }}</td>
-                <td class="td-email">{{ u.email }}</td>
-                <td>
-                  <span class="estado-dot" [ngClass]="'estado--' + u.estado.toLowerCase()">
-                    {{ u.estado }}
-                  </span>
-                </td>
-                <td class="td-actions">
-                  @if (u.estado !== 'Bloqueado') {
-                    <button class="action-btn action-btn--warn" (click)="abrirConfirmacion('bloquear', u)" title="Bloquear cuenta">🔒</button>
-                  } @else {
-                    <button class="action-btn action-btn--green" (click)="abrirConfirmacion('desbloquear', u)" title="Desbloquear cuenta">🔓</button>
-                  }
-                  <button class="action-btn action-btn--danger" (click)="abrirConfirmacion('eliminar', u)" title="Eliminar cuenta">🗑</button>
-                </td>
-              </tr>
+            <tr [class.row-blocked]="esBloqueado(u)">
+              <td class="td-id">{{ u.id }}</td>
+              <td class="td-user">
+                <div class="user-avatar">{{ u.usuario.charAt(0).toUpperCase() }}</div>
+                <span>{{ u.usuario }}</span>
+              </td>
+              <td>{{ u.nombre }} {{ u.apellidos }}</td>
+              <td class="td-email">{{ u.email }}</td>
+              <td>
+                <span class="estado-dot" [ngClass]="claseEstado(u.estado)">
+                  {{ u.estado | titlecase }}
+                </span>
+              </td>
+              <td class="td-actions">
+                @if (!esBloqueado(u)) {
+                <button class="action-btn action-btn--warn" (click)="abrirConfirmacion('bloquear', u)"
+                  title="Bloquear cuenta">🔒</button>
+                } @else {
+                <button class="action-btn action-btn--green" (click)="abrirConfirmacion('desbloquear', u)"
+                  title="Desbloquear cuenta">🔓</button>
+                }
+                <button class="action-btn action-btn--danger" (click)="abrirConfirmacion('eliminar', u)"
+                  title="Eliminar cuenta">🗑</button>
+              </td>
+            </tr>
+            }
             }
           </tbody>
         </table>
       </div>
+
     </div>
   </main>
 </div>
 
+<!-- MODAL CONFIRMACIÓN -->
 @if (modalConfirmar) {
-  <div class="modal-overlay" (click)="cerrarModales()">
-    <div class="modal modal--sm" (click)="$event.stopPropagation()">
-      <div class="modal-header">
-        <h3>{{ tituloModal }}</h3>
-        <button class="modal-close" (click)="cerrarModales()">✕</button>
-      </div>
-      <div class="modal-body">
-        <p class="confirm-text">{{ mensajeConfirmar }}</p>
-        @if (tipoAccion === 'eliminar' || tipoAccion === 'bloquear') {
-          <p class="confirm-warning">
-            {{ tipoAccion === 'eliminar' ? 'Esta acción es irreversible.' : 'El usuario no podrá acceder a la plataforma.' }}
-          </p>
-        }
-      </div>
-      <div class="modal-footer">
-        <button class="btn-modal" 
-                [ngClass]="tipoAccion === 'eliminar' ? 'btn-modal--danger' : 'btn-modal--success'"
-                (click)="cerrarModales()">
-          Confirmar
-        </button>
-        <button class="btn-modal btn-modal--ghost" (click)="cerrarModales()">Cancelar</button>
-      </div>
+<div class="modal-overlay" (click)="cerrarModales()">
+  <div class="modal modal--sm" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>{{ tituloModal }}</h3>
+      <button class="modal-close" (click)="cerrarModales()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="confirm-text">{{ mensajeConfirmar }}</p>
+      @if (tipoAccion === 'eliminar' || tipoAccion === 'bloquear') {
+      <p class="confirm-warning">
+        {{ tipoAccion === 'eliminar' ? 'Esta acción es irreversible.' : 'El usuario no podrá acceder a la plataforma.'
+        }}
+      </p>
+      }
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal" [ngClass]="tipoAccion === 'eliminar' ? 'btn-modal--danger' : 'btn-modal--success'"
+        [disabled]="ejecutando" (click)="confirmarAccion()">
+        {{ ejecutando ? 'Procesando…' : 'Confirmar' }}
+      </button>
+      <button class="btn-modal btn-modal--ghost" [disabled]="ejecutando" (click)="cerrarModales()">Cancelar</button>
     </div>
   </div>
+</div>
+}
+
+<!-- TOAST -->
+@if (toastMsg) {
+<div class="toast" [class.toast--error]="toastError">{{ toastMsg }}</div>
 }
