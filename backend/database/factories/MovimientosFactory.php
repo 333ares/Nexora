@@ -31,7 +31,7 @@ class MovimientosFactory extends Factory
                 : $this->faker->randomElement($categoriasGasto),
             'fecha' => $this->faker->dateTimeBetween('-3 months', 'now'),
             'descripcion' => $this->faker->sentence(4),
-            'usuario_id' => 1
+            'usuario_id' => 2
         ];
     }
 }
