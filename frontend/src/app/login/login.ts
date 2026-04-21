@@ -43,7 +43,7 @@ export class Login implements OnInit, OnDestroy {
         this.authService.saveUsuario(response.usuario);
 
         // Se redirige en base a si eres admin o usuario normal
-        if (response.usuario?.id === 1) {
+        if (Number(response.usuario?.id) === 1) {
           this.router.navigate(['/panel-admin']);
         } else {
           this.router.navigate(['/movimientos']);
