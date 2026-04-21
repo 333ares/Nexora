@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('rango'); //No es enum porque es el progrmaa el que selecciona el rango
             $table->enum('estado', ['Activo', 'Inactivo', 'Bloqueado'])->default('Activo'); //Por defecto el perfil está activo
-            $table->enum('rol', ['usuario', 'admin'])->default('usuario');
             $table->timestamps();
         });
 

@@ -40,6 +40,5 @@ class Usuario extends Authenticatable
         'balance_total' => 0.0,
         'estado' => 'activo',
         'rango' => '-',
-        'rol' => 'usuario'
     ];
 }
