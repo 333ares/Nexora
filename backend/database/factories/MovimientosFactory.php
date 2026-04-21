@@ -30,8 +30,7 @@ class MovimientosFactory extends Factory
                 ? $this->faker->randomElement($categoriasIngreso)
                 : $this->faker->randomElement($categoriasGasto),
             'fecha' => $this->faker->dateTimeBetween('-3 months', 'now'),
-            'descripcion' => $this->faker->sentence(4),
-            'usuario_id' => 2
+            'descripcion' => $this->faker->sentence(4)
         ];
     }
 }
