@@ -121,6 +121,24 @@ export class Auth {
   }
 
   // --- ADMIN ---
+  listarUsuarios(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/admin/usuarios`, { headers: this.getHeaders() });
+  }
+
+  bloquearUsuario(user_id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/admin/bloquear`, { user_id }, { headers: this.getHeaders() });
+  }
+
+  desbloquearUsuario(user_id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/admin/desbloquear`, { user_id }, { headers: this.getHeaders() });
+  }
+
+  eliminarUsuario(user_id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/admin/usuario`, {
+      headers: this.getHeaders(),
+      body: { user_id }
+    });
+  }
 
 
   // --- LOCAL STORAGE ---
