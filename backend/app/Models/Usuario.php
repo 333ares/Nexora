@@ -25,20 +25,17 @@ class Usuario extends Authenticatable
         'balance_total',
         'email',
         'password',
-        'estado',
-        'rango',
-        'rol'
+        'estado'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
-    
+
     protected $attributes = [
         'linkedin' => '-',
         'balance_total' => 0.0,
         'estado' => 'activo',
-        'rango' => '-',
     ];
 }

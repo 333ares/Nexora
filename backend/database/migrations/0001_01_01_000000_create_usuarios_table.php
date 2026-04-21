@@ -20,7 +20,6 @@ return new class extends Migration
             $table->decimal('balance_total', 15, 2); //15 digitos enteros y 2 decimales. Por defecto marca 0.00
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('rango'); //No es enum porque es el progrmaa el que selecciona el rango
             $table->enum('estado', ['Activo', 'Inactivo', 'Bloqueado'])->default('Activo'); //Por defecto el perfil está activo
             $table->timestamps();
         });
