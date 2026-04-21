@@ -34,7 +34,7 @@ export class PanelAdmin implements OnInit {
   mensajeConfirmar = '';
   tipoAccion: 'bloquear' | 'desbloquear' | 'eliminar' | null = null;
   usuarioSeleccionado: Usuario | null = null;
-  ejecutando = false; // evita doble clic mientras la petición está en curso
+  ejecutando = false;
 
   // Toast
   toastMsg = '';
@@ -48,18 +48,28 @@ export class PanelAdmin implements OnInit {
   }
 
   // CARGA INICIAL
+  // El backend devuelve IDusuario en lugar de id, se mapea aquí
   cargarUsuarios(): void {
     this.cargando = true;
     this.authService.listarUsuarios().subscribe({
       next: (res) => {
-        this.usuarios = Array.isArray(res.usuarios) ? res.usuarios : [];
+        const raw = Array.isArray(res.usuarios) ? res.usuarios : [];
+        this.usuarios = raw.map((u: any) => ({
+          id: u.IDusuario ?? u.id,
+          usuario: u.usuario,
+          nombre: u.nombre,
+          apellidos: u.apellidos,
+          email: u.email,
+          estado: u.estado,
+        }));
         this.cargando = false;
         this.cdr.detectChanges();
-
       },
       error: (err) => {
         this.cargando = false;
-        const msg = err.status === 403 ? 'No tienes permisos de administrador.' : 'Error al cargar usuarios.';
+        const msg = err.status === 403
+          ? 'No tienes permisos de administrador.'
+          : 'Error al cargar usuarios.';
         this.mostrarToast(msg, true);
         this.cdr.detectChanges();
       }
@@ -95,9 +105,9 @@ export class PanelAdmin implements OnInit {
     this.modalConfirmar = true;
 
     const nombres: Record<typeof accion, string> = {
-      bloquear: '⚠️ Bloquear usuario',
-      desbloquear: '🔓 Desbloquear usuario',
-      eliminar: '🗑 Eliminar usuario',
+      bloquear: 'Bloquear usuario',
+      desbloquear: 'Desbloquear usuario',
+      eliminar: 'Eliminar usuario',
     };
     const mensajes: Record<typeof accion, string> = {
       bloquear: `¿Estás seguro de que quieres bloquear a ${u.usuario}?`,
@@ -149,6 +159,8 @@ export class PanelAdmin implements OnInit {
         }
 
         this.cerrarModales();
+        this.cdr.detectChanges();
+
       },
       error: (err) => {
         this.ejecutando = false;
@@ -157,6 +169,8 @@ export class PanelAdmin implements OnInit {
             err.status === 403 ? 'No tienes permisos.' :
               'Error al realizar la acción.';
         this.mostrarToast(msg, true);
+        this.cdr.detectChanges();
+
       }
     });
   }
@@ -164,15 +178,17 @@ export class PanelAdmin implements OnInit {
   // LOGOUT
   cerrarSesion(): void {
     this.authService.logout().subscribe({
-      next: () => { this.limpiarSesion(); },
-      error: () => { this.limpiarSesion(); }
+      next: () => {
+        this.authService.removeToken();
+        this.authService.removeUsuario();
+        this.router.navigate(['/inicio']);
+      },
+      error: () => {
+        this.authService.removeToken();
+        this.authService.removeUsuario();
+        this.router.navigate(['/inicio']);
+      }
     });
-  }
-
-  private limpiarSesion(): void {
-    this.authService.removeToken();
-    this.authService.removeUsuario();
-    this.router.navigate(['/login']);
   }
 
   // TOAST
