@@ -87,7 +87,14 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Inicio de sesión correcto',
             'token' => $token,
-            'usuario' => $usuario->only(['IDusuario', 'usuario', 'nombre', 'apellidos', 'email', 'estado'])
+            'usuario' => [
+                'id'        => $usuario->IDusuario,
+                'usuario'   => $usuario->usuario,
+                'nombre'    => $usuario->nombre,
+                'apellidos' => $usuario->apellidos,
+                'email'     => $usuario->email,
+                'estado'    => $usuario->estado,
+            ]
         ], 200);
     }
 

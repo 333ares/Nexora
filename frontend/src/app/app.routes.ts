@@ -66,7 +66,6 @@ export const routes: Routes = [
   {
     path: 'registro',
     component: Registro,
-    canActivate: [AuthGuard]
   },
   {
     path: 'foro',

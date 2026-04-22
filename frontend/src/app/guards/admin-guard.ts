@@ -9,6 +9,12 @@ export class AdminGuard implements CanActivate {
   canActivate(): boolean {
     const usuario = this.auth.getUsuario();
 
-    return usuario?.id === 1;
+    if (Number(usuario?.id) === 1) {
+      return true;
+    }
+
+    this.router.navigate(['/login']); // redirige si no es admin
+    return false;
+
   }
 }

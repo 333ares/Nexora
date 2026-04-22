@@ -16,8 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Usuario::factory(1)->create();
-        Movimientos::factory()->count(100)->create();
-
+        Usuario::factory()->admin()->create();
+        Usuario::factory()->create();
+        Movimientos::factory()->count(100)->create([
+            'usuario_id' => 2
+        ]);
     }
 }
