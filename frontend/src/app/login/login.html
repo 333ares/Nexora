@@ -4,42 +4,38 @@
     <div class="left-panel">
 
         <!-- Logo -->
-        <div class="logo">
-            <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Logo de la aplicación Nexora"
-                width="56" height="56" />
+        <div class="logo" routerLink="/inicio">
+            <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="" width="56" height="56" />
         </div>
 
         <!-- Título y descripción -->
-        <h1 class="title">Inicio de sesión</h1>
+        <h1 class="title">{{ 'LOGIN.TITLE' | translate }}</h1>
         <p class="subtitle">
-            Vuelve a tu diario financiero para organizar tus presupuestos y asegurar tu tranquilidad económica
+            {{ 'LOGIN.SUBTITLE' | translate }}
         </p>
 
         <!-- Formulario -->
-        <form (ngSubmit)="onLogin()" aria-label="Formulario de inicio de sesión">
+        <form (ngSubmit)="onLogin()">
             <!-- Email -->
             <div class="form-group">
-                <label for="email">Correo electrónico</label>
-                <input type="email" id="email" name="email" placeholder="Tu correo electrónico" [(ngModel)]="email"
-                    required autocomplete="email" aria-required="true" />
+                <label for="email">{{ 'LOGIN.EMAIL_LABEL' | translate }}</label>
+                <input type="email" id="email" name="email" [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
+                    [(ngModel)]="email" required />
             </div>
 
             <!-- Contraseña -->
             <div class="form-group">
-                <label for="password">Contraseña</label>
+                <label for="password">{{ 'LOGIN.PASS_LABEL' | translate }}</label>
                 <div class="input-wrapper">
                     <!-- Input dinámico (muestra/oculta contraseña) -->
                     <input [type]="showPassword ? 'text' : 'password'" id="password" name="password"
-                        placeholder="Tu contraseña" [(ngModel)]="password" required autocomplete="current-password"
-                        aria-required="true" />
+                        [placeholder]="'LOGIN.PASS_PLACEHOLDER' | translate" [(ngModel)]="password" required />
 
                     <button type="button" class="toggle-pass"
-                        (click)="togglePassword(); $event.stopPropagation(); $event.preventDefault()"
-                        [attr.aria-pressed]="showPassword" aria-label="Mostrar u ocultar contraseña">
+                        (click)="togglePassword(); $event.stopPropagation(); $event.preventDefault()">
                         @if (!showPassword) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            aria-hidden="true">
+                            stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path
                                 d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
                             </path>
@@ -47,8 +43,7 @@
                         </svg>
                         } @else {
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            aria-hidden="true">
+                            stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                             <circle cx="12" cy="12" r="3"></circle>
                         </svg>
@@ -57,72 +52,61 @@
                 </div>
 
                 <!-- Recuperar contraseña -->
-                <div class="forgot">
-                    <a href="#" aria-label="Recuperar contraseña">¿Has olvidado tu contraseña?</a>
-                </div>
+                <div class="forgot"><a href="#">{{ 'LOGIN.FORGOT' | translate }}</a></div>
             </div>
-
             @if (successMessage) {
-            <div class="alert-success" role="status" aria-live="polite">
+            <div class="alert-success">
                 {{ successMessage }}
-                <button class="alert-close" (click)="successMessage = ''"
-                    aria-label="Cerrar mensaje de éxito">✕</button>
+                <button class="alert-close" (click)="successMessage = ''">✕</button>
             </div>
             }
 
             @if (errorMessage) {
-            <div class="alert-error" role="alert" aria-live="assertive">
+            <div class="alert-error">
                 {{ errorMessage }}
-                <button class="alert-close" (click)="errorMessage = ''" aria-label="Cerrar mensaje de error">✕</button>
+                <button class="alert-close" (click)="errorMessage = ''">✕</button>
             </div>
             }
 
             <!-- Botón login -->
-            <button type="submit" class="btn-login" [disabled]="isLoading" [attr.aria-disabled]="isLoading">
+            <button type="submit" class="btn-login" [disabled]="isLoading">
                 @if (isLoading) {
-                <span class="spinner" aria-hidden="true"></span> Accediendo...
+                <span class="spinner"></span> {{ 'LOGIN.BTN_LOADING' | translate }}
                 } @else {
-                Acceder
+                {{ 'LOGIN.BTN' | translate }}
                 }
             </button>
         </form>
 
         <!-- Separador -->
-        <div class="divider" aria-hidden="true"><span>o</span></div>
+        <div class="divider"><span>{{ 'LOGIN.OR' | translate }}</span></div>
 
         <!-- Registro -->
         <p class="register">
-            ¿Aún no tienes cuenta? <a routerLink="/registro">Regístrate</a>
+            {{ 'LOGIN.NO_ACCOUNT' | translate }} <a routerLink="/registro">{{ 'LOGIN.REGISTER_LINK' | translate }}</a>
         </p>
     </div>
 
     <!-- Panel derecho: parte visual -->
     <div class="right-panel">
-
-        <img src="https://i.postimg.cc/XYpBkbgT/Letras_Nexora.png" alt="Logo Nexora" class="logo2">
-
+        <img src="https://i.postimg.cc/XYpBkbgT/Letras_Nexora.png" alt="Logo Nexora letras" class="logo2">
         <!-- Carrusel de frases -->
-        <div class="quote-card" aria-roledescription="carrusel de frases">
-
+        <div class="quote-card">
             <div class="quotes-track-wrapper">
-                <div class="quotes-track" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'"
-                    [style.transition]="'transform 0.5s ease'" aria-live="polite">
-
+                <div class="quotes-track" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'">
                     @for (quote of quotes; track $index) {
-                    <div class="quote-slide" aria-label="Frase {{ $index + 1 }} de {{ quotes.length }}">
-                        <p class="quote-text">{{ quote.text }}</p>
-                        <p class="quote-author">{{ quote.author }}</p>
+                    <div class="quote-slide">
+                        <p class="quote-text">{{ quote.text | translate }}</p>
+                        <p class="quote-author">{{ quote.author | translate }}</p>
                     </div>
                     }
                 </div>
             </div>
 
             <!-- Indicadores -->
-            <div class="dots" role="tablist" aria-label="Indicadores del carrusel">
+            <div class="dots">
                 @for (quote of quotes; track $index) {
-                <span class="dot" [ngClass]="{ active: $index === currentIndex }" (click)="goTo($index)" role="button"
-                    tabindex="0" [attr.aria-label]="'Ir a la frase ' + ($index + 1)"
-                    [attr.aria-current]="$index === currentIndex ? 'true' : null"></span>
+                <span class="dot" [ngClass]="{ active: $index === currentIndex }" (click)="goTo($index)"></span>
                 }
             </div>
         </div>

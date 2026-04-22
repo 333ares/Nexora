@@ -2,16 +2,17 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ChangeDetectorRef,
+  ChangeDetectorRef
 } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Auth } from '../services/auth';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, TranslatePipe],
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })
@@ -20,8 +21,7 @@ export class Registro implements OnInit, OnDestroy {
   showPassword = false;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private authService: Auth, private router: Router, private cdr: ChangeDetectorRef
-  ) {
+  constructor(private fb: FormBuilder, private authService: Auth, private router: Router, private cdr: ChangeDetectorRef) {
     this.formulario = this.fb.group({
       nombre: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
@@ -55,7 +55,6 @@ export class Registro implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.isLoading = false;
-        this.cdr.detectChanges();
         if (typeof error.error?.errors === 'object') {
           const firstErrorKey = Object.keys(error.error.errors)[0];
           this.errorMessage = error.error.errors[firstErrorKey][0];
@@ -66,16 +65,17 @@ export class Registro implements OnInit, OnDestroy {
     });
   }
 
+
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
   quotes = [
-    { text: '"El precio es lo que pagas, el valor es lo que recibes"', author: '– Warren Buffett' },
-    { text: '"No ahorres lo que te queda después de gastar, gasta lo que te queda después de ahorrar"', author: '– Warren Buffett' },
-    { text: '"La inversión en conocimiento paga el mejor interés"', author: '– Benjamin Franklin' },
-    { text: '"El dinero es un buen sirviente pero un mal amo"', author: '– Francis Bacon' },
-    { text: '"Nunca gastes tu dinero antes de ganarlo"', author: '– Thomas Jefferson' },
+    { text: 'QUOTES.Q1.text', author: 'QUOTES.Q1.author' },
+    { text: 'QUOTES.Q6.text', author: 'QUOTES.Q6.author' },
+    { text: 'QUOTES.Q3.text', author: 'QUOTES.Q3.author' },
+    { text: 'QUOTES.Q4.text', author: 'QUOTES.Q4.author' },
+    { text: 'QUOTES.Q5.text', author: 'QUOTES.Q5.author' },
   ];
 
   currentIndex = 0;
@@ -91,7 +91,7 @@ export class Registro implements OnInit, OnDestroy {
 
   next() {
     this.currentIndex = (this.currentIndex + 1) % this.quotes.length;
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   goTo(i: number) {

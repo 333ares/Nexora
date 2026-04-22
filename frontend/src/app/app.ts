@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Auth } from './services/auth';
 import { filter } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -15,13 +16,23 @@ export class App implements OnInit {
   isLoggedIn: boolean = false;
   showHeader: boolean = false;
 
-  private rutasConHeader = ['/foro', '/movimientos', '/perfil'];
+  private rutasConHeader = ['/academia', '/movimientos', '/perfil'];
 
   constructor(
     private authService: Auth,
     private router: Router,
-    private cdr: ChangeDetectorRef
-  ) { }
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.translate.setDefaultLang('es');
+    if (isPlatformBrowser(this.platformId)) {
+      const savedLang = localStorage.getItem('lang') || 'es';
+      this.translate.use(savedLang);
+    } else {
+      this.translate.use('es');
+    }
+  }
 
   ngOnInit(): void {
     this.authService.isLoggedIn$.subscribe(value => {
