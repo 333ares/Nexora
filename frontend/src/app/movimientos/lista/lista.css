@@ -334,6 +334,21 @@
   font-size: 21px;
 }
 
+.bi-trash-fill {
+  color: #e74c3c;
+  font-size: 50px;
+}
+
+.bi-trash {
+  color: #e74c3c;
+  font-size: large;
+}
+
+.bi-pencil {
+  color: #3498db;
+  font-size: large;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
