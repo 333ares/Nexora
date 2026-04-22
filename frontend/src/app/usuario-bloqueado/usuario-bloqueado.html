@@ -1,0 +1,27 @@
+<div class="card">
+
+    <div class="logo">
+        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
+            alt="Nexora" width="48" height="48" />
+    </div>
+
+    <div class="avatar-placeholder">
+        @if (nombre && nombre.trim() !== '') {
+        <img [src]="getAvatarUrl()" alt="Avatar"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+        } @else {
+        <svg xmlns="http://w3.org" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#6dbf6e"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+        </svg>
+        }
+    </div>
+
+    <h1 class="title">Cuenta bloqueada</h1>
+    <p class="subtitle">Tu cuenta ha sido suspendida temporalmente por un administrador.</p>
+    <p class="hint">¿Crees que es un error? Escríbenos a <a href="mailto:soporte@nexora.com">soporte@nexora.com</a></p>
+
+    <button class="btn-volver" (click)="volverInicio()">Volver a la página de inicio</button>
+
+</div>
