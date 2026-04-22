@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageSelector } from '../language-selector/language-selector';
+import { Auth } from '../services/auth';
 
 @Component({
   selector: 'app-inicio',
@@ -11,6 +12,11 @@ import { LanguageSelector } from '../language-selector/language-selector';
   styleUrl: './inicio.css',
 })
 export class Inicio {
+  isLoggedIn = false;
+
+  constructor(private authService: Auth) {
+    this.isLoggedIn = !!this.authService.getToken();
+  }
 
   emailNewsletter: string = '';
 
