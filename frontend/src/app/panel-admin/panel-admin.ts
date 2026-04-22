@@ -31,7 +31,7 @@ export class PanelAdmin implements OnInit {
   // Paginación
   paginaActual = 1;
   usuariosPorPagina = 10;
-  
+
   // Control de modales
   modalConfirmar = false;
   tituloModal = '';
@@ -238,7 +238,11 @@ export class PanelAdmin implements OnInit {
   }
 
   // LOGOUT
-  cerrarSesion(): void {
+  isLoggingOut = false;
+
+  onLogout() {
+    this.isLoggingOut = true;
+
     this.authService.logout().subscribe({
       next: () => {
         this.authService.removeToken();

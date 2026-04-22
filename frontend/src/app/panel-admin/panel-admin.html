@@ -6,17 +6,21 @@
     <div class="brand-icon">
       <img src="https://i.postimg.cc/RFGT0P0K/Chat-GPT-Image-15-abr-2026-17-09-39.png" alt="Fincan.io logo" width="56"
         height="56" />
-    </div>
 
-    <!-- Text logo -->
-    <div class="brand-text">
+      <!-- Text logo -->
       <img src="https://i.postimg.cc/1tMKzWz4/Chat-GPT-Image-15-abr-2026-17-11-47.png" alt="Logo Nexora letras"
         class="logo2" />
     </div>
 
     <!-- Boton cerrar sesion -->
     <div class="topbar-right">
-      <button class="btn-logout" (click)="cerrarSesion()">Cerrar sesión →</button>
+      <button type="button" class="btn-logout" (click)="onLogout()" [disabled]="isLoggingOut">
+        @if (isLoggingOut) {
+        Cerrando sesión...
+        } @else {
+        Cerrar sesión
+        }
+      </button>
     </div>
   </header>
 
