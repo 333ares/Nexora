@@ -400,3 +400,10 @@
     transform: translateY(0);
   }
 }
+
+/* Botones deshabilitados en movimientos de reto */
+.btn-accion:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}

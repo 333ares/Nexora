@@ -68,10 +68,11 @@
       </span>
     </div>
     <div class="td td-acciones">
-      <button class="btn-accion btn-editar" title="Editar" (click)="abrirModalEditar(mov)"><i
-          class="bi bi-pencil"></i></button>
-      <button class="btn-accion btn-eliminar" title="Eliminar" (click)="abrirModalBorrar(mov.id)"><i
-          class="bi bi-trash"></i></button>
+      <!-- Deshabilitar botones para movimientos de reto -->
+      <button class="btn-accion btn-editar" title="Editar" [disabled]="mov.categoria?.startsWith('Reto:')"
+        (click)="abrirModalEditar(mov)"><i class="bi bi-pencil"></i></button>
+      <button class="btn-accion btn-eliminar" title="Eliminar" [disabled]="mov.categoria?.startsWith('Reto:')"
+        (click)="abrirModalBorrar(mov.id)"><i class="bi bi-trash"></i></button>
     </div>
   </div>
   } @empty {
