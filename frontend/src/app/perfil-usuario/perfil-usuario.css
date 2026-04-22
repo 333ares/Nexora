@@ -606,21 +606,8 @@
   border-radius: 50%;
   flex-shrink: 0;
 }
-
-.tx-dot--ocio {
-  background: #ff7043;
-}
-
-.tx-dot--supervivencia {
-  background: #7c4dff;
-}
-
-.tx-dot--cultura {
-  background: #00acc1;
-}
-
-.tx-dot--imprevistos {
-  background: #ffa726;
+.tx-dot--gasto {
+  background: #e57373;
 }
 
 .tx-dot--income {

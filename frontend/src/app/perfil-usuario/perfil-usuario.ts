@@ -158,20 +158,6 @@ export class PerfilUsuario implements OnInit {
     });
   }
 
-  getCategoriaClass(categoria: string): string {
-    const mapa: { [key: string]: string } = {
-      'Ocio': 'tx-dot--ocio',
-      'Supervivencia': 'tx-dot--supervivencia',
-      'Cultura': 'tx-dot--cultura',
-      'Extras o imprevistos': 'tx-dot--imprevistos',
-      'Nómina': 'tx-dot--income',
-      'Capital (Alquileres)': 'tx-dot--income',
-      'Negocios y ventas': 'tx-dot--income',
-      'Otros': 'tx-dot--income',
-    };
-    return mapa[categoria] ?? 'tx-dot--income';
-  }
-
   getAvatarUrl(): string {
     if (!this.nombre) return '';
 

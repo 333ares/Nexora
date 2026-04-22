@@ -100,7 +100,7 @@
             <button type="button" class="btn-save" (click)="onGuardar()"
               [disabled]="isSaving || isLoggingOut || isDeleting">
               @if (isSaving) {
-              <span class="spinner"></span> Guardando...
+              Guardando...
               } @else {
               Guardar cambios
               }
@@ -109,7 +109,7 @@
             <button type="button" class="btn-logout" (click)="onLogout()"
               [disabled]="isSaving || isLoggingOut || isDeleting">
               @if (isLoggingOut) {
-              <span class="spinner"></span> Cerrando sesión...
+              Cerrando sesión...
               } @else {
               Cerrar sesión
               }
@@ -118,7 +118,7 @@
             <button type="button" class="btn-delete" (click)="onDelete()"
               [disabled]="isSaving || isLoggingOut || isDeleting">
               @if (isDeleting) {
-              <span class="spinner"></span> Eliminando...
+              Eliminando...
               } @else {
               Eliminar cuenta
               }
@@ -129,7 +129,7 @@
           @if (showDeleteModal) {
           <div class="modal-overlay" (click)="cancelDelete()">
             <div class="modal-box" (click)="$event.stopPropagation()">
-              <div class="modal-icon">🗑️</div>
+              <div class="modal-icon"><i class="bi bi-trash"></i></div>
               <h3 class="modal-title">¿Eliminar cuenta?</h3>
               <p class="modal-desc">
                 Esta acción es irreversible. Se borrarán todos tus datos,
@@ -139,7 +139,7 @@
                 <button class="btn-modal-cancel" (click)="cancelDelete()">Cancelar</button>
                 <button class="btn-modal-confirm" (click)="confirmDelete()" [disabled]="isDeleting">
                   @if (isDeleting) {
-                  <span class="spinner"></span> Eliminando...
+                  Eliminando...
                   } @else {
                   Sí, eliminar
                   }
@@ -182,7 +182,7 @@
           @for (mov of movimientos.slice(0, 5); track mov.id) {
           <div class="tx-item">
             <div class="tx-left">
-              <div class="tx-dot" [ngClass]="getCategoriaClass(mov.categoria)"></div>
+              <div class="tx-dot" [ngClass]="mov.tipo === 'ingreso' ? 'tx-dot--income' : 'tx-dot--gasto'"></div>
               <div class="tx-info">
                 <span class="tx-type">{{ mov.tipo === 'ingreso' ? 'Ingreso' : 'Gasto' }}</span>
                 <span class="tx-category">{{ mov.categoria }}</span>
