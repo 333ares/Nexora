@@ -1,42 +1,18 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
-interface FaqItem {
-  id: number;
-  pregunta: string;
-  respuesta: string;
-}
+import { TranslatePipe } from '@ngx-translate/core';
+import { LanguageSelector } from '../language-selector/language-selector';
 
 @Component({
   selector: 'app-inicio',
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, TranslatePipe, LanguageSelector],
   templateUrl: './inicio.html',
   styleUrl: './inicio.css',
 })
 export class Inicio {
 
   emailNewsletter: string = '';
-
-  // Solo 3 preguntas en la home (resumen)
-  faqItems: FaqItem[] = [
-    {
-      id: 0,
-      pregunta: '¿Nexora es gratuito?',
-      respuesta: 'Sí, el plan Free es completamente gratuito y sin límite de tiempo. Podrás registrar gastos e ingresos, participar en el foro y en los retos mensuales.'
-    },
-    {
-      id: 1,
-      pregunta: '¿Qué es Kiro?',
-      respuesta: 'Kiro es el consejero financiero con inteligencia artificial de Nexora. Puedes hacerle preguntas sobre tus gastos, pedir recomendaciones de ahorro o resolver dudas financieras en cualquier momento.'
-    },
-    {
-      id: 2,
-      pregunta: '¿Mis datos financieros están seguros?',
-      respuesta: 'Absolutamente. Tus datos son privados y nunca los compartimos con terceros. La seguridad y privacidad de nuestra comunidad es una prioridad.'
-    }
-  ];
-
 
   suscribirse(): void {
     if (this.emailNewsletter) {

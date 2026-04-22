@@ -40,6 +40,7 @@
 /* Hace que la imagen del logo no tenga espacio extra */
 .logo img {
   display: block;
+  cursor:pointer;
 }
 
 /* Título principal del login */

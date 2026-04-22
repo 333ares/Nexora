@@ -54,9 +54,24 @@ services:
     command: >
       bash -c "npm install && npm start -- --host 0.0.0.0"
 
+
+  libretranslate:
+    container_name: nexora_libretranslate
+    image: libretranslate/libretranslate:latest
+    ports:
+      - "5000:5000"
+    environment:
+      - LT_LOAD_ONLY=es,en,ca
+      - LT_API_KEYS=false
+    volumes:
+      - libretranslate_models:/home/libretranslate/.local
+    networks:
+      - nexora_network  
+
 volumes:
   db_data:
-
+  libretranslate_models:
+  
 networks:
   nexora_network:
     driver: bridge
