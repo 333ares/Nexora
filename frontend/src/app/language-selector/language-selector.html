@@ -1,0 +1,29 @@
+<div class="lang-selector" (clickOutside)="close()">
+  <button class="lang-btn" (click)="toggle()" type="button" id="lang-selector-btn">
+    <span class="lang-flag">{{ currentLang.flag }}</span>
+    <span class="lang-code">{{ currentLang.code | uppercase }}</span>
+    <svg class="lang-chevron" [class.open]="isOpen" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+      stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  </button>
+
+  @if (isOpen) {
+  <div class="lang-dropdown">
+    @for (lang of languages; track lang.code) {
+    <button class="lang-option" [class.active]="lang.code === currentLang.code" (click)="selectLang(lang)"
+      type="button">
+      <span class="lang-flag">{{ lang.flag }}</span>
+      <span class="lang-label">{{ lang.label }}</span>
+      @if (lang.code === currentLang.code) {
+      <svg class="lang-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+      }
+    </button>
+    }
+  </div>
+  }
+</div>

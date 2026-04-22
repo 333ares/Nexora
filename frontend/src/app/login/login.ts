@@ -2,36 +2,82 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  Inject,
+  PLATFORM_ID,
   ChangeDetectorRef
 } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
-import { NgClass } from '@angular/common';
+import { NgClass, isPlatformBrowser } from '@angular/common';
 import { Auth } from '../services/auth';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, NgClass, FormsModule],
+  imports: [RouterLink, NgClass, FormsModule, TranslatePipe],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
 export class Login implements OnInit, OnDestroy {
-  showPassword = false;
-  currentIndex = 0;
-  successMessage: string = '';
-  private timer: any;
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
 
-  constructor(private authService: Auth, private router: Router, private cdr: ChangeDetectorRef) {
+  showPassword = false;
+
+  quotes = [
+    { text: 'QUOTES.Q1.text', author: 'QUOTES.Q1.author' },
+    { text: 'QUOTES.Q2.text', author: 'QUOTES.Q2.author' },
+    { text: 'QUOTES.Q3.text', author: 'QUOTES.Q3.author' },
+    { text: 'QUOTES.Q4.text', author: 'QUOTES.Q4.author' },
+    { text: 'QUOTES.Q5.text', author: 'QUOTES.Q5.author' },
+  ];
+
+  currentIndex = 0;
+  private intervalId?: ReturnType<typeof setInterval>;
+
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private authService: Auth,
+    private router: Router,
+    private translateService: TranslateService,
+    private cdr: ChangeDetectorRef
+  ) {
     const nav = this.router.getCurrentNavigation();
     if (nav?.extras?.state?.['registrado']) {
-      this.successMessage = 'Te has registrado correctamente, inicia sesión';
+      this.successMessage = this.translateService.instant('LOGIN.SUCCESS_REGISTERED');
     }
   }
 
+  successMessage: string = '';
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.intervalId = setInterval(() => {
+        this.currentIndex =
+          this.currentIndex + 1 >= this.quotes.length
+            ? 0
+            : this.currentIndex + 1;
+        this.cdr.markForCheck();
+      }, 3000);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  goTo(index: number): void {
+    this.currentIndex = index;
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  email: string = '';
+  password: string = '';
+  errorMessage: string = '';
   isLoading = false;
 
   onLogin() {
@@ -46,12 +92,7 @@ export class Login implements OnInit, OnDestroy {
         if (Number(response.usuario?.id) === 1) {
           this.router.navigate(['/panel-admin']);
         } else {
-          // Si el usuario está bloqueado, se redirige a la página de bloqueo
-          if (response.usuario?.estado === 'bloqueado') {
-            this.router.navigate(['/usuario-bloqueado']);
-          } else {
-            this.router.navigate(['/movimientos']);
-          }
+          this.router.navigate(['/movimientos']);
         }
       },
       error: (error) => {
@@ -67,32 +108,5 @@ export class Login implements OnInit, OnDestroy {
     });
   }
 
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
-  }
 
-  quotes = [
-    { text: '"El precio es lo que pagas, el valor es lo que recibes"', author: '– Warren Buffett' },
-    { text: '"Comprar por impulso es pagar por ansiedad"', author: '– Antonie de Saint-Exupéry' },
-    { text: '"La inversión en conocimiento paga el mejor interés"', author: '– Benjamin Franklin' },
-    { text: '"El dinero es un buen sirviente pero un mal amo"', author: '– Francis Bacon' },
-    { text: '"Nunca gastes tu dinero antes de ganarlo"', author: '– Thomas Jefferson' },
-  ];
-
-  ngOnInit(): void {
-    this.timer = setInterval(() => this.next(), 4000);
-  }
-
-  ngOnDestroy(): void {
-    clearInterval(this.timer);
-  }
-
-  next() {
-    this.currentIndex = (this.currentIndex + 1) % this.quotes.length;
-    this.cdr.detectChanges();
-  }
-
-  goTo(index: number): void {
-    this.currentIndex = index;
-  }
 }

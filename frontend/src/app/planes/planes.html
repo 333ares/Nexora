@@ -2,30 +2,26 @@
 <nav>
   <a routerLink="/inicio" class="nav-logo">
     <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="36" height="36" style="object-fit: contain;" />
-    <span>NEXORA</span>
+        <img src="https://i.postimg.cc/XYpBkbgT/Letras-Nexora.png">
+
   </a>
   <div class="nav-links">
-    <a routerLink="/servicios">Servicios</a>
-    <a routerLink="/planes">Planes</a>
-    <a routerLink="/faqs">FAQ</a>
-    <a routerLink="/acerca-de">Nosotros</a>
-    <a routerLink="/contacto">Contacto</a>
+    <a routerLink="/servicios">{{ 'NAV.SERVICIOS' | translate }}</a>
+    <a routerLink="/planes">{{ 'NAV.PLANES' | translate }}</a>
+    <a routerLink="/faqs">{{ 'NAV.FAQ' | translate }}</a>
+    <a routerLink="/acerca-de">{{ 'NAV.NOSOTROS' | translate }}</a>
+    <a routerLink="/contacto">{{ 'NAV.CONTACTO' | translate }}</a>
   </div>
   <div class="nav-cta">
-    <a routerLink="/login" class="btn-nav-secondary">Acceder</a>
-    <a routerLink="/registro" class="btn-nav-primary">Registrarse →</a>
+    <a routerLink="/login" class="btn-nav-secondary">{{ 'NAV.ACCEDER' | translate }}</a>
+    <a routerLink="/registro" class="btn-nav-primary">{{ 'NAV.REGISTRARSE' | translate }}</a>
+    <app-language-selector />
   </div>
 </nav>
 
 <div class="page">
 
-
-
-  <!-- ══════════════════════════════════════════
-       BLOQUE PLANES — hero + tarjetas
-  ══════════════════════════════════════════ -->
   <div class="white-block">
-
     <!-- HERO BANNER -->
     <div class="hero">
       <div class="hero__circle hero__circle--1"></div>
@@ -38,11 +34,11 @@
       <div class="hero__circle hero__circle--8"></div>
 
       <div class="hero__content">
-        <p class="hero__eyebrow">Precios simples y transparentes</p>
-        <h1 class="hero__title">Planes de <span>NEXORA</span></h1>
+        <p class="hero__eyebrow">{{ 'PLANES_PAGE.EYEBROW' | translate }}</p>
+        <h1 class="hero__title">{{ 'PLANES_PAGE.TITLE_PREFIX' | translate }} <span>NEXORA</span></h1>
         <p class="hero__subtitle">
-          Elige el plan que mejor se adapte a ti.<br>
-          Sin costes ocultos, sin sorpresas.
+          {{ 'PLANES_PAGE.SUBTITLE_1' | translate }}<br>
+          {{ 'PLANES_PAGE.SUBTITLE_2' | translate }}
         </p>
       </div>
     </div>
@@ -54,34 +50,34 @@
         <!-- Plan FREE -->
         <div class="plan-card" [class.plan-card--current]="planActual === 'free'">
           <div class="plan-card__top">
-            <div class="plan-badge plan-badge--free">GRATIS</div>
-            <h2 class="plan-card__name">Nexora Free</h2>
-            <p class="plan-card__desc">Todo lo esencial para empezar a gestionar tus finanzas.</p>
+            <div class="plan-badge plan-badge--free">{{ 'PLANES_PAGE.FREE_BADGE' | translate }}</div>
+            <h2 class="plan-card__name">{{ 'PLANES_PAGE.FREE_NAME' | translate }}</h2>
+            <p class="plan-card__desc">{{ 'PLANES_PAGE.FREE_DESC' | translate }}</p>
             <div class="plan-card__divider"></div>
             <ul class="plan-card__features">
               <li>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Registrar gastos e ingresos
+                {{ 'PLANES_PAGE.FREE_F1' | translate }}
               </li>
               <li>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Participar en el foro de economía
+                {{ 'PLANES_PAGE.FREE_F2' | translate }}
               </li>
               <li>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Retos mensuales
+                {{ 'PLANES_PAGE.FREE_F3' | translate }}
               </li>
             </ul>
           </div>
           <div class="plan-card__bottom">
             <div class="plan-card__price">
-              <span class="price-amount">0 €</span>
-              <span class="price-period">/mes</span>
+              <span class="price-amount">{{ 'PLANES_PAGE.FREE_PRICE' | translate }}</span>
+              <span class="price-period">{{ 'PLANES_PAGE.FREE_PERIOD' | translate }}</span>
             </div>
             @if (planActual === 'free') {
-              <button class="btn-plan btn-plan--current" disabled>Plan actual</button>
+              <button class="btn-plan btn-plan--current" disabled>{{ 'PLANES_PAGE.PLAN_ACTUAL' | translate }}</button>
             } @else {
-              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('free')">Seleccionar</button>
+              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('free')">{{ 'PLANES_PAGE.SELECCIONAR' | translate }}</button>
             }
           </div>
         </div>
@@ -89,42 +85,27 @@
         <!-- Plan GO -->
         <div class="plan-card" [class.plan-card--current]="planActual === 'go'">
           <div class="plan-card__top">
-            <div class="plan-badge plan-badge--go">GO</div>
-            <h2 class="plan-card__name">Nexora Go</h2>
-            <p class="plan-card__desc">Un mes para comprobar todo lo que Nexora puede hacer por ti.</p>
+            <div class="plan-badge plan-badge--go">{{ 'PLANES_PAGE.GO_BADGE' | translate }}</div>
+            <h2 class="plan-card__name">{{ 'PLANES_PAGE.GO_NAME' | translate }}</h2>
+            <p class="plan-card__desc">{{ 'PLANES_PAGE.GO_DESC' | translate }}</p>
             <div class="plan-card__divider"></div>
             <ul class="plan-card__features">
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Todo lo de Free
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Estadísticas avanzadas
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Sin anuncios
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Chat bot Kiro
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Recomendaciones
-              </li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F1' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F2' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F3' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F4' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F5' | translate }}</li>
             </ul>
           </div>
           <div class="plan-card__bottom">
             <div class="plan-card__price">
-              <span class="price-amount">2 €</span>
-              <span class="price-period">/1 mes</span>
+              <span class="price-amount">{{ 'PLANES_PAGE.GO_PRICE' | translate }}</span>
+              <span class="price-period">{{ 'PLANES_PAGE.GO_PERIOD' | translate }}</span>
             </div>
             @if (planActual === 'go') {
-              <button class="btn-plan btn-plan--current" disabled>Plan actual</button>
+              <button class="btn-plan btn-plan--current" disabled>{{ 'PLANES_PAGE.PLAN_ACTUAL' | translate }}</button>
             } @else {
-              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('go')">Seleccionar</button>
+              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('go')">{{ 'PLANES_PAGE.SELECCIONAR' | translate }}</button>
             }
           </div>
         </div>
@@ -132,43 +113,28 @@
         <!-- Plan ADVANCED -->
         <div class="plan-card" [class.plan-card--current]="planActual === 'advanced'">
           <div class="plan-card__top">
-            <div class="plan-badge plan-badge--advanced">ADVANCED</div>
-            <h2 class="plan-card__name">Nexora Advanced</h2>
-            <p class="plan-card__desc">Seis meses para transformar tu relación con el dinero.</p>
+            <div class="plan-badge plan-badge--advanced">{{ 'PLANES_PAGE.ADV_BADGE' | translate }}</div>
+            <h2 class="plan-card__name">{{ 'PLANES_PAGE.ADV_NAME' | translate }}</h2>
+            <p class="plan-card__desc">{{ 'PLANES_PAGE.ADV_DESC' | translate }}</p>
             <div class="plan-card__divider"></div>
             <ul class="plan-card__features">
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Todo lo de Free
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Estadísticas avanzadas
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Sin anuncios
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Chat bot Kiro
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Recomendaciones
-              </li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F1' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F2' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F3' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F4' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F5' | translate }}</li>
             </ul>
           </div>
           <div class="plan-card__bottom">
-            <p class="plan-card__saving">Te ahorras un 33%</p>
+            <p class="plan-card__saving">{{ 'PLANES_PAGE.ADV_SAVE' | translate }}</p>
             <div class="plan-card__price">
-              <span class="price-amount">8 €</span>
-              <span class="price-period">/6 meses</span>
+              <span class="price-amount">{{ 'PLANES_PAGE.ADV_PRICE' | translate }}</span>
+              <span class="price-period">{{ 'PLANES_PAGE.ADV_PERIOD' | translate }}</span>
             </div>
             @if (planActual === 'advanced') {
-              <button class="btn-plan btn-plan--current" disabled>Plan actual</button>
+              <button class="btn-plan btn-plan--current" disabled>{{ 'PLANES_PAGE.PLAN_ACTUAL' | translate }}</button>
             } @else {
-              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('advanced')">Seleccionar</button>
+              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('advanced')">{{ 'PLANES_PAGE.SELECCIONAR' | translate }}</button>
             }
           </div>
         </div>
@@ -176,178 +142,129 @@
         <!-- Plan PREMIUM -->
         <div class="plan-card" [class.plan-card--current]="planActual === 'premium'">
           <div class="plan-card__top">
-            <div class="plan-badge plan-badge--premium">PREMIUM</div>
-            <h2 class="plan-card__name">Nexora Premium</h2>
-            <p class="plan-card__desc">Un año completo para dominar tus finanzas al mejor precio.</p>
+            <div class="plan-badge plan-badge--premium">{{ 'PLANES_PAGE.PREM_BADGE' | translate }}</div>
+            <h2 class="plan-card__name">{{ 'PLANES_PAGE.PREM_NAME' | translate }}</h2>
+            <p class="plan-card__desc">{{ 'PLANES_PAGE.PREM_DESC' | translate }}</p>
             <div class="plan-card__divider"></div>
             <ul class="plan-card__features">
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Todo lo de Free
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Estadísticas avanzadas
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Sin anuncios
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Chat bot Kiro
-              </li>
-              <li>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Recomendaciones
-              </li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F1' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F2' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F3' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F4' | translate }}</li>
+              <li><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> {{ 'PLANES_PAGE.SHARED_F5' | translate }}</li>
             </ul>
           </div>
           <div class="plan-card__bottom">
-            <p class="plan-card__saving">Te ahorras un 50%</p>
+            <p class="plan-card__saving">{{ 'PLANES_PAGE.PREM_SAVE' | translate }}</p>
             <div class="plan-card__price">
-              <span class="price-amount">12 €</span>
-              <span class="price-period">/12 meses</span>
+              <span class="price-amount">{{ 'PLANES_PAGE.PREM_PRICE' | translate }}</span>
+              <span class="price-period">{{ 'PLANES_PAGE.PREM_PERIOD' | translate }}</span>
             </div>
             @if (planActual === 'premium') {
-              <button class="btn-plan btn-plan--current" disabled>Plan actual</button>
+              <button class="btn-plan btn-plan--current" disabled>{{ 'PLANES_PAGE.PLAN_ACTUAL' | translate }}</button>
             } @else {
-              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('premium')">Seleccionar</button>
+              <button class="btn-plan btn-plan--select" type="button" (click)="seleccionarPlan('premium')">{{ 'PLANES_PAGE.SELECCIONAR' | translate }}</button>
             }
           </div>
         </div>
 
       </div>
     </div>
-    <!-- FIN GRID DE PLANES -->
-
   </div>
-  <!-- FIN BLOQUE PLANES -->
 
-  <!-- BLOQUE WHY — separado -->
+  <!-- BLOQUE WHY -->
   <div class="why-block">
     <div class="why-section">
-      <h2 class="why-title">¿Por qué suscribirte?</h2>
-      <p class="why-subtitle">Desbloquea todo el potencial de Nexora y toma el control de tus finanzas.</p>
+      <h2 class="why-title">{{ 'PLANES_PAGE.WHY_TITLE' | translate }}</h2>
+      <p class="why-subtitle">{{ 'PLANES_PAGE.WHY_SUBTITLE' | translate }}</p>
       <div class="why-grid">
-
         <div class="why-item">
           <div class="why-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
             </svg>
           </div>
-          <h3 class="why-item__title">Sin anuncios</h3>
-          <p class="why-item__desc">Navega sin interrupciones. Concéntrate en lo que importa: tus finanzas.</p>
+          <h3 class="why-item__title">{{ 'PLANES_PAGE.WHY_1_TITLE' | translate }}</h3>
+          <p class="why-item__desc">{{ 'PLANES_PAGE.WHY_1_DESC' | translate }}</p>
         </div>
-
         <div class="why-item">
           <div class="why-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
             </svg>
           </div>
-          <h3 class="why-item__title">Estadísticas reales</h3>
-          <p class="why-item__desc">Gráficas detalladas de tus hábitos de gasto para tomar mejores decisiones.</p>
+          <h3 class="why-item__title">{{ 'PLANES_PAGE.WHY_2_TITLE' | translate }}</h3>
+          <p class="why-item__desc">{{ 'PLANES_PAGE.WHY_2_DESC' | translate }}</p>
         </div>
-
         <div class="why-item">
           <div class="why-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
           </div>
-          <h3 class="why-item__title">Kiro, tu consejero financiero</h3>
-          <p class="why-item__desc">Nuestro chatbot inteligente, resuelve tus dudas financieras y te da recomendaciones personalizadas para ahorrar más.</p>
+          <h3 class="why-item__title">{{ 'PLANES_PAGE.WHY_3_TITLE' | translate }}</h3>
+          <p class="why-item__desc">{{ 'PLANES_PAGE.WHY_3_DESC' | translate }}</p>
         </div>
-
       </div>
     </div>
   </div>
-  <!-- FIN BLOQUE WHY -->
 
-  <!-- ══════════════════════════════════════════
-       FAQ
-  ══════════════════════════════════════════ -->
+  <!-- FAQ -->
   <div class="faq-section">
-    <h2 class="faq-title">Preguntas frecuentes</h2>
-    <p class="faq-subtitle">Todo lo que necesitas saber antes de elegir tu plan.</p>
-
+    <h2 class="faq-title">{{ 'PLANES_PAGE.FAQ_TITLE' | translate }}</h2>
+    <p class="faq-subtitle">{{ 'PLANES_PAGE.FAQ_SUBTITLE' | translate }}</p>
     <div class="faq-list">
-
       <div class="faq-item" [class.faq-item--open]="faqAbierta === 0" (click)="toggleFaq(0)">
         <div class="faq-item__header">
-          <span class="faq-item__question">¿Puedo cambiar de plan en cualquier momento?</span>
+          <span class="faq-item__question">{{ 'PLANES_PAGE.FAQ_Q1' | translate }}</span>
           <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
-        @if (faqAbierta === 0) {
-          <p class="faq-item__answer">Sí, puedes cambiar de plan cuando quieras desde tu perfil. Los cambios se aplican inmediatamente y el ajuste de precio se calcula de forma proporcional al tiempo restante.</p>
-        }
+        @if (faqAbierta === 0) { <p class="faq-item__answer">{{ 'PLANES_PAGE.FAQ_A1' | translate }}</p> }
       </div>
-
       <div class="faq-item" [class.faq-item--open]="faqAbierta === 1" (click)="toggleFaq(1)">
         <div class="faq-item__header">
-          <span class="faq-item__question">¿Qué métodos de pago aceptáis?</span>
+          <span class="faq-item__question">{{ 'PLANES_PAGE.FAQ_Q2' | translate }}</span>
           <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
-        @if (faqAbierta === 1) {
-          <p class="faq-item__answer">Aceptamos tarjetas de crédito y débito (Visa, Mastercard, American Express) y PayPal. Todos los pagos se procesan de forma segura con cifrado SSL.</p>
-        }
+        @if (faqAbierta === 1) { <p class="faq-item__answer">{{ 'PLANES_PAGE.FAQ_A2' | translate }}</p> }
       </div>
-
       <div class="faq-item" [class.faq-item--open]="faqAbierta === 2" (click)="toggleFaq(2)">
         <div class="faq-item__header">
-          <span class="faq-item__question">¿Hay período de prueba gratuito?</span>
+          <span class="faq-item__question">{{ 'PLANES_PAGE.FAQ_Q3' | translate }}</span>
           <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
-        @if (faqAbierta === 2) {
-          <p class="faq-item__answer">El plan Free es gratuito para siempre y no requiere tarjeta. Te permite registrar gastos, participar en el foro y en retos mensuales sin coste alguno.</p>
-        }
+        @if (faqAbierta === 2) { <p class="faq-item__answer">{{ 'PLANES_PAGE.FAQ_A3' | translate }}</p> }
       </div>
-
       <div class="faq-item" [class.faq-item--open]="faqAbierta === 3" (click)="toggleFaq(3)">
         <div class="faq-item__header">
-          <span class="faq-item__question">¿Mis datos financieros están seguros?</span>
+          <span class="faq-item__question">{{ 'PLANES_PAGE.FAQ_Q4' | translate }}</span>
           <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
-        @if (faqAbierta === 3) {
-          <p class="faq-item__answer">Absolutamente. Utilizamos cifrado AES-256 para todos tus datos y nunca compartimos tu información con terceros. Tu privacidad es nuestra prioridad.</p>
-        }
+        @if (faqAbierta === 3) { <p class="faq-item__answer">{{ 'PLANES_PAGE.FAQ_A4' | translate }}</p> }
       </div>
-
       <div class="faq-item" [class.faq-item--open]="faqAbierta === 4" (click)="toggleFaq(4)">
         <div class="faq-item__header">
-          <span class="faq-item__question">¿Puedo cancelar mi suscripción en cualquier momento?</span>
+          <span class="faq-item__question">{{ 'PLANES_PAGE.FAQ_Q5' | translate }}</span>
           <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
-        @if (faqAbierta === 4) {
-          <p class="faq-item__answer">Sí, puedes cancelar cuando quieras sin penalizaciones. Seguirás teniendo acceso a las funciones de pago hasta el final del período facturado y luego pasarás automáticamente al plan Free.</p>
-        }
+        @if (faqAbierta === 4) { <p class="faq-item__answer">{{ 'PLANES_PAGE.FAQ_A5' | translate }}</p> }
       </div>
-
       <div class="faq-item" [class.faq-item--open]="faqAbierta === 5" (click)="toggleFaq(5)">
         <div class="faq-item__header">
-          <span class="faq-item__question">¿Qué es Kiro?</span>
+          <span class="faq-item__question">{{ 'PLANES_PAGE.FAQ_Q6' | translate }}</span>
           <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
-        @if (faqAbierta === 5) {
-          <p class="faq-item__answer">Kiro es el consejero financiero inteligente de Nexora. Resuelve dudas financieras y te da recomendaciones para ayudarte a ahorrar más cada mes. Disponible en todos los planes de pago.</p>
-        }
+        @if (faqAbierta === 5) { <p class="faq-item__answer">{{ 'PLANES_PAGE.FAQ_A6' | translate }}</p> }
       </div>
-
       <div class="faq-item" [class.faq-item--open]="faqAbierta === 6" (click)="toggleFaq(6)">
         <div class="faq-item__header">
-          <span class="faq-item__question">¿Qué es el método Kakebo?</span>
+          <span class="faq-item__question">{{ 'PLANES_PAGE.FAQ_Q7' | translate }}</span>
           <div class="faq-item__icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
-        @if (faqAbierta === 6) {
-          <p class="faq-item__answer">Kakebo es un método japonés de gestión financiera personal que consiste en registrar todos tus ingresos y gastos divididos en categorías (supervivencia, ocio, cultura e imprevistos) para tomar conciencia de tus hábitos de consumo y ahorrar de forma progresiva.</p>
-        }
+        @if (faqAbierta === 6) { <p class="faq-item__answer">{{ 'PLANES_PAGE.FAQ_A7' | translate }}</p> }
       </div>
-
     </div>
   </div>
-  <!-- FIN FAQ -->
 
 </div>
 
@@ -359,23 +276,23 @@
         <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="32" height="32" style="object-fit: contain;" />
         <span>NEXORA</span>
       </a>
-      <p>Plataforma de gestión de gastos y hábitos financieros. Desarrollada por el equipo ADDA.</p>
+      <p>{{ 'FOOTER.DESC' | translate }}</p>
     </div>
     <div class="footer-col">
-      <h5>Producto</h5>
-      <a routerLink="/servicios">Servicios</a>
-      <a routerLink="/planes">Planes</a>
+      <h5>{{ 'FOOTER.PRODUCTO' | translate }}</h5>
+      <a routerLink="/servicios">{{ 'NAV.SERVICIOS' | translate }}</a>
+      <a routerLink="/planes">{{ 'NAV.PLANES' | translate }}</a>
     </div>
     <div class="footer-col">
-      <h5>Empresa</h5>
-      <a routerLink="/acerca-de">Acerca de ADDA</a>
-      <a routerLink="/faqs">FAQ</a>
-      <a routerLink="/contacto">Contacto</a>
-      <a routerLink="/politica-privacidad">Política de privacidad</a>
+      <h5>{{ 'FOOTER.EMPRESA' | translate }}</h5>
+      <a routerLink="/acerca-de">{{ 'FOOTER.ACERCA_DE' | translate }}</a>
+      <a routerLink="/faqs">{{ 'NAV.FAQ' | translate }}</a>
+      <a routerLink="/contacto">{{ 'NAV.CONTACTO' | translate }}</a>
+      <a routerLink="/politica-privacidad">{{ 'FOOTER.PRIVACIDAD' | translate }}</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 Nexora. Todos los derechos reservados.</span>
-    <span class="contact">¿Preguntas? <a href="mailto:contacto@nexora.app">contacto&#64;nexora.app</a></span>
+    <span>{{ 'FOOTER.COPYRIGHT' | translate }}</span>
+    <span class="contact">{{ 'FOOTER.PREGUNTAS' | translate }} <a href="mailto:contacto@nexora.app">contacto&#64;nexora.app</a></span>
   </div>
 </footer>

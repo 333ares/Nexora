@@ -1,199 +1,148 @@
 <div class="card">
-  <div class="left-panel">
-    <img src="https://i.postimg.cc/XYpBkbgT/-Nexora.png"
-         class="letras-izquierda"
-         alt="Logo Nexora letras">
-
-    <div class="quote-card" aria-label="Frases motivacionales">
+  <div class="left-panel"> <!-- Panel isquierdo -->
+    <img src="https://i.postimg.cc/XYpBkbgT/Letras-Nexora.png" class="letras-izquierda">
+    <div class="quote-card">
       <div class="quotes-track-wrapper">
-        <div class="quotes-track"
-             [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
-
+        <div class="quotes-track" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
           @for (q of quotes; track q.text) {
-          <div class="quote-slide" role="group" aria-label="Frase">
-            <p class="quote-text">{{ q.text }}</p>
-            <p class="quote-author">{{ q.author }}</p>
+          <div class="quote-slide">
+            <p class="quote-text">{{ q.text | translate }}</p>
+            <p class="quote-author">{{ q.author | translate }}</p>
           </div>
           }
-
         </div>
       </div>
-
-      <div class="dots" role="tablist" aria-label="Selector de frases">
+      <div class="dots">
         @for (q of quotes; track q.text; let i = $index) {
-        <button class="dot"
-                type="button"
-                [class.active]="currentIndex === i"
-                (click)="goTo(i)"
-                [attr.aria-label]="'Ir a frase ' + (i + 1)">
-        </button>
+        <button class="dot" [class.active]="currentIndex === i" (click)="goTo(i)"></button>
         }
       </div>
     </div>
   </div>
+  <div class="right-panel"> <!-- Panel DERECHO -->
+    <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Nexora logo" class="logo" routerLink="/inicio">
+    <h1 class="title">{{ 'REGISTRO.TITLE' | translate }}</h1>
+    <p class="subtitle">{{ 'REGISTRO.SUBTITLE' | translate }}</p>
+    <!-- Formuoario para registrarse -->
+    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
-  <div class="right-panel">
-    <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png"
-         alt="Logo Nexora"
-         class="logo">
-
-    <h1 class="title">Crear cuenta</h1>
-
-    <p class="subtitle">
-      Regístrate ahora y toma el control de tus finanzas: la herramienta definitiva para asegurar tu
-      futuro financiero te está esperando
-    </p>
-
-    <!-- ✅ MAIN añadido para accesibilidad -->
-    <main>
-      <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-
-        <div class="row">
-
-          <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input id="nombre"
-                   type="text"
-                   placeholder="Tu nombre"
-                   formControlName="nombre"
-                   required
-                   class="row-field"
-                   autocomplete="given-name">
-
-            @if (formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched) {
-            <div class="error" role="alert">
-              <span>El nombre es obligatorio</span>
-            </div>
-            }
-          </div>
-
-          <div class="form-group">
-            <label for="apellidos">Apellidos</label>
-            <input id="apellidos"
-                   type="text"
-                   placeholder="Tus apellidos"
-                   formControlName="apellidos"
-                   class="row-field"
-                   autocomplete="family-name">
-
-            @if (formulario.get('apellidos')?.invalid && formulario.get('apellidos')?.touched) {
-            <div class="error" role="alert">
-              <span>Los apellidos son obligatorios</span>
-            </div>
-            }
-          </div>
-
-        </div>
+      <!-- Usuario y apellidos -->
+      <div class="row">
 
         <div class="form-group">
-          <label for="nombre_usuario">Nombre de usuario</label>
-          <input id="nombre_usuario"
-                 type="text"
-                 placeholder="Tu nombre de usuario"
-                 formControlName="nombre_usuario"
-                 autocomplete="username">
-
-          @if (formulario.get('nombre_usuario')?.invalid && formulario.get('nombre_usuario')?.touched) {
-          <div class="error" role="alert">
-            <span>El nombre de usuario es obligatorio</span>
+          <label>{{ 'REGISTRO.NOMBRE_LABEL' | translate }}</label>
+          <input type="text" [placeholder]="'REGISTRO.NOMBRE_PLACEHOLDER' | translate" formControlName="nombre" required class="row-field">
+          @if (formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched) {
+          <div class="error">
+            <span>{{ 'REGISTRO.NOMBRE_ERROR' | translate }}</span>
           </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="correo">Correo electrónico</label>
-          <input id="correo"
-                 type="email"
-                 placeholder="nexora@example.com"
-                 formControlName="correo"
-                 autocomplete="email">
-
-          @if (formulario.get('correo')?.invalid && formulario.get('correo')?.touched) {
-          <div class="error" role="alert">
-            @if (formulario.get('correo')?.errors?.['required']) {
-            <span>El correo es obligatorio</span>
-            }
-            @if (formulario.get('correo')?.errors?.['email']) {
-            <span>El formato de email no es válido</span>
-            }
+          <label>{{ 'REGISTRO.APELLIDOS_LABEL' | translate }}</label>
+          <input type="text" [placeholder]="'REGISTRO.APELLIDOS_PLACEHOLDER' | translate" formControlName="apellidos" class="row-field">
+          @if (formulario.get('apellidos')?.invalid && formulario.get('apellidos')?.touched) {
+          <div class="error">
+            <span>{{ 'REGISTRO.APELLIDOS_ERROR' | translate }}</span>
           </div>
           }
         </div>
 
-        <div class="form-group">
-          <label for="contrasena">Contraseña</label>
+      </div>
 
-          <div class="input-wrapper">
-            <input id="contrasena"
-                   [type]="showPassword ? 'text' : 'password'"
-                   placeholder="Tu contraseña"
-                   formControlName="contrasena"
-                   autocomplete="new-password"
-                   aria-describedby="password-help">
-
-            <button type="button"
-                    class="toggle-pass"
-                    (click)="togglePassword(); $event.stopPropagation(); $event.preventDefault()"
-                    [attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'">
-
-              @if (!showPassword) {
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                   viewBox="0 0 24 24" fill="none" stroke="#bbb"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                <line x1="1" y1="1" x2="23" y2="23"></line>
-              </svg>
-              } @else {
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                   viewBox="0 0 24 24" fill="none" stroke="#bbb"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-              }
-            </button>
-          </div>
-
-          @if (formulario.get('contrasena')?.invalid && formulario.get('contrasena')?.touched) {
-          <div class="error" role="alert" id="password-help">
-            @if (formulario.get('contrasena')?.errors?.['required']) {
-            <span>La contraseña es obligatoria</span>
-            }
-            @else if (formulario.get('contrasena')?.errors?.['minlength']) {
-            <span>La contraseña debe tener al menos 5 caracteres.</span>
-            }
-            @else if (formulario.get('contrasena')?.errors?.['pattern']) {
-            <span>La contraseña debe tener al menos un carácter especial (@%#...)</span>
-            }
-          </div>
-          }
-        </div>
-
-        @if (errorMessage) {
-        <div class="alert-error" role="alert">
-          {{ errorMessage }}
-          <button class="alert-close" type="button" (click)="errorMessage = ''" aria-label="Cerrar error">✕</button>
+      <!-- Nombre de usuario -->
+      <div class="form-group">
+        <label>{{ 'REGISTRO.USUARIO_LABEL' | translate }}</label>
+        <input type="text" [placeholder]="'REGISTRO.USUARIO_PLACEHOLDER' | translate" formControlName="nombre_usuario">
+        @if (formulario.get('nombre_usuario')?.invalid && formulario.get('nombre_usuario')?.touched) {
+        <div class="error">
+          <span>{{ 'REGISTRO.USUARIO_ERROR' | translate }}</span>
         </div>
         }
+      </div>
 
-        <button type="submit"
-                class="btn-register"
-                [disabled]="isLoading"
-                aria-busy="{{ isLoading }}">
-          @if (isLoading) {
-          <span class="spinner"></span> Registrando...
-          } @else {
-          Registrarse
+      <!-- Correo -->
+      <div class="form-group">
+        <label>{{ 'REGISTRO.EMAIL_LABEL' | translate }}</label>
+        <input type="email" [placeholder]="'REGISTRO.EMAIL_PLACEHOLDER' | translate" formControlName="correo">
+        @if (formulario.get('correo')?.invalid && formulario.get('correo')?.touched) {
+        <div class="error">
+          @if (formulario.get('correo')?.errors?.['required']) {
+          <span>{{ 'REGISTRO.EMAIL_ERROR_REQ' | translate }}</span>
           }
-        </button>
+          @if (formulario.get('correo')?.errors?.['email']) {
+          <span>{{ 'REGISTRO.EMAIL_ERROR_FORMAT' | translate }}</span>
+          }
+        </div>
+        }
+      </div>
 
-      </form>
-    </main>
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label>{{ 'REGISTRO.PASS_LABEL' | translate }}</label>
 
-    <div class="divider" aria-hidden="true">o</div>
+        <div class="input-wrapper">
+          <input [type]="showPassword ? 'text' : 'password'" [placeholder]="'REGISTRO.PASS_PLACEHOLDER' | translate" formControlName="contrasena">
 
+          <button type="button" class="toggle-pass"
+            (click)="togglePassword(); $event.stopPropagation(); $event.preventDefault()">
+
+            @if (!showPassword) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#bbb"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+              </path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+            } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#bbb"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            }
+          </button>
+        </div>
+
+        <!-- Validaciones -->
+        @if (formulario.get('contrasena')?.invalid && formulario.get('contrasena')?.touched) {
+        <div class="error">
+          @if (formulario.get('contrasena')?.errors?.['required']) {
+          <span>{{ 'REGISTRO.PASS_ERROR_REQ' | translate }}</span>
+          }
+          @else if (formulario.get('contrasena')?.errors?.['minlength']) {
+          <span>{{ 'REGISTRO.PASS_ERROR_MIN' | translate }}</span>
+          }
+          @else if (formulario.get('contrasena')?.errors?.['pattern']) {
+          <span>{{ 'REGISTRO.PASS_ERROR_PATTERN' | translate }}</span>
+          }
+        </div>
+        }
+      </div>
+
+      @if (errorMessage) {
+      <div class="alert-error">
+        {{ errorMessage }}
+        <button class="alert-close" (click)="errorMessage = ''">✕</button>
+      </div>
+      }
+
+      <button type="submit" class="btn-register" [disabled]="isLoading">
+        @if (isLoading) {
+        <span class="spinner"></span> {{ 'REGISTRO.BTN_LOADING' | translate }}
+        } @else {
+        {{ 'REGISTRO.BTN' | translate }}
+        }
+      </button>
+
+    </form>
+
+    <!-- -O- iniciar sesion -->
+    <div class="divider">{{ 'REGISTRO.OR' | translate }}</div>
     <p class="login">
-      ¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesión</a>
+      {{ 'REGISTRO.HAS_ACCOUNT' | translate }} <a routerLink="/login">{{ 'REGISTRO.LOGIN_LINK' | translate }}</a>
     </p>
 
   </div>

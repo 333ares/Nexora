@@ -60,14 +60,7 @@ nav {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-}
-
-.nav-logo span {
-  font-family: 'Onest', sans-serif;
-  font-weight: 800;
-  font-size: 1.15rem;
-  color: var(--green-mid);
-  letter-spacing: 0.04em;
+  width: 70px;
 }
 
 .nav-links {

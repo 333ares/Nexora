@@ -147,11 +147,13 @@
   width: 56px;
   height: 56px;
   margin-bottom: 10px;
+  cursor:pointer
 }
 
 /* Hace que la imagen del logo no tenga espacio extra */
 .logo img {
   display: block;
+  
 }
 
 /* Texto descriptivo debajo del título */
