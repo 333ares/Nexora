@@ -58,7 +58,28 @@
     } @else {
     @for (mov of movimientosDiaSeleccionado; track mov.id) {
     <div class="mov-item-cal">
-      <div class="mov-avatar">{{ mov.tipo === 'ingreso' ? '💰' : '💸' }}</div>
+      <div class="mov-avatar">
+        @if (mov.categoria === 'Nomina') {
+        <i class="bi bi-cash-stack icono-mov"></i>
+        } @else if (mov.categoria === 'Capital y alquileres') {
+        <i class="bi bi-house-add icono-mov"></i>
+        } @else if (mov.categoria === 'Negocios y ventas') {
+        <i class="bi bi-briefcase icono-mov"></i>
+        } @else if (mov.categoria === 'Otros') {
+        <i class="bi bi-bookmark-plus icono-mov"></i>
+        } @else if (mov.categoria === 'Ocio') {
+        <i class="bi bi-people icono-mov"></i>
+        } @else if (mov.categoria === 'Supervivencia') {
+        <i class="bi bi-basket2 icono-mov"></i>
+        } @else if (mov.categoria === 'Cultura') {
+        <i class="bi bi-book icono-mov"></i>
+        } @else if (mov.categoria === 'Extras o imprevistos') {
+        <i class="bi bi-bookmark-dash icono-mov"></i>
+        } @else {
+        <i class="bi bi-piggy-bank icono-mov"></i>
+        }
+
+      </div>
       <div class="mov-info-cal">
         <span class="mov-nombre">{{ mov.categoria }}</span>
       </div>
