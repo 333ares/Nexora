@@ -29,7 +29,7 @@ app-root {
     padding: 14px 40px;
 
     /* 🌿 VERDE MÁS SUAVE */
-    background: rgba(183, 219, 162, 0.88);
+    background: linear-gradient(135deg, #3a8c1a 0%, #4E9C25 40%, #78C550 100%);
     /* #6BBF3A con transparencia */
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -85,7 +85,7 @@ app-root {
     display: flex;
     align-items: center;
     gap: 14px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .brand-icon {

@@ -626,3 +626,14 @@
   font-family: 'Lato', sans-serif;
   line-height: 1.5;
 }
+
+
+.bi-flag {
+  color: #e67e22;
+  font-size: 50px;
+}
+
+.bi-piggy-bank {
+  color: #4E9C25;
+  font-size: 30px;
+}

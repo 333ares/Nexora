@@ -256,13 +256,13 @@
     color: #fff;
 }
 
-.bi-piggy-bank {
+.bi-piggy-bank-fill {
     color: #4E9C25;
     font-size: 30px;
     transition: transform 0.3s ease;
 }
 
-.reto-info-card:hover .bi-piggy-bank {
+.reto-info-card:hover .bi-piggy-bank-fill {
     animation: subtleBounce 0.6s ease;
 }
 
@@ -298,13 +298,13 @@
     transform: scale(0.97);
 }
 
-.bi-chat-dots {
+.bi-chat-dots-fill {
     color: #4E9C25;
     font-size: 30px;
     transition: transform 0.3s ease;
 }
 
-.reto-info-card:hover .bi-chat-dots {
+.reto-info-card:hover .bi-chat-dots-fill {
     animation: subtleBounce 0.6s ease;
 }
 
