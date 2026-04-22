@@ -38,24 +38,6 @@ app-root {
     overflow: hidden;
 }
 
-
-/* HEADER OVERLAY EFFECT */
-/*.header::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0.18),
-            rgba(0, 0, 0, 0.06));
-
-    pointer-events: none;
-}
-
-.header>* {
-    position: relative;
-    z-index: 1;
-}*/
-
 /* EFECTOS DEL CIRCULO */
 .header::before {
     content: "";
@@ -115,20 +97,6 @@ app-root {
 .brand-text {
     display: flex;
     flex-direction: column;
-}
-
-.brand-name {
-    font-size: 17px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.2;
-}
-
-.brand-sub {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.9);
-    font-family: 'Lato';
-    font-weight: 300;
 }
 
 

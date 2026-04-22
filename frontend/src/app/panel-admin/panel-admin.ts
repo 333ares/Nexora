@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgClass, TitleCasePipe } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
 
@@ -16,7 +16,7 @@ export interface Usuario {
 @Component({
   selector: 'app-panel-admin',
   standalone: true,
-  imports: [FormsModule, NgClass, TitleCasePipe],
+  imports: [FormsModule, NgClass],
   templateUrl: './panel-admin.html',
   styleUrl: './panel-admin.css',
 })
@@ -28,6 +28,10 @@ export class PanelAdmin implements OnInit {
   busquedaUsuario: string = '';
   filtroUsuario: string = 'todos';
 
+  // Paginación
+  paginaActual = 1;
+  usuariosPorPagina = 10;
+  
   // Control de modales
   modalConfirmar = false;
   tituloModal = '';
@@ -48,7 +52,6 @@ export class PanelAdmin implements OnInit {
   }
 
   // CARGA INICIAL
-  // El backend devuelve IDusuario en lugar de id, se mapea aquí
   cargarUsuarios(): void {
     this.cargando = true;
     this.authService.listarUsuarios().subscribe({
@@ -76,7 +79,7 @@ export class PanelAdmin implements OnInit {
     });
   }
 
-  // FILTROS
+  // FILTROS (sin paginar — base para la paginación)
   get usuariosFiltrados(): Usuario[] {
     return this.usuarios.filter(u => {
       const matchFiltro =
@@ -88,6 +91,63 @@ export class PanelAdmin implements OnInit {
         u.email.toLowerCase().includes(q) ||
         u.nombre.toLowerCase().includes(q));
     });
+  }
+
+  // PAGINACIÓN
+  get totalPaginas(): number {
+    return Math.max(1, Math.ceil(this.usuariosFiltrados.length / this.usuariosPorPagina));
+  }
+
+  get usuariosPaginados(): Usuario[] {
+    const inicio = (this.paginaActual - 1) * this.usuariosPorPagina;
+    return this.usuariosFiltrados.slice(inicio, inicio + this.usuariosPorPagina);
+  }
+
+  get paginas(): number[] {
+    const total = this.totalPaginas;
+    const actual = this.paginaActual;
+    const rango: number[] = [];
+
+    if (total <= 5) {
+      for (let i = 1; i <= total; i++) rango.push(i);
+    } else {
+      rango.push(1);
+
+      if (actual > 3) rango.push(-1); // ...
+
+      for (let i = Math.max(2, actual - 1); i <= Math.min(total - 1, actual + 1); i++) {
+        rango.push(i);
+      }
+
+      if (actual < total - 2) rango.push(-1); // ...
+
+      rango.push(total);
+    }
+
+    return rango;
+  }
+
+  irAPagina(pagina: number): void {
+    if (pagina < 1 || pagina > this.totalPaginas) return;
+    this.paginaActual = pagina;
+    this.cdr.detectChanges();
+  }
+
+  // Resetea la página cuando cambia el filtro o la búsqueda
+  onBusquedaChange(): void {
+    this.paginaActual = 1;
+  }
+
+  onFiltroChange(filtro: string): void {
+    this.filtroUsuario = filtro;
+    this.paginaActual = 1;
+  }
+
+  get finPagina(): number {
+    return Math.min(
+      this.paginaActual * this.usuariosPorPagina,
+      this.usuariosFiltrados.length
+    );
   }
 
   get usuariosActivos(): number {
@@ -145,6 +205,10 @@ export class PanelAdmin implements OnInit {
 
         if (accion === 'eliminar') {
           this.usuarios = this.usuarios.filter(u => u.id !== id);
+          // Si al eliminar la página actual queda vacía, retrocede una página
+          if (this.paginaActual > this.totalPaginas) {
+            this.paginaActual = this.totalPaginas;
+          }
           this.mostrarToast('Usuario eliminado correctamente.');
         } else {
           const nuevoEstado = accion === 'bloquear' ? 'bloqueado' : 'activo';
@@ -160,7 +224,6 @@ export class PanelAdmin implements OnInit {
 
         this.cerrarModales();
         this.cdr.detectChanges();
-
       },
       error: (err) => {
         this.ejecutando = false;
@@ -170,7 +233,6 @@ export class PanelAdmin implements OnInit {
               'Error al realizar la acción.';
         this.mostrarToast(msg, true);
         this.cdr.detectChanges();
-
       }
     });
   }

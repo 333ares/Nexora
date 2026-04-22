@@ -1,18 +1,21 @@
 <div class="admin-layout">
-  <header class="topbar">
-    <div class="topbar-left">
-      <div class="topbar-logo">
-        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
-          alt="Nexora" width="36" height="36" />
-        <span>NEXORA</span>
-      </div>
-      <div class="topbar-title">
-        <span>Panel de Administración</span>
-      </div>
+  <header class="header">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Icon / Logo -->
+    <div class="brand-icon">
+      <img src="https://i.postimg.cc/RFGT0P0K/Chat-GPT-Image-15-abr-2026-17-09-39.png" alt="Fincan.io logo" width="56"
+        height="56" />
     </div>
 
+    <!-- Text logo -->
+    <div class="brand-text">
+      <img src="https://i.postimg.cc/1tMKzWz4/Chat-GPT-Image-15-abr-2026-17-11-47.png" alt="Logo Nexora letras"
+        class="logo2" />
+    </div>
+
+    <!-- Boton cerrar sesion -->
     <div class="topbar-right">
-      <span class="admin-badge">Administrador</span>
       <button class="btn-logout" (click)="cerrarSesion()">Cerrar sesión →</button>
     </div>
   </header>
@@ -39,14 +42,14 @@
       <!-- TOOLBAR -->
       <div class="toolbar">
         <input class="search-input" type="text" placeholder="Buscar por usuario, nombre o email…"
-          [(ngModel)]="busquedaUsuario" />
+          [(ngModel)]="busquedaUsuario" (ngModelChange)="onBusquedaChange()" />
         <div class="filter-tabs">
           <button class="filter-tab" [class.active]="filtroUsuario === 'todos'"
-            (click)="filtroUsuario = 'todos'">Todos</button>
+            (click)="onFiltroChange('todos')">Todos</button>
           <button class="filter-tab" [class.active]="filtroUsuario === 'activo'"
-            (click)="filtroUsuario = 'activo'">Activos</button>
+            (click)="onFiltroChange('activo')">Activos</button>
           <button class="filter-tab" [class.active]="filtroUsuario === 'bloqueado'"
-            (click)="filtroUsuario = 'bloqueado'">Bloqueados</button>
+            (click)="onFiltroChange('bloqueado')">Bloqueados</button>
         </div>
       </div>
 
@@ -73,30 +76,37 @@
               <td colspan="6" class="empty-row">No se encontraron usuarios.</td>
             </tr>
             } @else {
-            @for (u of usuariosFiltrados; track u.id) {
+            @for (u of usuariosPaginados; track u.id) {
             <tr [class.row-blocked]="esBloqueado(u)">
               <td class="td-id">{{ u.id }}</td>
+
               <td class="td-user">
-                <div class="user-avatar">{{ u.usuario.charAt(0).toUpperCase() }}</div>
+                <div class="user-avatar">
+                  {{ u.usuario.charAt(0).toUpperCase() }}
+                </div>
                 <span>{{ u.usuario }}</span>
               </td>
+
               <td>{{ u.nombre }} {{ u.apellidos }}</td>
               <td class="td-email">{{ u.email }}</td>
+
               <td>
                 <span class="estado-dot" [ngClass]="claseEstado(u.estado)">
-                  {{ u.estado | titlecase }}
+                  {{ u.estado }}
                 </span>
               </td>
+
               <td class="td-actions">
                 @if (!esBloqueado(u)) {
-                <button class="action-btn action-btn--warn" (click)="abrirConfirmacion('bloquear', u)"
-                  title="Bloquear cuenta">🔒</button>
+                <button class="action-btn action-btn--warn" (click)="abrirConfirmacion('bloquear', u)"><i
+                    class="bi bi-lock-fill"></i></button>
                 } @else {
-                <button class="action-btn action-btn--green" (click)="abrirConfirmacion('desbloquear', u)"
-                  title="Desbloquear cuenta">🔓</button>
+                <button class="action-btn action-btn--green" (click)="abrirConfirmacion('desbloquear', u)"><i
+                    class="bi bi-unlock-fill"></i></button>
                 }
-                <button class="action-btn action-btn--danger" (click)="abrirConfirmacion('eliminar', u)"
-                  title="Eliminar cuenta">🗑</button>
+
+                <button class="action-btn action-btn--danger" (click)="abrirConfirmacion('eliminar', u)"><i
+                    class="bi bi-trash-fill"></i></button>
               </td>
             </tr>
             }
@@ -104,6 +114,39 @@
           </tbody>
         </table>
       </div>
+
+      <!-- PAGINACIÓN -->
+      @if (!cargando && usuariosFiltrados.length > 0) {
+      <div class="pagination-bar">
+        <div class="pagination-controls">
+          <button class="page-btn page-btn--arrow" (click)="irAPagina(1)" [disabled]="paginaActual === 1"
+            title="Primera página">«</button>
+          <button class="page-btn page-btn--arrow" (click)="irAPagina(paginaActual - 1)" [disabled]="paginaActual === 1"
+            title="Anterior">‹</button>
+
+          @if (paginas[0] > 1) {
+          <span class="page-ellipsis">…</span>
+          }
+
+          @for (p of paginas; track $index) {
+          @if (p === -1) {
+          <span class="page-ellipsis">…</span>
+          } @else {
+          <button class="page-btn" [class.page-btn--active]="p === paginaActual" (click)="irAPagina(p)">
+            {{ p }}
+          </button>
+          }
+          }
+          @if (paginas[paginas.length - 1] < totalPaginas) { <span class="page-ellipsis">…</span>
+            }
+
+            <button class="page-btn page-btn--arrow" (click)="irAPagina(paginaActual + 1)"
+              [disabled]="paginaActual === totalPaginas" title="Siguiente">›</button>
+            <button class="page-btn page-btn--arrow" (click)="irAPagina(totalPaginas)"
+              [disabled]="paginaActual === totalPaginas" title="Última página">»</button>
+        </div>
+      </div>
+      }
 
     </div>
   </main>
