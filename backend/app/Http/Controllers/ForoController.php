@@ -51,4 +51,21 @@ class ForoController extends Controller
             'foros' => $foros
         ], 200);
     }
+
+    public function verForosUsuario(Request $request)
+    {
+        $foros = Foro::where('IDusuario', '=', $request->user()->IDusuario)->orderBy('created_at', 'desc')->get();
+
+        if (count($foros) <= 0) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'No has creado ningun foro'
+            ], 400);
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'foros' => $foros
+        ], 200);
+    }
 }

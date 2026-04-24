@@ -63,4 +63,5 @@ Route::middleware('auth:sanctum')->group(function () {
     // Foro
     Route::post('/foro', [ForoController::class, 'crearForo']);
     Route::get('/foros', [ForoController::class, 'verForos']);
+    Route::get('/foros/usuario', [ForoController::class, 'verForosUsuario']);
 });
