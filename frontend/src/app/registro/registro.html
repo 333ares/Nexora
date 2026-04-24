@@ -1,6 +1,6 @@
 <div class="card">
   <div class="left-panel"> <!-- Panel isquierdo -->
-    <img src="https://i.postimg.cc/XYpBkbgT/Letras-Nexora.png" class="letras-izquierda">
+    <img src="https://i.postimg.cc/XYpBkbgT/Letras-Nexora.png" routerLink="/inicio" class="letras-izquierda">
     <div class="quote-card">
       <div class="quotes-track-wrapper">
         <div class="quotes-track" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
@@ -20,7 +20,8 @@
     </div>
   </div>
   <div class="right-panel"> <!-- Panel DERECHO -->
-    <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Nexora logo" class="logo" routerLink="/inicio">
+    <img src="https://i.postimg.cc/QxjpNn21/Logo_Nexora_pequeño.png" alt="Nexora logo" class="logo"
+      routerLink="/inicio">
     <h1 class="title">{{ 'REGISTRO.TITLE' | translate }}</h1>
     <p class="subtitle">{{ 'REGISTRO.SUBTITLE' | translate }}</p>
     <!-- Formuoario para registrarse -->
@@ -31,7 +32,8 @@
 
         <div class="form-group">
           <label>{{ 'REGISTRO.NOMBRE_LABEL' | translate }}</label>
-          <input type="text" [placeholder]="'REGISTRO.NOMBRE_PLACEHOLDER' | translate" formControlName="nombre" required class="row-field">
+          <input type="text" [placeholder]="'REGISTRO.NOMBRE_PLACEHOLDER' | translate" formControlName="nombre" required
+            class="row-field">
           @if (formulario.get('nombre')?.invalid && formulario.get('nombre')?.touched) {
           <div class="error">
             <span>{{ 'REGISTRO.NOMBRE_ERROR' | translate }}</span>
@@ -41,7 +43,8 @@
 
         <div class="form-group">
           <label>{{ 'REGISTRO.APELLIDOS_LABEL' | translate }}</label>
-          <input type="text" [placeholder]="'REGISTRO.APELLIDOS_PLACEHOLDER' | translate" formControlName="apellidos" class="row-field">
+          <input type="text" [placeholder]="'REGISTRO.APELLIDOS_PLACEHOLDER' | translate" formControlName="apellidos"
+            class="row-field">
           @if (formulario.get('apellidos')?.invalid && formulario.get('apellidos')?.touched) {
           <div class="error">
             <span>{{ 'REGISTRO.APELLIDOS_ERROR' | translate }}</span>
@@ -83,7 +86,8 @@
         <label>{{ 'REGISTRO.PASS_LABEL' | translate }}</label>
 
         <div class="input-wrapper">
-          <input [type]="showPassword ? 'text' : 'password'" [placeholder]="'REGISTRO.PASS_PLACEHOLDER' | translate" formControlName="contrasena">
+          <input [type]="showPassword ? 'text' : 'password'" [placeholder]="'REGISTRO.PASS_PLACEHOLDER' | translate"
+            formControlName="contrasena">
 
           <button type="button" class="toggle-pass"
             (click)="togglePassword(); $event.stopPropagation(); $event.preventDefault()">

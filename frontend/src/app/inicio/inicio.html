@@ -14,7 +14,7 @@
     <a routerLink="/contacto">{{ 'NAV.CONTACTO' | translate }}</a>
   </div>
   <div class="nav-cta">
-    <a routerLink="/login" class="btn-nav-secondary">{{ 'NAV.ACCEDER' | translate }}</a>
+<a [routerLink]="isLoggedIn ? '/movimientos' : '/login'" class="btn-nav-secondary">{{ 'NAV.ACCEDER' | translate }}</a>
     <a routerLink="/registro" class="btn-nav-primary">{{ 'NAV.REGISTRARSE' | translate }}</a>
     <app-language-selector />
   </div>

@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Foro;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class ForoController extends Controller
+{
+    public function crearForo(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'titulo' => 'required|string',
+            'contenido' => 'required|string',
+        ]);
+
+        // Si el validador falla, mostramos porque
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $foro = Foro::create([
+            'titulo' => $request->titulo,
+            'contenido' => $request->contenido,
+            'IDusuario' => $request->user()->IDusuario
+        ]);
+
+        return response()->json([
+            'message' => 'Foro añadido correctamente',
+            'foro' => $foro
+        ], 201);
+    }
+
+    public function verForos(Request $request)
+    {
+        $foros = Foro::orderBy('created_at', 'desc')->get();
+
+        if (count($foros) <= 0) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'No se han creado foros aún'
+            ], 400);
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'foros' => $foros
+        ], 200);
+    }
+
+    public function verForosUsuario(Request $request)
+    {
+        $foros = Foro::where('IDusuario', '=', $request->user()->IDusuario)->orderBy('created_at', 'desc')->get();
+
+        if (count($foros) <= 0) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'No has creado ningun foro'
+            ], 400);
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'foros' => $foros
+        ], 200);
+    }
+}
