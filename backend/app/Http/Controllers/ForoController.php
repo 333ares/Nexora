@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ForoController extends Controller
 {
-    function crearForo(Request $request)
+    public function crearForo(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string',
@@ -33,5 +33,22 @@ class ForoController extends Controller
             'message' => 'Foro añadido correctamente',
             'foro' => $foro
         ], 201);
+    }
+
+    public function verForos(Request $request)
+    {
+        $foros = Foro::orderBy('created_at', 'desc')->get();
+
+        if (count($foros) <= 0) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'No se han creado foros aún'
+            ], 400);
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'foros' => $foros
+        ], 200);
     }
 }
