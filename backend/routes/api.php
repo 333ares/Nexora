@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\EstadisticasController;
+use App\Http\Controllers\ForoController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -58,4 +59,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/admin/bloquear', [AdminController::class, 'bloquearUsuario']);
     Route::post('/admin/desbloquear', [AdminController::class, 'desbloquearUsuario']);
     Route::delete('/admin/usuario', [AdminController::class, 'eliminarUsuario']);
+
+    // Foro
+    Route::post('/foro', [ForoController::class, 'crearForo']);
 });
