@@ -9,6 +9,8 @@ class Foro extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'IDforo';
+    
     protected $fillable = [
         'IDforo',
         'titulo',
