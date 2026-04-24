@@ -10,7 +10,7 @@ class Respuesta extends Model
         'IDrespuesta',
         'respuesta',
         'IDusuario',
-        'IDpregunta',
+        'IDforo',
         'created_at'
     ];
 }
