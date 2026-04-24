@@ -12,9 +12,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class Inicio {
   isLoggedIn = false;
 
-  constructor(private authService: Auth) {
-    this.isLoggedIn = !!this.authService.getToken();
-  }
 
   emailNewsletter: string = '';
 
