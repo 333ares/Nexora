@@ -66,4 +66,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/foros', [ForoController::class, 'listarForos']);
     Route::get('/foros/usuario', [ForoController::class, 'listarForosUsuario']);
     Route::put('/foros', [ForoController::class, 'actualizarForo']);
+    Route::delete('/foro', [ForoController::class, 'borrarForo']);
 });

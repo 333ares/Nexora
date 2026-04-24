@@ -151,4 +151,25 @@ class ForoController extends Controller
             'foro' => $foro
         ], 200);
     }
+
+    public function borrarForo(Request $request)
+    {
+        $foro = Foro::where('IDforo', $request->IDforo)
+            ->where('IDusuario', $request->user()->IDusuario)
+            ->first();
+
+        if (!$foro) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'No tienes ningún foro con ese ID'
+            ], 404);
+        }
+
+        $foro->delete();
+
+        return response()->json([
+            'message' => 'success',
+            'foro' => 'El foro se ha borrado correctamente'
+        ], 200);
+    }
 }
