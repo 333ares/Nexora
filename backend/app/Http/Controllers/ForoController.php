@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Foro;
+use App\Models\Respuesta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -35,14 +36,50 @@ class ForoController extends Controller
         ], 201);
     }
 
-    public function verForos(Request $request)
+    public function visitarForo(Request $request)
     {
-        $foros = Foro::orderBy('created_at', 'desc')->get();
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $foro = Foro::find($request->IDforo);
+
+        if (!$foro) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Foro no encontrado'
+            ], 404);
+        }
+
+        $foro->increment('visitas');
+
+        return response()->json([
+            'message' => 'success',
+            'foro' => $foro
+        ], 200);
+    }
+
+    public function listarForos()
+    {
+        $foros = Foro::orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($foro) {
+                $foro->respuestas = Respuesta::where('IDforo', '=', $foro->IDforo)->count();
+                return $foro;
+            });
+
 
         if (count($foros) <= 0) {
             return response()->json([
                 'message' => 'error',
-                'errors' => 'No se han creado foros aún'
+                'errors' => 'No hay foros aún'
             ], 400);
         }
 
@@ -52,9 +89,15 @@ class ForoController extends Controller
         ], 200);
     }
 
-    public function verForosUsuario(Request $request)
+    public function listarForosUsuario(Request $request)
     {
-        $foros = Foro::where('IDusuario', '=', $request->user()->IDusuario)->orderBy('created_at', 'desc')->get();
+        $foros = Foro::where('IDusuario', '=', $request->user()->IDusuario)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($foro) {
+                $foro->respuestas = Respuesta::where('IDforo', '=', $foro->IDforo)->count();
+                return $foro;
+            });
 
         if (count($foros) <= 0) {
             return response()->json([
@@ -67,5 +110,13 @@ class ForoController extends Controller
             'message' => 'success',
             'foros' => $foros
         ], 200);
+    }
+
+    public function actualizarForo(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'titulo' => 'required|string',
+            'contenido' => 'required|string',
+        ]);
     }
 }
