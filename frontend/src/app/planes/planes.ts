@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { LanguageSelector } from '../language-selector/language-selector';
 
 @Component({
   selector: 'app-planes',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink, TranslatePipe, LanguageSelector],
   templateUrl: './planes.html',
   styleUrl: './planes.css'
 })

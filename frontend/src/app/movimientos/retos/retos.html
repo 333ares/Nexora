@@ -3,7 +3,7 @@
     <div class="card card-white retos-header-card">
       <div class="retos-tabs">
         <button class="reto-vista-tab" [class.active]="vistaActiva === 'activos'" (click)="cambiarVista('activos')">
-          <i class="bi bi-bullseye"></i> Reto actual
+          <i class="bi bi-piggy-bank-fill"></i> Reto actual
         </button>
         <button class="reto-vista-tab" [class.active]="vistaActiva === 'historial'" (click)="cambiarVista('historial')">
           <i class="bi bi-journal-text"></i> Historial
@@ -22,7 +22,7 @@
         @for (reto of retosVisibles; track reto.IDreto) {
         <div class="card card-white reto-card reto-card-slider">
           <div class="reto-card-top">
-            <div class="reto-card-icon">🎯</div>
+            <div class="reto-card-icon"><i class="bi bi-piggy-bank"></i></div>
             <div class="reto-card-info">
               <span class="reto-card-nombre">{{ reto.titulo }}</span>
               <span class="reto-card-desc">
@@ -103,8 +103,7 @@
     @if (retosVisibles.length > 1) {
     <div class="slider-dots">
       @for (j of sliderIndices; track j) {
-      <span class="slider-dot" [class.active]="sliderIndex === j" 
-        (click)="sliderIr(j)"></span>
+      <span class="slider-dot" [class.active]="sliderIndex === j" (click)="sliderIr(j)"></span>
       }
       <span class="slider-count">{{ sliderIndex + 1 }} / {{ retosVisibles.length }}</span>
     </div>
@@ -194,7 +193,7 @@
     </div>
 
     <div class="modal-body">
-      <div class="borrar-icon">🏳️</div>
+      <div class="borrar-icon"><i class="bi bi-flag"></i></div>
       <p class="borrar-texto">¿Estás seguro de que quieres abandonar este reto? Esta acción no se puede deshacer.</p>
     </div>
 

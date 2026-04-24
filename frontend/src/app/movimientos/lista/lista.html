@@ -46,7 +46,10 @@
         <i class="bi bi-book icono-mov"></i>
         } @else if (mov.categoria === 'Extras o imprevistos') {
         <i class="bi bi-bookmark-dash icono-mov"></i>
+        } @else {
+        <i class="bi bi-piggy-bank icono-mov"></i>
         }
+
       </div>
       <div class="mov-name-wrap">
         <span class="mov-nombre">{{ mov.categoria }}</span>
@@ -65,8 +68,11 @@
       </span>
     </div>
     <div class="td td-acciones">
-      <button class="btn-accion btn-editar" title="Editar" (click)="abrirModalEditar(mov)">✏️</button>
-      <button class="btn-accion btn-eliminar" title="Eliminar" (click)="abrirModalBorrar(mov.id)">🗑️</button>
+      <!-- Deshabilitar botones para movimientos de reto -->
+      <button class="btn-accion btn-editar" title="Editar" [disabled]="mov.categoria?.startsWith('Reto:')"
+        (click)="abrirModalEditar(mov)"><i class="bi bi-pencil"></i></button>
+      <button class="btn-accion btn-eliminar" title="Eliminar" [disabled]="mov.categoria?.startsWith('Reto:')"
+        (click)="abrirModalBorrar(mov.id)"><i class="bi bi-trash"></i></button>
     </div>
   </div>
   } @empty {
@@ -132,7 +138,7 @@
 
         @if (nuevoMovimiento.categoria && getCategoriaHint(nuevoMovimiento.categoria)) {
         <div class="categoria-hint">
-          <span class="categoria-hint-icon">💡</span>
+          <span class="categoria-hint-icon"><i class="bi bi-lightbulb"></i></span>
           <span>{{ getCategoriaHint(nuevoMovimiento.categoria) }}</span>
         </div>
         }
@@ -176,7 +182,7 @@
 
 
     <div class="modal-body">
-      <div class="borrar-icon">🗑️</div>
+      <div class="borrar-icon"><i class="bi bi-trash-fill"></i></div>
       <p class="borrar-texto">¿Estás seguro de que quieres eliminar este movimiento? Esta acción no se puede deshacer.
       </p>
     </div>

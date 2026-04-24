@@ -1,85 +1,75 @@
 <!-- NAV -->
-<nav role="navigation" aria-label="Navegación principal">
-  <a routerLink="/inicio" class="nav-logo" aria-label="Ir a la página de inicio">
-    <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
-      alt="Logo de Nexora" width="36" height="36" style="object-fit: contain;" />
-    <span>NEXORA</span>
+<nav>
+  <a routerLink="/inicio" class="nav-logo">
+    <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="36" height="36" style="object-fit: contain;" />
+        <img src="https://i.postimg.cc/XYpBkbgT/Letras-Nexora.png">
+
   </a>
-  <div class="nav-links" role="menubar">
-    <a routerLink="/servicios" class="active" role="menuitem" aria-current="page">Servicios</a>
-    <a routerLink="/planes" role="menuitem">Planes</a>
-    <a routerLink="/faqs" role="menuitem">FAQ</a>
-    <a routerLink="/acerca-de" role="menuitem">Nosotros</a>
-    <a routerLink="/contacto" role="menuitem">Contacto</a>
+  <div class="nav-links">
+    <a routerLink="/servicios" class="active">{{ 'NAV.SERVICIOS' | translate }}</a>
+    <a routerLink="/planes">{{ 'NAV.PLANES' | translate }}</a>
+    <a routerLink="/faqs">{{ 'NAV.FAQ' | translate }}</a>
+    <a routerLink="/acerca-de">{{ 'NAV.NOSOTROS' | translate }}</a>
+    <a routerLink="/contacto">{{ 'NAV.CONTACTO' | translate }}</a>
   </div>
-  <div class="nav-cta" aria-label="Acciones de usuario">
-    <a routerLink="/login" class="btn-nav-secondary">Acceder</a>
-    <a routerLink="/registro" class="btn-nav-primary">Registrarse →</a>
+  <div class="nav-cta">
+    <a routerLink="/login" class="btn-nav-secondary">{{ 'NAV.ACCEDER' | translate }}</a>
+    <a routerLink="/registro" class="btn-nav-primary">{{ 'NAV.REGISTRARSE' | translate }}</a>
+    <app-language-selector />
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="page-hero" role="region" aria-labelledby="servicios-title">
-  <div class="page-hero-pattern" aria-hidden="true"></div>
+<section class="page-hero">
+  <div class="page-hero-pattern"></div>
   <div class="container">
-    <p class="section-eyebrow">Lo que ofrecemos</p>
-    <h1 id="servicios-title" class="page-hero-title">Nuestros servicios</h1>
-    <p class="page-hero-subtitle">Nexora combina herramientas potentes con contenido profesional para que tomes el
-      control total de tus finanzas.</p>
+    <p class="section-eyebrow">{{ 'SERVICIOS_PAGE.EYEBROW' | translate }}</p>
+    <h1 class="page-hero-title">{{ 'SERVICIOS_PAGE.TITLE' | translate }}</h1>
+    <p class="page-hero-subtitle">{{ 'SERVICIOS_PAGE.SUBTITLE' | translate }}</p>
   </div>
 </section>
 
 <!-- SERVICIOS PRINCIPALES -->
-<section class="services-main" role="main">
+<section class="services-main">
   <div class="container">
-
     <div class="service-block">
       <div class="service-text">
-        <h2>Registro de gastos e ingresos</h2>
-        <p>Registra todos tus movimientos financieros en segundos...</p>
+        <h2>{{ 'SERVICIOS_PAGE.S1_TITLE' | translate }}</h2>
+        <p>{{ 'SERVICIOS_PAGE.S1_DESC' | translate }}</p>
         <ul>
-          <li>Añade movimientos de forma rápida e intuitiva</li>
-          <li>Categorización automática por tipo de gasto</li>
-          <li>Historial completo siempre disponible</li>
+          <li>{{ 'SERVICIOS_PAGE.S1_LI1' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S1_LI2' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S1_LI3' | translate }}</li>
         </ul>
       </div>
-      <div class="service-visual" aria-label="Resumen de gastos e ingresos">
+      <div class="service-visual">
         <div class="service-visual-card">
-          <div class="mini-stat">
-            <span class="mini-stat-label">Gastos este mes</span>
-            <span class="mini-stat-value" aria-label="Menos 342 euros">-342 €</span>
-          </div>
-          <div class="mini-stat">
-            <span class="mini-stat-label">Ingresos este mes</span>
-            <span class="mini-stat-value text-green" aria-label="Más 1850 euros">+1.850 €</span>
-          </div>
-          <div class="mini-stat">
-            <span class="mini-stat-label">Balance</span>
-            <span class="mini-stat-value text-green" aria-label="Balance positivo de 1508 euros">+1.508 €</span>
-          </div>
+          <div class="mini-stat"><span class="mini-stat-label">{{ 'SERVICIOS_PAGE.S1_STAT1_LABEL' | translate }}</span><span class="mini-stat-value">{{ 'SERVICIOS_PAGE.S1_STAT1_VALUE' | translate }}</span></div>
+          <div class="mini-stat"><span class="mini-stat-label">{{ 'SERVICIOS_PAGE.S1_STAT2_LABEL' | translate }}</span><span class="mini-stat-value text-green">{{ 'SERVICIOS_PAGE.S1_STAT2_VALUE' | translate }}</span></div>
+          <div class="mini-stat"><span class="mini-stat-label">{{ 'SERVICIOS_PAGE.S1_STAT3_LABEL' | translate }}</span><span class="mini-stat-value text-green">{{ 'SERVICIOS_PAGE.S1_STAT3_VALUE' | translate }}</span></div>
         </div>
       </div>
     </div>
 
     <div class="service-block service-block--reverse">
       <div class="service-text">
-        <h2>Estadísticas avanzadas</h2>
-        <p>Visualiza tendencias...</p>
+        <h2>{{ 'SERVICIOS_PAGE.S2_TITLE' | translate }}</h2>
+        <p>{{ 'SERVICIOS_PAGE.S2_DESC' | translate }}</p>
         <ul>
-          <li>Gráficas de evolución mensual y anual</li>
-          <li>Desglose por categorías de gasto</li>
-          <li>Comparativas entre períodos</li>
+          <li>{{ 'SERVICIOS_PAGE.S2_LI1' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S2_LI2' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S2_LI3' | translate }}</li>
         </ul>
       </div>
-      <div class="service-visual" aria-label="Gráfica de gastos mensuales">
+      <div class="service-visual">
         <div class="service-visual-card stats-card">
           <div class="bar-chart">
-            <div class="bar" style="height: 40%;" aria-label="Enero 40%"><span>Ene</span></div>
-            <div class="bar" style="height: 65%;" aria-label="Febrero 65%"><span>Feb</span></div>
-            <div class="bar" style="height: 55%;" aria-label="Marzo 55%"><span>Mar</span></div>
-            <div class="bar bar--highlight" style="height: 80%;" aria-label="Abril 80%"><span>Abr</span></div>
-            <div class="bar" style="height: 45%;" aria-label="Mayo 45%"><span>May</span></div>
-            <div class="bar" style="height: 70%;" aria-label="Junio 70%"><span>Jun</span></div>
+            <div class="bar" style="height: 40%;"><span>Ene</span></div>
+            <div class="bar" style="height: 65%;"><span>Feb</span></div>
+            <div class="bar" style="height: 55%;"><span>Mar</span></div>
+            <div class="bar bar--highlight" style="height: 80%;"><span>Abr</span></div>
+            <div class="bar" style="height: 45%;"><span>May</span></div>
+            <div class="bar" style="height: 70%;"><span>Jun</span></div>
           </div>
         </div>
       </div>
@@ -87,19 +77,19 @@
 
     <div class="service-block">
       <div class="service-text">
-        <h2>Kiro — Consejero financiero con IA</h2>
-        <p>Tu asistente financiero personal...</p>
+        <h2>{{ 'SERVICIOS_PAGE.S3_TITLE' | translate }}</h2>
+        <p>{{ 'SERVICIOS_PAGE.S3_DESC' | translate }}</p>
         <ul>
-          <li>Respuestas instantáneas</li>
-          <li>Recomendaciones personalizadas</li>
-          <li>Análisis inteligente</li>
+          <li>{{ 'SERVICIOS_PAGE.S3_LI1' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S3_LI2' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S3_LI3' | translate }}</li>
         </ul>
       </div>
-      <div class="service-visual" aria-label="Chat con asistente Kiro">
+      <div class="service-visual">
         <div class="service-visual-card chat-card">
-          <div class="chat-bubble chat-bubble--user">¿Cómo puedo reducir mis gastos en ocio?</div>
+          <div class="chat-bubble chat-bubble--user">{{ 'SERVICIOS_PAGE.S3_CHAT_USER' | translate }}</div>
           <div class="chat-bubble chat-bubble--kiro">
-            <strong>Kiro:</strong> Según tus datos...
+            <strong>Kiro:</strong> {{ 'SERVICIOS_PAGE.S3_CHAT_KIRO' | translate }}
           </div>
         </div>
       </div>
@@ -107,81 +97,74 @@
 
     <div class="service-block service-block--reverse">
       <div class="service-text">
-        <h2>Foro de economía</h2>
-        <p>Interactúa con otros usuarios...</p>
+        <h2>{{ 'SERVICIOS_PAGE.S4_TITLE' | translate }}</h2>
+        <p>{{ 'SERVICIOS_PAGE.S4_DESC' | translate }}</p>
         <ul>
-          <li>Preguntas y respuestas</li>
-          <li>Debates económicos</li>
-          <li>Aprende de la comunidad</li>
+          <li>{{ 'SERVICIOS_PAGE.S4_LI1' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S4_LI2' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S4_LI3' | translate }}</li>
         </ul>
       </div>
-      <div class="service-visual" aria-label="Ejemplo de publicación en foro">
+      <div class="service-visual">
         <div class="service-visual-card foro-card">
-          <div class="content-tag">Pregunta</div>
-          <h4>¿Cuál es la mejor estrategia para invertir?</h4>
-          <p>Tengo unos ahorros...</p>
-          <div class="content-meta">Por Carlos Gómez · 5 respuestas</div>
+          <div class="content-tag">{{ 'SERVICIOS_PAGE.S4_TAG' | translate }}</div>
+          <h4>{{ 'SERVICIOS_PAGE.S4_Q' | translate }}</h4>
+          <p>{{ 'SERVICIOS_PAGE.S4_Q_DESC' | translate }}</p>
+          <div class="content-meta">{{ 'SERVICIOS_PAGE.S4_Q_META' | translate }}</div>
         </div>
       </div>
     </div>
 
     <div class="service-block">
       <div class="service-text">
-        <h2>Retos mensuales</h2>
-        <p>Cada mes puedes proponerte retos...</p>
+        <h2>{{ 'SERVICIOS_PAGE.S5_TITLE' | translate }}</h2>
+        <p>{{ 'SERVICIOS_PAGE.S5_DESC' | translate }}</p>
         <ul>
-          <li>Retos alcanzables</li>
-          <li>Seguimiento</li>
-          <li>Mejora hábitos</li>
+          <li>{{ 'SERVICIOS_PAGE.S5_LI1' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S5_LI2' | translate }}</li>
+          <li>{{ 'SERVICIOS_PAGE.S5_LI3' | translate }}</li>
         </ul>
       </div>
-      <div class="service-visual" aria-label="Ejemplo de retos financieros">
+      <div class="service-visual">
         <div class="service-visual-card retos-card">
           <div class="reto-mini">
-            <div><strong>Coche nuevo</strong><br><span class="reto-desc">5000 de 10000 euros</span></div>
+            <div><strong>{{ 'SERVICIOS_PAGE.S5_RETO1_TITLE' | translate }}</strong><br><span class="reto-desc">{{ 'SERVICIOS_PAGE.S5_RETO1_DESC' | translate }}</span></div>
           </div>
           <div class="reto-mini">
-            <div><strong>Ahorra el 10% de tu sueldo</strong><br><span class="reto-desc">Destina el 10% al ahorro</span>
-            </div>
+            <div><strong>{{ 'SERVICIOS_PAGE.S5_RETO2_TITLE' | translate }}</strong><br><span class="reto-desc">{{ 'SERVICIOS_PAGE.S5_RETO2_DESC' | translate }}</span></div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
+
 <!-- FOOTER -->
-<footer role="contentinfo" aria-label="Pie de página">
+<footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a routerLink="/inicio" class="nav-logo" aria-label="Ir a inicio">
-        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png"
-          alt="Logo de Nexora" width="32" height="32" style="object-fit: contain;" />
+      <a routerLink="/inicio" class="nav-logo">
+        <img src="https://image2url.com/r2/default/images/1771516075234-2bd3afc6-5bfd-4499-902c-762ea9c1fe1d.png" alt="Nexora" width="32" height="32" style="object-fit: contain;" />
         <span>NEXORA</span>
       </a>
-      <p>Plataforma de gestión de gastos y hábitos financieros.</p>
+      <p>{{ 'FOOTER.DESC' | translate }}</p>
     </div>
     <div class="footer-col">
-      <h5>Producto</h5>
-      <a routerLink="/servicios">Servicios</a>
-      <a routerLink="/planes">Planes</a>
+      <h5>{{ 'FOOTER.PRODUCTO' | translate }}</h5>
+      <a routerLink="/servicios">{{ 'NAV.SERVICIOS' | translate }}</a>
+      <a routerLink="/planes">{{ 'NAV.PLANES' | translate }}</a>
     </div>
     <div class="footer-col">
-      <h5>Empresa</h5>
-      <a routerLink="/acerca-de">Acerca de ADDA</a>
-      <a routerLink="/faqs">FAQ</a>
-      <a routerLink="/contacto">Contacto</a>
-      <a routerLink="/politica-privacidad">Política de privacidad</a>
+      <h5>{{ 'FOOTER.EMPRESA' | translate }}</h5>
+      <a routerLink="/acerca-de">{{ 'FOOTER.ACERCA_DE' | translate }}</a>
+      <a routerLink="/faqs">{{ 'NAV.FAQ' | translate }}</a>
+      <a routerLink="/contacto">{{ 'NAV.CONTACTO' | translate }}</a>
+      <a routerLink="/politica-privacidad">{{ 'FOOTER.PRIVACIDAD' | translate }}</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 Nexora. Todos los derechos reservados.</span>
-    <span class="contact">
-      ¿Preguntas?
-      <a href="mailto:contacto@nexora.app" aria-label="Enviar email a soporte">
-        contacto&#64;nexora.app
-      </a>
-    </span>
+    <span>{{ 'FOOTER.COPYRIGHT' | translate }}</span>
+    <span class="contact">{{ 'FOOTER.PREGUNTAS' | translate }} <a href="mailto:contacto@nexora.app">contacto&#64;nexora.app</a></span>
   </div>
 </footer>

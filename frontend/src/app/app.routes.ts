@@ -19,6 +19,7 @@ import { Faqs } from './faqs/faqs';
 import { PoliticaPrivacidad } from './politica-privacidad/politica-privacidad';
 import { PanelAdmin } from './panel-admin/panel-admin';
 import { Foro } from './foro/foro';
+import { UsuarioBloqueado } from './usuario-bloqueado/usuario-bloqueado';
 
 export const routes: Routes = [
   {
@@ -61,6 +62,11 @@ export const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuario,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'usuario-bloqueado',
+    component: UsuarioBloqueado,
     canActivate: [AuthGuard]
   },
   {

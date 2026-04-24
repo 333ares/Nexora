@@ -20,7 +20,7 @@ class UsuarioFactory extends Factory
             'nombre' => fake()->name(),
             'apellidos' => fake()->lastName(),
             'balance_total' => fake()->randomFloat(2, 0, 1000),
-            'email' => 'user@gmail.com',
+            'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make($password),
             'estado' => 'activo'
         ];
@@ -32,6 +32,16 @@ class UsuarioFactory extends Factory
             return [
                 'usuario' => 'admin',
                 'email' => 'admin@gmail.com'
+            ];
+        });
+    }
+
+    public function user(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'usuario' => 'user',
+                'email' => 'user@gmail.com'
             ];
         });
     }
