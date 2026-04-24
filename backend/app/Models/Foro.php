@@ -13,6 +13,7 @@ class Foro extends Model
         'IDforo',
         'titulo',
         'contenido',
+        'visitas',
         'IDusuario',
         'created_at'
     ];
