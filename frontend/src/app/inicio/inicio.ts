@@ -10,6 +10,11 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './inicio.css',
 })
 export class Inicio {
+  isLoggedIn = false;
+
+  constructor(private authService: Auth) {
+    this.isLoggedIn = !!this.authService.getToken();
+  }
 
   emailNewsletter: string = '';
 
