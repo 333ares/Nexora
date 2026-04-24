@@ -115,8 +115,40 @@ class ForoController extends Controller
     public function actualizarForo(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'titulo' => 'required|string',
-            'contenido' => 'required|string',
+            'IDforo' => 'required|integer',
+            'titulo' => 'nullable|string',
+            'contenido' => 'nullable|string',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $datos = $request->only([
+            'IDforo',
+            'titulo',
+            'contenido'
+        ]);
+
+        $foro = Foro::where('IDforo', $request->IDforo)
+            ->where('IDusuario', $request->user()->IDusuario)
+            ->first();
+
+        if (!$foro) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Foro no encontrado'
+            ], 404);
+        }
+
+        $foro->update($datos);
+
+        return response()->json([
+            'message' => 'success',
+            'foro' => $foro
+        ], 200);
     }
 }
