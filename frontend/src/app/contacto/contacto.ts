@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { LanguageSelector } from '../language-selector/language-selector';
+
 
 @Component({
   selector: 'app-contacto',
   standalone: true,
-  imports: [RouterLink, FormsModule, TranslatePipe, LanguageSelector],
+  imports: [RouterLink, FormsModule, TranslatePipe],
   templateUrl: './contacto.html',
   styleUrl: './contacto.css',
 })

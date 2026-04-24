@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { LanguageSelector } from '../language-selector/language-selector';
+import { TranslatePipe } from '@ngx-translate/core';
+
 
 interface FaqItem {
   id: number;
@@ -14,7 +14,7 @@ interface FaqItem {
 @Component({
   selector: 'app-faqs',
   standalone: true,
-  imports: [RouterLink, FormsModule, TranslatePipe, LanguageSelector],
+  imports: [RouterLink, FormsModule, TranslatePipe],
   templateUrl: './faqs.html',
   styleUrl: './faqs.css',
 })
