@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id('IDforo');
             $table->string('titulo');
             $table->text('contenido');
-            $table->foreignId('IDusuario')->onDelete('cascade'); 
+            $table->unsignedBigInteger('visitas')->default(0);
+            $table->foreignId('IDusuario')->onDelete('cascade');
             $table->timestamps();
         });
     }

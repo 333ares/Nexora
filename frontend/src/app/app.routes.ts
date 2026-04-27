@@ -20,6 +20,7 @@ import { PoliticaPrivacidad } from './politica-privacidad/politica-privacidad';
 import { PanelAdmin } from './panel-admin/panel-admin';
 import { Foro } from './foro/foro';
 import { UsuarioBloqueado } from './usuario-bloqueado/usuario-bloqueado';
+import { LandingLayout } from './landing-layout/landing-layout';
 import { VerForo } from './foro/ver-foro/ver-foro';
 import { MisForos } from './foro/mis-foros/mis-foros';
 import { MisPreguntas } from './foro/mis-preguntas/mis-preguntas';
@@ -27,13 +28,21 @@ import { Kiro } from './foro/kiro/kiro';
 import { DetalleForo } from './foro/detalle-foro/detalle-foro';
 
 export const routes: Routes = [
-  { path: 'inicio', component: Inicio },
-  { path: 'servicios', component: Servicios },
-  { path: 'planes', component: Planes },
-  { path: 'acerca-de', component: AcercaDe },
-  { path: 'faqs', component: Faqs },
-  { path: 'contacto', component: Contacto },
-  { path: 'politica-privacidad', component: PoliticaPrivacidad },
+
+  {
+    path: '',
+    component: LandingLayout,
+    children: [
+      { path: 'inicio', component: Inicio },
+      { path: 'servicios', component: Servicios },
+      { path: 'planes', component: Planes },
+      { path: 'acerca-de', component: AcercaDe },
+      { path: 'faqs', component: Faqs },
+      { path: 'contacto', component: Contacto },
+      { path: 'politica-privacidad', component: PoliticaPrivacidad },
+      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+    ]
+  },
   {
     path: 'panel-admin',
     component: PanelAdmin,

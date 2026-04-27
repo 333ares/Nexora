@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('respuestas', function (Blueprint $table) {
             $table->id('IDrespuesta');
             $table->string('respuesta');
-            $table->foreignId('IDpregunta')->onDelete('cascade');
+            $table->foreignId('IDusuario')->onDelete('cascade');
+            $table->foreignId('IDforo')->onDelete('cascade');
             $table->timestamps();
         });
     }
