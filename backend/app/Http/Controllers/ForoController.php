@@ -38,17 +38,6 @@ class ForoController extends Controller
 
     public function visitarForo(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|integer',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'error',
-                'errors' => $validator->errors()
-            ], 400);
-        }
-
         $foro = Foro::find($request->IDforo);
 
         if (!$foro) {
@@ -59,6 +48,7 @@ class ForoController extends Controller
         }
 
         $foro->increment('visitas');
+        $foro->respuestas = Respuesta::where('IDforo', $foro->IDforo)->get();
 
         return response()->json([
             'message' => 'success',
