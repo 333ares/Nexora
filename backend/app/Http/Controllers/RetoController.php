@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reto;
 use App\Models\Movimientos;
+use App\Models\Usuario;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
@@ -140,6 +141,11 @@ class RetoController extends Controller
             ], 400);
         }
 
+        // Actualizamos el balance del usuario
+        $balanceUsuarioActualizado = $request->user()->balance_total - $request->cantidad;
+        $usuario = Usuario::find($request->user()->IDusuario);
+        $usuario->update(['balance_total' => $balanceUsuarioActualizado]);
+
         // Creamos el movimiento de gasto
         Movimientos::create([
             'tipo' => 'gasto',
@@ -201,6 +207,11 @@ class RetoController extends Controller
                 'errors' => 'No puedes retirar más dinero del que tienes en la hucha'
             ], 400);
         }
+
+        // Actualizamos el balance del usuario
+        $balanceUsuarioActualizado = $request->user()->balance_total + $request->cantidad;
+        $usuario = Usuario::find($request->user()->IDusuario);
+        $usuario->update(['balance_total' => $balanceUsuarioActualizado]);
 
         // Creamos el movimiento de ingreso
         Movimientos::create([
