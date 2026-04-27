@@ -16,7 +16,7 @@ export class App implements OnInit {
   isLoggedIn: boolean = false;
   showHeader: boolean = false;
 
-  private rutasConHeader = ['/academia', '/movimientos', '/perfil'];
+  private rutasConHeader = ['/Foro', '/movimientos', '/perfil'];
 
   constructor(
     private authService: Auth,

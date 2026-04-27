@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Respuesta extends Model
 {
+
+    protected $primaryKey = 'IDrespuesta';
+
     protected $fillable = [
         'IDrespuesta',
         'respuesta',
         'IDusuario',
-        'IDpregunta',
+        'IDforo',
         'created_at'
     ];
 }
