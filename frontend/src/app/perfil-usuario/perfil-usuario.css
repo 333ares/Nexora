@@ -1,13 +1,10 @@
 /* 
    FUENTES
-   Importa Onest y Lato desde Google Fonts
 */
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 
-/* 
-   HOST — fondo verde de la página completa
- */
+/* HOST */
 :host {
   display: flex;
   align-items: center;
@@ -18,11 +15,7 @@
   box-sizing: border-box;
 }
 
-/* 
-   CARD — contenedor principal del modal/pantalla
-   --gap controla a la vez: padding exterior, separación entre
-   columnas y separación entre recuadros de la columna derecha.
- */
+/* CARD */
 .card {
   --gap: 24px;
   display: grid;
@@ -38,27 +31,17 @@
   box-sizing: border-box;
 }
 
-/* main-layout es transparente al grid; sus hijos participan
-   directamente en el grid de .card */
 .main-layout {
   display: contents;
 }
 
-
-/* 
-   RECUADROS — estilos base compartidos por todas las secciones
-   (perfil, plan, transacciones)
- */
 .section-box {
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
 }
 
-
-/* 
-   COLUMNA IZQUIERDA — sección de perfil de usuario
- */
+/* COLUMNA IZQUIERDA */
 .left-col {
   display: flex;
   flex-direction: column;
@@ -69,10 +52,7 @@
   flex-direction: column;
 }
 
-
-/* 
-   BANNER — franja decorativa superior estilo Discord
- */
+/* BANNER */
 .banner {
   width: 100%;
   height: 120px;
@@ -81,11 +61,7 @@
   border-radius: 0;
 }
 
-
-/* 
-   AVATAR — foto de perfil que solapa el banner
-   margin-top negativo = mitad del alto del avatar para el solapado
- */
+/* AVATAR */
 .avatar-top {
   padding: 0 0 0 28px;
   margin-top: -65px;
@@ -121,11 +97,30 @@
   height: 100%;
   background: #e8f5e9;
   font-family: 'Lato', sans-serif;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-/* 
-   FORMULARIO — grid de campos del perfil
- */
+/* BLINDAJE DEL AVATAR — fuerza el tamaño aunque el SVG tenga el xmlns mal */
+.avatar-ring svg {
+  width: 50px !important;
+  height: 50px !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+  flex-shrink: 0;
+}
+
+.avatar-ring img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 120px !important;
+  max-height: 120px !important;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* FORMULARIO */
 .fields-col {
   display: flex;
   flex-direction: column;
@@ -133,14 +128,12 @@
   padding: 0 28px 28px 28px;
 }
 
-/* Grid de 2 columnas para los campos */
 .fields-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px 30px;
 }
 
-/* Cada campo: label + input */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -153,7 +146,6 @@
   color: #222;
 }
 
-/* Inputs con borde gris; verde al hacer foco */
 .form-group input {
   padding: 11px 14px;
   border: 1.5px solid #c8c8c8;
@@ -174,7 +166,6 @@
   color: #bbb;
 }
 
-/* Wrapper del campo contraseña para posicionar el ojo */
 .input-wrapper {
   position: relative;
 }
@@ -184,7 +175,6 @@
   width: 100%;
 }
 
-/* Botón mostrar/ocultar contraseña */
 .toggle-pass {
   position: absolute;
   right: 20px;
@@ -198,10 +188,23 @@
   padding: 0;
 }
 
+/* Blindaje para los SVG del ojo (toggle password) */
+.toggle-pass svg {
+  width: 16px !important;
+  height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+}
 
-/* 
-   BOTONES DE ACCIÓN — fila inferior del formulario
- */
+/* Blindaje del SVG de la flechita del botón "ver más" */
+.btn-icon-round svg {
+  width: 16px !important;
+  height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+}
+
+/* BOTONES */
 .action-row {
   display: flex;
   gap: 10px;
@@ -211,7 +214,6 @@
   margin-top: 20px;
 }
 
-/* Guardar cambios */
 .btn-save {
   padding: 11px 22px;
   background-color: #fff;
@@ -228,9 +230,7 @@
 .btn-save:hover {
   background: #bee2ab;
   border-color: #4caf50;
-
 }
-
 
 .btn-save:disabled {
   background: #B3E29A;
@@ -239,8 +239,6 @@
   opacity: 1;
 }
 
-
-/* Cerrar sesión */
 .btn-logout {
   padding: 11px 22px;
   background: #fff;
@@ -266,7 +264,6 @@
   opacity: 1;
 }
 
-/* Eliminar cuenta */
 .btn-delete {
   padding: 11px 22px;
   background: #fff;
@@ -298,7 +295,7 @@
   opacity: 1;
 }
 
-/* Modal overlay */
+/* MODAL */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -414,7 +411,7 @@
   cursor: not-allowed;
 }
 
-/* Spinner */
+/* SPINNER */
 .spinner {
   width: 14px;
   height: 14px;
@@ -446,11 +443,7 @@
   }
 }
 
-/* 
-   COLUMNA DERECHA — plan y transacciones
-   gap: var(--gap) iguala la separación entre recuadros al
-   padding/gap general de la card
- */
+/* COLUMNA DERECHA */
 .right-col {
   display: flex;
   flex-direction: column;
@@ -458,10 +451,7 @@
   justify-content: space-between;
 }
 
-
-/* 
-   RECUADRO PLAN ACTUAL
- */
+/* PLAN */
 .plan-box {
   padding: 25px 22px;
   background: linear-gradient(135deg, #B3E29A 0%, #78C550);
@@ -477,7 +467,6 @@
   margin: 0;
 }
 
-/* Nombre del plan con badge FREE/PRO */
 .plan-name {
   font-size: 22px;
   font-weight: 800;
@@ -497,7 +486,6 @@
   letter-spacing: 2px;
 }
 
-/* Botón actualizar plan */
 .btn-upgrade {
   width: 100%;
   padding: 11px;
@@ -521,16 +509,12 @@
   transform: scale(0.98);
 }
 
-
-/* 
-   RECUADRO MIS TRANSACCIONES
- */
 .transactions-box {
   padding: 24px 22px;
   display: flex;
   flex-direction: column;
   height: 70%;
-  justify-content: space-evenly
+  justify-content: flex-start;
 }
 
 .tx-empty {
@@ -541,7 +525,6 @@
   font-family: 'Lato', sans-serif;
 }
 
-/* Cabecera: título + botón flecha */
 .panel-header {
   display: flex;
   align-items: center;
@@ -555,7 +538,6 @@
   color: #1a1a1a;
 }
 
-/* Botón redondo con icono (flecha ver más) */
 .btn-icon-round {
   width: 28px;
   height: 28px;
@@ -568,19 +550,18 @@
   justify-content: center;
   color: #4caf50;
   transition: background 0.2s;
+  flex-shrink: 0;
 }
 
 .btn-icon-round:hover {
   background: #c8e6c9;
 }
 
-/* Lista de transacciones */
 .tx-list {
   display: flex;
   flex-direction: column;
 }
 
-/* Fila individual de transacción */
 .tx-item {
   display: flex;
   align-items: center;
@@ -599,7 +580,6 @@
   gap: 10px;
 }
 
-/* Punto de color que indica la categoría */
 .tx-dot {
   width: 10px;
   height: 10px;
@@ -620,7 +600,6 @@
   gap: 1px;
 }
 
-/* Tipo (GASTO / INGRESO) en mayúsculas pequeñas */
 .tx-type {
   font-size: 14px;
   font-weight: 600;
@@ -629,14 +608,12 @@
   letter-spacing: 0.5px;
 }
 
-/* Nombre de la categoría */
 .tx-category {
   font-size: 16px;
   font-weight: 700;
   color: #222;
 }
 
-/* Chips de importe (verde = ingreso, rojo = gasto) */
 .chip {
   padding: 4px 12px;
   border-radius: 20px;
@@ -694,4 +671,185 @@
   color: inherit;
   padding: 0;
   line-height: 1;
+}
+
+
+/* ══════════════════════════════════════════════════════════════ */
+/* KEYFRAMES SUTILES                                              */
+/* ══════════════════════════════════════════════════════════════ */
+
+@keyframes perfilFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes perfilFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes perfilFadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes perfilFadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.card {
+  animation: perfilFadeIn 0.4s ease both;
+}
+
+.left-col {
+  animation: perfilFadeInLeft 0.5s ease 0.1s both;
+}
+
+.right-col {
+  animation: perfilFadeInRight 0.5s ease 0.1s both;
+}
+
+.avatar-wrapper {
+  animation: perfilFadeIn 0.6s ease 0.3s both;
+}
+
+.avatar-ring {
+  transition: box-shadow 0.3s ease;
+}
+
+.avatar-ring:hover {
+  box-shadow: 0 4px 14px rgba(78, 156, 37, 0.2);
+}
+
+.form-group {
+  animation: perfilFadeInUp 0.4s ease both;
+}
+
+.form-group:nth-child(1) {
+  animation-delay: 0.15s;
+}
+
+.form-group:nth-child(2) {
+  animation-delay: 0.20s;
+}
+
+.form-group:nth-child(3) {
+  animation-delay: 0.25s;
+}
+
+.form-group:nth-child(4) {
+  animation-delay: 0.30s;
+}
+
+.form-group:nth-child(5) {
+  animation-delay: 0.35s;
+}
+
+.form-group input {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(78, 156, 37, 0.1);
+}
+
+.btn-save,
+.btn-logout,
+.btn-delete {
+  transition: all 0.25s ease;
+}
+
+.btn-save:hover,
+.btn-logout:hover,
+.btn-delete:hover {
+  transform: translateY(-1px);
+}
+
+.plan-box {
+  animation: perfilFadeInUp 0.5s ease 0.3s both;
+}
+
+.transactions-box {
+  animation: perfilFadeInUp 0.5s ease 0.4s both;
+}
+
+.btn-upgrade {
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.btn-upgrade:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+
+.tx-item {
+  animation: perfilFadeIn 0.35s ease both;
+  transition: background 0.2s ease;
+}
+
+.tx-item:nth-child(1) {
+  animation-delay: 0.5s;
+}
+
+.tx-item:nth-child(2) {
+  animation-delay: 0.55s;
+}
+
+.tx-item:nth-child(3) {
+  animation-delay: 0.60s;
+}
+
+.tx-item:nth-child(4) {
+  animation-delay: 0.65s;
+}
+
+.tx-item:nth-child(5) {
+  animation-delay: 0.70s;
+}
+
+.tx-item:hover {
+  background: #f8fdf5;
+  border-radius: 6px;
+}
+
+.btn-icon-round {
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-icon-round:hover {
+  background: #c8e6c9;
+  transform: translateX(2px);
+}
+
+.alert-error,
+.alert-success {
+  animation: perfilFadeInUp 0.3s ease both;
 }

@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<!-- TOOLBAR -->
+<div class="foro-toolbar">
+
+    <div class="search-wrapper">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" class="search-input" placeholder="Buscar preguntas..." [(ngModel)]="busqueda">
+    </div>
+
+    <div class="filter-wrapper">
+        <button class="btn-filter-drop" (click)="toggleFiltro($event)" [class.filter-active]="filtroAbierto">
+            <i class="bi bi-funnel"></i>
+            <span>{{ labelOrdenActivo }}</span>
+            <i class="bi" [class.bi-chevron-up]="filtroAbierto" [class.bi-chevron-down]="!filtroAbierto"></i>
+        </button>
+
+        @if (filtroAbierto) {
+        <div class="filter-dropdown" (click)="$event.stopPropagation()">
+            <p class="filter-heading">Ordenar por</p>
+            @for (op of opcionesOrden; track op.key) {
+            <button class="filter-item" [class.filter-item-active]="ordenActivo === op.key"
+                (click)="elegirOrden(op.key)">
+                <i class="bi" [class]="op.icon"></i>
+                <span>{{ op.label }}</span>
+                @if (ordenActivo === op.key) {
+                <i class="bi bi-check-lg filter-check"></i>
+                }
+            </button>
+            }
+        </div>
+        }
+    </div>
+
+    <button class="btn-nueva" (click)="abrirNueva()">
+        <i class="bi bi-plus-lg"></i>
+        <span>Nueva pregunta</span>
+    </button>
+
+</div>
+
+
+<!-- FEED -->
+<div class="preguntas-grid">
+    @for (p of preguntas; track p.id) {
+    <article class="card pregunta-card pregunta-clickable" (click)="abrirDetalle(p)">
+        <div class="pregunta-stats">
+            <div class="stat-item">
+                <span class="stat-num">{{ p.respuestas }}</span>
+                <span class="stat-label">Resp.</span>
+            </div>
+            <div class="stat-item stat-muted">
+                <span class="stat-num">{{ p.visitas }}</span>
+                <span class="stat-label">Visitas</span>
+            </div>
+        </div>
+
+        <div class="pregunta-body">
+            <h3 class="pregunta-titulo">{{ p.titulo }}</h3>
+            <p class="pregunta-desc">{{ p.descripcion }}</p>
+
+            <div class="pregunta-footer">
+                <div class="pregunta-autor">
+                    <div class="autor-avatar">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <span class="autor-nombre">{{ p.autor }}</span>
+                    <span class="pregunta-time">
+                        <i class="bi bi-clock"></i> Hace {{ tiempoRelativo(p.fecha) }}
+                    </span>
+                </div>
+
+                <span class="ver-mas">
+                    Ver foro <i class="bi bi-arrow-right"></i>
+                </span>
+            </div>
+        </div>
+    </article>
+    }
+    @empty {
+    <div class="empty-state">
+        <i class="bi bi-chat-square-dots empty-icon"></i>
+        <p>No hay preguntas disponibles.</p>
+    </div>
+    }
+</div>
+
+
+<!-- MODAL NUEVA PREGUNTA -->
+@if (popupNuevaAbierto) {
+<div class="modal-overlay" (click)="cerrarNueva()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <i class="bi bi-pencil-square" style="color:#4E9C25; margin-right:8px;"></i>
+                Nueva pregunta
+            </h2>
+            <button class="modal-close" (click)="cerrarNueva()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="modal-field">
+            <label>Título</label>
+            <input type="text" class="modal-input" placeholder="Resume tu pregunta en una frase"
+                [(ngModel)]="nuevaTitulo" maxlength="120">
+        </div>
+
+        <div class="modal-field">
+            <label>Descripción</label>
+            <textarea class="modal-input" rows="4" placeholder="Explica tu situación con detalle..."
+                [(ngModel)]="nuevaDescripcion"></textarea>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancelar" (click)="cerrarNueva()">Cancelar</button>
+            <button class="btn-guardar" [disabled]="!nuevaTitulo.trim() || !nuevaDescripcion.trim()"
+                (click)="publicarNueva()">
+                <i class="bi bi-send-fill" style="margin-right:6px;"></i>
+                Publicar
+            </button>
+        </div>
+
+    </div>
+</div>
+}

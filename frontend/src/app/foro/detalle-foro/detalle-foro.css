@@ -1,0 +1,43 @@
+/* Sustituye la regla anterior de .btn-votar-respuesta por esta pareja */
+.btn-votar-respuesta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: 'Onest', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.btn-votar-respuesta i {
+    color: #4E9C25;
+    font-size: 13px;
+}
+
+.btn-votar-respuesta:hover {
+    border-color: #4E9C25;
+    color: #4E9C25;
+    background: rgba(78, 156, 37, 0.04);
+}
+
+.btn-votar-respuesta-activo {
+    background: linear-gradient(135deg, #4E9C25, #78C550);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(78, 156, 37, 0.3);
+}
+
+.btn-votar-respuesta-activo:hover {
+    background: linear-gradient(135deg, #3a8c1a, #4E9C25);
+    color: #fff;
+}
+
+.btn-votar-respuesta-activo i {
+    color: #fff;
+}
