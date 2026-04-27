@@ -6,9 +6,11 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\ForoController;
 use App\Http\Controllers\MovimientosController;
+use App\Http\Controllers\RespuestasController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RetoController;
+use App\Models\Respuesta;
 
 // Login, registro
 Route::post('/login', [AuthController::class, 'loginUsuario']);
@@ -67,4 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/foros/usuario', [ForoController::class, 'listarForosUsuario']);
     Route::put('/foros', [ForoController::class, 'actualizarForo']);
     Route::delete('/foro', [ForoController::class, 'borrarForo']);
+
+    // Respuestas
+    Route::post('/responder', [RespuestasController::class, 'responderForo']);
 });
