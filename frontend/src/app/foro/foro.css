@@ -1,0 +1,478 @@
+/* ══ HOST FORO ══ */
+app-foro {
+  display: block;
+  min-height: 100vh;
+  background: #F2F6EE;
+  font-family: 'Onest', 'Lato', sans-serif;
+  padding-top: 110px;
+}
+
+/* ══ HERO + SUBNAV ══ */
+app-foro .hero {
+  padding: 32px 20px;
+  max-width: 1300px;
+  margin: 0 auto;
+  animation: fadeInDownForo 0.5s ease both;
+}
+
+app-foro .bienvenida {
+  font-size: 30px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 18px;
+}
+
+app-foro .subnav {
+  display: flex;
+  border-bottom: 2px solid #e8e8e8;
+  animation: fadeInForo 0.6s ease 0.2s both;
+}
+
+app-foro .subnav-item {
+  padding: 10px 24px;
+  border: none;
+  background: transparent;
+  color: #999;
+  font-family: 'Onest';
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  margin-right: 4px;
+}
+
+app-foro .subnav-item:hover {
+  color: #4E9C25;
+  background: rgba(78, 156, 37, 0.04);
+}
+
+app-foro .subnav-item.active {
+  color: #4E9C25;
+  border-bottom-color: #4E9C25;
+  background: rgba(78, 156, 37, 0.06);
+}
+
+app-foro .page-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 28px 20px;
+  animation: fadeInForo 0.5s ease 0.15s both;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Espacio uniforme entre las pestañas y el contenido de cada componente hijo */
+app-foro .page-wrapper>* {
+  margin-top: 0;
+}
+
+app-foro .page-wrapper router-outlet+* {
+  display: block;
+}
+
+/* Kiro: pantalla completa sin scroll externo */
+app-foro:has(app-kiro) {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+app-foro:has(app-kiro) .hero {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+app-foro:has(app-kiro) .page-wrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 20px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+app-foro:has(app-kiro) .page-wrapper app-kiro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin-bottom: 0;
+}
+
+/* El router-outlet en sí no ocupa espacio, pero sí su contenido */
+app-foro:has(app-kiro) .page-wrapper router-outlet {
+  display: none;
+}
+
+app-foro:has(app-kiro) .page-wrapper app-kiro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ══ CARD BASE ══ */
+app-foro .card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 20px 48px rgba(0, 0, 0, 0.06),
+    0 0 20px rgba(78, 156, 37, 0.06);
+  overflow: visible;
+  animation: fadeInForo 0.45s ease both;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+  border: 1px solid rgba(78, 156, 37, 0.08);
+  position: relative;
+}
+
+app-foro .card:hover {
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.1),
+    0 24px 56px rgba(0, 0, 0, 0.06),
+    0 0 40px rgba(78, 156, 37, 0.12),
+    0 0 80px rgba(78, 156, 37, 0.06);
+  border-color: rgba(78, 156, 37, 0.15);
+}
+
+/* ══ MODAL OVERLAY ══ */
+.foro-modal-overlay,
+app-foro .modal-overlay,
+app-foro~.modal-overlay {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  animation: fadeInForo 0.2s ease;
+}
+
+app-foro .modal-box {
+  background: #fff;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 32px;
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 24px 48px rgba(0, 0, 0, 0.14),
+    0 40px 80px rgba(0, 0, 0, 0.1);
+  animation: slideUpForo 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+app-foro .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+app-foro .modal-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0;
+  font-family: 'Onest';
+  display: flex;
+  align-items: center;
+}
+
+app-foro .modal-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #888;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.15s, transform 0.2s;
+}
+
+app-foro .modal-close:hover {
+  background: #f0f0f0;
+  transform: scale(1.1) rotate(90deg);
+}
+
+app-foro .modal-field {
+  margin-bottom: 16px;
+}
+
+app-foro .modal-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #222;
+  font-family: 'Onest';
+}
+
+app-foro .modal-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Lato';
+  color: #333;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  box-sizing: border-box;
+}
+
+app-foro textarea.modal-input {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.5;
+  font-family: 'Lato';
+}
+
+app-foro .modal-input:focus {
+  border-color: #4E9C25;
+  box-shadow: 0 0 0 3px rgba(78, 156, 37, 0.12);
+}
+
+app-foro .modal-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+app-foro .btn-cancelar {
+  flex: 1;
+  padding: 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Onest';
+  color: #555;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+app-foro .btn-cancelar:hover {
+  border-color: #aaa;
+  background: #fafafa;
+}
+
+app-foro .btn-guardar {
+  flex: 2;
+  padding: 12px;
+  background: linear-gradient(135deg, #4E9C25, #78C550);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Onest';
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(78, 156, 37, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+app-foro .btn-guardar:hover {
+  box-shadow: 0 6px 20px rgba(78, 156, 37, 0.4);
+  transform: translateY(-1px);
+}
+
+app-foro .btn-guardar:active {
+  transform: scale(0.97);
+}
+
+app-foro .btn-guardar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ══ MODAL CITA + VOTAR ══ */
+app-foro .modal-cita {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  color: #555;
+  font-style: italic;
+  text-align: center;
+  margin: 0 0 22px;
+  padding: 14px 18px;
+  background: #f8fdf5;
+  border-radius: 12px;
+  border-left: 3px solid #78C550;
+  line-height: 1.5;
+}
+
+app-foro .votar-opciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+app-foro .voto-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 14px;
+  background: #fff;
+  border: 2px solid #eee;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  text-align: center;
+}
+
+app-foro .voto-card:hover {
+  transform: translateY(-4px);
+}
+
+app-foro .voto-si:hover {
+  border-color: #78C550;
+}
+
+app-foro .voto-no:hover {
+  border-color: #e88585;
+}
+
+app-foro .voto-activo.voto-si {
+  border-color: #4E9C25;
+  background: #f8fdf5;
+  box-shadow: 0 6px 20px rgba(78, 156, 37, 0.2);
+}
+
+app-foro .voto-activo.voto-no {
+  border-color: #e74c3c;
+  background: #fff5f5;
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.15);
+}
+
+app-foro .voto-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  transition: transform 0.3s;
+}
+
+app-foro .voto-card:hover .voto-icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+app-foro .voto-no:hover .voto-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+app-foro .voto-icon-si {
+  background: linear-gradient(135deg, #4E9C25, #78C550);
+  box-shadow: 0 4px 12px rgba(78, 156, 37, 0.3);
+}
+
+app-foro .voto-icon-no {
+  background: linear-gradient(135deg, #e74c3c, #ff8a8a);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.25);
+}
+
+app-foro .voto-icon i {
+  color: #fff;
+  font-size: 24px;
+}
+
+app-foro .voto-titulo {
+  font-family: 'Onest', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: #1a1a1a;
+  display: block;
+}
+
+app-foro .voto-desc {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  color: #888;
+  display: block;
+}
+
+/* ══ KEYFRAMES ══ */
+@keyframes fadeInForo {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDownForo {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slideUpForo {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 768px) {
+  app-foro .hero {
+    padding: 20px 16px 0;
+  }
+
+  app-foro .page-wrapper {
+    padding: 20px 16px 40px;
+  }
+
+  app-foro .bienvenida {
+    font-size: 24px;
+  }
+
+  app-foro .votar-opciones {
+    grid-template-columns: 1fr;
+  }
+}

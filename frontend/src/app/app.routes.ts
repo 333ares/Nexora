@@ -21,21 +21,26 @@ import { PanelAdmin } from './panel-admin/panel-admin';
 import { Foro } from './foro/foro';
 import { UsuarioBloqueado } from './usuario-bloqueado/usuario-bloqueado';
 import { LandingLayout } from './landing-layout/landing-layout';
+import { VerForo } from './foro/ver-foro/ver-foro';
+import { MisForos } from './foro/mis-foros/mis-foros';
+import { MisPreguntas } from './foro/mis-preguntas/mis-preguntas';
+import { Kiro } from './foro/kiro/kiro';
+import { DetalleForo } from './foro/detalle-foro/detalle-foro';
 
 export const routes: Routes = [
- 
-    {
+
+  {
     path: '',
     component: LandingLayout,
     children: [
-      { path: 'inicio',             component: Inicio },
-      { path: 'servicios',          component: Servicios },
-      { path: 'planes',             component: Planes },
-      { path: 'acerca-de',          component: AcercaDe },
-      { path: 'faqs',               component: Faqs },
-      { path: 'contacto',           component: Contacto },
+      { path: 'inicio', component: Inicio },
+      { path: 'servicios', component: Servicios },
+      { path: 'planes', component: Planes },
+      { path: 'acerca-de', component: AcercaDe },
+      { path: 'faqs', component: Faqs },
+      { path: 'contacto', component: Contacto },
       { path: 'politica-privacidad', component: PoliticaPrivacidad },
-      { path: '',                   redirectTo: 'inicio', pathMatch: 'full' },
+      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
     ]
   },
   {
@@ -64,7 +69,15 @@ export const routes: Routes = [
   {
     path: 'foro',
     component: Foro,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'ver', component: VerForo },
+      { path: 'mis-foros', component: MisForos },
+      { path: 'mis-preguntas', component: MisPreguntas },
+      { path: 'kiro', component: Kiro },
+      { path: 'detalle/:id', component: DetalleForo },
+      { path: '', redirectTo: 'ver', pathMatch: 'full' }
+    ]
   },
   {
     path: 'movimientos',
@@ -77,19 +90,7 @@ export const routes: Routes = [
       { path: 'estadisticas', component: Estadisticas },
       { path: 'retos', component: Retos },
       { path: '', redirectTo: 'resumen', pathMatch: 'full' }
-
     ]
   },
-  {
-    path: 'contacto',
-    component: Contacto,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: '',
-    redirectTo: 'inicio',
-    pathMatch: 'full' //Esto es para que si no pones nada en la URL te rerdiriga a el inicio
-  }
-
-
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' }
 ];

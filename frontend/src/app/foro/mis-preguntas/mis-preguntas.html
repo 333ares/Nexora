@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<!-- Header con contador y tabs -->
+<div class="mp-header">
+    <div class="mp-title-wrap">
+        <h2 class="mp-title">Mis preguntas</h2>
+        <p class="mp-subtitle">Gestiona tus publicaciones y revisa las respuestas recibidas.</p>
+    </div>
+
+    <div class="mp-tabs">
+        <button class="mp-tab" [class.mp-tab-active]="filtroActivo === 'todas'" (click)="cambiarFiltro('todas')">
+            Todas <span class="tab-count">{{ misPreguntas.length }}</span>
+        </button>
+        <button class="mp-tab" [class.mp-tab-active]="filtroActivo === 'abierta'" (click)="cambiarFiltro('abierta')">
+            Abiertas
+        </button>
+        <button class="mp-tab" [class.mp-tab-active]="filtroActivo === 'respondida'"
+            (click)="cambiarFiltro('respondida')">
+            Respondidas
+        </button>
+    </div>
+</div>
+
+<!-- Lista -->
+<div class="mp-lista">
+    @for (p of preguntasFiltradas; track p.id) {
+    <article class="mp-card" (click)="abrirDetalle(p.id)">
+        <div class="mp-card-top">
+            <span class="mp-estado" [class.estado-abierta]="p.estado === 'abierta'"
+                [class.estado-respondida]="p.estado === 'respondida'" [class.estado-cerrada]="p.estado === 'cerrada'">
+                <i class="bi" [class.bi-circle-fill]="p.estado === 'abierta'"
+                    [class.bi-check-circle-fill]="p.estado === 'respondida'"
+                    [class.bi-lock-fill]="p.estado === 'cerrada'"></i>
+                {{ p.estado === 'abierta' ? 'Abierta' : p.estado === 'respondida' ? 'Respondida' : 'Cerrada' }}
+            </span>
+
+            <div class="mp-actions">
+                <button class="mp-icon-btn" title="Editar" (click)="editar(p.id); $event.stopPropagation()">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="mp-icon-btn mp-icon-btn-danger" title="Borrar"
+                    (click)="borrar(p.id); $event.stopPropagation()">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+
+        <h3 class="mp-pregunta-titulo">{{ p.titulo }}</h3>
+        <p class="mp-pregunta-desc">{{ p.descripcion }}</p>
+
+        <div class="mp-metrics">
+            <span class="mp-metric"><i class="bi bi-chat-left-text"></i> {{ p.respuestas }} respuestas</span>
+            <span class="mp-metric"><i class="bi bi-eye"></i> {{ p.visitas }} visitas</span>
+            <span class="mp-metric mp-metric-time"><i class="bi bi-clock"></i> Hace {{ p.tiempo }}</span>
+        </div>
+    </article>
+    }
+    @empty {
+    <div class="mp-empty">
+        <i class="bi bi-inbox"></i>
+        <p>No tienes preguntas {{ filtroActivo !== 'todas' ? filtroActivo + 's' : '' }} todavía.</p>
+    </div>
+    }
+</div>

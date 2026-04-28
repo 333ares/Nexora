@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<div class="mis-foros-header">
+    <div>
+        <h2 class="mf-titulo">Foros a los que pertenezco</h2>
+        <p class="mf-sub">Gestiona los foros a los que te has unido y accede rápidamente a sus debates.</p>
+    </div>
+    <div class="mf-count">
+        <span class="count-num">{{ foros.length }}</span>
+        <span class="count-label">activos</span>
+    </div>
+</div>
+
+<div class="mf-lista">
+    @for (f of foros; track f.id) {
+    <article class="card mf-card" (click)="abrirForo(f)">
+        <div class="mf-card-top">
+            <button class="btn-mini-salir" (click)="salirForo($event, f)" title="Abandonar foro">
+                <i class="bi bi-box-arrow-right"></i>
+            </button>
+        </div>
+
+        <h3 class="mf-titulo-foro">{{ f.titulo }}</h3>
+
+        <div class="mf-metricas">
+            <span class="mf-metric"><i class="bi bi-people-fill"></i> {{ f.miembros }} miembros</span>
+            <span class="mf-metric"><i class="bi bi-chat-left-text"></i> {{ f.respuestas }} resp.</span>
+            <span class="mf-metric mf-metric-time">
+                <i class="bi bi-clock"></i> Hace {{ tiempoRelativo(f.ultimaActividad) }}
+            </span>
+        </div>
+    </article>
+    }
+    @empty {
+    <div class="empty-state">
+        <i class="bi bi-inbox empty-icon"></i>
+        <p>Todavía no te has unido a ningún foro.</p>
+    </div>
+    }
+</div>

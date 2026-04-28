@@ -1,0 +1,136 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+@if (pregunta) {
+
+<button class="btn-volver" (click)="volver()">
+    <i class="bi bi-arrow-left"></i>
+    <span>Volver al foro</span>
+</button>
+
+<article class="card pregunta-detalle">
+    <div class="detalle-top">
+        <div class="detalle-meta">
+            <h1 class="detalle-titulo">{{ pregunta.titulo }}</h1>
+        </div>
+
+        @if (pregunta.unido) {
+        <button class="btn-salir" (click)="salirDelForo()">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Unido</span>
+        </button>
+        } @else {
+        <button class="btn-unirse-detalle" (click)="abrirUnirse()">
+            <i class="bi bi-person-plus-fill"></i>
+            <span>Unirme al foro</span>
+        </button>
+        }
+    </div>
+
+    <p class="detalle-desc">{{ pregunta.descripcion }}</p>
+
+    <div class="detalle-footer">
+        <div class="pregunta-autor">
+            <div class="autor-avatar">
+                <i class="bi bi-person-fill"></i>
+            </div>
+            <span class="autor-nombre">{{ pregunta.autor }}</span>
+            <span class="pregunta-time">
+                <i class="bi bi-clock"></i> Hace {{ tiempoRelativo(pregunta.fecha) }}
+            </span>
+        </div>
+
+        <div class="detalle-stats-inline">
+            <span class="stat-inline"><i class="bi bi-chat-left-text"></i> {{ pregunta.respuestas }}</span>
+            <span class="stat-inline"><i class="bi bi-eye"></i> {{ pregunta.visitas }}</span>
+            <span class="stat-inline stat-miembros">
+                <i class="bi bi-people-fill"></i> {{ pregunta.miembros }} miembros
+            </span>
+        </div>
+    </div>
+</article>
+
+<div class="card caja-respuesta">
+    <h3 class="respuesta-titulo">
+        <i class="bi bi-pencil-fill"></i>
+        Tu respuesta
+    </h3>
+    <textarea class="respuesta-input" rows="4" placeholder="Comparte tu experiencia o consejo..."
+        [(ngModel)]="nuevaRespuesta"></textarea>
+    <div class="respuesta-actions">
+        <button class="btn-publicar" [disabled]="!nuevaRespuesta.trim()" (click)="publicarRespuesta()">
+            <i class="bi bi-send-fill"></i>
+            Publicar respuesta
+        </button>
+    </div>
+</div>
+
+<div class="respuestas-header">
+    <h2 class="respuestas-heading">
+        {{ respuestas.length }} {{ respuestas.length === 1 ? 'respuesta' : 'respuestas' }}
+    </h2>
+</div>
+
+<div class="respuestas-list">
+    @for (r of respuestas; track r.id) {
+    <article class="card respuesta-card">
+        <div class="respuesta-top">
+            <div class="pregunta-autor">
+                <div class="autor-avatar">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <span class="autor-nombre">{{ r.autor }}</span>
+                <span class="pregunta-time">
+                    <i class="bi bi-clock"></i> Hace {{ tiempoRelativo(r.fecha) }}
+                </span>
+            </div>
+
+            <button class="btn-votar-respuesta" [class.btn-votar-respuesta-activo]="r.yaVotada"
+                (click)="toggleVotoRespuesta(r)">
+                <i class="bi" [class.bi-hand-thumbs-up-fill]="r.yaVotada" [class.bi-hand-thumbs-up]="!r.yaVotada"></i>
+                <span>{{ r.votos }}</span>
+            </button>
+        </div>
+        <p class="respuesta-contenido">{{ r.contenido }}</p>
+    </article>
+    }
+    @empty {
+    <div class="empty-state">
+        <i class="bi bi-chat-left-dots empty-icon"></i>
+        <p>Todavía no hay respuestas. ¡Sé el primero!</p>
+    </div>
+    }
+</div>
+
+}
+
+@if (popupUnirseAbierto && pregunta) {
+<div class="modal-overlay" (click)="cerrarUnirse()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <i class="bi bi-people-fill" style="color:#4E9C25; margin-right:8px;"></i>
+                Unirme al foro
+            </h2>
+            <button class="modal-close" (click)="cerrarUnirse()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <p class="modal-cita">"{{ pregunta.titulo }}"</p>
+        <p class="modal-info">
+            Al unirte podrás participar en las respuestas, recibir notificaciones
+            de novedades y aparecer en la lista de miembros.
+        </p>
+
+        <div class="modal-footer">
+            <button class="btn-cancelar" (click)="cerrarUnirse()">Cancelar</button>
+            <button class="btn-guardar" (click)="confirmarUnirse()">
+                <i class="bi bi-check-lg" style="margin-right:6px;"></i>
+                Unirme ahora
+            </button>
+        </div>
+
+    </div>
+</div>
+}
