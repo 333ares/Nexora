@@ -1,16 +1,18 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Auth } from '../../services/auth';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateCategoryPipe } from '../../pipes/translate-category';
 
 @Component({
   selector: 'app-calendario',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule, TranslateCategoryPipe],
   templateUrl: './calendario.html',
   styleUrl: './calendario.css'
 })
-export class Calendario implements OnInit {
+export class Calendario implements OnInit, OnDestroy {
 
   // --- FECHA ACTUAL Y MES VISIBLE ---
   hoy = new Date();
@@ -39,13 +41,26 @@ export class Calendario implements OnInit {
 
   categoríasIngreso = ['Nómina', 'Capital (Alquileres)', 'Negocios y ventas', 'Otros'];
   categoríasGasto = ['Ocio', 'Supervivencia', 'Cultura', 'Extras o imprevistos'];
+  
+  private langSub: any;
 
-  constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private authService: Auth, 
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
+  ) { }
 
   ngOnInit() {
+    this.langSub = this.translate.onLangChange.subscribe(() => {
+      this.cdr.detectChanges();
+    });
     // Seleccionar el día actual por defecto
     this.diaSeleccionado = this.hoy.getDate();
     this.cargarMovimientos();
+  }
+
+  ngOnDestroy() {
+    if (this.langSub) this.langSub.unsubscribe();
   }
 
   // Obtiene todos los movimientos del usuario
@@ -71,7 +86,10 @@ export class Calendario implements OnInit {
   }
 
   get tituloMes(): string {
-    return this.mesActual.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+    const lang = this.translate.currentLang || 'es';
+    const formatter = new Intl.DateTimeFormat(lang, { month: 'long', year: 'numeric' });
+    const formatted = formatter.format(this.mesActual);
+    return formatted.charAt(0).toUpperCase() + formatted.slice(1);
   }
 
   // --- CONSTRUCCIÓN DEL GRID ---

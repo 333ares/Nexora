@@ -2,11 +2,13 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Auth } from '../../services/auth';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateCategoryPipe } from '../../pipes/translate-category';
 
 @Component({
   selector: 'app-lista',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule, TranslateCategoryPipe],
   templateUrl: './lista.html',
   styleUrl: './lista.css'
 })

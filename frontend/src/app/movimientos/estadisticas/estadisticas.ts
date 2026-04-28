@@ -1,8 +1,10 @@
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js'
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { Auth } from '../../services/auth';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateCategoryPipe } from '../../pipes/translate-category';
 
 // Registro de todos los componentes de Chart.js
 Chart.register(...registerables);
@@ -28,7 +30,7 @@ const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'O
 @Component({
   selector: 'app-estadisticas', // Nombre del componente
   standalone: true, // Componente standalone (no necesita módulo)
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule, TranslateCategoryPipe],
   templateUrl: './estadisticas.html',
   styleUrl: './estadisticas.css'
 })
@@ -58,8 +60,14 @@ export class Estadisticas implements OnInit, OnDestroy {
   readonly gastoColores = ['#e74c3c', '#3498db', '#f59e42', '#9b59b6'];
   readonly ingresoColores = ['#27ae60', '#1abc9c', '#2ecc71', '#16a085', '#82ca9d'];
 
+  private langSub!: Subscription;
+
   // Inyección de dependencias
-  constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private authService: Auth, 
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
+  ) { }
 
   // Getter para calcular la tasa de ahorro (%)
   get tasaAhorro(): number {
@@ -80,6 +88,11 @@ export class Estadisticas implements OnInit, OnDestroy {
 
   // Hook de inicialización del componente
   ngOnInit(): void {
+    this.langSub = this.translate.onLangChange.subscribe(() => {
+      if (!this.cargando) {
+        this.renderizarGraficos();
+      }
+    });
     // Ejecuta todas las llamadas HTTP en paralelo
     forkJoin({
       balance: this.authService.getBalanceTotal(),
@@ -121,6 +134,7 @@ export class Estadisticas implements OnInit, OnDestroy {
 
   // Hook al destruir el componente
   ngOnDestroy(): void {
+    if (this.langSub) this.langSub.unsubscribe();
     // Destruye todos los gráficos para evitar fugas de memoria
     this.charts.forEach(c => c?.destroy());
   }
@@ -140,7 +154,12 @@ export class Estadisticas implements OnInit, OnDestroy {
     this.charts[2]?.destroy();
 
     // Genera etiquetas (mes + año)
-    const labels = this.ingresosMensuales.map(i => `${MESES[i.mes - 1]} ${i.año}`);
+    const lang = this.translate.currentLang || 'es';
+    const formatter = new Intl.DateTimeFormat(lang, { month: 'short' });
+    const labels = this.ingresosMensuales.map(i => {
+      const monthName = formatter.format(new Date(i.año, i.mes - 1));
+      return `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${i.año}`;
+    });
 
     // Datos de ingresos
     const dataIngresos = this.ingresosMensuales.map(i => i.total);
@@ -151,13 +170,16 @@ export class Estadisticas implements OnInit, OnDestroy {
     );
 
     // Creación del gráfico
+    const lblIngresos = this.translate.instant('RESUMEN.INGRESOS');
+    const lblGastos = this.translate.instant('RESUMEN.GASTOS');
+
     this.charts[2] = new Chart(this.barChartRef.nativeElement, {
       type: 'bar',
       data: {
         labels,
         datasets: [
-          { label: 'Ingresos', data: dataIngresos, backgroundColor: '#27ae60', borderRadius: 6, barPercentage: 0.4 },
-          { label: 'Gastos', data: dataGastos, backgroundColor: '#d94f4f', borderRadius: 6, barPercentage: 0.4 }
+          { label: lblIngresos, data: dataIngresos, backgroundColor: '#27ae60', borderRadius: 6, barPercentage: 0.4 },
+          { label: lblGastos, data: dataGastos, backgroundColor: '#d94f4f', borderRadius: 6, barPercentage: 0.4 }
         ]
       },
       options: {
@@ -180,10 +202,16 @@ export class Estadisticas implements OnInit, OnDestroy {
     this.charts[idx]?.destroy();
 
     // Creación del gráfico donut
+    const labels = stats.map(s => {
+      const key = `CATEGORIAS.${s.categoria}`;
+      const trans = this.translate.instant(key);
+      return trans === key ? s.categoria : trans;
+    });
+
     this.charts[idx] = new Chart(ref.nativeElement, {
       type: 'doughnut',
       data: {
-        labels: stats.map(s => s.categoria),
+        labels: labels,
         datasets: [{
           data: stats.map(s => s.total),
           backgroundColor: colores.slice(0, stats.length),

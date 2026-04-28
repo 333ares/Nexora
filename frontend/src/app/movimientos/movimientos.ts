@@ -1,11 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { Auth } from '../services/auth';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-movimientos',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, TranslateModule],
   templateUrl: './movimientos.html',
   styleUrl: './movimientos.css',
   encapsulation: ViewEncapsulation.None
