@@ -768,19 +768,28 @@ footer {
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────── */
+
+/* Tablet — 4 planes no caben en pantalla media, pasamos a 2 columnas */
+@media (max-width: 900px) {
+  .plans-grid { grid-template-columns: repeat(2, 1fr); }
+  .why-grid   { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Móvil — reducimos padding, apilamos el why-grid y ajustamos el hero */
 @media (max-width: 768px) {
-  .footer-inner {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
+  .nav-links     { display: none; }
+  .page          { padding-top: 80px; }
+  .hero          { padding: 36px 20px 32px; }
+  .plans-wrapper { padding: 20px 16px 28px; }
+  .plans-grid    { grid-template-columns: repeat(2, 1fr); }
+  .why-grid      { grid-template-columns: 1fr; }
+  .footer-inner  { grid-template-columns: 1fr; gap: 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
 
-  .footer-bottom {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
-  }
-
-  .nav-links {
-    display: none;
-  }
+/* Móvil pequeño — un plan por fila para que la tarjeta tenga espacio */
+@media (max-width: 480px) {
+  .hero         { padding: 28px 16px 24px; }
+  .plans-grid   { grid-template-columns: 1fr; }
+  .why-section  { padding: 28px 16px 32px; }
 }

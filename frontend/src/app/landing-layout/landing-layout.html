@@ -18,8 +18,29 @@
     <a [routerLink]="isLoggedIn ? '/movimientos' : '/login'" class="btn-nav-secondary">{{ 'NAV.ACCEDER' | translate }}</a>
     <a routerLink="/registro" class="btn-nav-primary">{{ 'NAV.REGISTRARSE' | translate }}</a>
     <app-language-selector />
+    <button class="hamburger" [class.open]="menuOpen" (click)="toggleMenu()" aria-label="Menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </nav>
+
+<!-- MENÚ MÓVIL -->
+<div class="mobile-nav" [class.open]="menuOpen">
+  <a routerLink="/servicios" routerLinkActive="active" (click)="closeMenu()">{{ 'NAV.SERVICIOS' | translate }}</a>
+  <a routerLink="/planes" routerLinkActive="active" (click)="closeMenu()">{{ 'NAV.PLANES' | translate }}</a>
+  <a routerLink="/faqs" routerLinkActive="active" (click)="closeMenu()">{{ 'NAV.FAQ' | translate }}</a>
+  <a routerLink="/acerca-de" routerLinkActive="active" (click)="closeMenu()">{{ 'NAV.NOSOTROS' | translate }}</a>
+  <a routerLink="/contacto" routerLinkActive="active" (click)="closeMenu()">{{ 'NAV.CONTACTO' | translate }}</a>
+  <div class="mobile-nav-cta">
+    <a [routerLink]="isLoggedIn ? '/movimientos' : '/login'" class="btn-nav-secondary" (click)="closeMenu()">{{ 'NAV.ACCEDER' | translate }}</a>
+    <a routerLink="/registro" class="btn-nav-primary" (click)="closeMenu()">{{ 'NAV.REGISTRARSE' | translate }}</a>
+  </div>
+</div>
+
+<!-- FONDO OSCURO AL ABRIR EL MENÚ -->
+<div class="mobile-nav-backdrop" [class.open]="menuOpen" (click)="closeMenu()"></div>
 
 <!-- CHILD PAGE CONTENT -->
 <router-outlet />

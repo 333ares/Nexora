@@ -1,8 +1,9 @@
 import { Component, HostListener } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet, NavigationStart } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageSelector } from '../language-selector/language-selector';
 import { Auth } from '../services/auth';
+
 @Component({
   selector: 'app-landing-layout',
   standalone: true,
@@ -13,10 +14,17 @@ import { Auth } from '../services/auth';
 export class LandingLayout {
 
   isLoggedIn = false;
+  menuOpen   = false;
 
-  constructor(private authService: Auth) {
+  constructor(private authService: Auth, private router: Router) {
     this.isLoggedIn = !!this.authService.getToken();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) this.menuOpen = false;
+    });
   }
+
+  toggleMenu(): void { this.menuOpen = !this.menuOpen; }
+  closeMenu():  void { this.menuOpen = false; }
 
   @HostListener('window:scroll')
   onScroll(): void {
