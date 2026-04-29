@@ -33,4 +33,41 @@ class RespuestasController extends Controller
             'respuesta' => $respuesta
         ], 201);
     }
+
+    public function modificarRespuesta(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'IDrespuesta' => 'required|integer',
+            'respuesta' => 'nullable|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $respuesta = Respuesta::where('IDrespuesta', $request->IDrespuesta)
+            ->where('IDusuario', $request->user()->IDusuario)
+            ->first();
+
+        if (!$respuesta) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Respuesta no encontrada'
+            ], 404);
+        }
+
+        $datos = $request->only([
+            'respuesta'
+        ]);
+
+        $respuesta->update($datos);
+
+        return response()->json([
+            'message' => 'success',
+            'movimiento' => $respuesta
+        ], 200);
+    }
 }
