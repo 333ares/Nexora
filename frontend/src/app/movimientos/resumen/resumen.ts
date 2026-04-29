@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
 import { RouterLink } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateCategoryPipe } from '../../pipes/translate-category';
 
 Chart.register(...registerables);
-
-const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
 interface MesStat {
   año: number;
@@ -18,7 +18,7 @@ interface MesStat {
 @Component({
   selector: 'app-resumen',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslateModule, TranslateCategoryPipe],
   templateUrl: './resumen.html',
   styleUrl: './resumen.css'
 })
@@ -37,10 +37,18 @@ export class Resumen implements OnInit, OnDestroy {
 
   private gastosMensuales: MesStat[] = [];
   private ingresosMensuales: MesStat[] = [];
+  private langSub!: Subscription;
 
-  constructor(private authService: Auth, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private authService: Auth, 
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
+  ) { }
 
   ngOnInit(): void {
+    this.langSub = this.translate.onLangChange.subscribe(() => {
+      this.renderBarChart();
+    });
     forkJoin({
       balance: this.authService.getBalanceTotal(),
       gastos: this.authService.getGastoMensual(),
@@ -83,6 +91,7 @@ export class Resumen implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.langSub) this.langSub.unsubscribe();
     this.chartInstance?.destroy();
   }
 
@@ -90,19 +99,29 @@ export class Resumen implements OnInit, OnDestroy {
     if (!this.barChartRef?.nativeElement) return;
     this.chartInstance?.destroy();
 
-    const labels = this.ingresosMensuales.map(i => `${MESES[i.mes - 1]} ${i.año}`);
+    const lang = this.translate.currentLang || 'es';
+    const formatter = new Intl.DateTimeFormat(lang, { month: 'short' });
+
+    const labels = this.ingresosMensuales.map(i => {
+      const monthName = formatter.format(new Date(i.año, i.mes - 1));
+      return `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${i.año}`;
+    });
+    
     const dataIngresos = this.ingresosMensuales.map(i => i.total);
     const dataGastos = this.ingresosMensuales.map(i =>
       this.gastosMensuales.find(g => g.año === i.año && g.mes === i.mes)?.total ?? 0
     );
+
+    const lblIngresos = this.translate.instant('RESUMEN.INGRESOS');
+    const lblGastos = this.translate.instant('RESUMEN.GASTOS');
 
     this.chartInstance = new Chart(this.barChartRef.nativeElement, {
       type: 'bar',
       data: {
         labels,
         datasets: [
-          { label: 'Ingresos', data: dataIngresos, backgroundColor: '#59b881', borderRadius: 6, barPercentage: 0.4 },
-          { label: 'Gastos', data: dataGastos, backgroundColor: '#e27d7d', borderRadius: 6, barPercentage: 0.4 }
+          { label: lblIngresos, data: dataIngresos, backgroundColor: '#59b881', borderRadius: 6, barPercentage: 0.4 },
+          { label: lblGastos, data: dataGastos, backgroundColor: '#e27d7d', borderRadius: 6, barPercentage: 0.4 }
         ]
       },
       options: {

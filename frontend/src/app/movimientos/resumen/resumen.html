@@ -8,30 +8,27 @@
     <div class="card card-saldo">
       <div class="saldo-circle-sm"></div>
       <div class="balance-top">
-        <span class="balance-label">Saldo banco</span>
+        <span class="balance-label">{{ 'RESUMEN.SALDO_BANCO' | translate }}</span>
       </div>
       <div class="balance-amount">{{ balanceTotal | number:'1.2-2' }} €</div>
     </div>
 
     <div class="card card-white reto-info-card">
       <i class="bi bi-piggy-bank-fill"></i>
-      <p class="section-title" style="margin-bottom: 8px;">Retos de ahorro</p>
+      <p class="section-title" style="margin-bottom: 8px;">{{ 'RESUMEN.RETOS_AHORRO' | translate }}</p>
       <p class="reto-info-desc">
-        Define objetivos de ahorro y haz seguimiento de tu progreso.
-        Pon una meta, una fecha límite y comprueba cómo te acercas a ella cada mes.
+        {{ 'RESUMEN.RETOS_DESC' | translate }}
       </p>
-      <button class="btn-ir-retos" routerLink="/movimientos/retos">Ver mis retos</button>
+      <button class="btn-ir-retos" routerLink="/movimientos/retos">{{ 'RESUMEN.VER_MIS_RETOS' | translate }}</button>
     </div>
 
     <div class="card card-white reto-info-card">
       <i class="bi bi-chat-dots-fill"></i>
-      <p class="section-title" style="margin-bottom: 8px;">Foro</p>
+      <p class="section-title" style="margin-bottom: 8px;">{{ 'RESUMEN.FORO' | translate }}</p>
       <p class="reto-info-desc">
-        Comparte experiencias y consejos financieros con otros usuarios.
-        Pregunta dudas, comparte estrategias de ahorro y aprende de la
-        comunidad para mejorar tus finanzas personales.
+        {{ 'RESUMEN.FORO_DESC' | translate }}
       </p>
-      <button class="btn-ir-retos" routerLink="/foro">Ir al foro</button>
+      <button class="btn-ir-retos" routerLink="/foro">{{ 'RESUMEN.IR_AL_FORO' | translate }}</button>
     </div>
 
   </div>
@@ -43,7 +40,7 @@
       <!-- STAT INGRESOS: fondo verde suave -->
       <div class="card card-stat card-stat-ingresos">
         <div class="stat-top">
-          <span class="stat-label">Total ingresos</span>
+          <span class="stat-label">{{ 'RESUMEN.TOTAL_INGRESOS' | translate }}</span>
           <div class="stat-icon stat-icon-green"><i class="bi bi-arrow-up"></i></div>
         </div>
         <div class="stat-amount ingreso-color">{{ ingresoMensual | number:'1.2-2' }} €</div>
@@ -52,7 +49,7 @@
       <!-- STAT GASTOS: fondo rojo suave -->
       <div class="card card-stat card-stat-gastos">
         <div class="stat-top">
-          <span class="stat-label">Total gastos</span>
+          <span class="stat-label">{{ 'RESUMEN.TOTAL_GASTOS' | translate }}</span>
           <div class="stat-icon stat-icon-red"><i class="bi bi-arrow-down"></i></div>
         </div>
         <div class="stat-amount gasto-color">{{ gastoMensual | number:'1.2-2' }} €</div>
@@ -63,7 +60,7 @@
         <div class="stat-top">
           <div class="reto-title-row">
             <span class="stat-label">
-              {{ retoActual?.titulo || 'Reto actual' }}
+              {{ retoActual?.titulo || ('RESUMEN.RETO_ACTUAL' | translate) }}
             </span>
 
             @if (listaRetos.length > 0) {
@@ -117,7 +114,7 @@
         } @else {
 
         <div class="empty-state" style="padding: 10px 0;">
-          No tienes retos activos
+          {{ 'RESUMEN.SIN_RETOS' | translate }}
         </div>
 
         }
@@ -128,13 +125,13 @@
     <!-- GRÁFICO EVOLUCIÓN MENSUAL -->
     <div class="card card-white">
       <div class="grafica-header">
-        <span class="section-title" style="margin:0;">Evolución mensual</span>
+        <span class="section-title" style="margin:0;">{{ 'RESUMEN.EVOLUCION_MENSUAL' | translate }}</span>
         <div class="chart-legend-row" style="margin:0;">
           <span class="chart-legend-item">
-            <span class="chart-legend-dot" style="background:#27ae60"></span>Ingresos
+            <span class="chart-legend-dot" style="background:#27ae60"></span>{{ 'RESUMEN.INGRESOS' | translate }}
           </span>
           <span class="chart-legend-item">
-            <span class="chart-legend-dot" style="background:#d94f4f"></span>Gastos
+            <span class="chart-legend-dot" style="background:#d94f4f"></span>{{ 'RESUMEN.GASTOS' | translate }}
           </span>
         </div>
       </div>
@@ -146,13 +143,13 @@
     <!-- ÚLTIMOS MOVIMIENTOS -->
     <div class="card card-white">
       <div class="historial-header">
-        <span class="section-title" style="margin:0;">Últimos movimientos</span>
+        <span class="section-title" style="margin:0;">{{ 'RESUMEN.ULTIMOS_MOVIMIENTOS' | translate }}</span>
       </div>
       <div class="tabla-header-mov-resumen">
-        <span class="th">Nombre</span>
-        <span class="th">Fecha</span>
-        <span class="th th-right">Importe</span>
-        <span class="th th-right">Tipo</span>
+        <span class="th">{{ 'RESUMEN.TH_NOMBRE' | translate }}</span>
+        <span class="th">{{ 'RESUMEN.TH_FECHA' | translate }}</span>
+        <span class="th th-right">{{ 'RESUMEN.TH_IMPORTE' | translate }}</span>
+        <span class="th th-right">{{ 'RESUMEN.TH_TIPO' | translate }}</span>
       </div>
 
       @for (mov of movimientos; track mov.id) {
@@ -183,7 +180,7 @@
             }
           </div>
           <div class="mov-name-wrap">
-            <span class="mov-nombre">{{ mov.categoria }}</span>
+            <span class="mov-nombre">{{ mov.categoria | translateCategory }}</span>
           </div>
         </div>
 
@@ -202,7 +199,7 @@
 
         <div class="td td-right">
           <span class="badge" [class.badge-ok]="mov.tipo === 'ingreso'" [class.badge-red]="mov.tipo === 'gasto'">
-            {{ mov.tipo === 'ingreso' ? 'Ingreso' : 'Gasto' }}
+            {{ mov.tipo === 'ingreso' ? ('RESUMEN.INGRESO' | translate) : ('RESUMEN.GASTO' | translate) }}
           </span>
         </div>
 
@@ -210,11 +207,11 @@
       }
 
       @empty {
-      <div class="empty-state">No hay movimientos registrados</div>
+      <div class="empty-state">{{ 'LISTA.SIN_MOVIMIENTOS' | translate }}</div>
       }
 
       <!-- "Ver todos →" al pie de la lista -->
-      <a class="ver-todos-link" routerLink="/movimientos/lista">Ver todos →</a>
+      <a class="ver-todos-link" routerLink="/movimientos/lista">{{ 'RESUMEN.VER_TODOS' | translate }}</a>
     </div>
 
   </div>

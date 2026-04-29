@@ -2,26 +2,26 @@
 
   <!-- Acciones tabla de movimientos -->
   <div class="historial-header">
-    <span class="section-title" style="margin:0;">Movimientos</span>
+    <span class="section-title" style="margin:0;">{{ 'LISTA.MOVIMIENTOS' | translate }}</span>
     <div class="historial-actions">
       <button class="btn-filter" [class.active-filter]="filtroActivo === 'todos'"
-        (click)="filtrar('todos')">Todos</button>
+        (click)="filtrar('todos')">{{ 'LISTA.TODOS' | translate }}</button>
       <button class="btn-filter" [class.active-filter]="filtroActivo === 'gasto'"
-        (click)="filtrar('gasto')">Gastos</button>
+        (click)="filtrar('gasto')">{{ 'LISTA.GASTOS' | translate }}</button>
       <button class="btn-filter" [class.active-filter]="filtroActivo === 'ingreso'"
-        (click)="filtrar('ingreso')">Ingresos</button>
-      <button class="btn-mas" (click)="abrirModal()">+ Añadir</button>
+        (click)="filtrar('ingreso')">{{ 'LISTA.INGRESOS' | translate }}</button>
+      <button class="btn-mas" (click)="abrirModal()">{{ 'LISTA.ANADIR' | translate }}</button>
     </div>
   </div>
 
   <!-- Campos de la tabla -->
   <div class="tabla-header-mov">
-    <span class="th">Nombre</span>
-    <span class="th">Fecha</span>
-    <span class="th">Tipo</span>
-    <span class="th">Descripción</span>
-    <span class="th th-right">Importe</span>
-    <span class="th th-right">Acciones</span>
+    <span class="th">{{ 'LISTA.TH_NOMBRE' | translate }}</span>
+    <span class="th">{{ 'LISTA.TH_FECHA' | translate }}</span>
+    <span class="th">{{ 'LISTA.TH_TIPO' | translate }}</span>
+    <span class="th">{{ 'LISTA.TH_DESC' | translate }}</span>
+    <span class="th th-right">{{ 'LISTA.TH_IMPORTE' | translate }}</span>
+    <span class="th th-right">{{ 'LISTA.TH_ACCIONES' | translate }}</span>
   </div>
 
   <!-- Lista de movimientos -->
@@ -52,14 +52,14 @@
 
       </div>
       <div class="mov-name-wrap">
-        <span class="mov-nombre">{{ mov.categoria }}</span>
+        <span class="mov-nombre">{{ mov.categoria | translateCategory }}</span>
       </div>
     </div>
     <div class="td td-fecha">
       <span class="fecha-dia">{{ mov.fecha | date:'dd/MM/yyyy' }}</span>
       <span class="fecha-hora">{{ mov.fecha | date:'HH:mm' }}</span>
     </div>
-    <div class="td">{{ mov.tipo === 'ingreso' ? 'Ingreso' : 'Gasto' }}</div>
+    <div class="td">{{ mov.tipo === 'ingreso' ? ('LISTA.TIPO_INGRESO' | translate) : ('LISTA.TIPO_GASTO' | translate) }}</div>
     <div class="td td-desc"><span class="mov-desc-tabla">{{ mov.descripcion || '—' }}</span></div>
     <div class="td td-right">
       <span class="mov-importe" [class.ingreso-color]="mov.tipo === 'ingreso'"
@@ -76,7 +76,7 @@
     </div>
   </div>
   } @empty {
-  <div class="empty-state">No hay movimientos registrados</div>
+  <div class="empty-state">{{ 'LISTA.SIN_MOVIMIENTOS' | translate }}</div>
   }
 
   <!-- Paginación -->
@@ -103,7 +103,7 @@
   <div class="modal-box" (click)="$event.stopPropagation()">
 
     <div class="modal-header">
-      <h2 class="modal-title">{{ modoEdicion ? 'Editar movimiento' : 'Nuevo movimiento' }}</h2>
+      <h2 class="modal-title">{{ modoEdicion ? ('LISTA.EDITAR_MOVIMIENTO' | translate) : ('LISTA.NUEVO_MOVIMIENTO' | translate) }}</h2>
       <button class="modal-close" (click)="cerrarModal()">✕</button>
     </div>
 
@@ -111,46 +111,46 @@
     <div class="modal-tipo-selector">
       <button class="tipo-btn" [class.tipo-ingreso-active]="nuevoMovimiento.tipo === 'ingreso'"
         (click)="nuevoMovimiento.tipo = 'ingreso'; onTipoChange()">
-        <i class="bi bi-graph-up-arrow"></i> Ingreso
+        <i class="bi bi-graph-up-arrow"></i> {{ 'LISTA.TIPO_INGRESO' | translate }}
       </button>
       <button class="tipo-btn" [class.tipo-gasto-active]="nuevoMovimiento.tipo === 'gasto'"
         (click)="nuevoMovimiento.tipo = 'gasto'; onTipoChange()">
-        <i class="bi bi-graph-down-arrow"></i> Gasto
+        <i class="bi bi-graph-down-arrow"></i> {{ 'LISTA.TIPO_GASTO' | translate }}
       </button>
     </div>
 
     <div class="modal-body">
       <div class="modal-field">
-        <label>Cantidad (€)</label>
+        <label>{{ 'LISTA.CANTIDAD' | translate }}</label>
         <input type="text" inputmode="decimal" placeholder="0.00" #cantidadInput [value]="cantidadDisplay"
           (input)="cantidadDisplay = cantidadInput.value" (blur)="formatearCantidad(cantidadInput)"
           class="modal-input" />
       </div>
 
       <div class="modal-field">
-        <label>Categoría</label>
+        <label>{{ 'LISTA.CATEGORIA' | translate }}</label>
         <select [(ngModel)]="nuevoMovimiento.categoria" class="modal-input">
-          <option value="" disabled>Selecciona una categoría</option>
+          <option value="" disabled>{{ 'LISTA.SELECCIONA_CATEGORIA' | translate }}</option>
           @for (cat of categoriasActuales; track cat) {
-          <option [value]="cat">{{ cat }}</option>
+          <option [value]="cat">{{ cat | translateCategory }}</option>
           }
         </select>
 
-        @if (nuevoMovimiento.categoria && getCategoriaHint(nuevoMovimiento.categoria)) {
+        @if (nuevoMovimiento.categoria) {
         <div class="categoria-hint">
           <span class="categoria-hint-icon"><i class="bi bi-lightbulb"></i></span>
-          <span>{{ getCategoriaHint(nuevoMovimiento.categoria) }}</span>
+          <span>{{ 'CAT_HINTS.' + nuevoMovimiento.categoria | translate }}</span>
         </div>
         }
       </div>
 
       <div class="modal-field">
-        <label>Fecha</label>
+        <label>{{ 'LISTA.FECHA' | translate }}</label>
         <input type="date" [(ngModel)]="nuevoMovimiento.fecha" (change)="onFechaChange()" class="modal-input" />
       </div>
 
       <div class="modal-field">
-        <label>Descripción <span class="opcional">(opcional)</span></label>
+        <label>{{ 'LISTA.TH_DESC' | translate }} <span class="opcional">({{ 'LISTA.DESC_OPCIONAL' | translate | slice:13 }})</span></label>
         <input type="text" [(ngModel)]="nuevoMovimiento.descripcion" class="modal-input" />
       </div>
 
@@ -160,9 +160,9 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+      <button class="btn-cancelar" (click)="cerrarModal()">{{ 'LISTA.CANCELAR' | translate }}</button>
       <button class="btn-guardar" (click)="guardarMovimiento()" [disabled]="cargando">
-        {{ cargando ? 'Guardando...' : (modoEdicion ? 'Actualizar' : 'Guardar') }}
+        {{ cargando ? ('LISTA.GUARDANDO' | translate) : (modoEdicion ? ('LISTA.ACTUALIZAR' | translate) : ('LISTA.GUARDAR' | translate)) }}
       </button>
     </div>
 
@@ -176,22 +176,21 @@
   <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
 
     <div class="modal-header">
-      <h2 class="modal-title">Eliminar movimiento</h2>
+      <h2 class="modal-title">{{ 'LISTA.ELIMINAR_TITLE' | translate }}</h2>
       <button class="modal-close" (click)="cerrarModalBorrar()">✕</button>
     </div>
 
 
     <div class="modal-body">
       <div class="borrar-icon"><i class="bi bi-trash-fill"></i></div>
-      <p class="borrar-texto">¿Estás seguro de que quieres eliminar este movimiento? Esta acción no se puede deshacer.
-      </p>
+      <p class="borrar-texto">{{ 'LISTA.ELIMINAR_DESC' | translate }}</p>
     </div>
 
     <div class="modal-footer">
-      <button class="btn-cancelar" (click)="cerrarModalBorrar()">Cancelar</button>
+      <button class="btn-cancelar" (click)="cerrarModalBorrar()">{{ 'LISTA.CANCELAR' | translate }}</button>
       <button class="btn-borrar" (click)="confirmarBorrar()" [disabled]="cargandoBorrar">{{ cargandoBorrar ?
-        'Eliminando...' :
-        'Eliminar' }}</button>
+        ('LISTA.ELIMINANDO' | translate) :
+        ('LISTA.ELIMINAR' | translate) }}</button>
     </div>
 
   </div>
