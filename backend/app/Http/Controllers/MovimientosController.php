@@ -211,12 +211,7 @@ class MovimientosController extends Controller
         // Actualizamos el movimimento
         $movimiento->update($datos);
 
-        // Mostramos mensaje de éxito
-        return response()->json([
-            'message' => 'success',
-            'movimiento' => $movimiento
-        ], 200);
-
+        
         $cantidad = $request->cantidad;
         $balanceUsuario = $request->user()->balance_total;
 
@@ -229,6 +224,12 @@ class MovimientosController extends Controller
                 'balance_total' => $balanceUsuario - $cantidad
             ]);
         }
+
+        // Mostramos mensaje de éxito
+        return response()->json([
+            'message' => 'success',
+            'movimiento' => $movimiento
+        ], 200);
     }
 
     public function borrarMovimiento(Request $request)
