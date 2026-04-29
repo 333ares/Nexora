@@ -64,7 +64,7 @@ export class Estadisticas implements OnInit, OnDestroy {
 
   // Inyección de dependencias
   constructor(
-    private authService: Auth, 
+    private authService: Auth,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService
   ) { }
@@ -112,8 +112,13 @@ export class Estadisticas implements OnInit, OnDestroy {
         this.ingresosMensuales = [...ingresos.data.ingresos_mensuales].reverse();
 
         // Filtrar categorías con valores > 0
-        this.gastosPorCategoria = gastosCat.stats.filter((s: CategoriaStat) => s.total > 0);
-        this.ingresosPorCategoria = ingresosCat.stats.filter((s: CategoriaStat) => s.total > 0);
+        this.gastosPorCategoria = gastosCat.stats
+          .filter((s: CategoriaStat) => s.total > 0)
+          .map((s: CategoriaStat) => ({ ...s, total: parseFloat(s.total as any) }));
+
+        this.ingresosPorCategoria = ingresosCat.stats
+          .filter((s: CategoriaStat) => s.total > 0)
+          .map((s: CategoriaStat) => ({ ...s, total: parseFloat(s.total as any) }));
 
         this.cargando = false;
 

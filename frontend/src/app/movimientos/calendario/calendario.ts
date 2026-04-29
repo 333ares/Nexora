@@ -41,11 +41,11 @@ export class Calendario implements OnInit, OnDestroy {
 
   categoríasIngreso = ['Nómina', 'Capital (Alquileres)', 'Negocios y ventas', 'Otros'];
   categoríasGasto = ['Ocio', 'Supervivencia', 'Cultura', 'Extras o imprevistos'];
-  
+
   private langSub: any;
 
   constructor(
-    private authService: Auth, 
+    private authService: Auth,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService
   ) { }
@@ -174,9 +174,9 @@ export class Calendario implements OnInit, OnDestroy {
 
   abrirModal() {
     const ahora = new Date();
-    const año = ahora.getFullYear();
-    const mes = String(ahora.getMonth() + 1).padStart(2, '0');
-    const dia = String(this.diaSeleccionado ?? ahora.getDate()).padStart(2, '0'); // usa el día seleccionado
+    const año = this.mesActual.getFullYear();  // ← mesActual en vez de ahora
+    const mes = String(this.mesActual.getMonth() + 1).padStart(2, '0');  // ← mesActual
+    const dia = String(this.diaSeleccionado ?? ahora.getDate()).padStart(2, '0');
     const hora = String(ahora.getHours()).padStart(2, '0');
     const minutos = String(ahora.getMinutes()).padStart(2, '0');
 
@@ -186,7 +186,7 @@ export class Calendario implements OnInit, OnDestroy {
       categoria: '',
       descripcion: '',
       fecha: `${año}-${mes}-${dia}`,
-      hora: `${hora}:${minutos}`,   // inicializa con hora actual
+      hora: `${hora}:${minutos}`,
       fechaHora: ''
     };
     this.cantidadDisplay = '';
