@@ -294,6 +294,12 @@ nav {
   flex-shrink: 0;
 }
 
+/*
+  Flotación suave del logo en el hero.
+  Sube 12 px en la mitad del ciclo y baja de vuelta al origen.
+  4 segundos de duración: lo suficiente para que se sienta vivo,
+  pero sin ponerse nervioso ni marear al usuario.
+*/
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(-12px); }
@@ -1007,7 +1013,25 @@ footer {
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────── */
+
+/*
+  Tablet — los grids de 3 y 4 columnas pasan a 2.
+  Si pasamos directo a 1 columna en móvil quedan huecos raros
+  en pantallas medianas, así que este breakpoint hace de puente.
+*/
+@media (max-width: 960px) {
+  .func-grid         { grid-template-columns: repeat(2, 1fr); }
+  .plan-preview-grid { grid-template-columns: repeat(2, 1fr); }
+  .benefits-grid     { grid-template-columns: repeat(2, 1fr); }
+  .team-grid         { grid-template-columns: repeat(2, 1fr); }
+}
+
+/*
+  Móvil — apilamos el hero en una columna, centramos botones
+  y reducimos los paddings para que la página no se sienta ahogada.
+*/
 @media (max-width: 768px) {
+  .hero                { padding: 90px 24px 56px; }
   .hero-inner          { grid-template-columns: 1fr; text-align: center; }
   .hero-buttons        { justify-content: center; }
   .hero-visual         { order: -1; }
@@ -1024,4 +1048,18 @@ footer {
   .newsletter-form     { flex-direction: column; }
   .newsletter-box      { padding: 32px 24px; }
   .contact-preview-box { padding: 32px 24px; }
+}
+
+/*
+  Móvil pequeño — para pantallas de menos de 480 px reducimos
+  más el hero, el equipo pasa a 1 columna y ajustamos secciones.
+*/
+@media (max-width: 480px) {
+  .hero                { padding: 80px 16px 48px; }
+  .hero-subtitle       { font-size: 1rem; }
+  .hero-logo-wrap      { width: 160px; height: 160px; }
+  section              { padding: 56px 16px; }
+  .team-grid           { grid-template-columns: 1fr; }
+  .newsletter-box      { padding: 28px 20px; }
+  .contact-preview-box { padding: 28px 20px; }
 }
