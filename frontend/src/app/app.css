@@ -146,3 +146,141 @@ app-root {
     display: flex;
     align-items: center;
 }
+
+/* ══ LADO DERECHO DEL HEADER ══
+   Reemplaza los estilos inline que había antes para poder añadir el hamburguesa */
+.header-right {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ══ BOTÓN HAMBURGUESA ══
+   Oculto por defecto; solo se muestra en móvil via @media.
+   Las líneas son blancas para contrastar con el fondo verde del header */
+.hamburger {
+    display: none; /* se activa en el media query de móvil */
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+.hamburger:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Cada línea del icono hamburguesa */
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.92); /* blanco sobre fondo verde */
+    border-radius: 2px;
+    transform-origin: center;
+    /* Transición suave para la animación de convertirse en X */
+    transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+/* Animación de X cuando el menú está abierto:
+   - Línea 1 sube 7px (altura 2px + gap 5px) y rota 45°
+   - Línea 2 desaparece
+   - Línea 3 baja 7px y rota -45° */
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ══ MENÚ MÓVIL ══
+   Oculto por defecto (display:none + opacity:0).
+   Se activa en el media query y se abre con la clase .open */
+.mobile-nav {
+    position: fixed;
+    top: 84px; /* altura aproximada del header: padding 14px×2 + logo 56px */
+    left: 0;
+    right: 0;
+    z-index: 99; /* por debajo del header (z-index: 100) pero sobre el contenido */
+
+    display: none; /* se activa con display:flex en el media query */
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 16px;
+
+    /* Mismo gradiente verde que el header para coherencia visual */
+    background: linear-gradient(135deg, #3a8c1a 0%, #4E9C25 40%, #78C550 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+    /* Animación de entrada: aparece deslizándose hacia abajo */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+/* Estado abierto: visible e interactuable */
+.mobile-nav.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+/* Botones de navegación dentro del menú móvil */
+.mobile-nav-item {
+    font-family: 'Onest', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding: 14px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+}
+.mobile-nav-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+/* Estado activo: fondo blanco con texto verde — igual que en el nav de escritorio */
+.mobile-nav-item.active {
+    background: #fff;
+    color: #3a8c1a;
+}
+
+/* ══ FONDO OSCURO (BACKDROP) ══
+   Cubre el contenido al abrir el menú móvil.
+   Oculto por defecto; se activa en el media query */
+.mobile-nav-backdrop {
+    display: none; /* se activa en el media query */
+    position: fixed;
+    inset: 0;
+    z-index: 98; /* por debajo del menú móvil (99) y del header (100) */
+    background: rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.mobile-nav-backdrop.open { opacity: 1; }
+
+/* ══ RESPONSIVE ══
+   En pantallas ≤820px: se oculta la nav de escritorio y aparece el hamburguesa.
+   Mismo breakpoint que el LandingLayout para coherencia en toda la app */
+@media (max-width: 820px) {
+    /* Ocultar navegación de escritorio */
+    .header-nav { display: none; }
+
+    /* Reducir padding lateral del header en móvil */
+    .header { padding: 14px 20px; }
+
+    /* Mostrar botón hamburguesa */
+    .hamburger { display: flex; }
+
+    /* Activar el menú móvil y el fondo oscuro
+       (estaban en display:none para no ocupar espacio en escritorio) */
+    .mobile-nav          { display: flex; }
+    .mobile-nav-backdrop { display: block; }
+}

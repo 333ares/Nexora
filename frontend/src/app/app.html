@@ -35,11 +35,46 @@
             {{ 'MOV.PERFIL' | translate }}
         </button>
     </nav>
-    <div style="justify-self: end; display: flex; align-items: center; gap: 15px;">
+    <!-- LADO DERECHO: selector de idioma + botón hamburguesa (hamburguesa solo visible en móvil) -->
+    <div class="header-right">
         <app-language-selector></app-language-selector>
+        <!-- Círculo decorativo posicionado de forma absoluta, no afecta al flujo flex -->
         <div class="saldo-circle-sm"></div>
+
+        <!-- Botón hamburguesa: tres líneas que se transforman en X al abrirse.
+             [class.open] añade la clase .open cuando menuOpen es true, disparando la animación CSS -->
+        <button class="hamburger" [class.open]="menuOpen" (click)="toggleMenu()" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </div>
+
 </header>
+
+<!-- MENÚ MÓVIL: se despliega debajo del header en pantallas pequeñas.
+     [class.open] controla visibilidad y animación de entrada -->
+<div class="mobile-nav" [class.open]="menuOpen">
+
+    <!-- Cada botón cierra el menú al hacer clic para que no quede abierto tras navegar -->
+    <button class="mobile-nav-item" routerLink="/foro" routerLinkActive="active" (click)="closeMenu()">
+        {{ 'MOV.FORO' | translate }}
+    </button>
+
+    <button class="mobile-nav-item" routerLink="/movimientos" routerLinkActive="active" (click)="closeMenu()">
+        {{ 'MOV.MOVIMIENTOS' | translate }}
+    </button>
+
+    <button class="mobile-nav-item" routerLink="/perfil" routerLinkActive="active" (click)="closeMenu()">
+        {{ 'MOV.PERFIL' | translate }}
+    </button>
+
+</div>
+
+<!-- FONDO OSCURO: cubre el contenido de fondo al abrir el menú.
+     Al hacer clic sobre él se cierra el menú sin necesidad de pulsar la X -->
+<div class="mobile-nav-backdrop" [class.open]="menuOpen" (click)="closeMenu()"></div>
+
 }
 
 <!-- ROUTER CONTENT -->
