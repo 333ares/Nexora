@@ -73,4 +73,5 @@ Route::middleware('auth:sanctum')->group(function () {
     // Respuestas
     Route::post('/respuesta', [RespuestasController::class, 'responderForo']);
     Route::put('/respuesta', [RespuestasController::class, 'modificarRespuesta']);
+    Route::delete('/respuesta', [RespuestasController::class, 'borrarRespuesta']);
 });

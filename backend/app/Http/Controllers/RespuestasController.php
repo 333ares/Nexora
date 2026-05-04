@@ -70,4 +70,25 @@ class RespuestasController extends Controller
             'movimiento' => $respuesta
         ], 200);
     }
+
+    public function borrarRespuesta(Request $request)
+    {
+        $respuesta = Respuesta::where('IDrespuesta', $request->IDrespuesta)
+            ->where('IDusuario', $request->user()->IDusuario)
+            ->first();
+
+        if (!$respuesta) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Respuesta no encontrada'
+            ], 404);
+        }
+
+        $respuesta->delete();
+
+        return response()->json([
+            'message' => 'success',
+            'reto' => 'La respuesta se ha borrado correctamente'
+        ], 200);
+    }
 }
