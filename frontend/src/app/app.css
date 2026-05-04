@@ -13,6 +13,9 @@ body {
 app-root {
     display: block;
     min-height: 100vh;
+    /* Fondo verde claro como base: si alguna página autenticada no llena el viewport
+       se ve este color en lugar del blanco del body */
+    background: #f0f7ec;
 }
 
 /* ══ HEADER ══ */
@@ -93,6 +96,18 @@ app-root {
     font-size: 24px;
     display: flex;
     align-items: center;
+    /* Evita que el contenedor del icono se comprima en layouts flex/grid */
+    flex-shrink: 0;
+}
+
+/* El icono circular del logo nunca debe encogerse aunque el viewport sea pequeño.
+   Anula el max-width: 100% global de styles.css para este elemento específico */
+.brand-icon img {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    max-width: none;
+    flex-shrink: 0;
 }
 
 .brand-text {
@@ -273,8 +288,15 @@ app-root {
     /* Ocultar navegación de escritorio */
     .header-nav { display: none; }
 
-    /* Reducir padding lateral del header en móvil */
-    .header { padding: 14px 20px; }
+    /* Cambiar el grid a "auto 1fr":
+       - "auto": el brand ocupa solo su ancho natural → el icono/logo no se encoge
+       - "1fr":  el lado derecho toma todo el espacio restante
+       Con "justify-self: end" en .header-right, ES y hamburguesa quedan pegados
+       al borde derecho del header */
+    .header {
+        padding: 14px 20px;
+        grid-template-columns: auto 1fr;
+    }
 
     /* Mostrar botón hamburguesa */
     .hamburger { display: flex; }
