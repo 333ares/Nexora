@@ -2,13 +2,13 @@
 
 
 <div class="hero">
-  <h1 class="bienvenida">¡Bienvenido/a, {{ usuario?.nombre }}!</h1>
+  <h1 class="bienvenida">{{ 'MOV.WELCOME' | translate:{nombre: usuario?.nombre} }}</h1>
   <nav class="subnav">
-    <a class="subnav-item" routerLink="resumen" routerLinkActive="active">Resumen</a>
-    <a class="subnav-item" routerLink="lista" routerLinkActive="active">Movimientos</a>
-    <a class="subnav-item" routerLink="calendario" routerLinkActive="active">Calendario</a>
-    <a class="subnav-item" routerLink="estadisticas" routerLinkActive="active">Estadísticas</a>
-    <a class="subnav-item" routerLink="retos" routerLinkActive="active">Retos</a>
+    <a class="subnav-item" routerLink="resumen" routerLinkActive="active">{{ 'MOV.RESUMEN' | translate }}</a>
+    <a class="subnav-item" routerLink="lista" routerLinkActive="active">{{ 'MOV.MOVIMIENTOS' | translate }}</a>
+    <a class="subnav-item" routerLink="calendario" routerLinkActive="active">{{ 'MOV.CALENDARIO' | translate }}</a>
+    <a class="subnav-item" routerLink="estadisticas" routerLinkActive="active">{{ 'MOV.ESTADISTICAS' | translate }}</a>
+    <a class="subnav-item" routerLink="retos" routerLinkActive="active">{{ 'MOV.RETOS' | translate }}</a>
   </nav>
 </div>
 

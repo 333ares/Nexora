@@ -171,9 +171,21 @@ footer { background: var(--text-dark); color: rgba(255,255,255,0.7); padding: 48
 .footer-bottom .contact a { color: #ABDE91; text-decoration: none; }
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
+
+/* Móvil — bloques texto/visual en columna y hero con menos aire arriba */
 @media (max-width: 768px) {
-  .nav-links { display: none; }
-  .service-block, .service-block--reverse { grid-template-columns: 1fr; direction: ltr; }
+  .nav-links    { display: none; }
+  .page-hero    { padding: 100px 24px 52px; }
+  .service-block,
+  .service-block--reverse { grid-template-columns: 1fr; direction: ltr; }
+  .cta-box      { padding: 40px 24px; }
   .footer-inner { grid-template-columns: 1fr; gap: 24px; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+
+/* Móvil pequeño — apretamos más para que el texto no se vea ahogado */
+@media (max-width: 480px) {
+  .page-hero  { padding: 80px 16px 44px; }
+  .cta-box    { padding: 32px 16px; }
+  .cta-box h2 { font-size: 1.4rem; }
 }

@@ -4,11 +4,13 @@ import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateCategoryPipe } from '../pipes/translate-category';
 
 @Component({
   selector: 'app-perfil-usuario',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule],
+  imports: [FormsModule, RouterLink, CommonModule, TranslateModule, TranslateCategoryPipe],
   templateUrl: './perfil-usuario.html',
   styleUrl: './perfil-usuario.css'
 })

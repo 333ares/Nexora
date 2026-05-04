@@ -853,3 +853,93 @@
 .alert-success {
   animation: perfilFadeInUp 0.3s ease both;
 }
+
+
+/* ══════════════════════════════════════════════════════════════ */
+/* RESPONSIVE                                                     */
+/* ══════════════════════════════════════════════════════════════ */
+
+/* Tablet: apila columnas izquierda/derecha y pone plan+transacciones en fila */
+@media (max-width: 900px) {
+  :host {
+    padding: 90px 20px 32px 20px;
+    align-items: flex-start;
+  }
+
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .right-col {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .plan-box {
+    flex: 0 0 220px;
+  }
+
+  .transactions-box {
+    flex: 1;
+    height: auto;
+  }
+}
+
+/* Mobile: todo a una columna, formulario en columna simple */
+@media (max-width: 600px) {
+  :host {
+    padding: 80px 12px 24px 12px;
+  }
+
+  .card {
+    --gap: 16px;
+    border-radius: 16px;
+  }
+
+  .fields-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .fields-col {
+    padding: 0 16px 20px 16px;
+  }
+
+  .avatar-top {
+    padding-left: 16px;
+  }
+
+  .right-col {
+    flex-direction: column;
+  }
+
+  .plan-box {
+    flex: none;
+  }
+
+  .action-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-save,
+  .btn-logout,
+  .btn-delete {
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal-box {
+    padding: 24px 20px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .btn-modal-cancel,
+  .btn-modal-confirm {
+    width: 100%;
+    justify-content: center;
+  }
+}

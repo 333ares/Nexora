@@ -3,12 +3,13 @@ import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Auth } from './services/auth';
 import { filter } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { LanguageSelector } from './language-selector/language-selector';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule, LanguageSelector],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -17,7 +18,7 @@ export class App implements OnInit {
   showHeader: boolean = false;
 
   private rutasConHeader = ['/foro', '/movimientos', '/perfil'];
-  
+
   constructor(
     private authService: Auth,
     private router: Router,
