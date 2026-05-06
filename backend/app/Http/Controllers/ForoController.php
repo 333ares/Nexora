@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Foro;
 use App\Models\Respuesta;
+use App\Models\Votos_Respuesta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -48,7 +49,10 @@ class ForoController extends Controller
         }
 
         $foro->increment('visitas');
-        $foro->respuestas = Respuesta::where('IDforo', $foro->IDforo)->get();
+        $foro->respuestas = Respuesta::where('IDforo', $foro->IDforo)->get()->map(function ($respuesta) {
+            $respuesta->votos = Votos_Respuesta::where('IDrespuesta', $respuesta->IDrespuesta)->count();
+            return $respuesta;
+        });
 
         return response()->json([
             'message' => 'success',
