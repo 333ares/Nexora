@@ -16,6 +16,9 @@ return new class extends Migration
             $table->foreignId('IDrespuesta')->onDelete('cascade');
             $table->foreignId('IDusuario')->onDelete('cascade');
             $table->timestamps();
+
+            $table->unique(['IDusuario', 'IDrespuesta']); // Un voto por usuario
+
         });
     }
 
