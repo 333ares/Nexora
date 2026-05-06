@@ -340,23 +340,6 @@
     color: #333;
 }
 
-.pregunta-time {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    color: #999;
-    font-family: 'Lato', sans-serif;
-    margin-left: 10px;
-    padding-left: 12px;
-    border-left: 1px solid #eee;
-}
-
-.pregunta-time i {
-    font-size: 11px;
-    color: #999;
-}
-
 
 /* Empty state */
 .empty-state {
