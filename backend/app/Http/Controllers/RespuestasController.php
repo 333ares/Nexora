@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Respuesta;
+use App\Models\Votos_Respuesta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -88,7 +89,49 @@ class RespuestasController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'reto' => 'La respuesta se ha borrado correctamente'
+            'respuesta' => 'La respuesta se ha borrado correctamente'
+        ], 200);
+    }
+
+    public function toggleVotoRespuesta(Request $request)
+    {
+        $respuesta = Respuesta::find($request->IDrespuesta);
+
+        if (!$respuesta) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Respuesta no encontrada'
+            ], 404);
+        }
+
+        $IDusuario = $request->user()->IDusuario;
+
+        $votoExistente = Votos_Respuesta::where('IDusuario', $IDusuario)
+            ->where('IDrespuesta', $respuesta->IDrespuesta)
+            ->first();
+
+        if ($votoExistente) {
+            Votos_Respuesta::where('IDusuario', $IDusuario)
+                ->where('IDrespuesta', $respuesta->IDrespuesta)
+                ->delete();
+
+            $respuesta->decrement('votos');
+            $votado = false;
+        } else {
+
+            Votos_Respuesta::create([
+                'user_id' => $IDusuario,
+                'respuesta_id' => $respuesta->IDrespuesta
+            ]);
+
+            $respuesta->increment('votos');
+            $votado = true;
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'votos' => $respuesta->fresh()->votos,
+            'votado' => $votado // Para el front (color del boton)
         ], 200);
     }
 }
