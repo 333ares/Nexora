@@ -354,18 +354,29 @@
   }
 }
 
-/* RESPONSIVE */
+/* ══ RESPONSIVE ESTADÍSTICAS ══ */
 @media (max-width: 768px) {
-  .grid-estadisticas {
-    grid-template-columns: 1fr;
-    padding: 16px;
-  }
+    /* Columna única en móvil.
+       Se elimina el padding aquí porque el page-wrapper ya tiene su propio padding;
+       duplicarlo reduce el espacio útil de las cards */
+    .grid-estadisticas {
+        grid-template-columns: 1fr;
+    }
 
-  .stats-grande {
-    grid-column: span 1;
-  }
+    /* Con 1 columna, stats-grande ya no necesita span 2 */
+    .stats-grande {
+        grid-column: span 1;
+    }
 
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    /* 4 KPIs en 2 columnas: legible en móvil */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    /* En pantallas muy pequeñas los 4 KPIs apilados en 1 columna son más legibles */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
 }
