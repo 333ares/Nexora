@@ -16,7 +16,7 @@ services:
     networks:
       - nexora_network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234" ]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -34,12 +34,9 @@ services:
     networks:
       - nexora_network
     command: >
-      bash -c "
-      curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
-      composer install &&
-      php artisan migrate:fresh --seed --force &&
-      apache2-foreground
-      "
+      bash -c " curl -sS https://getcomposer.org/installer | php --
+      --install-dir=/usr/local/bin --filename=composer && composer install &&
+      php artisan migrate && php artisan db:seed && apache2-foreground "
 
   frontend:
     container_name: nexora_angular
@@ -54,7 +51,6 @@ services:
     command: >
       bash -c "npm install && npm start -- --host 0.0.0.0"
 
-
   libretranslate:
     container_name: nexora_libretranslate
     image: libretranslate/libretranslate:latest
@@ -66,12 +62,12 @@ services:
     volumes:
       - libretranslate_models:/home/libretranslate/.local
     networks:
-      - nexora_network  
+      - nexora_network
 
 volumes:
   db_data:
   libretranslate_models:
-  
+
 networks:
   nexora_network:
     driver: bridge
