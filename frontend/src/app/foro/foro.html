@@ -2,13 +2,34 @@
 
 <div class="hero">
   <h1 class="bienvenida">¡Bienvenido/a al foro, {{ usuario?.nombre }}!</h1>
+
+  <!-- SUBNAV ESCRITORIO: pestañas horizontales visibles en ≥768px -->
   <nav class="subnav">
     <a class="subnav-item" routerLink="ver" routerLinkActive="active">Inicio</a>
     <a class="subnav-item" routerLink="mis-foros" routerLinkActive="active">Mis foros</a>
     <a class="subnav-item" routerLink="mis-preguntas" routerLinkActive="active">Mis preguntas</a>
     <a class="subnav-item" routerLink="kiro" routerLinkActive="active">Pregunta a Kiro</a>
   </nav>
+
+  <!-- SUBNAV HAMBURGUESA: solo visible en móvil (<768px).
+       [class.open] activa la animación X y despliega el dropdown -->
+  <div class="subnav-mobile">
+    <button class="subnav-ham" [class.open]="subnavOpen" (click)="toggleSubnav()" aria-label="Menú de secciones">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="subnav-dropdown" [class.open]="subnavOpen">
+      <a class="subnav-drop-item" routerLink="ver" routerLinkActive="active" (click)="closeSubnav()">Inicio</a>
+      <a class="subnav-drop-item" routerLink="mis-foros" routerLinkActive="active" (click)="closeSubnav()">Mis foros</a>
+      <a class="subnav-drop-item" routerLink="mis-preguntas" routerLinkActive="active" (click)="closeSubnav()">Mis preguntas</a>
+      <a class="subnav-drop-item" routerLink="kiro" routerLinkActive="active" (click)="closeSubnav()">Pregunta a Kiro</a>
+    </div>
+  </div>
 </div>
+
+<!-- Fondo oscuro que cierra el dropdown al tocar fuera -->
+<div class="subnav-backdrop" [class.open]="subnavOpen" (click)="closeSubnav()"></div>
 
 <main class="page-wrapper">
   <router-outlet />

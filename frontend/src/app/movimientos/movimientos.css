@@ -69,6 +69,114 @@ app-movimientos {
   background: rgba(78, 156, 37, 0.06);
 }
 
+/* ══ SUBNAV HAMBURGUESA MÓVIL ══ */
+/* Oculto en escritorio; se activa solo con el media query de ≤768px */
+.subnav-mobile {
+  display: none;
+  position: relative;
+}
+
+/* Botón de 3 líneas — mismo estilo que el del header principal */
+.subnav-ham {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: #fff;
+  border: 1.5px solid rgba(78, 156, 37, 0.25);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px 14px;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(78, 156, 37, 0.08);
+}
+
+.subnav-ham:hover {
+  border-color: rgba(78, 156, 37, 0.5);
+  background: rgba(78, 156, 37, 0.04);
+}
+
+.subnav-ham span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #4E9C25;
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+/* Las 3 líneas se transforman en X al abrir */
+.subnav-ham.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.subnav-ham.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.subnav-ham.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Dropdown con las secciones — aparece debajo del botón */
+.subnav-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  background: #fff;
+  border: 1.5px solid rgba(78, 156, 37, 0.15);
+  border-radius: 16px;
+  padding: 8px;
+  min-width: 210px;
+  z-index: 200;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(78, 156, 37, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.subnav-dropdown.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+/* Cada enlace dentro del dropdown */
+.subnav-drop-item {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-family: 'Onest', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #777;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.subnav-drop-item:hover {
+  background: rgba(78, 156, 37, 0.06);
+  color: #4E9C25;
+}
+
+.subnav-drop-item.active {
+  color: #4E9C25;
+  background: rgba(78, 156, 37, 0.08);
+}
+
+/* Fondo semitransparente que cierra el dropdown al tocar fuera */
+.subnav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.subnav-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
 /* ══ PAGE WRAPPER ══ */
 .page-wrapper {
   max-width: 1300px;
@@ -1580,9 +1688,8 @@ app-movimientos {
     padding: 20px 16px 0;
   }
 
-  /* Reducir padding lateral para aprovechar más espacio en móvil */
   .page-wrapper {
-    padding: 20px 12px 40px;
+    padding: 20px 16px 40px;
   }
 
   .grid-top-right {
@@ -1621,34 +1728,18 @@ app-movimientos {
     gap: 8px;
   }
 
-  /* Subnav de 5 tabs: en móvil no caben (~690px) y desbordan el viewport.
-     Se convierte en scroll horizontal silencioso (sin barra visible) */
-  .subnav {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;        /* Firefox */
-  }
-  .subnav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
-
-  /* Cada tab no debe comprimirse ni partir el texto — se desplaza con el scroll */
-  .subnav-item {
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding: 10px 16px;           /* reducido de 24px para ganar espacio */
-    font-size: 14px;
-  }
+  /* Subnav de tabs: en móvil se oculta y se reemplaza por el hamburguesa */
+  .subnav        { display: none; }
+  .subnav-mobile { display: block; }
+  .subnav-backdrop { display: block; }
 }
 
 /* Pantallas muy pequeñas (≤480px, ej. iPhone SE): reducir aún más */
 @media (max-width: 480px) {
   .bienvenida { font-size: 22px; }
 
-  /* Padding mínimo para aprovechar todo el ancho disponible */
-  .page-wrapper { padding: 16px 10px 40px; }
-  .hero         { padding: 16px 10px 0; }
-
-  /* Tabs más compactos */
-  .subnav-item  { padding: 8px 12px; font-size: 13px; }
+  .page-wrapper { padding: 16px 14px 40px; }
+  .hero         { padding: 16px 14px 0; }
 
   /* Card base: reducir padding interior para más espacio al contenido */
   .card { padding: 18px; }
