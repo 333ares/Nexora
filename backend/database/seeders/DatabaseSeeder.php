@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             $usuarios = Usuario::all();
             for ($i = 0; $i < 100; $i++) {
                 Movimientos::factory()->create([
-                    'usuario_id' => $usuarios->random()->id
+                    'usuario_id' => $usuarios->random()->IDusuario
                 ]);
             }
         }
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             $usuarios = Usuario::all();
             for ($i = 0; $i < 100; $i++) {
                 Reto::factory()->create([
-                    'usuario_id' => $usuarios->random()->id
+                    'usuario_id' => $usuarios->random()->IDusuario
                 ]);
             }
         }

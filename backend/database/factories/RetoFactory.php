@@ -2,13 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\Reto;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reto>
  */
-class RetosFactory extends Factory
+class RetoFactory extends Factory
 {
+    protected $model = Reto::class;
     /**
      * Define the model's default state.
      *
