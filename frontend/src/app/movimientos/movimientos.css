@@ -1666,81 +1666,41 @@ app-movimientos {
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 1100px) {
-  .grid-main {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-top-right {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .grid-retos {
-    grid-template-columns: 1fr;
-  }
-
-  .retos-col-right {
-    order: -1;
-  }
+  .grid-main          { grid-template-columns: 1fr; }
+  .grid-top-right     { grid-template-columns: 1fr 1fr; }
+  .grid-retos         { grid-template-columns: 1fr; }
+  .retos-col-right    { order: -1; }
 }
 
-@media (max-width: 768px) {
-  .hero {
-    padding: 20px 16px 0;
-  }
-
-  .page-wrapper {
-    padding: 20px 16px 40px;
-  }
-
-  .grid-top-right {
-    grid-template-columns: 1fr;
-  }
-
-  .bienvenida {
-    font-size: 24px;
-  }
-
-  /* El header de lista y retos necesita poder apilarse en pantallas estrechas:
-     sin flex-wrap el título + botones desbordan en <400px */
-  .historial-header {
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .reto-card-meta-row {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .tabla-header-mov,
-  .tabla-header-mov-resumen,
-  .tabla-header-historial {
-    display: none;
-  }
-
-  .tabla-row-mov,
-  .tabla-row-mov-resumen {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .tabla-row-historial {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  /* Subnav de tabs: en móvil se oculta y se reemplaza por el hamburguesa */
-  .subnav        { display: none; }
-  .subnav-mobile { display: block; }
+/* Submenú al mismo breakpoint que el header principal */
+@media (max-width: 820px) {
+  .subnav          { display: none; }
+  .subnav-mobile   { display: block; }
   .subnav-backdrop { display: block; }
 }
 
-/* Pantallas muy pequeñas (≤480px, ej. iPhone SE): reducir aún más */
-@media (max-width: 480px) {
-  .bienvenida { font-size: 22px; }
+@media (max-width: 768px) {
+  .hero         { padding: 20px 16px 0; }
+  .page-wrapper { padding: 20px 16px 40px; }
+  .bienvenida   { font-size: 24px; }
 
+  .grid-top-right { grid-template-columns: 1fr; }
+
+  .historial-header  { flex-wrap: wrap; gap: 12px; }
+  .reto-card-meta-row { grid-template-columns: 1fr 1fr; }
+
+  .tabla-header-mov,
+  .tabla-header-mov-resumen,
+  .tabla-header-historial { display: none; }
+
+  .tabla-row-mov,
+  .tabla-row-mov-resumen  { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tabla-row-historial    { grid-template-columns: 1fr 1fr; gap: 8px; }
+}
+
+@media (max-width: 480px) {
+  .bienvenida   { font-size: 22px; }
   .page-wrapper { padding: 16px 14px 40px; }
   .hero         { padding: 16px 14px 0; }
-
-  /* Card base: reducir padding interior para más espacio al contenido */
-  .card { padding: 18px; }
+  .card         { padding: 18px; }
 }
