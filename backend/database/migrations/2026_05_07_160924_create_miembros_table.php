@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('miembros', function (Blueprint $table) {
-            $table->id();
+            $table->id('IDmiembro');
+            $table->foreignId('IDforo')->onDelete('cascade');
+            $table->foreignId('IDusuario')->onDelete('cascade');
             $table->timestamps();
         });
     }
