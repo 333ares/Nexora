@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Foro;
+use App\Models\Miembro;
 use App\Models\Respuesta;
 use App\Models\Votos_Respuesta;
 use Illuminate\Http\Request;
@@ -53,6 +54,8 @@ class ForoController extends Controller
             $respuesta->votos = Votos_Respuesta::where('IDrespuesta', $respuesta->IDrespuesta)->count();
             return $respuesta;
         });
+
+        $foro->miembros = Miembro::where('IDforo', $foro->IDforo)->get();
 
         return response()->json([
             'message' => 'success',
