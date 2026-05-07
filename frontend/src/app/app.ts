@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
+// NavigationStart se usa para cerrar el menú hamburguesa al cambiar de ruta
+import { RouterModule, Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Auth } from './services/auth';
 import { filter } from 'rxjs/operators';
@@ -17,6 +18,9 @@ export class App implements OnInit {
   isLoggedIn: boolean = false;
   showHeader: boolean = false;
 
+  // Controla si el menú hamburguesa está abierto (true) o cerrado (false)
+  menuOpen: boolean = false;
+
   private rutasConHeader = ['/foro', '/movimientos', '/perfil'];
 
   constructor(
@@ -33,6 +37,12 @@ export class App implements OnInit {
     } else {
       this.translate.use('es');
     }
+
+    // Cierra el menú hamburguesa automáticamente al comenzar cualquier navegación,
+    // evitando que quede abierto al cambiar de página
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) this.menuOpen = false;
+    });
   }
 
   ngOnInit(): void {
@@ -49,6 +59,12 @@ export class App implements OnInit {
       this.cdr.detectChanges();
     });
   }
+
+  // Alterna entre abrir y cerrar el menú hamburguesa
+  toggleMenu(): void { this.menuOpen = !this.menuOpen; }
+
+  // Cierra el menú — se llama al hacer clic en un enlace o en el fondo oscuro
+  closeMenu(): void { this.menuOpen = false; }
 
   private actualizarHeader(): void {
     const rutaActual = this.router.url;

@@ -10,9 +10,12 @@
 /* ══ HOST ══ */
 app-movimientos {
   display: block;
+  /* min-height garantiza que el fondo #F2F6EE llene todo el viewport aunque
+     el contenido de la pestaña sea corto (evita que el body blanco se vea abajo) */
   min-height: 100vh;
   background: #F2F6EE;
   font-family: 'Onest', 'Lato', sans-serif;
+  /* padding-top compensa el header fixed (~84px) dejando 26px de respiro */
   padding-top: 110px;
 }
 
@@ -1577,8 +1580,9 @@ app-movimientos {
     padding: 20px 16px 0;
   }
 
+  /* Reducir padding lateral para aprovechar más espacio en móvil */
   .page-wrapper {
-    padding: 20px 16px 40px;
+    padding: 20px 12px 40px;
   }
 
   .grid-top-right {
@@ -1587,6 +1591,13 @@ app-movimientos {
 
   .bienvenida {
     font-size: 24px;
+  }
+
+  /* El header de lista y retos necesita poder apilarse en pantallas estrechas:
+     sin flex-wrap el título + botones desbordan en <400px */
+  .historial-header {
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .reto-card-meta-row {
@@ -1609,4 +1620,36 @@ app-movimientos {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
   }
+
+  /* Subnav de 5 tabs: en móvil no caben (~690px) y desbordan el viewport.
+     Se convierte en scroll horizontal silencioso (sin barra visible) */
+  .subnav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;        /* Firefox */
+  }
+  .subnav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+  /* Cada tab no debe comprimirse ni partir el texto — se desplaza con el scroll */
+  .subnav-item {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 10px 16px;           /* reducido de 24px para ganar espacio */
+    font-size: 14px;
+  }
+}
+
+/* Pantallas muy pequeñas (≤480px, ej. iPhone SE): reducir aún más */
+@media (max-width: 480px) {
+  .bienvenida { font-size: 22px; }
+
+  /* Padding mínimo para aprovechar todo el ancho disponible */
+  .page-wrapper { padding: 16px 10px 40px; }
+  .hero         { padding: 16px 10px 0; }
+
+  /* Tabs más compactos */
+  .subnav-item  { padding: 8px 12px; font-size: 13px; }
+
+  /* Card base: reducir padding interior para más espacio al contenido */
+  .card { padding: 18px; }
 }

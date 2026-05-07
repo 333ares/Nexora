@@ -34,9 +34,6 @@
                 <i class="bi bi-person-fill"></i>
             </div>
             <span class="autor-nombre">{{ pregunta.autor }}</span>
-            <span class="pregunta-time">
-                <i class="bi bi-clock"></i> Hace {{ tiempoRelativo(pregunta.fecha) }}
-            </span>
         </div>
 
         <div class="detalle-stats-inline">
@@ -79,9 +76,6 @@
                     <i class="bi bi-person-fill"></i>
                 </div>
                 <span class="autor-nombre">{{ r.autor }}</span>
-                <span class="pregunta-time">
-                    <i class="bi bi-clock"></i> Hace {{ tiempoRelativo(r.fecha) }}
-                </span>
             </div>
 
             <button class="btn-votar-respuesta" [class.btn-votar-respuesta-activo]="r.yaVotada"

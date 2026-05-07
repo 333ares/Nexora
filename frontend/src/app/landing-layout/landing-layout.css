@@ -1,6 +1,11 @@
 /* ── VARIABLES  */
 :host {
   display: block;
+  /* Fondo verde degradado como base de todas las páginas del landing (registro, login, etc.).
+     Evita que el blanco del body se vea cuando el contenido de la página no llena el viewport */
+  background: linear-gradient(to bottom, #ABDE91, #4E9C25);
+  min-height: 100vh;
+
   --green-dark:     #2d7a0f;
   --green-mid:      #4E9C25;
   --green-light:    #78C550;

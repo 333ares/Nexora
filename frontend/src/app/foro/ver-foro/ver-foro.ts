@@ -59,19 +59,6 @@ export class VerForo {
     }
   }
 
-  tiempoRelativo(fecha: Date): string {
-    if (!fecha) return '';
-    const diff = Date.now() - new Date(fecha).getTime();
-    const min = Math.floor(diff / 60000);
-    if (min < 1) return 'ahora';
-    if (min < 60) return `${min} min`;
-    const horas = Math.floor(min / 60);
-    if (horas < 24) return `${horas} h`;
-    const dias = Math.floor(horas / 24);
-    if (dias < 7) return `${dias} día${dias > 1 ? 's' : ''}`;
-    return new Date(fecha).toLocaleDateString('es');
-  }
-
   get labelOrdenActivo(): string {
     return this.opcionesOrden.find(o => o.key === this.ordenActivo)?.label || 'Ordenar';
   }
