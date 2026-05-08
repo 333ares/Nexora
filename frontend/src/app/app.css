@@ -277,9 +277,10 @@ app-root {
     z-index: 98; /* por debajo del menú móvil (99) y del header (100) */
     background: rgba(0, 0, 0, 0.25);
     opacity: 0;
+    pointer-events: none;
     transition: opacity 0.2s;
 }
-.mobile-nav-backdrop.open { opacity: 1; }
+.mobile-nav-backdrop.open { opacity: 1; pointer-events: all; }
 
 /* ══ RESPONSIVE ══
    En pantallas ≤820px: se oculta la nav de escritorio y aparece el hamburguesa.
