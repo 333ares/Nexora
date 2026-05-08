@@ -188,6 +188,18 @@ export class Auth {
     return this.http.post(`${this.apiUrl}/respuesta/votar`, { IDrespuesta }, { headers: this.getHeaders() });
   }
 
+  // --- MEMBRESIA DEL FORO ---
+  unirseAForo(IDforo: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/miembro`, { IDforo }, { headers: this.getHeaders() });
+  }
+
+  salirDeForo(IDmembresia: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/miembro`, {
+      headers: this.getHeaders(),
+      body: { IDmembresia }
+    });
+  }
+
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
     localStorage.setItem('token', token);
