@@ -49,6 +49,7 @@ export class VerForo implements OnInit {
   constructor(private router: Router, private auth: Auth, private cdr: ChangeDetectorRef) { }
 
   error = '';
+  cargando = true;
 
   ngOnInit(): void {
     this.auth.listarForos().subscribe({
@@ -64,10 +65,12 @@ export class VerForo implements OnInit {
           autor: f.creador ?? f.IDusuario
         }));
         this.aplicarOrdenYFiltro();
+        this.cargando = false;
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error cargando foros', err);
+        this.cargando = false;
         this.cdr.detectChanges();
       }
     });
