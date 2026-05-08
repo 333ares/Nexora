@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Foro;
 use App\Models\Miembro;
 use App\Models\Respuesta;
+use App\Models\Usuario;
 use App\Models\Votos_Respuesta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -68,12 +69,12 @@ class ForoController extends Controller
         $foros = Foro::orderBy('created_at', 'desc')
             ->get()
             ->map(function ($foro) {
-                $foro->respuestas = Respuesta::where('IDforo', '=', $foro->IDforo)->count();
+                $foro->respuestas = Respuesta::where('IDforo', $foro->IDforo)->count();
+                $foro->creador = Usuario::where('IDusuario', $foro->IDusuario)->value('usuario');
                 return $foro;
             });
 
-
-        if (count($foros) <= 0) {
+        if ($foros->isEmpty()) {
             return response()->json([
                 'message' => 'error',
                 'errors' => 'No hay foros aún'
