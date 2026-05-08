@@ -1040,6 +1040,7 @@ app-movimientos {
   flex-direction: column;
   gap: 20px;
   animation: slideInLeft 0.5s ease 0.15s both;
+  min-width: 0;
 }
 
 .retos-col-right {

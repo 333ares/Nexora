@@ -5,30 +5,31 @@ namespace Database\Factories;
 use App\Models\Reto;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reto>
- */
 class RetoFactory extends Factory
 {
     protected $model = Reto::class;
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+
     public function definition(): array
     {
-        $fechaInicio = $this->faker->dateTimeBetween('-1 month', 'now');
+        $fechaInicio = $this->faker->dateTimeBetween('-4 months', 'now');
         $fechaFinal = $this->faker->dateTimeBetween($fechaInicio, '+3 months');
+        $cantidad = $this->faker->randomFloat(2, 10, 1000);
+
+        $expirado = $fechaFinal < new \DateTime();
+        $cantidad_actual = $this->faker->randomFloat(2, 0, $cantidad);
+        $cumplido = $cantidad_actual >= $cantidad;
+
+        // Activo = no cumplido y no expirado
+        $activo = !$cumplido && !$expirado;
 
         return [
             'titulo' => $this->faker->sentence(3),
-            'cantidad' => $this->faker->numberBetween(10, 1000),
-            'cantidad_actual' => $this->faker->numberBetween(0, 50), // Menor o igual a cantidad, pero para simplicidad
+            'cantidad' => $cantidad,
+            'cantidad_actual' => $cantidad_actual,
             'fecha_inicio' => $fechaInicio,
             'fecha_final' => $fechaFinal,
-            'cumplido' => $this->faker->boolean(20), // 20% de cumplido
-            'activo' => $this->faker->boolean(90), // 90% de activo
+            'cumplido' => $cumplido,
+            'activo' => $activo,
         ];
     }
 }
