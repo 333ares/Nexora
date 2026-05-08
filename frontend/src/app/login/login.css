@@ -40,7 +40,7 @@
 /* Hace que la imagen del logo no tenga espacio extra */
 .logo img {
   display: block;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 /* Título principal del login */
@@ -368,8 +368,21 @@ form {
   cursor: not-allowed;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    padding: 30px 20px;
+    margin: 0 16px;
+    /* ← añade esto */
+  }
+
+  .right-panel {
+    width: 100%;
+    order: 1;
+  }
+
+  .left-panel {
+    order: 0;
   }
 }
