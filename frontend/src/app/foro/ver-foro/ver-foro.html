@@ -5,7 +5,8 @@
 
     <div class="search-wrapper">
         <i class="bi bi-search search-icon"></i>
-        <input type="text" class="search-input" placeholder="Buscar preguntas..." [(ngModel)]="busqueda">
+        <input type="text" class="search-input" placeholder="Buscar foros..." [(ngModel)]="busqueda"
+            (ngModelChange)="onBusqueda()">
     </div>
 
     <div class="filter-wrapper">
@@ -41,6 +42,12 @@
 
 
 <!-- FEED -->
+@if (cargando) {
+<div class="empty-state">
+    <i class="bi bi-hourglass-split empty-icon"></i>
+    <p>Cargando foros...</p>
+</div>
+} @else {
 <div class="preguntas-grid">
     @for (p of preguntas; track p.id) {
     <article class="card pregunta-card pregunta-clickable" (click)="abrirDetalle(p)">
@@ -65,10 +72,12 @@
                         <i class="bi bi-person-fill"></i>
                     </div>
                     <span class="autor-nombre">{{ p.autor }}</span>
-                    <span class="pregunta-time">
-                        <i class="bi bi-clock"></i> Hace {{ tiempoRelativo(p.fecha) }}
-                    </span>
                 </div>
+
+                <span class="pregunta-fecha">
+                    <i class="bi bi-clock"></i>
+                    {{ p.fecha | date:'dd/MM/yyyy' }}
+                </span>
 
                 <span class="ver-mas">
                     Ver foro <i class="bi bi-arrow-right"></i>
@@ -84,7 +93,7 @@
     </div>
     }
 </div>
-
+}
 
 <!-- MODAL NUEVA PREGUNTA -->
 @if (popupNuevaAbierto) {
@@ -113,12 +122,23 @@
                 [(ngModel)]="nuevaDescripcion"></textarea>
         </div>
 
+        @if (error) {
+        <div class="modal-error">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            {{ error }}
+        </div>
+        }
+
         <div class="modal-footer">
             <button class="btn-cancelar" (click)="cerrarNueva()">Cancelar</button>
-            <button class="btn-guardar" [disabled]="!nuevaTitulo.trim() || !nuevaDescripcion.trim()"
+            <button class="btn-guardar" [disabled]="!nuevaTitulo.trim() || !nuevaDescripcion.trim() || publicando"
                 (click)="publicarNueva()">
+                @if (publicando) {
+                Publicando...
+                } @else {
                 <i class="bi bi-send-fill" style="margin-right:6px;"></i>
                 Publicar
+                }
             </button>
         </div>
 

@@ -6,21 +6,36 @@ use App\Models\Usuario;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Movimientos;
+use App\Models\Reto;
 
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        Usuario::factory()->admin()->create();
-        Usuario::factory()->user()->create();
-        Usuario::factory()->count(100)->create();
-        Movimientos::factory()->count(100)->create([
-            'usuario_id' => 2
-        ]);
+        if (Usuario::count() == 0) {
+            Usuario::factory()->admin()->create();
+            Usuario::factory()->user()->create();
+            Usuario::factory()->count(10)->create();
+        }
+
+        $usuarios = Usuario::all();
+
+        if (Movimientos::count() == 0) {
+            foreach ($usuarios as $usuario) {
+                Movimientos::factory()->count(50)->create([
+                    'usuario_id' => $usuario->IDusuario
+                ]);
+            }
+        }
+
+        if (Reto::count() == 0) {
+            foreach ($usuarios as $usuario) {
+                Reto::factory()->count(20)->create([
+                    'usuario_id' => $usuario->IDusuario
+                ]);
+            }
+        }
     }
 }

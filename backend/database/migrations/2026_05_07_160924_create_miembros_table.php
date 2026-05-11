@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('votos_respuestas', function (Blueprint $table) {
-            $table->id('IDvoto');
-            $table->foreignId('IDrespuesta')->onDelete('cascade');
+        Schema::create('miembros', function (Blueprint $table) {
+            $table->id('IDmiembro');
+            $table->foreignId('IDforo')->onDelete('cascade');
             $table->foreignId('IDusuario')->onDelete('cascade');
             $table->timestamps();
-
-            $table->unique(['IDusuario', 'IDrespuesta']); // Un voto por usuario
-
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('votos_respuestas');
+        Schema::dropIfExists('miembros');
     }
 };

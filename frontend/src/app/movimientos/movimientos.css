@@ -10,9 +10,12 @@
 /* ══ HOST ══ */
 app-movimientos {
   display: block;
+  /* min-height garantiza que el fondo #F2F6EE llene todo el viewport aunque
+     el contenido de la pestaña sea corto (evita que el body blanco se vea abajo) */
   min-height: 100vh;
   background: #F2F6EE;
   font-family: 'Onest', 'Lato', sans-serif;
+  /* padding-top compensa el header fixed (~84px) dejando 26px de respiro */
   padding-top: 110px;
 }
 
@@ -63,6 +66,146 @@ app-movimientos {
 .subnav-item.active {
   color: #4E9C25;
   border-bottom-color: #4E9C25;
+  background: rgba(78, 156, 37, 0.06);
+}
+
+/* ══ SUBNAV HAMBURGUESA MÓVIL ══ */
+/* Oculto en escritorio; se activa solo con el media query de ≤768px */
+.subnav-mobile {
+  display: none;
+  position: relative;
+}
+
+/* Botón de 3 líneas — mismo estilo que el del header principal */
+.subnav-ham {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: #fff;
+  border: 1.5px solid rgba(78, 156, 37, 0.25);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px 14px;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(78, 156, 37, 0.08);
+}
+
+.subnav-ham:hover {
+  border-color: rgba(78, 156, 37, 0.5);
+  background: rgba(78, 156, 37, 0.04);
+}
+
+.subnav-ham span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #4E9C25;
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+/* Las 3 líneas se transforman en X al abrir */
+.subnav-ham.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.subnav-ham.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.subnav-ham.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* movimientos.css */
+.subnav-dropdown {
+  position: fixed;
+  top: 160px;
+  left: 16px;
+  background: #fff;
+  border: 1.5px solid rgba(78, 156, 37, 0.15);
+  border-radius: 16px;
+  padding: 8px;
+  min-width: 210px;
+  z-index: 99999;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 0 20px rgba(78, 156, 37, 0.08);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.subnav-dropdown.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.subnav-dropdown .subnav-item {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  border-bottom: none;
+  margin: 2px 0;
+  padding: 10px 14px;
+  box-sizing: border-box;
+}
+
+.subnav-dropdown .subnav-item.active {
+  background: rgba(78, 156, 37, 0.08);
+  border-bottom: none;
+}
+
+.subnav-backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(0, 0, 0, 0.15);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.subnav-backdrop.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.subnav-backdrop.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ← AQUÍ */
+.subnav-drop-item {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin: 2px 0;
+  color: #999;
+  font-family: 'Onest';
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s, background 0.3s;
+}
+
+.subnav-drop-item:hover {
+  color: #4E9C25;
+  background: rgba(78, 156, 37, 0.04);
+}
+
+.subnav-drop-item.active {
+  color: #4E9C25;
   background: rgba(78, 156, 37, 0.06);
 }
 
@@ -897,6 +1040,7 @@ app-movimientos {
   flex-direction: column;
   gap: 20px;
   animation: slideInLeft 0.5s ease 0.15s both;
+  min-width: 0;
 }
 
 .retos-col-right {
@@ -1572,6 +1716,21 @@ app-movimientos {
   }
 }
 
+/* Submenú al mismo breakpoint que el header principal */
+@media (max-width: 820px) {
+  .subnav {
+    display: none;
+  }
+
+  .subnav-mobile {
+    display: block;
+  }
+
+  .subnav-backdrop {
+    display: block;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     padding: 20px 16px 0;
@@ -1581,12 +1740,17 @@ app-movimientos {
     padding: 20px 16px 40px;
   }
 
+  .bienvenida {
+    font-size: 24px;
+  }
+
   .grid-top-right {
     grid-template-columns: 1fr;
   }
 
-  .bienvenida {
-    font-size: 24px;
+  .historial-header {
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .reto-card-meta-row {
@@ -1608,5 +1772,23 @@ app-movimientos {
   .tabla-row-historial {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bienvenida {
+    font-size: 22px;
+  }
+
+  .page-wrapper {
+    padding: 16px 14px 40px;
+  }
+
+  .hero {
+    padding: 16px 14px 0;
+  }
+
+  .card {
+    padding: 18px;
   }
 }

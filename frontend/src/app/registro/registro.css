@@ -1,4 +1,4 @@
-/* Importa la fuente Onest y Lato desde Google Fonts */
+﻿/* Importa la fuente Onest y Lato desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Onest:wght@100..900&display=swap');
 
@@ -36,6 +36,8 @@
 /* --- PANEL IZQUIERDO -> PANEL DECORATIVO --- */
 .left-panel {
   width: 370px;
+  flex-shrink: 0;
+  /* Panel decorativo: nunca se encoge, conserva su tamaño fijo */
   display: flex;
   flex-direction: column;
   padding: 28px 24px;
@@ -125,6 +127,8 @@
 /* --- PANEL DERECHO -> FORMULARIO --- */
 .right-panel {
   flex: 1;
+  min-width: 0;
+  /* Permite que el formulario se comprima sin empujar el panel de imagen */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -147,13 +151,13 @@
   width: 56px;
   height: 56px;
   margin-bottom: 10px;
-  cursor:pointer
+  cursor: pointer
 }
 
 /* Hace que la imagen del logo no tenga espacio extra */
 .logo img {
   display: block;
-  
+
 }
 
 /* Texto descriptivo debajo del título */
@@ -174,7 +178,9 @@
 
 /* Ancho fijo para cada campo dentro de la fila */
 .row-field {
-  width: 285px;
+  flex: 1;
+  /* Ancho adaptable en lugar de 285px fijo para que no fuerce min-content del formulario */
+  min-width: 0;
 }
 
 /* Títulos secundarios */
@@ -368,8 +374,39 @@ input::placeholder {
   border-top-color: #fff;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.row .form-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.row .form-group input {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    padding: 30px 20px;
+    margin: 0 16px;
+    /* ← añade esto */
+  }
+
+  .left-panel {
+    width: 100%;
+    order: 1;
+  }
+
+  .right-panel {
+    order: 0;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 0;
   }
 }

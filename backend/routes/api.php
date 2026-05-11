@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\ForoController;
+use App\Http\Controllers\MiembrosController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\RespuestasController;
 use App\Http\Controllers\UsuarioController;
@@ -73,4 +74,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // Respuestas
     Route::post('/respuesta', [RespuestasController::class, 'responderForo']);
     Route::put('/respuesta', [RespuestasController::class, 'modificarRespuesta']);
+    Route::delete('/respuesta', [RespuestasController::class, 'borrarRespuesta']);
+    Route::post('/respuesta/votar', [RespuestasController::class, 'toggleVotoRespuesta']);
+
+    // Miembros
+    Route::post('/miembro', [MiembrosController::class, 'unirseAForo']);
+    Route::delete('/miembro', [MiembrosController::class, 'salirDeForo']);
 });

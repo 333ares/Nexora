@@ -7,6 +7,7 @@
 /* ══ CALENDARIO ══ */
 .grid-calendario {
     display: grid;
+    /* En escritorio: calendario a la izquierda (1fr) + panel del día a la derecha (300px) */
     grid-template-columns: 1fr 300px;
     gap: 24px;
     align-items: start;
@@ -446,5 +447,27 @@
     to {
         opacity: 1;
         transform: none;
+    }
+}
+
+/* ══ RESPONSIVE CALENDARIO ══ */
+@media (max-width: 768px) {
+    /* En móvil el grid de 2 columnas no cabe: la columna fija de 300px dejaría
+       el calendario en ~30px de ancho. Se apila en columna única */
+    .grid-calendario {
+        grid-template-columns: 1fr;
+    }
+
+    /* Reducir padding del modal en pantallas pequeñas */
+    .modal-box {
+        padding: 20px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* En teléfonos muy pequeños el modal ocupa casi toda la pantalla */
+    .modal-box {
+        padding: 16px 12px;
+        border-radius: 16px;
     }
 }

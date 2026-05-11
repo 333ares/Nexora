@@ -153,15 +153,6 @@
     color: #4E9C25;
 }
 
-.mf-metric-time {
-    margin-left: auto;
-    color: #999;
-}
-
-.mf-metric-time i {
-    color: #999;
-}
-
 .empty-state {
     text-align: center;
     padding: 60px 20px;

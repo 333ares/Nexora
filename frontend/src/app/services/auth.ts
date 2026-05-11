@@ -140,6 +140,65 @@ export class Auth {
     });
   }
 
+  // --- FORO ---
+  listarForos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/foros`, { headers: this.getHeaders() });
+  }
+
+  listarForosUsuario(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/foros/usuario`, { headers: this.getHeaders() });
+  }
+
+  visitarForo(IDforo: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/foros/ver`, { IDforo }, { headers: this.getHeaders() });
+  }
+
+  crearForo(datos: { titulo: string, contenido: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/foro`, datos, { headers: this.getHeaders() });
+  }
+
+  actualizarForo(datos: { IDforo: number, titulo?: string, contenido?: string }): Observable<any> {
+    return this.http.put(`${this.apiUrl}/foros`, datos, { headers: this.getHeaders() });
+  }
+
+  borrarForo(IDforo: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/foro`, {
+      headers: this.getHeaders(),
+      body: { IDforo }
+    });
+  }
+
+  // --- RESPUESTAS ---
+  responderForo(datos: { IDforo: number, respuesta: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/respuesta`, datos, { headers: this.getHeaders() });
+  }
+
+  modificarRespuesta(datos: { IDrespuesta: number, respuesta: string }): Observable<any> {
+    return this.http.put(`${this.apiUrl}/respuesta`, datos, { headers: this.getHeaders() });
+  }
+
+  borrarRespuesta(IDrespuesta: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/respuesta`, {
+      headers: this.getHeaders(),
+      body: { IDrespuesta }
+    });
+  }
+
+  toggleVotoRespuesta(IDrespuesta: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/respuesta/votar`, { IDrespuesta }, { headers: this.getHeaders() });
+  }
+
+  // --- MEMBRESIA DEL FORO ---
+  unirseAForo(IDforo: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/miembro`, { IDforo }, { headers: this.getHeaders() });
+  }
+
+  salirDeForo(IDmembresia: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/miembro`, {
+      headers: this.getHeaders(),
+      body: { IDmembresia }
+    });
+  }
 
   // --- LOCAL STORAGE ---
   saveToken(token: string) {
