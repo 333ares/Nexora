@@ -64,6 +64,49 @@ export class Retos implements OnInit {
     return Math.min(100, Math.round((this.totalAhorrado / this.totalObjetivo) * 100));
   }
 
+  get fechaHace30Dias(): Date {
+    const d = new Date();
+    d.setDate(d.getDate() - 30);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
+
+  get retosUltimos30Dias(): any[] {
+    return this.listaDeRetos.filter(r => {
+      const inicio = new Date(r.fecha_inicio);
+      return inicio >= this.fechaHace30Dias;
+    });
+  }
+
+  get ahorradoUltimos30Dias(): number {
+    return this.retosUltimos30Dias
+      .reduce((sum, r) => sum + (parseFloat(r.cantidad_actual) || 0), 0);
+  }
+
+  get progresoGlobal30Dias(): number {
+    const objetivo = this.retosUltimos30Dias
+      .reduce((sum, r) => sum + (parseFloat(r.cantidad) || 0), 0);
+    if (objetivo <= 0) return 0;
+    return Math.min(100, Math.round((this.ahorradoUltimos30Dias / objetivo) * 100));
+  }
+
+  get retoMasCercano(): any | null {
+    const activos = this.listaDeRetos.filter(r => r.activo && !r.cumplido);
+    if (!activos.length) return null;
+    return activos.reduce((prev, curr) =>
+      new Date(curr.fecha_final) < new Date(prev.fecha_final) ? curr : prev
+    );
+  }
+
+  get diasRestantesMasCercano(): number | null {
+    if (!this.retoMasCercano) return null;
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    const fin = new Date(this.retoMasCercano.fecha_final);
+    fin.setHours(0, 0, 0, 0);
+    return Math.max(0, Math.round((fin.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24)));
+  }
+
   get sliderIndices(): number[] {
     return Array.from({ length: this.retosVisibles.length }, (_, i) => i);
   }

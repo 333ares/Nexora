@@ -51,8 +51,10 @@ class ForoController extends Controller
         }
 
         $foro->increment('visitas');
+        $foro->creador = Usuario::where('IDusuario', $foro->IDusuario)->value('usuario');
         $foro->respuestas = Respuesta::where('IDforo', $foro->IDforo)->get()->map(function ($respuesta) {
             $respuesta->votos = Votos_Respuesta::where('IDrespuesta', $respuesta->IDrespuesta)->count();
+            $respuesta->creador = Usuario::where('IDusuario', $respuesta->IDusuario)->value('usuario');
             return $respuesta;
         });
 

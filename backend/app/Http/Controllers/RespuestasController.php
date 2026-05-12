@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Respuesta;
+use App\Models\Usuario;
 use App\Models\Votos_Respuesta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -28,6 +29,8 @@ class RespuestasController extends Controller
             'respuesta' => $request->respuesta,
             'IDusuario' => $request->user()->IDusuario
         ]);
+
+        $respuesta->creador = Usuario::where('IDusuario', $respuesta->IDusuario)->value('usuario');
 
         return response()->json([
             'message' => 'Respuesta añadida correctamente',
