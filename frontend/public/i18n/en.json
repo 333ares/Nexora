@@ -606,7 +606,12 @@
     "MODAL_EDITAR_TITLE": "Edit challenge",
     "TITULO": "Title",
     "CANTIDAD_OBJETIVO_EUR": "Target amount (€)",
-    "GUARDAR_CAMBIOS": "Save changes"
+    "GUARDAR_CAMBIOS": "Save changes",
+    "ULTIMOS_30_DIAS": "Last 30 days",
+    "AHORRO_PERIODO": "Saved in this period",
+    "RETO_MAS_CERCANO": "Expiring soon",
+    "DIAS_RESTANTES": "days remaining",
+    "VENCE_HOY": "Expires today!"
   },
   "PERFIL": {
     "NOMBRE": "First name",

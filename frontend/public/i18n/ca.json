@@ -606,7 +606,12 @@
     "MODAL_EDITAR_TITLE": "Editar repte",
     "TITULO": "Títol",
     "CANTIDAD_OBJETIVO_EUR": "Quantitat objectiu (€)",
-    "GUARDAR_CAMBIOS": "Desar canvis"
+    "GUARDAR_CAMBIOS": "Desar canvis",
+    "ULTIMOS_30_DIAS": "Últims 30 dies",
+    "AHORRO_PERIODO": "Estalviat en el període",
+    "RETO_MAS_CERCANO": "Pròxim a vèncer",
+    "DIAS_RESTANTES": "dies restants",
+    "VENCE_HOY": "Venç avui!"
   },
   "PERFIL": {
     "NOMBRE": "Nom",

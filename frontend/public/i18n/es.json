@@ -606,7 +606,12 @@
     "MODAL_EDITAR_TITLE": "Editar reto",
     "TITULO": "Título",
     "CANTIDAD_OBJETIVO_EUR": "Cantidad objetivo (€)",
-    "GUARDAR_CAMBIOS": "Guardar cambios"
+    "GUARDAR_CAMBIOS": "Guardar cambios",
+    "ULTIMOS_30_DIAS": "Últimos 30 días",
+    "AHORRO_PERIODO": "Ahorrado en el período",
+    "RETO_MAS_CERCANO": "Próximo a vencer",
+    "DIAS_RESTANTES": "días restantes",
+    "VENCE_HOY": "¡Vence hoy!"
   },
   "PERFIL": {
     "NOMBRE": "Nombre",

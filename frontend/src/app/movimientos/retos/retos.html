@@ -8,7 +8,8 @@
         <button class="reto-vista-tab" [class.active]="vistaActiva === 'historial'" (click)="cambiarVista('historial')">
           <i class="bi bi-journal-text"></i> {{ 'RETOS.HISTORIAL' | translate }}
         </button>
-        <button (click)="abrirModal()" class="btn-mas" style="margin-left:auto;">{{ 'RETOS.NUEVO_RETO' | translate }}</button>
+        <button (click)="abrirModal()" class="btn-mas" style="margin-left:auto;">{{ 'RETOS.NUEVO_RETO' | translate
+          }}</button>
       </div>
     </div>
 
@@ -30,7 +31,8 @@
               </span>
             </div>
             @if (reto.cumplido) {
-            <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> {{ 'RETOS.CUMPLIDO' | translate }}</span>
+            <span class="badge badge-cumplido"><i class="bi bi-check2-circle"></i> {{ 'RETOS.CUMPLIDO' | translate
+              }}</span>
             } @else if (reto.activo) {
             <span class="badge badge-activo"><i class="bi bi-check2-square"></i> {{ 'RETOS.ACTIVO' | translate }}</span>
             } @else {
@@ -77,7 +79,8 @@
             </button>
             }
             <button class="btn-abandonar" (click)="abrirModalBorrar(reto.IDreto)">
-              @if (reto.cumplido || !reto.activo) { {{ 'RETOS.ELIMINAR' | translate }} } @else { {{ 'RETOS.ABANDONAR' | translate }} }
+              @if (reto.cumplido || !reto.activo) { {{ 'RETOS.ELIMINAR' | translate }} } @else { {{ 'RETOS.ABANDONAR' |
+              translate }} }
             </button>
           </div>
         </div>
@@ -111,211 +114,247 @@
   </div>
 
   <div class="retos-col-right">
-    <div class="card card-white">
+    <div class="card card-white resumen-card">
       <p class="section-title">{{ 'RETOS.RESUMEN_MENSUAL' | translate }}</p>
+      <p class="resumen-periodo">{{ 'RETOS.ULTIMOS_30_DIAS' | translate }}</p>
+
       <div class="resumen-stats">
+
         <div class="resumen-item">
-          <span class="label">{{ 'RETOS.AHORRO_TOTAL' | translate }}</span>
-          <span class="value">{{ totalAhorrado }} €</span>
+          <div class="resumen-icon resumen-icon--ahorro">
+            <i class="bi bi-piggy-bank"></i>
+          </div>
+          <div class="resumen-item-body">
+            <span class="resumen-label">{{ 'RETOS.AHORRO_PERIODO' | translate }}</span>
+            <span class="resumen-value ingreso-color">
+              {{ ahorradoUltimos30Dias | number:'1.2-2' }} €
+            </span>
+          </div>
         </div>
 
         <div class="resumen-item">
-          <span class="label">{{ 'RETOS.METAS_TOTALES' | translate }}</span>
-          <span class="value">{{ totalObjetivo }} €</span>
+          <div class="resumen-icon resumen-icon--progreso">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+          <div class="resumen-item-body">
+            <span class="resumen-label">{{ 'RETOS.PROGRESO_GLOBAL' | translate }}</span>
+            <span class="resumen-value">{{ progresoGlobal30Dias }}%</span>
+            <div class="resumen-mini-bar-track">
+              <div class="resumen-mini-bar-fill" [style.width.%]="progresoGlobal30Dias"></div>
+            </div>
+          </div>
         </div>
 
-        <div class="resumen-item">
-          <span class="label">{{ 'RETOS.PROGRESO_GLOBAL' | translate }}</span>
-          <span class="value">{{ progresoGlobal }}%</span>
+        @if (retoMasCercano) {
+        <div class="resumen-item resumen-item--urgente">
+          <div class="resumen-icon resumen-icon--fecha">
+            <i class="bi bi-clock"></i>
+          </div>
+          <div class="resumen-item-body">
+            <span class="resumen-label">{{ 'RETOS.RETO_MAS_CERCANO' | translate }}</span>
+            <span class="resumen-value-nombre">{{ retoMasCercano.titulo }}</span>
+            <span class="resumen-dias"
+              [class.resumen-dias--urgente]="diasRestantesMasCercano !== null && diasRestantesMasCercano <= 7">
+              @if (diasRestantesMasCercano === 0) {
+              {{ 'RETOS.VENCE_HOY' | translate }}
+              } @else {
+              {{ diasRestantesMasCercano }} {{ 'RETOS.DIAS_RESTANTES' | translate }}
+              }
+            </span>
+          </div>
         </div>
+        }
+
       </div>
     </div>
   </div>
-</div>
 
-<!-- MODAL: NUEVO RETO -->
-@if (mostrarPopup) {
-<div class="modal-overlay" (click)="cerrarModal()">
-  <div class="modal-box" (click)="$event.stopPropagation()">
+  <!-- MODAL: NUEVO RETO -->
+  @if (mostrarPopup) {
+  <div class="modal-overlay" (click)="cerrarModal()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
 
-    <div class="modal-header">
-      <h2 class="modal-title">{{ 'RETOS.MODAL_NUEVO_TITLE' | translate }}</h2>
-      <button class="modal-close" (click)="cerrarModal()">✕</button>
-    </div>
-
-    <form [formGroup]="retoForm" (ngSubmit)="guardarReto()">
-
-      <div class="modal-field">
-        <label>{{ 'RETOS.QUE_LOGRAR' | translate }}</label>
-        <input type="text" formControlName="titulo" [placeholder]="'RETOS.QUE_LOGRAR_PH' | translate" class="modal-input" />
+      <div class="modal-header">
+        <h2 class="modal-title">{{ 'RETOS.MODAL_NUEVO_TITLE' | translate }}</h2>
+        <button class="modal-close" (click)="cerrarModal()">✕</button>
       </div>
 
-      <div class="modal-field">
-        <label>{{ 'RETOS.CANTIDAD_OBJETIVO' | translate }}</label>
-        <input type="text" inputmode="decimal" placeholder="0.00" #cantidadInput [value]="cantidadDisplay"
-          (input)="cantidadDisplay = cantidadInput.value" (blur)="formatearCantidad(cantidadInput)"
-          class="modal-input" />
-      </div>
+      <form [formGroup]="retoForm" (ngSubmit)="guardarReto()">
 
-      <div class="modal-field">
-        <label>{{ 'RETOS.FECHA_FIN' | translate }}</label>
-        <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
-        @if (retoForm.get('fecha_final')?.touched && retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
-        <p class="modal-error">{{ 'RETOS.ERROR_FECHA' | translate }}</p>
+        <div class="modal-field">
+          <label>{{ 'RETOS.QUE_LOGRAR' | translate }}</label>
+          <input type="text" formControlName="titulo" [placeholder]="'RETOS.QUE_LOGRAR_PH' | translate"
+            class="modal-input" />
+        </div>
+
+        <div class="modal-field">
+          <label>{{ 'RETOS.CANTIDAD_OBJETIVO' | translate }}</label>
+          <input type="text" inputmode="decimal" placeholder="0.00" #cantidadInput [value]="cantidadDisplay"
+            (input)="cantidadDisplay = cantidadInput.value" (blur)="formatearCantidad(cantidadInput)"
+            class="modal-input" />
+        </div>
+
+        <div class="modal-field">
+          <label>{{ 'RETOS.FECHA_FIN' | translate }}</label>
+          <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
+          @if (retoForm.get('fecha_final')?.touched && retoForm.get('fecha_final')?.errors?.['fechaAnterior']) {
+          <p class="modal-error">{{ 'RETOS.ERROR_FECHA' | translate }}</p>
+          }
+        </div>
+
+        @if (errorModal) {
+        <p class="modal-error">{{ errorModal }}</p>
         }
+
+        <div class="modal-footer">
+          <button type="button" class="btn-cancelar" (click)="cerrarModal()">{{ 'RETOS.CANCELAR' | translate }}</button>
+          <button type="submit" class="btn-guardar" [disabled]="cargando">
+            {{ cargando ? ('RETOS.GUARDANDO' | translate) : ('RETOS.GUARDAR' | translate) }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  }
+
+  <!-- MODAL: ABANDONAR / BORRAR RETO -->
+  @if (modalBorrarAbierto) {
+  <div class="modal-overlay" (click)="cerrarModalBorrar()">
+    <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2 class="modal-title">{{ 'RETOS.MODAL_ABANDONAR_TITLE' | translate }}</h2>
+        <button class="modal-close" (click)="cerrarModalBorrar()">✕</button>
       </div>
 
-      @if (errorModal) {
-      <p class="modal-error">{{ errorModal }}</p>
-      }
+      <div class="modal-body">
+        <div class="borrar-icon"><i class="bi bi-flag"></i></div>
+        <p class="borrar-texto">{{ 'RETOS.ABANDONAR_DESC' | translate }}</p>
+      </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn-cancelar" (click)="cerrarModal()">{{ 'RETOS.CANCELAR' | translate }}</button>
-        <button type="submit" class="btn-guardar" [disabled]="cargando">
-          {{ cargando ? ('RETOS.GUARDANDO' | translate) : ('RETOS.GUARDAR' | translate) }}
+        <button class="btn-cancelar" (click)="cerrarModalBorrar()">{{ 'RETOS.CANCELAR' | translate }}</button>
+        <button class="btn-borrar" (click)="confirmarBorrar()" [disabled]="cargandoBorrar">
+          {{ cargandoBorrar ? ('RETOS.ABANDONANDO' | translate) : ('RETOS.ABANDONAR' | translate) }}
         </button>
       </div>
 
-    </form>
+    </div>
   </div>
-</div>
-}
+  }
 
-<!-- MODAL: ABANDONAR / BORRAR RETO -->
-@if (modalBorrarAbierto) {
-<div class="modal-overlay" (click)="cerrarModalBorrar()">
-  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+  <!-- MODAL: APORTAR DINERO -->
+  @if (modalAportarAbierto) {
+  <div class="modal-overlay" (click)="cerrarModalAportar()">
+    <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
 
-    <div class="modal-header">
-      <h2 class="modal-title">{{ 'RETOS.MODAL_ABANDONAR_TITLE' | translate }}</h2>
-      <button class="modal-close" (click)="cerrarModalBorrar()">✕</button>
-    </div>
-
-    <div class="modal-body">
-      <div class="borrar-icon"><i class="bi bi-flag"></i></div>
-      <p class="borrar-texto">{{ 'RETOS.ABANDONAR_DESC' | translate }}</p>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn-cancelar" (click)="cerrarModalBorrar()">{{ 'RETOS.CANCELAR' | translate }}</button>
-      <button class="btn-borrar" (click)="confirmarBorrar()" [disabled]="cargandoBorrar">
-        {{ cargandoBorrar ? ('RETOS.ABANDONANDO' | translate) : ('RETOS.ABANDONAR' | translate) }}
-      </button>
-    </div>
-
-  </div>
-</div>
-}
-
-<!-- MODAL: APORTAR DINERO -->
-@if (modalAportarAbierto) {
-<div class="modal-overlay" (click)="cerrarModalAportar()">
-  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
-
-    <div class="modal-header">
-      <h2 class="modal-title">{{ 'RETOS.MODAL_APORTAR_TITLE' | translate }}</h2>
-      <button class="modal-close" (click)="cerrarModalAportar()">✕</button>
-    </div>
-
-    <div class="modal-body">
-      <p class="modal-subtitle">{{ retoAportandoTitulo }}</p>
-      <div class="modal-field">
-        <label>{{ 'RETOS.CANTIDAD_APORTAR' | translate }}</label>
-        <input type="text" inputmode="decimal" placeholder="0.00" #aportarInput [value]="aportarDisplay"
-          (input)="aportarDisplay = aportarInput.value" (blur)="formatearAportar(aportarInput)" class="modal-input" />
-      </div>
-      @if (errorAportar) {
-      <p class="modal-error">{{ errorAportar }}</p>
-      }
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn-cancelar" (click)="cerrarModalAportar()">{{ 'RETOS.CANCELAR' | translate }}</button>
-      <button class="btn-guardar" (click)="confirmarAportar()" [disabled]="cargandoAportar">
-        {{ cargandoAportar ? ('RETOS.APORTANDO' | translate) : ('RETOS.APORTAR' | translate) }}
-      </button>
-    </div>
-
-  </div>
-</div>
-}
-
-<!-- MODAL: RETIRAR DINERO -->
-@if (modalRetirarAbierto) {
-<div class="modal-overlay" (click)="cerrarModalRetirar()">
-  <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
-
-    <div class="modal-header">
-      <h2 class="modal-title">{{ 'RETOS.MODAL_RETIRAR_TITLE' | translate }}</h2>
-      <button class="modal-close" (click)="cerrarModalRetirar()">✕</button>
-    </div>
-
-    <div class="modal-body">
-      <p class="modal-subtitle">{{ retoRetirandoTitulo }}</p>
-      <p class="modal-hint">{{ 'RETOS.DISPONIBLE' | translate }}: <strong>{{ retoRetirandoMax | number:'1.2-2' }} €</strong></p>
-      <div class="modal-field">
-        <label>{{ 'RETOS.CANTIDAD_RETIRAR' | translate }}</label>
-        <input type="text" inputmode="decimal" placeholder="0.00" #retirarInput [value]="retirarDisplay"
-          (input)="retirarDisplay = retirarInput.value" (blur)="formatearRetirar(retirarInput)" class="modal-input" />
-      </div>
-      @if (errorRetirar) {
-      <p class="modal-error">{{ errorRetirar }}</p>
-      }
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn-cancelar" (click)="cerrarModalRetirar()">{{ 'RETOS.CANCELAR' | translate }}</button>
-      <button class="btn-retirar-confirm" (click)="confirmarRetirar()" [disabled]="cargandoRetirar">
-        {{ cargandoRetirar ? ('RETOS.RETIRANDO' | translate) : ('RETOS.RETIRAR' | translate) }}
-      </button>
-    </div>
-
-  </div>
-</div>
-}
-
-<!-- MODAL: EDITAR RETO -->
-@if (modalEditarAbierto) {
-<div class="modal-overlay" (click)="cerrarModalEditar()">
-  <div class="modal-box" (click)="$event.stopPropagation()">
-
-    <div class="modal-header">
-      <h2 class="modal-title">{{ 'RETOS.MODAL_EDITAR_TITLE' | translate }}</h2>
-      <button class="modal-close" (click)="cerrarModalEditar()">✕</button>
-    </div>
-
-    <form [formGroup]="editarForm" (ngSubmit)="confirmarEditar()">
-
-      <div class="modal-field">
-        <label>{{ 'RETOS.TITULO' | translate }}</label>
-        <input type="text" formControlName="titulo" class="modal-input" />
+      <div class="modal-header">
+        <h2 class="modal-title">{{ 'RETOS.MODAL_APORTAR_TITLE' | translate }}</h2>
+        <button class="modal-close" (click)="cerrarModalAportar()">✕</button>
       </div>
 
-      <div class="modal-field">
-        <label>{{ 'RETOS.CANTIDAD_OBJETIVO_EUR' | translate }}</label>
-        <input type="number" formControlName="cantidad" min="0.01" step="0.01" class="modal-input" />
-      </div>
-
-      <div class="modal-field">
-        <label>{{ 'RETOS.FECHA_FIN' | translate }}</label>
-        <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
-        @if (editarForm.get('fecha_final')?.touched && editarForm.get('fecha_final')?.errors?.['fechaAnterior']) {
-        <p class="modal-error">{{ 'RETOS.ERROR_FECHA' | translate }}</p>
+      <div class="modal-body">
+        <p class="modal-subtitle">{{ retoAportandoTitulo }}</p>
+        <div class="modal-field">
+          <label>{{ 'RETOS.CANTIDAD_APORTAR' | translate }}</label>
+          <input type="text" inputmode="decimal" placeholder="0.00" #aportarInput [value]="aportarDisplay"
+            (input)="aportarDisplay = aportarInput.value" (blur)="formatearAportar(aportarInput)" class="modal-input" />
+        </div>
+        @if (errorAportar) {
+        <p class="modal-error">{{ errorAportar }}</p>
         }
       </div>
 
-      @if (errorEditar) {
-      <p class="modal-error">{{ errorEditar }}</p>
-      }
-
       <div class="modal-footer">
-        <button type="button" class="btn-cancelar" (click)="cerrarModalEditar()">{{ 'RETOS.CANCELAR' | translate }}</button>
-        <button type="submit" class="btn-guardar" [disabled]="cargandoEditar">
-          {{ cargandoEditar ? ('RETOS.GUARDANDO' | translate) : ('RETOS.GUARDAR_CAMBIOS' | translate) }}
+        <button class="btn-cancelar" (click)="cerrarModalAportar()">{{ 'RETOS.CANCELAR' | translate }}</button>
+        <button class="btn-guardar" (click)="confirmarAportar()" [disabled]="cargandoAportar">
+          {{ cargandoAportar ? ('RETOS.APORTANDO' | translate) : ('RETOS.APORTAR' | translate) }}
         </button>
       </div>
 
-    </form>
+    </div>
   </div>
-</div>
-}
+  }
+
+  <!-- MODAL: RETIRAR DINERO -->
+  @if (modalRetirarAbierto) {
+  <div class="modal-overlay" (click)="cerrarModalRetirar()">
+    <div class="modal-box modal-box-sm" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2 class="modal-title">{{ 'RETOS.MODAL_RETIRAR_TITLE' | translate }}</h2>
+        <button class="modal-close" (click)="cerrarModalRetirar()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-subtitle">{{ retoRetirandoTitulo }}</p>
+        <p class="modal-hint">{{ 'RETOS.DISPONIBLE' | translate }}: <strong>{{ retoRetirandoMax | number:'1.2-2' }}
+            €</strong></p>
+        <div class="modal-field">
+          <label>{{ 'RETOS.CANTIDAD_RETIRAR' | translate }}</label>
+          <input type="text" inputmode="decimal" placeholder="0.00" #retirarInput [value]="retirarDisplay"
+            (input)="retirarDisplay = retirarInput.value" (blur)="formatearRetirar(retirarInput)" class="modal-input" />
+        </div>
+        @if (errorRetirar) {
+        <p class="modal-error">{{ errorRetirar }}</p>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancelar" (click)="cerrarModalRetirar()">{{ 'RETOS.CANCELAR' | translate }}</button>
+        <button class="btn-retirar-confirm" (click)="confirmarRetirar()" [disabled]="cargandoRetirar">
+          {{ cargandoRetirar ? ('RETOS.RETIRANDO' | translate) : ('RETOS.RETIRAR' | translate) }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+  }
+
+  <!-- MODAL: EDITAR RETO -->
+  @if (modalEditarAbierto) {
+  <div class="modal-overlay" (click)="cerrarModalEditar()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2 class="modal-title">{{ 'RETOS.MODAL_EDITAR_TITLE' | translate }}</h2>
+        <button class="modal-close" (click)="cerrarModalEditar()">✕</button>
+      </div>
+
+      <form [formGroup]="editarForm" (ngSubmit)="confirmarEditar()">
+
+        <div class="modal-field">
+          <label>{{ 'RETOS.TITULO' | translate }}</label>
+          <input type="text" formControlName="titulo" class="modal-input" />
+        </div>
+
+        <div class="modal-field">
+          <label>{{ 'RETOS.CANTIDAD_OBJETIVO_EUR' | translate }}</label>
+          <input type="number" formControlName="cantidad" min="0.01" step="0.01" class="modal-input" />
+        </div>
+
+        <div class="modal-field">
+          <label>{{ 'RETOS.FECHA_FIN' | translate }}</label>
+          <input type="date" formControlName="fecha_final" [min]="fechaMinima" class="modal-input" />
+          @if (editarForm.get('fecha_final')?.touched && editarForm.get('fecha_final')?.errors?.['fechaAnterior']) {
+          <p class="modal-error">{{ 'RETOS.ERROR_FECHA' | translate }}</p>
+          }
+        </div>
+
+        @if (errorEditar) {
+        <p class="modal-error">{{ errorEditar }}</p>
+        }
+
+        <div class="modal-footer">
+          <button type="button" class="btn-cancelar" (click)="cerrarModalEditar()">{{ 'RETOS.CANCELAR' | translate
+            }}</button>
+          <button type="submit" class="btn-guardar" [disabled]="cargandoEditar">
+            {{ cargandoEditar ? ('RETOS.GUARDANDO' | translate) : ('RETOS.GUARDAR_CAMBIOS' | translate) }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  }
