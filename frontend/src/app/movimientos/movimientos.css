@@ -233,7 +233,6 @@ app-resumen, app-lista, app-calendario, app-estadisticas, app-retos {
     0 20px 48px rgba(0, 0, 0, 0.06),
     0 0 20px rgba(78, 156, 37, 0.06);
   overflow: visible;
-  animation: fadeIn 0.45s ease both;
   transition: box-shadow 0.4s ease, border-color 0.4s ease;
   border: 1px solid rgba(78, 156, 37, 0.08);
   position: relative;
@@ -1047,6 +1046,7 @@ app-resumen, app-lista, app-calendario, app-estadisticas, app-retos {
   flex-direction: column;
   gap: 20px;
   animation: slideInLeft 0.5s ease 0.15s both;
+  min-width: 0;
 }
 
 .retos-col-right {
@@ -1546,6 +1546,17 @@ app-resumen, app-lista, app-calendario, app-estadisticas, app-retos {
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
   z-index: 9999;
   animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* La card del reto no puede tener animation activa porque
+   crea stacking context y atrapa el dropdown */
+.card-stat-reto {
+  animation: none !important;
+}
+
+/* Tampoco el grid que la contiene */
+.grid-top-right {
+  overflow: visible !important;
 }
 
 /* ══ KEYFRAMES ══ */
