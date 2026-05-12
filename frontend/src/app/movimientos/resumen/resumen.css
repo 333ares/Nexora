@@ -436,3 +436,22 @@
     color: #3a8c1a;
     text-decoration: underline;
 }
+
+/* ══ RESPONSIVE MÓVIL ══ */
+@media (max-width: 768px) {
+  .bar-chart-container { height: 180px; }
+
+  /* El canvas de Chart.js no debe superar el ancho del contenedor */
+  .bar-chart-container canvas { max-width: 100%; }
+
+  .btn-ir-retos { width: 100%; text-align: center; }
+
+  /* Las filas de la mini-tabla en 2 columnas: nombre+importe / fecha+tipo */
+  .tabla-row-mov-resumen {
+    grid-template-columns: 1fr auto;
+    gap: 4px 8px;
+  }
+
+  /* Ocultar columna de fecha en pantallas muy pequeñas para evitar overflow */
+  .tabla-row-mov-resumen .td-fecha { display: none; }
+}

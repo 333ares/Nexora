@@ -10,13 +10,18 @@
 /* ══ HOST ══ */
 app-movimientos {
   display: block;
-  /* min-height garantiza que el fondo #F2F6EE llene todo el viewport aunque
-     el contenido de la pestaña sea corto (evita que el body blanco se vea abajo) */
   min-height: 100vh;
   background: #F2F6EE;
   font-family: 'Onest', 'Lato', sans-serif;
-  /* padding-top compensa el header fixed (~84px) dejando 26px de respiro */
   padding-top: 110px;
+  overflow-x: hidden;
+}
+
+/* Sub-componentes del router-outlet: Angular los genera como display:inline por defecto,
+   lo que hace que el grid interior desborde el viewport en móvil */
+app-resumen, app-lista, app-calendario, app-estadisticas, app-retos {
+  display: block;
+  min-width: 0;
 }
 
 /* ══ HERO + SUBNAV ══ */
@@ -286,6 +291,7 @@ app-movimientos {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
   animation: slideInLeft 0.5s ease 0.2s both;
 }
 
@@ -293,6 +299,7 @@ app-movimientos {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
   animation: slideInRight 0.5s ease 0.2s both;
 }
 
@@ -1717,17 +1724,9 @@ app-movimientos {
 
 /* Submenú al mismo breakpoint que el header principal */
 @media (max-width: 820px) {
-  .subnav {
-    display: none;
-  }
-
-  .subnav-mobile {
-    display: block;
-  }
-
-  .subnav-backdrop {
-    display: block;
-  }
+  .subnav          { display: none; }
+  .subnav-mobile   { display: block; padding: 0 16px 12px; }
+  .subnav-backdrop { display: block; }
 }
 
 @media (max-width: 768px) {
