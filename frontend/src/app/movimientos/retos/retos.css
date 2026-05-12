@@ -67,25 +67,6 @@
   transform: scale(1.15);
 }
 
-.grid-retos {
-  display: grid;
-  grid-template-columns: 1fr 320px;  /* slider ocupa el resto, resumen fijo */
-  gap: 16px;
-  align-items: start;
-}
-
-.retos-col-left {
-  min-width: 0;        /* ← clave, evita que desborde */
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.retos-col-right {
-  position: sticky;
-  top: 16px;           /* se queda fijo mientras haces scroll */
-}
-
 /* Historial */
 .tab-badge {
   display: inline-flex;
@@ -449,111 +430,44 @@
 .resumen-stats {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 .resumen-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #f8fafb 0%, #f3f4f6 100%);
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  transition: all 0.3s ease;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 14px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.resumen-item:last-child {
+  border-bottom: none;
+}
+
+/* ══ SLIDER DE RETOS ══ */
+.retos-slider-wrapper {
   position: relative;
-  overflow: hidden;
-}
-
-.resumen-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(to bottom, #22c55e, #16a34a);
-}
-
-.resumen-item:nth-child(2)::before {
-  background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
-}
-
-.resumen-item:nth-child(3)::before {
-  background: linear-gradient(to bottom, #f59e0b, #d97706);
-}
-
-.resumen-item:hover {
-  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-  border-color: #bfdbfe;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
-}
-
-.resumen-item .label {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #9ca3af;
-  font-family: 'Onest', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
 }
 
-.resumen-item .value {
-  font-size: 24px;
-  font-weight: 800;
-  color: #1f2937;
-  font-family: 'Onest', sans-serif;
-  min-width: 110px;
-  text-align: right;
+.retos-slider {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  overflow: hidden;
+  width: 0;
+  min-width: 0;
 }
-
-.resumen-item:nth-child(1) .value {
-  color: #22c55e;
-}
-
-.resumen-item:nth-child(2) .value {
-  color: #3b82f6;
-}
-
-.resumen-item:nth-child(3) .value {
-  color: #f59e0b;
-}
-
-  /* ══ SLIDER DE RETOS ══ */
-  .retos-slider-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    border-radius: 24px;  
-    gap: 12px;
-    justify-content: center;
-    padding: 16px;        /* ← espacio para la sombra */
-    margin: -16px;        /* ← compensa el padding */
-  }
-
-  .retos-slider {
-    border-radius: 24px;   /* ← mismo valor que .card */
-    flex: 1;
-    display: flex;
-    gap: 0;
-    overflow: hidden;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
-    -ms-overflow-style: none;
-    min-width: 0;
-  }
-
-  .reto-card-slider {
-    flex: 0 0 100%;
-    min-width: 100%;
-    max-width: 100%;
-  }
 
 .retos-slider::-webkit-scrollbar {
   display: none;
@@ -663,4 +577,99 @@
 .bi-piggy-bank {
   color: #4E9C25;
   font-size: 30px;
+}
+
+.resumen-periodo {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #888);
+  margin: -0.5rem 0 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.resumen-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-border, #f0f0f0);
+}
+
+.resumen-item:last-child {
+  border-bottom: none;
+}
+
+.resumen-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.resumen-icon--ahorro {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.resumen-icon--progreso {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.resumen-icon--fecha {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.resumen-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.resumen-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #888);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.resumen-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.resumen-value-nombre {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.resumen-mini-bar-track {
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  margin-top: 0.25rem;
+  overflow: hidden;
+}
+
+.resumen-mini-bar-fill {
+  height: 100%;
+  background: #1565c0;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.resumen-dias {
+  font-size: 0.8rem;
+  color: var(--color-text-muted, #888);
+}
+
+.resumen-dias--urgente {
+  color: #e65100;
+  font-weight: 600;
 }
