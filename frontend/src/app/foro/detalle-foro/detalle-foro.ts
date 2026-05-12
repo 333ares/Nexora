@@ -88,10 +88,6 @@ export class DetalleForo implements OnInit {
     });
   }
 
-  volver() {
-    this.router.navigate(['/foro/ver']);
-  }
-
   abrirUnirse() { this.popupUnirseAbierto = true; }
   cerrarUnirse() { this.popupUnirseAbierto = false; }
 
