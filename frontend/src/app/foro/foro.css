@@ -9,10 +9,14 @@ app-foro {
 
 /* ══ HERO + SUBNAV ══ */
 app-foro .hero {
-  padding: 32px 20px;
-  max-width: 1300px;
-  margin: 0 auto;
+  padding: 32px max(20px, calc((100% - 1300px) / 2));
+  width: 100%;
+  box-sizing: border-box;
   animation: fadeInDownForo 0.5s ease both;
+  position: sticky;
+  top: 85px;
+  z-index: 50;
+  background: #F2F6EE;
 }
 
 app-foro .bienvenida {
