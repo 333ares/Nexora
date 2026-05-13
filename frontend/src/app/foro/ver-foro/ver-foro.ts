@@ -179,4 +179,9 @@ export class VerForo implements OnInit {
     this.error = '';
   }
 
+  getAvatarUrl(nombre: string): string {
+    if (!nombre) return '';
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre.trim())}&background=random`;
+  }
+
 }

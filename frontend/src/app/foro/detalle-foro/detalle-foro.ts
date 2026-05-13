@@ -184,6 +184,11 @@ export class DetalleForo implements OnInit {
     });
   }
 
+  getAvatarUrl(nombre: string): string {
+    if (!nombre) return '';
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre.trim())}&background=random`;
+  }
+
   toggleVotoRespuesta(r: Respuesta) {
     this.auth.toggleVotoRespuesta(r.id).subscribe({
       next: (res) => {
