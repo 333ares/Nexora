@@ -25,6 +25,12 @@ export interface PreguntaDetalle {
   unido: boolean;
 }
 
+export interface Notificacion {
+  id: number;
+  tipo: 'error' | 'exito';
+  mensaje: string;
+}
+
 @Component({
   selector: 'app-detalle-foro',
   standalone: true,
@@ -38,8 +44,13 @@ export class DetalleForo implements OnInit {
   respuestas: Respuesta[] = [];
   nuevaRespuesta = '';
   popupUnirseAbierto = false;
+  popupSalirAbierto = false;
   cargando = true;
+  uniendose = false;
+  saliendo = false;
+  notificaciones: Notificacion[] = [];
   private IDmembresia: number | null = null;
+  private notifId = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,11 +64,11 @@ export class DetalleForo implements OnInit {
     this.auth.visitarForo(id).subscribe({
       next: (res) => {
         const f = res.foro;
-        const miUsuario = this.auth.getUsuario()?.IDusuario;
+        const miUsuario = this.auth.getUsuario()?.id;
         const membresia = Array.isArray(f.miembros)
           ? f.miembros.find((m: any) => m.IDusuario === miUsuario)
           : null;
-        this.IDmembresia = membresia?.IDmembresia ?? null;
+        this.IDmembresia = membresia?.IDmiembro ?? null;
         this.pregunta = {
           id: f.IDforo,
           titulo: f.titulo,
@@ -91,28 +102,57 @@ export class DetalleForo implements OnInit {
   abrirUnirse() { this.popupUnirseAbierto = true; }
   cerrarUnirse() { this.popupUnirseAbierto = false; }
 
+  abrirSalir() { this.popupSalirAbierto = true; }
+  cerrarSalir() { this.popupSalirAbierto = false; }
+
+  mostrarError(err: any, mensajeFront: string) {
+    const mensaje = err?.error?.message ?? err?.error?.error ?? err?.message ?? mensajeFront;
+    const id = ++this.notifId;
+    this.notificaciones.push({ id, tipo: 'error', mensaje });
+    setTimeout(() => this.cerrarNotificacion(id), 5000);
+  }
+
+  cerrarNotificacion(id: number) {
+    this.notificaciones = this.notificaciones.filter(n => n.id !== id);
+  }
+
   confirmarUnirse() {
     if (!this.pregunta) return;
+    this.uniendose = true;
     this.auth.unirseAForo(this.pregunta.id).subscribe({
       next: (res) => {
-        this.IDmembresia = res.miembro.IDmembresia;
+        this.IDmembresia = res.miembro.IDmiembro;
         this.pregunta!.unido = true;
         this.pregunta!.miembros++;
+        this.uniendose = false;
         this.cerrarUnirse();
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al unirse', err)
+      error: (err) => {
+        this.uniendose = false;
+        this.mostrarError(err, 'No se pudo unir al foro');
+        this.cdr.detectChanges();
+      }
     });
   }
 
-  salirDelForo() {
+  confirmarSalir() {
     if (!this.pregunta || !this.IDmembresia) return;
+    this.saliendo = true;
     this.auth.salirDeForo(this.IDmembresia).subscribe({
       next: () => {
         this.IDmembresia = null;
         this.pregunta!.unido = false;
         this.pregunta!.miembros--;
+        this.saliendo = false;
+        this.cerrarSalir();
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al salir', err)
+      error: (err) => {
+        this.saliendo = false;
+        this.mostrarError(err, 'No se pudo salir del foro');
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -131,20 +171,21 @@ export class DetalleForo implements OnInit {
         });
         this.pregunta!.respuestas++;
         this.nuevaRespuesta = '';
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error publicando respuesta', err)
+      error: (err) => this.mostrarError(err, 'No se pudo publicar la respuesta')
     });
   }
 
   toggleVotoRespuesta(r: Respuesta) {
     this.auth.toggleVotoRespuesta(r.id).subscribe({
       next: (res) => {
-        // El back devuelve si se añadió o quitó el voto
         const votado = res.votado ?? !r.yaVotada;
         r.votos += votado ? 1 : -1;
         r.yaVotada = votado;
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al votar', err)
+      error: (err) => this.mostrarError(err, 'No se pudo registrar el voto')
     });
   }
 }

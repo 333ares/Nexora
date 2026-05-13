@@ -1,5 +1,17 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+<div class="notif-container">
+    @for (n of notificaciones; track n.id) {
+    <div class="notif" [class.notif-error]="n.tipo === 'error'">
+        <i class="bi" [class.bi-exclamation-circle-fill]="n.tipo === 'error'"></i>
+        <span>{{ n.mensaje }}</span>
+        <button class="notif-close" (click)="cerrarNotificacion(n.id)">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+    }
+</div>
+
 @if (cargando) {
 <div class="empty-state">
     <i class="bi bi-hourglass-split empty-icon"></i>
@@ -14,7 +26,7 @@
         </div>
 
         @if (pregunta.unido) {
-        <button class="btn-salir" (click)="salirDelForo()">
+        <button class="btn-salir" (click)="abrirSalir()">
             <i class="bi bi-check-circle-fill"></i>
             <span>Unido</span>
         </button>
@@ -97,6 +109,43 @@
 
 }
 
+@if (popupSalirAbierto && pregunta) {
+<div class="modal-overlay" (click)="cerrarSalir()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <i class="bi bi-box-arrow-right" style="color:#e74c3c; margin-right:8px;"></i>
+                Salir del foro
+            </h2>
+            <button class="modal-close" (click)="cerrarSalir()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <p class="modal-cita">"{{ pregunta.titulo }}"</p>
+        <p class="modal-info">
+            ¿Estás seguro de que quieres salir de este foro? Dejarás de aparecer
+            en la lista de miembros y podrás volver a unirte cuando quieras.
+        </p>
+
+        <div class="modal-footer">
+            <button class="btn-cancelar" (click)="cerrarSalir()">Cancelar</button>
+            <button class="btn-salir-confirmar" (click)="confirmarSalir()" [disabled]="saliendo">
+                @if (saliendo) {
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
+                Saliendo...
+                } @else {
+                <i class="bi bi-box-arrow-right" style="margin-right:6px;"></i>
+                Salir del foro
+                }
+            </button>
+        </div>
+
+    </div>
+</div>
+}
+
 @if (popupUnirseAbierto && pregunta) {
 <div class="modal-overlay" (click)="cerrarUnirse()">
     <div class="modal-box" (click)="$event.stopPropagation()">
@@ -119,9 +168,14 @@
 
         <div class="modal-footer">
             <button class="btn-cancelar" (click)="cerrarUnirse()">Cancelar</button>
-            <button class="btn-guardar" (click)="confirmarUnirse()">
+            <button class="btn-guardar" (click)="confirmarUnirse()" [disabled]="uniendose">
+                @if (uniendose) {
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
+                Uniendo...
+                } @else {
                 <i class="bi bi-check-lg" style="margin-right:6px;"></i>
                 Unirme ahora
+                }
             </button>
         </div>
 
