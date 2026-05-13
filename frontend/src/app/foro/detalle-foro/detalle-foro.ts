@@ -48,6 +48,7 @@ export class DetalleForo implements OnInit {
   cargando = true;
   uniendose = false;
   saliendo = false;
+  publicando = false;
   notificaciones: Notificacion[] = [];
   private IDmembresia: number | null = null;
   private notifId = 0;
@@ -158,6 +159,7 @@ export class DetalleForo implements OnInit {
 
   publicarRespuesta() {
     if (!this.pregunta || !this.nuevaRespuesta.trim()) return;
+    this.publicando = true;
     this.auth.responderForo({ IDforo: this.pregunta.id, respuesta: this.nuevaRespuesta }).subscribe({
       next: (res) => {
         const r = res.respuesta;
@@ -171,9 +173,14 @@ export class DetalleForo implements OnInit {
         });
         this.pregunta!.respuestas++;
         this.nuevaRespuesta = '';
+        this.publicando = false;
         this.cdr.detectChanges();
       },
-      error: (err) => this.mostrarError(err, 'No se pudo publicar la respuesta')
+      error: (err) => {
+        this.publicando = false;
+        this.mostrarError(err, 'No se pudo publicar la respuesta');
+        this.cdr.detectChanges();
+      }
     });
   }
 

@@ -66,9 +66,14 @@
     <textarea class="respuesta-input" rows="4" placeholder="Comparte tu experiencia o consejo..."
         [(ngModel)]="nuevaRespuesta"></textarea>
     <div class="respuesta-actions">
-        <button class="btn-publicar" [disabled]="!nuevaRespuesta.trim()" (click)="publicarRespuesta()">
-            <i class="bi bi-send-fill"></i>
+        <button class="btn-publicar" [disabled]="!nuevaRespuesta.trim() || publicando" (click)="publicarRespuesta()">
+            @if (publicando) {
+            <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
+            Publicando...
+            } @else {
+            <i class="bi bi-send-fill" style="margin-right:6px;"></i>
             Publicar respuesta
+            }
         </button>
     </div>
 </div>
