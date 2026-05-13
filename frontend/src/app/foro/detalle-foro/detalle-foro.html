@@ -173,6 +173,13 @@
             de novedades y aparecer en la lista de miembros.
         </p>
 
+        @if (errorUnirse) {
+        <div class="modal-error">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            {{ errorUnirse }}
+        </div>
+        }
+
         <div class="modal-footer">
             <button class="btn-cancelar" (click)="cerrarUnirse()">Cancelar</button>
             <button class="btn-guardar" (click)="confirmarUnirse()" [disabled]="uniendose">
