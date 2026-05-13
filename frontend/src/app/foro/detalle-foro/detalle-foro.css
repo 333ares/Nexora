@@ -313,6 +313,108 @@
 }
 
 
+/* ══ ACCIONES RESPUESTA PROPIA ══ */
+.respuesta-acciones {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-accion-resp {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1.5px solid;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-accion-resp i {
+    font-size: 13px;
+}
+
+.btn-editar-resp {
+    border-color: #d0e8c8;
+    color: #4E9C25;
+}
+
+.btn-editar-resp:hover {
+    background: #f0fae8;
+    border-color: #4E9C25;
+}
+
+.btn-borrar-resp {
+    border-color: #ffd5d5;
+    color: #e57373;
+}
+
+.btn-borrar-resp:hover {
+    background: #fff0f0;
+    border-color: #e57373;
+}
+
+/* ══ EDICIÓN INLINE ══ */
+.edit-inline {
+    margin-top: 8px;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-cancelar-edit {
+    padding: 8px 18px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    background: #fff;
+    font-family: 'Onest', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #666;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-cancelar-edit:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+.btn-guardar-edit {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #4E9C25, #78C550);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Onest', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(78, 156, 37, 0.3);
+    transition: all 0.2s;
+}
+
+.btn-guardar-edit:hover:not(:disabled) {
+    box-shadow: 0 5px 16px rgba(78, 156, 37, 0.45);
+    transform: translateY(-1px);
+}
+
+.btn-guardar-edit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
 /* ══ BOTÓN VOTAR RESPUESTA ══ */
 .btn-votar-respuesta {
     display: inline-flex;

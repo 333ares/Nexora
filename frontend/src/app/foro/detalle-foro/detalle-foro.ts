@@ -50,6 +50,11 @@ export class DetalleForo implements OnInit {
   saliendo = false;
   errorUnirse: string | null = null;
   publicando = false;
+  editandoId: number | null = null;
+  editContenido = '';
+  guardandoEdit = false;
+  respuestaParaBorrar: Respuesta | null = null;
+  borrando = false;
   notificaciones: Notificacion[] = [];
   private IDmembresia: number | null = null;
   private notifId = 0;
@@ -199,6 +204,67 @@ export class DetalleForo implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => this.mostrarError(err, 'No se pudo registrar el voto')
+    });
+  }
+
+  esPropia(r: Respuesta): boolean {
+    return r.autor === this.auth.getUsuario()?.usuario;
+  }
+
+  iniciarEdicion(r: Respuesta): void {
+    this.editandoId = r.id;
+    this.editContenido = r.contenido;
+  }
+
+  cancelarEdicion(): void {
+    this.editandoId = null;
+    this.editContenido = '';
+  }
+
+  guardarEdicion(r: Respuesta): void {
+    if (!this.editContenido.trim()) return;
+    this.guardandoEdit = true;
+    this.auth.modificarRespuesta({ IDrespuesta: r.id, respuesta: this.editContenido }).subscribe({
+      next: () => {
+        r.contenido = this.editContenido;
+        this.editandoId = null;
+        this.editContenido = '';
+        this.guardandoEdit = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.guardandoEdit = false;
+        this.mostrarError(err, 'No se pudo editar la respuesta');
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  pedirConfirmacionBorrar(r: Respuesta): void {
+    this.respuestaParaBorrar = r;
+  }
+
+  cerrarPopupBorrar(): void {
+    this.respuestaParaBorrar = null;
+  }
+
+  confirmarBorrar(): void {
+    const r = this.respuestaParaBorrar;
+    if (!r) return;
+    this.borrando = true;
+    this.auth.borrarRespuesta(r.id).subscribe({
+      next: () => {
+        this.respuestas = this.respuestas.filter(x => x.id !== r.id);
+        if (this.pregunta) this.pregunta.respuestas--;
+        this.respuestaParaBorrar = null;
+        this.borrando = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.borrando = false;
+        this.mostrarError(err, 'No se pudo borrar la respuesta');
+        this.cdr.detectChanges();
+      }
     });
   }
 }
