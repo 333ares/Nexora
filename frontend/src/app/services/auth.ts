@@ -189,6 +189,10 @@ export class Auth {
   }
 
   // --- MEMBRESIA DEL FORO ---
+  getMisForos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/miembros/mis-foros`, { headers: this.getHeaders() });
+  }
+
   unirseAForo(IDforo: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/miembro`, { IDforo }, { headers: this.getHeaders() });
   }
