@@ -1,5 +1,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+<!-- HEADER CON TITULO O TOOLBAR -->
+@if (modoVista !== 'inicio') {
+<div class="foro-header-modo">
+    <button class="btn-volver" (click)="volverAlInicio()">
+        <i class="bi bi-chevron-left"></i>
+        <span>Volver</span>
+    </button>
+    <h2 class="foro-titulo-modo">{{ etiquetaModo }}</h2>
+</div>
+}
+
 <!-- TOOLBAR -->
 <div class="foro-toolbar">
 
@@ -9,6 +20,7 @@
             (ngModelChange)="onBusqueda()">
     </div>
 
+    @if (modoVista !== 'inicio') {
     <div class="filter-wrapper">
         <button class="btn-filter-drop" (click)="toggleFiltro($event)" [class.filter-active]="filtroAbierto">
             <i class="bi bi-funnel"></i>
@@ -32,6 +44,7 @@
         </div>
         }
     </div>
+    }
 
     <button class="btn-nueva" (click)="abrirNueva()">
         <i class="bi bi-plus-lg"></i>
@@ -48,6 +61,74 @@
     <p>Cargando foros...</p>
 </div>
 } @else {
+
+@if (modoVista === 'inicio') {
+<!-- VISTA INICIO: 3 CONTENEDORES -->
+<div class="contenedores-vista">
+
+    <!-- POPULARES -->
+    <section class="contenedor-foros">
+        <div class="contenedor-header">
+            <h3 class="contenedor-titulo">🔥 Más populares</h3>
+            <button class="btn-ver-mas" (click)="verMas('popular')">Ver más</button>
+        </div>
+        <div class="contenedor-grid">
+            @for (p of preguntasPopulares; track p.id) {
+            <article class="card pregunta-card-mini pregunta-clickable" (click)="abrirDetalle(p)">
+                <h4 class="pregunta-titulo-mini">{{ p.titulo }}</h4>
+                <p class="pregunta-desc-mini">{{ p.descripcion }}</p>
+                <div class="pregunta-stats-mini">
+                    <span><i class="bi bi-fire"></i> {{ p.visitas }}</span>
+                    <span><i class="bi bi-chat-left-text"></i> {{ p.respuestas }}</span>
+                </div>
+            </article>
+            }
+        </div>
+    </section>
+
+    <!-- RESPONDIDAS -->
+    <section class="contenedor-foros">
+        <div class="contenedor-header">
+            <h3 class="contenedor-titulo">💬 Más respondidas</h3>
+            <button class="btn-ver-mas" (click)="verMas('respondidas')">Ver más</button>
+        </div>
+        <div class="contenedor-grid">
+            @for (p of preguntasRespondidas; track p.id) {
+            <article class="card pregunta-card-mini pregunta-clickable" (click)="abrirDetalle(p)">
+                <h4 class="pregunta-titulo-mini">{{ p.titulo }}</h4>
+                <p class="pregunta-desc-mini">{{ p.descripcion }}</p>
+                <div class="pregunta-stats-mini">
+                    <span><i class="bi bi-fire"></i> {{ p.visitas }}</span>
+                    <span><i class="bi bi-chat-left-text"></i> {{ p.respuestas }}</span>
+                </div>
+            </article>
+            }
+        </div>
+    </section>
+
+    <!-- RECIENTES -->
+    <section class="contenedor-foros">
+        <div class="contenedor-header">
+            <h3 class="contenedor-titulo">✨ Recientes</h3>
+            <button class="btn-ver-mas" (click)="verMas('recientes')">Ver más</button>
+        </div>
+        <div class="contenedor-grid">
+            @for (p of preguntasRecientes; track p.id) {
+            <article class="card pregunta-card-mini pregunta-clickable" (click)="abrirDetalle(p)">
+                <h4 class="pregunta-titulo-mini">{{ p.titulo }}</h4>
+                <p class="pregunta-desc-mini">{{ p.descripcion }}</p>
+                <div class="pregunta-stats-mini">
+                    <span><i class="bi bi-fire"></i> {{ p.visitas }}</span>
+                    <span><i class="bi bi-chat-left-text"></i> {{ p.respuestas }}</span>
+                </div>
+            </article>
+            }
+        </div>
+    </section>
+
+</div>
+} @else {
+<!-- VISTA LISTA: TODOS LOS FOROS FILTRADOS -->
 <div class="preguntas-grid">
     @for (p of preguntas; track p.id) {
     <article class="card pregunta-card pregunta-clickable" (click)="abrirDetalle(p)">
@@ -94,6 +175,8 @@
     </div>
     }
 </div>
+}
+
 }
 
 <!-- MODAL NUEVA PREGUNTA -->

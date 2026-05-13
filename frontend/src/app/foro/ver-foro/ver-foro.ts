@@ -16,6 +16,7 @@ export interface Pregunta {
 }
 
 type OrdenKey = 'nuevo' | 'viejo' | 'popular' | 'miembros';
+type ModoVista = 'inicio' | 'popular' | 'respondidas' | 'recientes';
 
 @Component({
   selector: 'app-ver-foro',
@@ -26,6 +27,7 @@ type OrdenKey = 'nuevo' | 'viejo' | 'popular' | 'miembros';
 })
 export class VerForo implements OnInit {
 
+  modoVista: ModoVista = 'inicio';
   busqueda = '';
   filtroAbierto = false;
   ordenActivo: OrdenKey = 'nuevo';
@@ -76,7 +78,27 @@ export class VerForo implements OnInit {
     });
   }
 
-  // Helpers internos
+  get etiquetaModo(): string {
+    switch (this.modoVista) {
+      case 'popular': return 'Foros más populares';
+      case 'respondidas': return 'Foros más respondidos';
+      case 'recientes': return 'Foros recientes';
+      default: return '';
+    }
+  }
+
+  get preguntasPopulares(): Pregunta[] {
+    return [...this.preguntasRaw].sort((a, b) => b.visitas - a.visitas).slice(0, 3);
+  }
+
+  get preguntasRespondidas(): Pregunta[] {
+    return [...this.preguntasRaw].sort((a, b) => b.respuestas - a.respuestas).slice(0, 3);
+  }
+
+  get preguntasRecientes(): Pregunta[] {
+    return [...this.preguntasRaw].sort((a, b) => b.fecha.getTime() - a.fecha.getTime()).slice(0, 3);
+  }
+
   private aplicarOrdenYFiltro(): void {
     const texto = this.busqueda.toLowerCase().trim();
 
@@ -87,11 +109,18 @@ export class VerForo implements OnInit {
       )
       : [...this.preguntasRaw];
 
-    switch (this.ordenActivo) {
-      case 'nuevo': lista.sort((a, b) => b.fecha.getTime() - a.fecha.getTime()); break;
-      case 'viejo': lista.sort((a, b) => a.fecha.getTime() - b.fecha.getTime()); break;
-      case 'popular': lista.sort((a, b) => b.visitas - a.visitas); break;
-      case 'miembros': lista.sort((a, b) => b.miembros - a.miembros); break;
+    switch (this.modoVista) {
+      case 'popular':
+        lista.sort((a, b) => b.visitas - a.visitas);
+        break;
+      case 'respondidas':
+        lista.sort((a, b) => b.respuestas - a.respuestas);
+        break;
+      case 'recientes':
+        lista.sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
+        break;
+      case 'inicio':
+        break;
     }
 
     this.preguntas = lista;
@@ -121,6 +150,18 @@ export class VerForo implements OnInit {
 
   onBusqueda() {
     this.aplicarOrdenYFiltro();
+  }
+
+  verMas(modo: 'popular' | 'respondidas' | 'recientes') {
+    this.modoVista = modo;
+    this.busqueda = '';
+    this.aplicarOrdenYFiltro();
+  }
+
+  volverAlInicio() {
+    this.modoVista = 'inicio';
+    this.busqueda = '';
+    this.ordenActivo = 'nuevo';
   }
 
   abrirDetalle(p: Pregunta) {
