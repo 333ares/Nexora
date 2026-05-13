@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Foro;
 use App\Models\Miembro;
+use App\Models\Respuesta;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class MiembrosController extends Controller
@@ -79,6 +81,36 @@ class MiembrosController extends Controller
         return response()->json([
             'message' => 'success',
             'respuesta' => 'La membresia se ha quitado correctamente'
+        ], 200);
+    }
+
+    public function misForosMiembro(Request $request)
+    {
+        $IDusuario = $request->user()->IDusuario;
+
+        $membresias = Miembro::where('IDusuario', $IDusuario)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $foros = $membresias->map(function ($membresia) {
+            $foro = Foro::find($membresia->IDforo);
+            if (!$foro) return null;
+
+            return [
+                'IDforo' => $foro->IDforo,
+                'IDmembresia' => $membresia->IDmiembro,
+                'titulo' => $foro->titulo,
+                'descripcion' => $foro->contenido,
+                'creador' => Usuario::where('IDusuario', $foro->IDusuario)->value('usuario'),
+                'miembro_desde' => $membresia->created_at,
+                'num_miembros' => Miembro::where('IDforo', $foro->IDforo)->count(),
+                'num_respuestas' => Respuesta::where('IDforo', $foro->IDforo)->count(),
+            ];
+        })->filter()->values();
+
+        return response()->json([
+            'message' => 'success',
+            'foros'   => $foros
         ], 200);
     }
 }

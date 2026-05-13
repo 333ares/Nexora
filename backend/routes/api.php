@@ -78,6 +78,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/respuesta/votar', [RespuestasController::class, 'toggleVotoRespuesta']);
 
     // Miembros
+    Route::get('/miembros/mis-foros', [MiembrosController::class, 'misForosMiembro']);
     Route::post('/miembro', [MiembrosController::class, 'unirseAForo']);
     Route::delete('/miembro', [MiembrosController::class, 'salirDeForo']);
 });
