@@ -97,13 +97,40 @@
                 <span class="autor-nombre">{{ r.autor }}</span>
             </div>
 
-            <button class="btn-votar-respuesta" [class.btn-votar-respuesta-activo]="r.yaVotada"
-                (click)="toggleVotoRespuesta(r)">
-                <i class="bi" [class.bi-hand-thumbs-up-fill]="r.yaVotada" [class.bi-hand-thumbs-up]="!r.yaVotada"></i>
-                <span>{{ r.votos }}</span>
+            <div class="respuesta-acciones">
+                @if (esPropia(r) && editandoId !== r.id) {
+                <button class="btn-accion-resp btn-editar-resp" (click)="iniciarEdicion(r)" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn-accion-resp btn-borrar-resp" (click)="pedirConfirmacionBorrar(r)" title="Borrar">
+                    <i class="bi bi-trash"></i>
+                </button>
+                }
+                <button class="btn-votar-respuesta" [class.btn-votar-respuesta-activo]="r.yaVotada"
+                    (click)="toggleVotoRespuesta(r)">
+                    <i class="bi" [class.bi-hand-thumbs-up-fill]="r.yaVotada"
+                        [class.bi-hand-thumbs-up]="!r.yaVotada"></i>
+                    <span>{{ r.votos }}</span>
+                </button>
+            </div>
+        </div>
+
+        @if (editandoId === r.id) {
+        <textarea class="respuesta-input edit-inline" [(ngModel)]="editContenido" rows="4"></textarea>
+        <div class="edit-actions">
+            <button class="btn-cancelar-edit" (click)="cancelarEdicion()">Cancelar</button>
+            <button class="btn-guardar-edit" [disabled]="!editContenido.trim() || guardandoEdit"
+                (click)="guardarEdicion(r)">
+                @if (guardandoEdit) {
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>Guardando...
+                } @else {
+                <i class="bi bi-check-lg" style="margin-right:6px;"></i>Guardar
+                }
             </button>
         </div>
+        } @else {
         <p class="respuesta-contenido">{{ r.contenido }}</p>
+        }
     </article>
     }
     @empty {
@@ -145,6 +172,42 @@
                 } @else {
                 <i class="bi bi-box-arrow-right" style="margin-right:6px;"></i>
                 Salir del foro
+                }
+            </button>
+        </div>
+
+    </div>
+</div>
+}
+
+@if (respuestaParaBorrar) {
+<div class="modal-overlay" (click)="cerrarPopupBorrar()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <i class="bi bi-trash-fill" style="color:#e74c3c; margin-right:8px;"></i>
+                Borrar respuesta
+            </h2>
+            <button class="modal-close" (click)="cerrarPopupBorrar()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <p class="modal-cita" style="border-left-color:#e74c3c; background:#fff8f8;">
+            "{{ respuestaParaBorrar.contenido }}"
+        </p>
+        <p class="modal-info">
+            ¿Estás seguro de que quieres borrar esta respuesta? Esta acción no se puede deshacer.
+        </p>
+
+        <div class="modal-footer">
+            <button class="btn-cancelar" (click)="cerrarPopupBorrar()">Cancelar</button>
+            <button class="btn-salir-confirmar" (click)="confirmarBorrar()" [disabled]="borrando">
+                @if (borrando) {
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>Borrando...
+                } @else {
+                <i class="bi bi-trash-fill" style="margin-right:6px;"></i>Borrar
                 }
             </button>
         </div>
