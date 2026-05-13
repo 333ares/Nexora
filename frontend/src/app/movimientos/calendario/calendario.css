@@ -1,13 +1,6 @@
-/* ══ HOST ══ */
-:host {
-    display: block;
-    position: static;
-}
-
 /* ══ CALENDARIO ══ */
 .grid-calendario {
     display: grid;
-    /* En escritorio: calendario a la izquierda (1fr) + panel del día a la derecha (300px) */
     grid-template-columns: 1fr 300px;
     gap: 24px;
     align-items: start;
@@ -89,7 +82,7 @@
     border-radius: 10px;
     border: 2.5px solid #4E9C25;
     box-shadow: 0 2px 10px rgba(78, 156, 37, 0.15);
-    animation: scaleIn 0.4s ease 0.3s both;
+    animation: fadeIn 0.4s ease 0.3s both;
 }
 
 .cal-dia-grande.hoy {
@@ -152,7 +145,7 @@
     gap: 12px;
     padding: 10px 0;
     border-bottom: 1px solid #f0f0f0;
-    animation: rowSlideIn 0.3s ease both;
+    animation: fadeIn 0.3s ease both;
     transition: background 0.2s;
 }
 
@@ -192,280 +185,22 @@
     font-family: 'Lato';
 }
 
-/* ══ MODAL ══ */
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    animation: fadeIn 0.2s ease;
-}
-
-.modal-box {
-    background: #fff;
-    border-radius: 24px;
-    width: 100%;
-    max-width: 480px;
-    padding: 32px;
-    box-shadow:
-        0 8px 16px rgba(0, 0, 0, 0.08),
-        0 24px 48px rgba(0, 0, 0, 0.14),
-        0 40px 80px rgba(0, 0, 0, 0.1);
-    animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.modal-title {
-    font-size: 19px;
-    font-weight: 800;
-    color: #1a1a1a;
-    margin: 0;
-    font-family: 'Onest';
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-    color: #888;
-    padding: 4px 8px;
-    border-radius: 8px;
-    transition: background 0.15s, transform 0.2s;
-}
-
-.modal-close:hover {
-    background: #f0f0f0;
-    transform: scale(1.1);
-}
-
-.modal-tipo-selector {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    background: #f5f5f5;
-    border-radius: 12px;
-    padding: 5px;
-}
-
-.tipo-btn {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background: transparent;
-    font-size: 15px;
-    font-weight: 700;
-    font-family: 'Onest';
-    color: #888;
-    cursor: pointer;
-    transition: all 0.25s;
-}
-
-.tipo-ingreso-active {
-    background: #fff;
-    color: #27ae60;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.tipo-gasto-active {
-    background: #fff;
-    color: #e74c3c;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.modal-field {
-    margin-bottom: 16px;
-}
-
-.modal-field label {
-    display: block;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: #222;
-    font-family: 'Onest';
-}
-
-.opcional {
-    font-weight: 400;
-    color: #aaa;
-    font-family: 'Lato';
-}
-
-.modal-input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 14px;
-    font-family: 'Lato';
-    color: #333;
-    background: #fff;
-    outline: none;
-    transition: border-color 0.25s, box-shadow 0.25s;
-    box-sizing: border-box;
-}
-
-.modal-input:focus {
-    border-color: #4E9C25;
-    box-shadow: 0 0 0 3px rgba(78, 156, 37, 0.1);
-}
-
-.modal-error {
-    color: #e74c3c;
-    font-size: 13px;
-    font-family: 'Lato';
-    margin-top: 6px;
-    animation: fadeIn 0.2s ease;
-}
-
-.modal-footer {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-}
-
-.btn-cancelar {
-    flex: 1;
-    padding: 12px;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 12px;
-    background: #fff;
-    font-size: 15px;
-    font-weight: 700;
-    font-family: 'Onest';
-    color: #555;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-}
-
-.btn-cancelar:hover {
-    border-color: #aaa;
-    background: #fafafa;
-}
-
-.btn-guardar {
-    flex: 2;
-    padding: 12px;
-    background: linear-gradient(135deg, #4E9C25, #78C550);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 700;
-    font-family: 'Onest';
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 14px rgba(78, 156, 37, 0.3);
-}
-
-.btn-guardar:hover {
-    box-shadow: 0 6px 20px rgba(78, 156, 37, 0.4);
-    transform: translateY(-1px);
-}
-
-.btn-guardar:active {
-    transform: scale(0.97);
-}
-
-.btn-guardar:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
 .icono-mov {
     font-size: 21px;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(24px);
-    }
-
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.92);
-    }
-
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: none;
-        opacity: 1;
-    }
-}
-
-@keyframes rowSlideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-12px);
-    }
-
-    to {
-        opacity: 1;
-        transform: none;
-    }
-}
-
 /* ══ RESPONSIVE CALENDARIO ══ */
 @media (max-width: 768px) {
-    /* En móvil el grid de 2 columnas no cabe: la columna fija de 300px dejaría
-       el calendario en ~30px de ancho. Se apila en columna única */
     .grid-calendario {
         grid-template-columns: 1fr;
     }
 
-    /* Reducir padding del modal en pantallas pequeñas */
     .modal-box {
         padding: 20px 16px;
     }
 }
 
 @media (max-width: 480px) {
-    /* En teléfonos muy pequeños el modal ocupa casi toda la pantalla */
     .modal-box {
         padding: 16px 12px;
         border-radius: 16px;

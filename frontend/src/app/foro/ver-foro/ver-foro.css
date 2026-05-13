@@ -376,22 +376,6 @@
     transition: gap 0.25s ease, color 0.2s ease;
 }
 
-/* Empty state */
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: #bbb;
-    font-family: 'Lato';
-    font-size: 15px;
-}
-
-.empty-icon {
-    font-size: 48px;
-    color: #d0d0d0;
-    display: block;
-    margin-bottom: 12px;
-}
-
 /* ══ Keyframes ══ */
 @keyframes dropdownOpen {
     from {
@@ -610,19 +594,6 @@
     flex-shrink: 0;
 }
 
-/* ══ Animación entrada foro ══ */
-@keyframes fadeInDownForo {
-    from {
-        opacity: 0;
-        transform: translateY(-12px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* ══ Responsive modal ══ */
 @media (max-width: 560px) {
     .modal-box {
@@ -665,30 +636,4 @@
         gap: 12px;
     }
 
-    /* ══ Indicador "Ver foro" ══ */
-    .ver-mas {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-family: 'Onest', sans-serif;
-        font-weight: 700;
-        font-size: 13px;
-        color: #4E9C25;
-        transition: gap 0.25s ease, color 0.2s ease;
-    }
-
-    .ver-mas i {
-        font-size: 14px;
-        color: #4E9C25;
-        transition: transform 0.25s ease;
-    }
-
-    .pregunta-clickable:hover .ver-mas {
-        color: #3a8c1a;
-        gap: 10px;
-    }
-
-    .pregunta-clickable:hover .ver-mas i {
-        transform: translateX(3px);
-    }
 }

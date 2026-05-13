@@ -3,6 +3,7 @@
 <div class="hero">
   <h1 class="bienvenida">{{ 'MOV.WELCOME' | translate:{nombre: usuario?.nombre} }}</h1>
 
+  <!-- SUBNAV ESCRITORIO: pestañas horizontales visibles en ≥768px -->
   <nav class="subnav">
     <a class="subnav-item" routerLink="resumen" routerLinkActive="active">{{ 'MOV.RESUMEN' | translate }}</a>
     <a class="subnav-item" routerLink="lista" routerLinkActive="active">{{ 'MOV.MOVIMIENTOS' | translate }}</a>
@@ -10,28 +11,22 @@
     <a class="subnav-item" routerLink="estadisticas" routerLinkActive="active">{{ 'MOV.ESTADISTICAS' | translate }}</a>
     <a class="subnav-item" routerLink="retos" routerLinkActive="active">{{ 'MOV.RETOS' | translate }}</a>
   </nav>
-
-  <div class="subnav-mobile">
-    <button class="subnav-ham" [class.open]="subnavOpen" (click)="toggleSubnav()" aria-label="Menú de secciones">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
 </div>
 
-<!-- DROPDOWN Y BACKDROP FUERA DEL HERO, hijos directos del host -->
-<div class="subnav-dropdown" [class.open]="subnavOpen">
-  <a class="subnav-drop-item" routerLink="resumen" routerLinkActive="active" (click)="closeSubnav()">{{ 'MOV.RESUMEN' |
-    translate }}</a>
-  <a class="subnav-drop-item" routerLink="lista" routerLinkActive="active" (click)="closeSubnav()">{{ 'MOV.MOVIMIENTOS'
-    | translate }}</a>
-  <a class="subnav-drop-item" routerLink="calendario" routerLinkActive="active" (click)="closeSubnav()">{{
-    'MOV.CALENDARIO' | translate }}</a>
-  <a class="subnav-drop-item" routerLink="estadisticas" routerLinkActive="active" (click)="closeSubnav()">{{
-    'MOV.ESTADISTICAS' | translate }}</a>
-  <a class="subnav-drop-item" routerLink="retos" routerLinkActive="active" (click)="closeSubnav()">{{ 'MOV.RETOS' |
-    translate }}</a>
+<!-- SUBNAV HAMBURGUESA MÓVIL: fuera del .hero para evitar el stacking context de la animación -->
+<div class="subnav-mobile">
+  <button class="subnav-ham" [class.open]="subnavOpen" (click)="toggleSubnav()" aria-label="Menú de secciones">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="subnav-dropdown" [class.open]="subnavOpen">
+    <a class="subnav-drop-item" routerLink="resumen" routerLinkActive="active" (click)="closeSubnav()">{{ 'MOV.RESUMEN' | translate }}</a>
+    <a class="subnav-drop-item" routerLink="lista" routerLinkActive="active" (click)="closeSubnav()">{{ 'MOV.MOVIMIENTOS' | translate }}</a>
+    <a class="subnav-drop-item" routerLink="calendario" routerLinkActive="active" (click)="closeSubnav()">{{ 'MOV.CALENDARIO' | translate }}</a>
+    <a class="subnav-drop-item" routerLink="estadisticas" routerLinkActive="active" (click)="closeSubnav()">{{ 'MOV.ESTADISTICAS' | translate }}</a>
+    <a class="subnav-drop-item" routerLink="retos" routerLinkActive="active" (click)="closeSubnav()">{{ 'MOV.RETOS' | translate }}</a>
+  </div>
 </div>
 
 <div class="subnav-backdrop" [class.open]="subnavOpen" (click)="closeSubnav()"></div>
