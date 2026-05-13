@@ -31,6 +31,7 @@ export class Resumen implements OnInit, OnDestroy {
   ingresoMensual = 0;
   gastoMensual = 0;
   movimientos: any[] = [];
+  cargandoMovimientos = true;
   retoActual: any = null;
   retoSeleccionadoId: number | null = null;
   listaRetos: any[] = [];
@@ -83,10 +84,15 @@ export class Resumen implements OnInit, OnDestroy {
           this.retoActual = seleccionado ?? activos[0];
         }
 
+        this.cargandoMovimientos = false;
         this.cdr.detectChanges();
         setTimeout(() => this.renderBarChart(), 0);
       },
-      error: (err) => console.error('Error cargando resumen:', err)
+      error: (err) => {
+        console.error('Error cargando resumen:', err);
+        this.cargandoMovimientos = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 

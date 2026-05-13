@@ -43,7 +43,8 @@
     <div class="detalle-footer">
         <div class="pregunta-autor">
             <div class="autor-avatar">
-                <i class="bi bi-person-fill"></i>
+                <img [src]="getAvatarUrl(pregunta.autor)" alt="Avatar"
+                    style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
             </div>
             <span class="autor-nombre">{{ pregunta.autor }}</span>
         </div>
@@ -66,9 +67,14 @@
     <textarea class="respuesta-input" rows="4" placeholder="Comparte tu experiencia o consejo..."
         [(ngModel)]="nuevaRespuesta"></textarea>
     <div class="respuesta-actions">
-        <button class="btn-publicar" [disabled]="!nuevaRespuesta.trim()" (click)="publicarRespuesta()">
-            <i class="bi bi-send-fill"></i>
+        <button class="btn-publicar" [disabled]="!nuevaRespuesta.trim() || publicando" (click)="publicarRespuesta()">
+            @if (publicando) {
+            <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
+            Publicando...
+            } @else {
+            <i class="bi bi-send-fill" style="margin-right:6px;"></i>
             Publicar respuesta
+            }
         </button>
     </div>
 </div>
@@ -85,7 +91,8 @@
         <div class="respuesta-top">
             <div class="pregunta-autor">
                 <div class="autor-avatar">
-                    <i class="bi bi-person-fill"></i>
+                    <img [src]="getAvatarUrl(r.autor)" alt="Avatar"
+                        style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
                 </div>
                 <span class="autor-nombre">{{ r.autor }}</span>
             </div>

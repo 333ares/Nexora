@@ -50,11 +50,15 @@ class ForoController extends Controller
             ], 404);
         }
 
+        $IDusuario = $request->user()->IDusuario;
         $foro->increment('visitas');
         $foro->creador = Usuario::where('IDusuario', $foro->IDusuario)->value('usuario');
-        $foro->respuestas = Respuesta::where('IDforo', $foro->IDforo)->get()->map(function ($respuesta) {
+        $foro->respuestas = Respuesta::where('IDforo', $foro->IDforo)->get()->map(function ($respuesta) use ($IDusuario) {
             $respuesta->votos = Votos_Respuesta::where('IDrespuesta', $respuesta->IDrespuesta)->count();
             $respuesta->creador = Usuario::where('IDusuario', $respuesta->IDusuario)->value('usuario');
+            $respuesta->yaVotada = Votos_Respuesta::where('IDrespuesta', $respuesta->IDrespuesta)
+                ->where('IDusuario', $IDusuario)
+                ->exists();
             return $respuesta;
         });
 

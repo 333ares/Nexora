@@ -502,6 +502,7 @@
     "TIPO_INGRESO": "Income",
     "TIPO_GASTO": "Expense",
     "SIN_MOVIMIENTOS": "No transactions recorded",
+    "CARGANDO": "Loading transactions...",
     "NUEVO_MOVIMIENTO": "New transaction",
     "EDITAR_MOVIMIENTO": "Edit transaction",
     "CANTIDAD": "Amount (€)",

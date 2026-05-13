@@ -61,6 +61,7 @@ export class Lista implements OnInit {
   modalAbierto = false;
   modoEdicion = false;
   movimientoEditandoId: number | null = null;
+  cargandoLista = true;
   cargando = false;
   errorModal = '';
   exitoModal = '';
@@ -92,11 +93,13 @@ export class Lista implements OnInit {
       next: (res) => {
         this.movimientos = res.movimientos ?? res ?? [];
         this.filtrar(this.filtroActivo);
+        this.cargandoLista = false;
         this.cdr.detectChanges();
       },
       error: () => {
         this.movimientos = [];
         this.filtrar(this.filtroActivo);
+        this.cargandoLista = false;
         this.cdr.detectChanges();
       }
     });

@@ -48,6 +48,7 @@ export class DetalleForo implements OnInit {
   cargando = true;
   uniendose = false;
   saliendo = false;
+  publicando = false;
   notificaciones: Notificacion[] = [];
   private IDmembresia: number | null = null;
   private notifId = 0;
@@ -83,10 +84,10 @@ export class DetalleForo implements OnInit {
         this.respuestas = (f.respuestas ?? []).map((r: any) => ({
           id: r.IDrespuesta,
           autor: r.creador ?? r.IDusuario,
-          contenido: r.contenido,
+          contenido: r.respuesta,
           fecha: new Date(r.created_at),
           votos: r.votos ?? 0,
-          yaVotada: false
+          yaVotada: r.yaVotada ?? false
         }));
         this.cargando = false;
         this.cdr.detectChanges();
@@ -158,6 +159,7 @@ export class DetalleForo implements OnInit {
 
   publicarRespuesta() {
     if (!this.pregunta || !this.nuevaRespuesta.trim()) return;
+    this.publicando = true;
     this.auth.responderForo({ IDforo: this.pregunta.id, respuesta: this.nuevaRespuesta }).subscribe({
       next: (res) => {
         const r = res.respuesta;
@@ -171,10 +173,20 @@ export class DetalleForo implements OnInit {
         });
         this.pregunta!.respuestas++;
         this.nuevaRespuesta = '';
+        this.publicando = false;
         this.cdr.detectChanges();
       },
-      error: (err) => this.mostrarError(err, 'No se pudo publicar la respuesta')
+      error: (err) => {
+        this.publicando = false;
+        this.mostrarError(err, 'No se pudo publicar la respuesta');
+        this.cdr.detectChanges();
+      }
     });
+  }
+
+  getAvatarUrl(nombre: string): string {
+    if (!nombre) return '';
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre.trim())}&background=random`;
   }
 
   toggleVotoRespuesta(r: Respuesta) {

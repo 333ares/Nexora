@@ -118,23 +118,22 @@ class RespuestasController extends Controller
                 ->where('IDrespuesta', $respuesta->IDrespuesta)
                 ->delete();
 
-            $respuesta->decrement('votos');
             $votado = false;
         } else {
-
             Votos_Respuesta::create([
-                'user_id' => $IDusuario,
-                'respuesta_id' => $respuesta->IDrespuesta
+                'IDusuario' => $IDusuario,
+                'IDrespuesta' => $respuesta->IDrespuesta
             ]);
 
-            $respuesta->increment('votos');
             $votado = true;
         }
 
+        $votos = Votos_Respuesta::where('IDrespuesta', $respuesta->IDrespuesta)->count();
+
         return response()->json([
             'message' => 'success',
-            'votos' => $respuesta->fresh()->votos,
-            'votado' => $votado // Para el front (color del boton)
+            'votos' => $votos,
+            'votado' => $votado
         ], 200);
     }
 }
