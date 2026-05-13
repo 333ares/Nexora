@@ -502,6 +502,7 @@
     "TIPO_INGRESO": "Ingreso",
     "TIPO_GASTO": "Gasto",
     "SIN_MOVIMIENTOS": "No hay movimientos registrados",
+    "CARGANDO": "Cargando movimientos...",
     "NUEVO_MOVIMIENTO": "Nuevo movimiento",
     "EDITAR_MOVIMIENTO": "Editar movimiento",
     "CANTIDAD": "Cantidad (€)",

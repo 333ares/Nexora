@@ -502,6 +502,7 @@
     "TIPO_INGRESO": "Ingrés",
     "TIPO_GASTO": "Despesa",
     "SIN_MOVIMIENTOS": "No hi ha moviments registrats",
+    "CARGANDO": "Carregant moviments...",
     "NUEVO_MOVIMIENTO": "Nou moviment",
     "EDITAR_MOVIMIENTO": "Editar moviment",
     "CANTIDAD": "Quantitat (€)",

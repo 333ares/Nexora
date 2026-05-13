@@ -25,6 +25,9 @@
   </div>
 
   <!-- Lista de movimientos -->
+  @if (cargandoLista) {
+  <div class="empty-state">{{ 'LISTA.CARGANDO' | translate }}</div>
+  } @else {
   @for (mov of movimientosPaginados; track mov.id) {
   <div class="tabla-row tabla-row-mov" [class.row-ingreso]="mov.tipo === 'ingreso'"
     [class.row-gasto]="mov.tipo === 'gasto'">
@@ -77,6 +80,7 @@
   </div>
   } @empty {
   <div class="empty-state">{{ 'LISTA.SIN_MOVIMIENTOS' | translate }}</div>
+  }
   }
 
   <!-- Paginación -->

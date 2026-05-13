@@ -153,6 +153,9 @@
         <span class="th th-right">{{ 'RESUMEN.TH_TIPO' | translate }}</span>
       </div>
 
+      @if (cargandoMovimientos) {
+      <div class="empty-state">{{ 'LISTA.CARGANDO' | translate }}</div>
+      } @else {
       @for (mov of movimientos; track mov.id) {
       <div class="tabla-row tabla-row-mov-resumen" [class.row-ingreso]="mov.tipo === 'ingreso'"
         [class.row-gasto]="mov.tipo === 'gasto'">
@@ -209,6 +212,7 @@
 
       @empty {
       <div class="empty-state">{{ 'LISTA.SIN_MOVIMIENTOS' | translate }}</div>
+      }
       }
 
       <!-- "Ver todos →" al pie de la lista -->
