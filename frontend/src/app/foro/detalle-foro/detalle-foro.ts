@@ -84,7 +84,7 @@ export class DetalleForo implements OnInit {
         this.respuestas = (f.respuestas ?? []).map((r: any) => ({
           id: r.IDrespuesta,
           autor: r.creador ?? r.IDusuario,
-          contenido: r.contenido,
+          contenido: r.respuesta,
           fecha: new Date(r.created_at),
           votos: r.votos ?? 0,
           yaVotada: false
