@@ -186,7 +186,7 @@
     grid-template-columns: 2fr 1fr;
     gap: 20px;
     margin-bottom: 28px;
-    align-items: start;
+    align-items: stretch;
 }
 
 /* ══ CAJA RESPUESTA ══ */
@@ -288,7 +288,7 @@
     background: #fafafa;
     outline: none;
     resize: vertical;
-    min-height: 100px;
+    min-height: 164px;
     line-height: 1.6;
     transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
     box-sizing: border-box;
