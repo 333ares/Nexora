@@ -48,6 +48,7 @@ export class DetalleForo implements OnInit {
   cargando = true;
   uniendose = false;
   saliendo = false;
+  errorUnirse: string | null = null;
   publicando = false;
   notificaciones: Notificacion[] = [];
   private IDmembresia: number | null = null;
@@ -101,7 +102,7 @@ export class DetalleForo implements OnInit {
   }
 
   abrirUnirse() { this.popupUnirseAbierto = true; }
-  cerrarUnirse() { this.popupUnirseAbierto = false; }
+  cerrarUnirse() { this.popupUnirseAbierto = false; this.errorUnirse = null; }
 
   abrirSalir() { this.popupSalirAbierto = true; }
   cerrarSalir() { this.popupSalirAbierto = false; }
@@ -131,7 +132,7 @@ export class DetalleForo implements OnInit {
       },
       error: (err) => {
         this.uniendose = false;
-        this.mostrarError(err, 'No se pudo unir al foro');
+        this.errorUnirse = err?.error?.errors ?? err?.error?.message ?? 'No se pudo unir al foro.';
         this.cdr.detectChanges();
       }
     });

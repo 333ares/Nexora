@@ -144,7 +144,7 @@ export class VerForo implements OnInit {
           visitas: 0,
           miembros: 0,
           fecha: new Date(res.foro.created_at),
-          autor: res.foro.IDusuario
+          autor: this.auth.getUsuario()?.usuario ?? ''
         };
         this.preguntasRaw.unshift(nuevo);
         this.aplicarOrdenYFiltro();
