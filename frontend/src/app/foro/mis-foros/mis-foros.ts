@@ -33,6 +33,7 @@ export class MisForos implements OnInit {
   readonly porPagina = 6;
   cargando = true;
   saliendoId: number | null = null;
+  foroParaSalir: ForoUnido | null = null;
 
   constructor(private router: Router, private auth: Auth, private cdr: ChangeDetectorRef) { }
 
@@ -99,15 +100,26 @@ export class MisForos implements OnInit {
     this.router.navigate(['/foro/detalle', f.id]);
   }
 
-  salirForo(ev: MouseEvent, f: ForoUnido): void {
+  pedirConfirmacionSalir(ev: MouseEvent, f: ForoUnido): void {
     ev.stopPropagation();
     if (this.saliendoId !== null) return;
+    this.foroParaSalir = f;
+  }
+
+  cerrarPopupSalir(): void {
+    this.foroParaSalir = null;
+  }
+
+  confirmarSalir(): void {
+    const f = this.foroParaSalir;
+    if (!f) return;
     this.saliendoId = f.IDmembresia;
     this.auth.salirDeForo(f.IDmembresia).subscribe({
       next: () => {
         this.forosRaw = this.forosRaw.filter(x => x.IDmembresia !== f.IDmembresia);
         this.aplicarFiltro();
         this.saliendoId = null;
+        this.foroParaSalir = null;
         this.cdr.detectChanges();
       },
       error: () => {

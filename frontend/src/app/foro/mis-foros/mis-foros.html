@@ -29,7 +29,7 @@
 
         <div class="mf-card-top">
             <button class="btn-mini-salir" [disabled]="saliendoId !== null"
-                (click)="salirForo($event, f)" title="Abandonar foro">
+                (click)="pedirConfirmacionSalir($event, f)" title="Abandonar foro">
                 @if (saliendoId === f.IDmembresia) {
                 <i class="bi bi-hourglass-split"></i>
                 } @else {
@@ -81,5 +81,42 @@
 <div class="empty-state">
     <i class="bi bi-inbox empty-icon"></i>
     <p>{{ busqueda ? 'No se encontraron foros con esa búsqueda.' : 'Todavía no te has unido a ningún foro.' }}</p>
+</div>
+}
+
+@if (foroParaSalir) {
+<div class="mf-modal-overlay" (click)="cerrarPopupSalir()">
+    <div class="mf-modal-box" (click)="$event.stopPropagation()">
+
+        <div class="mf-modal-header">
+            <h2 class="mf-modal-title">
+                <i class="bi bi-box-arrow-right" style="color:#e74c3c; margin-right:8px;"></i>
+                Salir del foro
+            </h2>
+            <button class="mf-modal-close" (click)="cerrarPopupSalir()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <p class="mf-modal-cita">"{{ foroParaSalir.titulo }}"</p>
+        <p class="mf-modal-info">
+            ¿Estás seguro de que quieres salir de este foro? Dejarás de aparecer
+            en la lista de miembros y podrás volver a unirte cuando quieras.
+        </p>
+
+        <div class="mf-modal-footer">
+            <button class="mf-btn-cancelar" (click)="cerrarPopupSalir()">Cancelar</button>
+            <button class="mf-btn-salir-confirmar" (click)="confirmarSalir()" [disabled]="saliendoId !== null">
+                @if (saliendoId !== null) {
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
+                Saliendo...
+                } @else {
+                <i class="bi bi-box-arrow-right" style="margin-right:6px;"></i>
+                Salir del foro
+                }
+            </button>
+        </div>
+
+    </div>
 </div>
 }
