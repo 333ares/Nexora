@@ -9,9 +9,9 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './inicio.html',
   styleUrl: './inicio.css',
 })
+
 export class Inicio {
   isLoggedIn = false;
-
 
   emailNewsletter: string = '';
 
