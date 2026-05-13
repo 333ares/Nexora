@@ -30,6 +30,17 @@ class MiembrosController extends Controller
             ], 400);
         }
 
+        $yaEsMiembro = Miembro::where('IDforo', $request->IDforo)
+            ->where('IDusuario', $request->user()->IDusuario)
+            ->exists();
+
+        if ($yaEsMiembro) {
+            return response()->json([
+                'message' => 'error',
+                'errors' => 'Ya eres miembro de este foro'
+            ], 400);
+        }
+
         $membresia = Miembro::create([
             'IDforo' => $request->IDforo,
             'IDusuario' => $request->user()->IDusuario
