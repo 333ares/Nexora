@@ -59,24 +59,45 @@
     </div>
 </article>
 
-<div class="card caja-respuesta">
-    <h3 class="respuesta-titulo">
-        <i class="bi bi-pencil-fill"></i>
-        Tu respuesta
-    </h3>
-    <textarea class="respuesta-input" rows="4" placeholder="Comparte tu experiencia o consejo..."
-        [(ngModel)]="nuevaRespuesta"></textarea>
-    <div class="respuesta-actions">
-        <button class="btn-publicar" [disabled]="!nuevaRespuesta.trim() || publicando" (click)="publicarRespuesta()">
-            @if (publicando) {
-            <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
-            Publicando...
-            } @else {
-            <i class="bi bi-send-fill" style="margin-right:6px;"></i>
-            Publicar respuesta
-            }
-        </button>
+<div class="respuesta-grid">
+
+    <div class="card caja-respuesta">
+        <h3 class="respuesta-titulo">
+            <i class="bi bi-pencil-fill"></i>
+            Tu respuesta
+        </h3>
+        <textarea class="respuesta-input" rows="4" placeholder="Comparte tu experiencia o consejo..."
+            [(ngModel)]="nuevaRespuesta"></textarea>
+        <div class="respuesta-actions">
+            <button class="btn-publicar" [disabled]="!nuevaRespuesta.trim() || publicando"
+                (click)="publicarRespuesta()">
+                @if (publicando) {
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
+                Publicando...
+                } @else {
+                <i class="bi bi-send-fill" style="margin-right:6px;"></i>
+                Publicar respuesta
+                }
+            </button>
+        </div>
     </div>
+
+    <div class="card votos-info">
+        <h3 class="votos-info-titulo">
+            <i class="bi bi-hand-thumbs-up-fill"></i>
+            ¿Qué son los votos?
+        </h3>
+        <p class="votos-info-desc">
+            Los votos son la forma que tiene la comunidad de reconocer las respuestas más útiles.
+            Si una respuesta te ha ayudado o resuelve bien la duda, pulsa el botón para votar a su favor.
+        </p>
+        <ul class="votos-info-lista">
+            <li><i class="bi bi-check-circle-fill"></i> Vota si la respuesta te ha sido útil o te ha aportado algo.</li>
+            <li><i class="bi bi-dash-circle-fill"></i> Si no te ha interesado, simplemente no la votes.</li>
+        </ul>
+        <p class="votos-info-nota">Puedes cambiar tu voto en cualquier momento volviendo a pulsar el botón.</p>
+    </div>
+
 </div>
 
 <div class="respuestas-header">
