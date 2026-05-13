@@ -87,7 +87,7 @@ export class DetalleForo implements OnInit {
           contenido: r.respuesta,
           fecha: new Date(r.created_at),
           votos: r.votos ?? 0,
-          yaVotada: false
+          yaVotada: r.yaVotada ?? false
         }));
         this.cargando = false;
         this.cdr.detectChanges();
