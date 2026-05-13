@@ -1,64 +1,168 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-<!-- Header con contador y tabs -->
 <div class="mp-header">
-    <div class="mp-title-wrap">
-        <h2 class="mp-title">Mis preguntas</h2>
-        <p class="mp-subtitle">Gestiona tus publicaciones y revisa las respuestas recibidas.</p>
+    <div>
+        <h2 class="mp-titulo">Mis foros creados</h2>
+        <p class="mp-sub">Gestiona los foros que has creado y accede a sus debates.</p>
     </div>
-
-    <div class="mp-tabs">
-        <button class="mp-tab" [class.mp-tab-active]="filtroActivo === 'todas'" (click)="cambiarFiltro('todas')">
-            Todas <span class="tab-count">{{ misPreguntas.length }}</span>
-        </button>
-        <button class="mp-tab" [class.mp-tab-active]="filtroActivo === 'abierta'" (click)="cambiarFiltro('abierta')">
-            Abiertas
-        </button>
-        <button class="mp-tab" [class.mp-tab-active]="filtroActivo === 'respondida'"
-            (click)="cambiarFiltro('respondida')">
-            Respondidas
-        </button>
+    <div class="mp-count">
+        <span class="count-num">{{ forosFiltrados.length }}</span>
+        <span class="count-label">foros</span>
     </div>
 </div>
 
-<!-- Lista -->
-<div class="mp-lista">
-    @for (p of preguntasFiltradas; track p.id) {
-    <article class="mp-card" (click)="abrirDetalle(p.id)">
-        <div class="mp-card-top">
-            <span class="mp-estado" [class.estado-abierta]="p.estado === 'abierta'"
-                [class.estado-respondida]="p.estado === 'respondida'" [class.estado-cerrada]="p.estado === 'cerrada'">
-                <i class="bi" [class.bi-circle-fill]="p.estado === 'abierta'"
-                    [class.bi-check-circle-fill]="p.estado === 'respondida'"
-                    [class.bi-lock-fill]="p.estado === 'cerrada'"></i>
-                {{ p.estado === 'abierta' ? 'Abierta' : p.estado === 'respondida' ? 'Respondida' : 'Cerrada' }}
-            </span>
+<div class="search-wrapper">
+    <i class="bi bi-search search-icon"></i>
+    <input type="text" class="search-input" placeholder="Buscar por título o descripción..."
+        [(ngModel)]="busqueda" (ngModelChange)="onBusqueda()">
+</div>
 
+@if (cargando) {
+<div class="empty-state">
+    <i class="bi bi-hourglass-split empty-icon"></i>
+    <p>Cargando tus foros...</p>
+</div>
+} @else if (forosPaginados.length > 0) {
+
+<div class="mp-lista">
+    @for (f of forosPaginados; track f.id) {
+    <article class="card mp-card" (click)="abrirForo(f)">
+
+        <div class="mp-card-top">
             <div class="mp-actions">
-                <button class="mp-icon-btn" title="Editar" (click)="editar(p.id); $event.stopPropagation()">
+                <button class="btn-mini-editar" (click)="abrirEditar($event, f)" title="Editar foro">
                     <i class="bi bi-pencil"></i>
                 </button>
-                <button class="mp-icon-btn mp-icon-btn-danger" title="Borrar"
-                    (click)="borrar(p.id); $event.stopPropagation()">
+                <button class="btn-mini-borrar" (click)="pedirConfirmacionBorrar($event, f)" title="Borrar foro">
                     <i class="bi bi-trash"></i>
                 </button>
             </div>
         </div>
 
-        <h3 class="mp-pregunta-titulo">{{ p.titulo }}</h3>
-        <p class="mp-pregunta-desc">{{ p.descripcion }}</p>
+        <h3 class="mp-titulo-foro">{{ f.titulo }}</h3>
+        <p class="mp-desc">{{ f.descripcion }}</p>
 
-        <div class="mp-metrics">
-            <span class="mp-metric"><i class="bi bi-chat-left-text"></i> {{ p.respuestas }} respuestas</span>
-            <span class="mp-metric"><i class="bi bi-eye"></i> {{ p.visitas }} visitas</span>
-            <span class="mp-metric mp-metric-time"><i class="bi bi-clock"></i> Hace {{ p.tiempo }}</span>
+        <div class="mp-meta">
+            <span class="mp-meta-item">
+                <i class="bi bi-calendar3"></i>
+                {{ f.fecha | date:'dd/MM/yyyy' }}
+            </span>
         </div>
+
+        <div class="mp-metricas">
+            <span class="mp-metric"><i class="bi bi-people-fill"></i> {{ f.miembros }} miembros</span>
+            <span class="mp-metric"><i class="bi bi-chat-left-text"></i> {{ f.respuestas }} resp.</span>
+            <span class="mp-metric"><i class="bi bi-eye"></i> {{ f.visitas }}</span>
+        </div>
+
     </article>
     }
-    @empty {
-    <div class="mp-empty">
-        <i class="bi bi-inbox"></i>
-        <p>No tienes preguntas {{ filtroActivo !== 'todas' ? filtroActivo + 's' : '' }} todavía.</p>
-    </div>
-    }
 </div>
+
+@if (totalPaginas > 1) {
+<div class="paginacion">
+    <button class="pag-btn" [disabled]="paginaActual === 1" (click)="irPagina(paginaActual - 1)">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+    @for (p of paginas; track p) {
+    <button class="pag-btn" [class.pag-active]="paginaActual === p" (click)="irPagina(p)">
+        {{ p }}
+    </button>
+    }
+    <button class="pag-btn" [disabled]="paginaActual === totalPaginas" (click)="irPagina(paginaActual + 1)">
+        <i class="bi bi-chevron-right"></i>
+    </button>
+</div>
+}
+
+} @else {
+<div class="empty-state">
+    <i class="bi bi-inbox empty-icon"></i>
+    <p>{{ busqueda ? 'No se encontraron foros con esa búsqueda.' : 'Todavía no has creado ningún foro.' }}</p>
+</div>
+}
+
+@if (foroParaEditar) {
+<div class="mp-modal-overlay" (click)="cerrarEditar()">
+    <div class="mp-modal-box" (click)="$event.stopPropagation()">
+
+        <div class="mp-modal-header">
+            <h2 class="mp-modal-title">
+                <i class="bi bi-pencil-fill" style="color:#4E9C25; margin-right:8px;"></i>
+                Editar foro
+            </h2>
+            <button class="mp-modal-close" (click)="cerrarEditar()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="mp-form-group">
+            <label class="mp-label">Título</label>
+            <input type="text" class="mp-input" [(ngModel)]="editTitulo" placeholder="Título del foro" maxlength="100">
+        </div>
+
+        <div class="mp-form-group">
+            <label class="mp-label">Descripción</label>
+            <textarea class="mp-textarea" [(ngModel)]="editDescripcion" rows="4"
+                placeholder="Descripción del foro"></textarea>
+        </div>
+
+        @if (errorEdit) {
+        <div class="mp-modal-error">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            {{ errorEdit }}
+        </div>
+        }
+
+        <div class="mp-modal-footer">
+            <button class="mp-btn-cancelar" (click)="cerrarEditar()">Cancelar</button>
+            <button class="mp-btn-guardar" (click)="guardarEdicion()"
+                [disabled]="!editTitulo.trim() || guardandoEdit">
+                @if (guardandoEdit) {
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
+                Guardando...
+                } @else {
+                <i class="bi bi-check-lg" style="margin-right:6px;"></i>
+                Guardar cambios
+                }
+            </button>
+        </div>
+
+    </div>
+</div>
+}
+
+@if (foroParaBorrar) {
+<div class="mp-modal-overlay" (click)="cerrarPopupBorrar()">
+    <div class="mp-modal-box" (click)="$event.stopPropagation()">
+
+        <div class="mp-modal-header">
+            <h2 class="mp-modal-title">
+                <i class="bi bi-trash-fill" style="color:#e74c3c; margin-right:8px;"></i>
+                Borrar foro
+            </h2>
+            <button class="mp-modal-close" (click)="cerrarPopupBorrar()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <p class="mp-modal-cita">"{{ foroParaBorrar.titulo }}"</p>
+        <p class="mp-modal-info">
+            ¿Estás seguro de que quieres borrar este foro? Esta acción no se puede deshacer y
+            se eliminarán todas las respuestas y membresías asociadas.
+        </p>
+
+        <div class="mp-modal-footer">
+            <button class="mp-btn-cancelar" (click)="cerrarPopupBorrar()">Cancelar</button>
+            <button class="mp-btn-salir-confirmar" (click)="confirmarBorrar()" [disabled]="borrando">
+                @if (borrando) {
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>Borrando...
+                } @else {
+                <i class="bi bi-trash-fill" style="margin-right:6px;"></i>Borrar foro
+                }
+            </button>
+        </div>
+
+    </div>
+</div>
+}
