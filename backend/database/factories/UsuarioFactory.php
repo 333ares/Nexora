@@ -19,7 +19,7 @@ class UsuarioFactory extends Factory
             'usuario' => fake()->userName(),
             'nombre' => fake()->name(),
             'apellidos' => fake()->lastName(),
-            'balance_total' => fake()->randomFloat(2, 0, 1000),
+            'balance_total' => fake()->randomFloat(2, 0, 5000),
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make($password),
             'estado' => 'activo'
