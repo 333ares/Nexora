@@ -8,8 +8,7 @@
     padding: 22px 26px;
     box-shadow: 0 2px 12px rgba(78, 156, 37, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
     border: 1px solid rgba(78, 156, 37, 0.08);
-    margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .mf-titulo {
@@ -56,15 +55,54 @@
     font-weight: 700;
 }
 
+/* BUSCADOR */
+.search-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 15px;
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px 10px 38px;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 12px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: #333;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    border-color: #4E9C25;
+}
+
+/* GRID 3 columnas */
 .mf-lista {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+    margin-bottom: 20px;
 }
 
 .mf-card {
-    padding: 22px 24px !important;
+    padding: 20px 22px !important;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .mf-card:hover {
@@ -74,20 +112,7 @@
 .mf-card-top {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
     margin-bottom: 10px;
-}
-
-.mf-categoria {
-    font-family: 'Lato', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 4px 10px;
-    background: #E8F5E4;
-    color: #3a8c1a;
-    border-radius: 8px;
 }
 
 .btn-mini-salir {
@@ -102,12 +127,18 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
+    flex-shrink: 0;
 }
 
-.btn-mini-salir:hover {
+.btn-mini-salir:not(:disabled):hover {
     background: #ffe0e0;
     border-color: #e57373;
     transform: rotate(12deg);
+}
+
+.btn-mini-salir:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .btn-mini-salir i {
@@ -118,9 +149,9 @@
 .mf-titulo-foro {
     font-family: 'Onest', sans-serif;
     font-weight: 800;
-    font-size: 16px;
+    font-size: 15px;
     color: #1a1a1a;
-    margin: 0 0 16px;
+    margin: 0 0 8px;
     letter-spacing: -0.2px;
     line-height: 1.35;
     transition: color 0.2s;
@@ -128,6 +159,40 @@
 
 .mf-card:hover .mf-titulo-foro {
     color: #3a8c1a;
+}
+
+.mf-desc {
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    color: #888;
+    margin: 0 0 12px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+}
+
+.mf-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.mf-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    color: #666;
+}
+
+.mf-meta-item i {
+    color: #4E9C25;
+    font-size: 12px;
 }
 
 .mf-metricas {
@@ -153,14 +218,56 @@
     color: #4E9C25;
 }
 
+/* PAGINACIÓN */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.pag-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border: 1.5px solid #e8e8e8;
+    background: #fff;
+    color: #555;
+    border-radius: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+}
+
+.pag-btn:not(:disabled):hover {
+    border-color: #4E9C25;
+    color: #4E9C25;
+}
+
+.pag-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.pag-btn.pag-active {
+    background: #4E9C25;
+    border-color: #4E9C25;
+    color: #fff;
+}
+
+/* EMPTY */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
     color: #bbb;
-    font-family: 'Lato';
+    font-family: 'Lato', sans-serif;
     font-size: 15px;
-    background: #fff;
-    border-radius: 20px;
 }
 
 .empty-icon {
@@ -168,6 +275,12 @@
     color: #d0d0d0;
     display: block;
     margin-bottom: 12px;
+}
+
+@media (max-width: 900px) {
+    .mf-lista {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 600px) {

@@ -6,32 +6,80 @@
         <p class="mf-sub">Gestiona los foros a los que te has unido y accede rápidamente a sus debates.</p>
     </div>
     <div class="mf-count">
-        <span class="count-num">{{ foros.length }}</span>
-        <span class="count-label">activos</span>
+        <span class="count-num">{{ forosFiltrados.length }}</span>
     </div>
 </div>
 
+<div class="search-wrapper">
+    <i class="bi bi-search search-icon"></i>
+    <input type="text" class="search-input" placeholder="Buscar por título o descripción..."
+        [(ngModel)]="busqueda" (ngModelChange)="onBusqueda()">
+</div>
+
+@if (cargando) {
+<div class="empty-state">
+    <i class="bi bi-hourglass-split empty-icon"></i>
+    <p>Cargando tus foros...</p>
+</div>
+} @else if (forosPaginados.length > 0) {
+
 <div class="mf-lista">
-    @for (f of foros; track f.id) {
+    @for (f of forosPaginados; track f.id) {
     <article class="card mf-card" (click)="abrirForo(f)">
+
         <div class="mf-card-top">
-            <button class="btn-mini-salir" (click)="salirForo($event, f)" title="Abandonar foro">
+            <button class="btn-mini-salir" [disabled]="saliendoId !== null"
+                (click)="salirForo($event, f)" title="Abandonar foro">
+                @if (saliendoId === f.IDmembresia) {
+                <i class="bi bi-hourglass-split"></i>
+                } @else {
                 <i class="bi bi-box-arrow-right"></i>
+                }
             </button>
         </div>
 
         <h3 class="mf-titulo-foro">{{ f.titulo }}</h3>
+        <p class="mf-desc">{{ f.descripcion }}</p>
+
+        <div class="mf-meta">
+            <span class="mf-meta-item">
+                <i class="bi bi-person-fill"></i>
+                {{ f.creador }}
+            </span>
+            <span class="mf-meta-item">
+                <i class="bi bi-calendar-check"></i>
+                Miembro desde {{ f.miembro_desde | date:'dd/MM/yyyy' }}
+            </span>
+        </div>
 
         <div class="mf-metricas">
-            <span class="mf-metric"><i class="bi bi-people-fill"></i> {{ f.miembros }} miembros</span>
-            <span class="mf-metric"><i class="bi bi-chat-left-text"></i> {{ f.respuestas }} resp.</span>
+            <span class="mf-metric"><i class="bi bi-people-fill"></i> {{ f.num_miembros }} miembros</span>
+            <span class="mf-metric"><i class="bi bi-chat-left-text"></i> {{ f.num_respuestas }} resp.</span>
         </div>
+
     </article>
     }
-    @empty {
-    <div class="empty-state">
-        <i class="bi bi-inbox empty-icon"></i>
-        <p>Todavía no te has unido a ningún foro.</p>
-    </div>
-    }
 </div>
+
+@if (totalPaginas > 1) {
+<div class="paginacion">
+    <button class="pag-btn" [disabled]="paginaActual === 1" (click)="irPagina(paginaActual - 1)">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+    @for (p of paginas; track p) {
+    <button class="pag-btn" [class.pag-active]="paginaActual === p" (click)="irPagina(p)">
+        {{ p }}
+    </button>
+    }
+    <button class="pag-btn" [disabled]="paginaActual === totalPaginas" (click)="irPagina(paginaActual + 1)">
+        <i class="bi bi-chevron-right"></i>
+    </button>
+</div>
+}
+
+} @else {
+<div class="empty-state">
+    <i class="bi bi-inbox empty-icon"></i>
+    <p>{{ busqueda ? 'No se encontraron foros con esa búsqueda.' : 'Todavía no te has unido a ningún foro.' }}</p>
+</div>
+}
