@@ -100,29 +100,7 @@
     position: relative;
 }
 
-/* ══ GRÁFICO — JERARQUÍA TEMPORAL ══ */
-.grafica-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.grafica-nav {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.grafica-mes {
-    font-size: 14px;
-    font-weight: 700;
-    color: #555;
-    font-family: 'Onest';
-    min-width: 80px;
-    text-align: center;
-}
-
+/* ══ GRÁFICO ══ */
 .cal-nav {
     background: none;
     border: 1.5px solid #d3d3d3;
@@ -218,27 +196,6 @@
     margin-top: 16px;
 }
 
-.chart-legend-row {
-    display: flex;
-    gap: 16px;
-}
-
-.chart-legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    font-family: 'Lato', sans-serif;
-    color: #999;
-}
-
-.chart-legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 3px;
-    display: inline-block;
-}
 
 /* ══ CARDS RETO / FORO ══ */
 .reto-info-card {
@@ -265,9 +222,6 @@
     transition: transform 0.3s ease;
 }
 
-.reto-info-card:hover .bi-piggy-bank-fill {
-    animation: subtleBounce 0.6s ease;
-}
 
 .reto-info-desc {
     font-size: 14px;
@@ -307,9 +261,6 @@
     transition: transform 0.3s ease;
 }
 
-.reto-info-card:hover .bi-chat-dots-fill {
-    animation: subtleBounce 0.6s ease;
-}
 
 /* ══ DROPDOWN RETO ══ */
 .select-wrapper {
@@ -443,21 +394,181 @@
     text-decoration: underline;
 }
 
+/* ══ GRID LAYOUT ══ */
+.grid-main {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  animation: fadeIn 0.5s ease 0.2s both;
+}
+
+.col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  animation: fadeIn 0.5s ease 0.2s both;
+}
+
+/* ══ SALDO PRINCIPAL ══ */
+.balance-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.balance-label {
+  font-size: 14px;
+  color: #999;
+  font-family: 'Lato';
+}
+
+.balance-amount {
+  font-size: 36px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  font-family: 'Onest';
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
+
+/* ══ STATS CARDS ══ */
+.grid-top-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 16px;
+  overflow: visible !important;
+}
+
+.card-stat {
+  background: #fff;
+  animation: fadeInUp 0.5s ease both;
+}
+
+.stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #999;
+  font-family: 'Lato';
+}
+
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+
+.stat-icon-green { background: linear-gradient(135deg, #B3E29A, #4E9C25); }
+.stat-icon-red   { background: linear-gradient(135deg, #ff8a8a, #e74c3c); }
+
+.stat-amount {
+  font-size: 24px;
+  font-weight: 800;
+  font-family: 'Onest';
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+
+/* ══ PRESUPUESTO ══ */
+.limit-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.limit-amount {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+  font-family: 'Onest';
+}
+
+.limit-meta {
+  font-size: 13px;
+  color: #aaa;
+  font-family: 'Lato';
+}
+
+.limit-bar-track {
+  width: 100%;
+  height: 8px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.limit-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #B3E29A, #78C550);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  animation: growWidth 1.2s ease 0.4s both;
+}
+
+/* ══ MINI-TABLA MOVIMIENTOS ══ */
+.tabla-header-mov-resumen {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1fr;
+  padding: 8px 12px;
+  border-bottom: 1.5px solid #f0f0f0;
+  margin-bottom: 4px;
+}
+
+.tabla-row-mov-resumen {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1fr;
+  padding: 12px;
+  border-radius: 12px;
+  transition: background 0.2s, transform 0.2s;
+  align-items: center;
+  border-bottom: 1px solid #f5f5f5;
+  animation: fadeIn 0.3s ease both;
+}
+
+.tabla-row-mov-resumen:last-child { border-bottom: none; }
+
+.tabla-row-mov-resumen:hover {
+  background: #f8fdf5;
+  transform: translateX(4px);
+}
+
 /* ══ RESPONSIVE MÓVIL ══ */
+@media (max-width: 1100px) {
+  .grid-main { grid-template-columns: 1fr; }
+  .grid-top-right { grid-template-columns: 1fr 1fr; }
+}
+
 @media (max-width: 768px) {
   .bar-chart-container { height: 180px; }
-
-  /* El canvas de Chart.js no debe superar el ancho del contenedor */
   .bar-chart-container canvas { max-width: 100%; }
-
   .btn-ir-retos { width: 100%; text-align: center; }
-
-  /* Las filas de la mini-tabla en 2 columnas: nombre+importe / fecha+tipo */
+  .grid-top-right { grid-template-columns: 1fr; }
+  .tabla-header-mov-resumen { display: none; }
   .tabla-row-mov-resumen {
     grid-template-columns: 1fr auto;
     gap: 4px 8px;
   }
-
-  /* Ocultar columna de fecha en pantallas muy pequeñas para evitar overflow */
   .tabla-row-mov-resumen .td-fecha { display: none; }
 }
