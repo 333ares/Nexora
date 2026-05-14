@@ -24,7 +24,6 @@ import { LandingLayout } from './landing-layout/landing-layout';
 import { VerForo } from './foro/ver-foro/ver-foro';
 import { MisForos } from './foro/mis-foros/mis-foros';
 import { MisPreguntas } from './foro/mis-preguntas/mis-preguntas';
-import { Kiro } from './foro/kiro/kiro';
 import { DetalleForo } from './foro/detalle-foro/detalle-foro';
 
 export const routes: Routes = [
@@ -74,7 +73,6 @@ export const routes: Routes = [
       { path: 'ver', component: VerForo },
       { path: 'mis-foros', component: MisForos },
       { path: 'mis-preguntas', component: MisPreguntas },
-      { path: 'kiro', component: Kiro },
       { path: 'detalle/:id', component: DetalleForo },
       { path: '', redirectTo: 'ver', pathMatch: 'full' }
     ]

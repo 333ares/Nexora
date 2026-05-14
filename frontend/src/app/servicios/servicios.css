@@ -112,11 +112,6 @@ nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width:
   border: 1.5px solid var(--mint-border);
   align-self: flex-end; border-bottom-right-radius: 4px;
 }
-.chat-bubble--kiro {
-  background: linear-gradient(135deg, var(--green-mid), var(--green-light));
-  color: white; align-self: flex-start; border-bottom-left-radius: 4px;
-}
-.chat-bubble--kiro strong { font-weight: 700; }
 
 /* Foro card */
 .foro-card { display: flex; flex-direction: column; gap: 10px; }
