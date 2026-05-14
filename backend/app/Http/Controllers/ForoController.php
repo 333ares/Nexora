@@ -12,9 +12,24 @@ use Illuminate\Support\Facades\Validator;
 
 class ForoController extends Controller
 {
+    private function moderarContenido(string ...$textos): void
+    {
+        $input = implode("\n", array_filter($textos));
+
+        $response = Http::withToken(config('services.openai.key'))
+            ->post('https://api.openai.com/v1/moderations', ['input' => $input]);
+
+        $flagged = $response->json('results.0.flagged', false);
+
+        if ($flagged) {
+            abort(422, 'El contenido infringe las normas de la comunidad.');
+        }
+    }
 
     public function crearForo(Request $request)
     {
+        $this->moderarContenido($request->titulo, $request->contenido);
+
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string',
             'contenido' => 'required|string',
@@ -119,6 +134,8 @@ class ForoController extends Controller
 
     public function actualizarForo(Request $request)
     {
+        $this->moderarContenido($request->titulo, $request->contenido);
+
         $validator = Validator::make($request->all(), [
             'IDforo' => 'required|integer',
             'titulo' => 'nullable|string',
