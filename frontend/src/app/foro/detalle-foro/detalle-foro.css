@@ -397,9 +397,9 @@
 }
 
 .btn-accion-resp {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     border: 1.5px solid;
     background: transparent;
     cursor: pointer;
@@ -411,7 +411,7 @@
 }
 
 .btn-accion-resp i {
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .btn-editar-resp {
@@ -496,7 +496,8 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 12px;
+    padding: 8px 14px;
+    height: 36px;
     background: #fff;
     border: 1.5px solid #e0e0e0;
     border-radius: 10px;
@@ -510,7 +511,7 @@
 
 .btn-votar-respuesta i {
     color: #4E9C25;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .btn-votar-respuesta:hover {

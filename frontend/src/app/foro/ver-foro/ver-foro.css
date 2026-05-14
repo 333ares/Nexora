@@ -56,14 +56,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: linear-gradient(135deg, #e8f5e0, #d4f0bc);
+    border-radius: 14px;
+    padding: 12px 18px;
 }
 
 .contenedor-titulo {
     font-family: 'Onest', sans-serif;
     font-weight: 800;
     font-size: 18px;
-    color: #1a1a1a;
+    color: #2a6010;
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contenedor-titulo i {
+    color: #4E9C25;
+    font-size: 18px;
 }
 
 .btn-ver-mas {
@@ -92,10 +103,11 @@
 }
 
 .pregunta-card-mini {
-    padding: 16px !important;
+    padding: 18px !important;
+    min-height: 155px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -120,12 +132,12 @@
 
 .pregunta-desc-mini {
     font-family: 'Lato', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     color: #777;
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.5;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     flex: 1;
@@ -571,7 +583,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 99999;
     animation: fadeInDownForo 0.25s ease both;
 }
 
