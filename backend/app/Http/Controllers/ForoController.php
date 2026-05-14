@@ -8,6 +8,7 @@ use App\Models\Respuesta;
 use App\Models\Usuario;
 use App\Models\Votos_Respuesta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class ForoController extends Controller

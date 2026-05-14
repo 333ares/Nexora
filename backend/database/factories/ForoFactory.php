@@ -9,9 +9,10 @@ class ForoFactory extends Factory
     public function definition(): array
     {
         return [
-            'titulo'    => $this->faker->sentence(6),
-            'contenido' => $this->faker->paragraph(4),
-            'visitas'   => $this->faker->numberBetween(0, 1000),
+            'titulo' => $this->faker->sentence(6), // Título del foro (frase corta)
+            'contenido' => $this->faker->paragraph(4), // Cuerpo de la pregunta/debate
+            'visitas' => $this->faker->numberBetween(0, 1000), // Visitas aleatorias iniciales
+            // IDusuario, siempre proporcionado por el seeder
         ];
     }
 }
