@@ -23,7 +23,6 @@ export class Faqs {
     { id: 0, categoria: 'general', qKey: 'FAQS_PAGE.Q0', aKey: 'FAQS_PAGE.A0' },
     { id: 1, categoria: 'planes', qKey: 'FAQS_PAGE.Q1', aKey: 'FAQS_PAGE.A1' },
     { id: 2, categoria: 'planes', qKey: 'FAQS_PAGE.Q2', aKey: 'FAQS_PAGE.A2' },
-    { id: 3, categoria: 'funcionalidades', qKey: 'FAQS_PAGE.Q3', aKey: 'FAQS_PAGE.A3' },
     { id: 4, categoria: 'funcionalidades', qKey: 'FAQS_PAGE.Q4', aKey: 'FAQS_PAGE.A4' },
     { id: 5, categoria: 'funcionalidades', qKey: 'FAQS_PAGE.Q5', aKey: 'FAQS_PAGE.A5' },
     { id: 6, categoria: 'seguridad', qKey: 'FAQS_PAGE.Q6', aKey: 'FAQS_PAGE.A6' },

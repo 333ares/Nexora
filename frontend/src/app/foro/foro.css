@@ -219,45 +219,6 @@ app-foro .page-wrapper router-outlet+* {
   display: block;
 }
 
-/* Kiro: pantalla completa sin scroll externo */
-app-foro:has(app-kiro) {
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-app-foro:has(app-kiro) .hero {
-  position: relative;
-  top: 0;
-  flex-shrink: 0;
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 32px 20px;
-}
-
-app-foro:has(app-kiro) .page-wrapper {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 28px 20px;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-app-foro:has(app-kiro) .page-wrapper app-kiro {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  margin-bottom: 0;
-}
-
-app-foro:has(app-kiro) .page-wrapper router-outlet {
-  display: none;
-}
 
 /* ══ CARD BASE ══ */
 app-foro .card {

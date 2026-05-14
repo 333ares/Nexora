@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ForoController extends Controller
 {
+
     public function crearForo(Request $request)
     {
         $validator = Validator::make($request->all(), [
