@@ -11,7 +11,6 @@ use App\Http\Controllers\RespuestasController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RetoController;
-use App\Models\Respuesta;
 
 // Login, registro
 Route::post('/login', [AuthController::class, 'loginUsuario']);
