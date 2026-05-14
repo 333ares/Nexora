@@ -10,6 +10,8 @@ class RespuestaFactory extends Factory
     {
         return [
             'respuesta' => $this->faker->paragraph(2),
+            // IDforo, siempre proporcionado por el seeder
+            // IDusuario, siempre proporcionado por el seeder
         ];
     }
 }
