@@ -19,11 +19,15 @@ app-foro .hero {
   background: #F2F6EE;
 }
 
-app-foro:has(.modal-overlay) .hero {
+app-foro:has(.modal-overlay) .hero,
+app-foro:has(.mf-modal-overlay) .hero,
+app-foro:has(.mp-modal-overlay) .hero {
   z-index: 0;
 }
 
-body:has(app-foro .modal-overlay) {
+body:has(app-foro .modal-overlay),
+body:has(app-foro .mf-modal-overlay),
+body:has(app-foro .mp-modal-overlay) {
   overflow: hidden;
 }
 
