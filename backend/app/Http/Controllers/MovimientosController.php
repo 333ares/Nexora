@@ -211,10 +211,11 @@ class MovimientosController extends Controller
         // Actualizamos el movimimento
         $movimiento->update($datos);
 
-        
+        // Si el tipo o la cantidad han cambiado, actualizamos el balance del usuario
         $cantidad = $request->cantidad;
         $balanceUsuario = $request->user()->balance_total;
 
+        // Si el tipo ha cambiado, revertimos el efecto del tipo anterior y aplicamos el nuevo
         if ($request->tipo === 'ingreso') {
             $request->user()->update([
                 'balance_total' => $balanceUsuario + $cantidad

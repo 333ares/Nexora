@@ -36,6 +36,7 @@ class RetoController extends Controller
 
     public function crearReto(Request $request)
     {
+        // Validamos los datos de entrada
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string|max:255',
             'cantidad' => 'required|numeric|min:0.01',
@@ -43,6 +44,7 @@ class RetoController extends Controller
             'fecha_final' => 'required|date|after:today',
         ]);
 
+        // Si la validación falla, devolvemos un error con los mensajes de validación
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'error',
@@ -50,6 +52,7 @@ class RetoController extends Controller
             ], 400);
         }
 
+        // Creamos el reto con los datos validados
         $reto = Reto::create([
             'titulo' => $request->titulo,
             'cantidad' => $request->cantidad,
@@ -61,6 +64,7 @@ class RetoController extends Controller
             'usuario_id' => $request->user()->IDusuario,
         ]);
 
+        // Comprobamos el estado inicial del reto (en caso de que la fecha_inicio ya haya pasado)
         return response()->json([
             'message' => 'Reto creado correctamente',
             'reto' => $reto
@@ -69,11 +73,13 @@ class RetoController extends Controller
 
     public function listarRetos(Request $request)
     {
+        // Obtenemos los retos del usuario ordenados por fecha_inicio descendente y comprobamos su estado
         $retos = Reto::where('usuario_id', $request->user()->IDusuario)
             ->orderBy('fecha_inicio', 'desc')
             ->get()
             ->map(fn($reto) => $this->comprobarEstado($reto));
 
+        // De esta forma, cada vez que el usuario consulte sus retos, se actualizará su estado automáticamente
         return response()->json([
             'message' => 'success',
             'retos' => $retos
@@ -82,17 +88,19 @@ class RetoController extends Controller
 
     public function verInfoReto(Request $request)
     {
+        // Validamos el ID del reto
         $reto = Reto::where('IDreto', $request->id)
             ->where('usuario_id', $request->user()->IDusuario)
             ->first();
 
+        // Si no se encuentra el reto, devolvemos un error 404
         if (!$reto) {
             return response()->json([
                 'message' => 'error',
                 'errors' => 'Reto no encontrado'
             ], 404);
         }
-
+        // Comprobamos el estado del reto antes de devolverlo (en caso de que la fecha_final ya haya pasado)
         return response()->json([
             'message' => 'success',
             'reto' => $this->comprobarEstado($reto)
@@ -104,11 +112,13 @@ class RetoController extends Controller
      */
     public function aportarDinero(Request $request)
     {
+        // Validamos los datos de entrada
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'cantidad' => 'required|numeric|min:0.01',
         ]);
 
+        // Si la validación falla, devolvemos un error con los mensajes de validación
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'error',
@@ -116,10 +126,12 @@ class RetoController extends Controller
             ], 400);
         }
 
+        // Buscamos el reto asegurándonos de que pertenece al usuario autenticado
         $reto = Reto::where('IDreto', $request->id)
             ->where('usuario_id', $request->user()->IDusuario)
             ->first();
 
+        // Si no se encuentra el reto, devolvemos un error 404
         if (!$reto) {
             return response()->json([
                 'message' => 'error',
@@ -127,6 +139,7 @@ class RetoController extends Controller
             ], 404);
         }
 
+        // Si el reto no está activo o ya está cumplido, no se pueden hacer aportaciones
         if (!$reto->activo) {
             return response()->json([
                 'message' => 'error',
@@ -134,6 +147,7 @@ class RetoController extends Controller
             ], 400);
         }
 
+        // Si el usuario no tiene suficiente dinero para aportar, devolvemos un error
         if ($request->user()->balance_total <= $request->cantidad) {
             return response()->json([
                 'message' => 'error',
@@ -171,11 +185,13 @@ class RetoController extends Controller
 
     public function retirarDinero(Request $request)
     {
+        // Validamos los datos de entrada
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'cantidad' => 'required|numeric|min:0.01',
         ]);
 
+        // Si la validación falla, devolvemos un error con los mensajes de validación
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'error',
@@ -183,10 +199,12 @@ class RetoController extends Controller
             ], 400);
         }
 
+        // Buscamos el reto asegurándonos de que pertenece al usuario autenticado
         $reto = Reto::where('IDreto', $request->id)
             ->where('usuario_id', $request->user()->IDusuario)
             ->first();
 
+        // Si no se encuentra el reto, devolvemos un error 404
         if (!$reto) {
             return response()->json([
                 'message' => 'error',
@@ -194,6 +212,7 @@ class RetoController extends Controller
             ], 404);
         }
 
+        // Si el reto no está activo o ya está cumplido, no se pueden hacer retiradas
         if (!$reto->activo || $reto->cumplido) {
             return response()->json([
                 'message' => 'error',
@@ -201,6 +220,7 @@ class RetoController extends Controller
             ], 400);
         }
 
+        // Si se intenta retirar más dinero del que hay en la hucha, devolvemos un error
         if ($request->cantidad > $reto->cantidad_actual) {
             return response()->json([
                 'message' => 'error',
@@ -239,6 +259,7 @@ class RetoController extends Controller
 
     public function actualizarReto(Request $request)
     {
+        // Validamos los datos de entrada
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'titulo' => 'nullable|string|max:255',
@@ -247,17 +268,19 @@ class RetoController extends Controller
             'fecha_final' => 'nullable|date|after:today',
         ]);
 
+        // Si la validación falla, devolvemos un error con los mensajes de validación
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'error',
                 'errors'  => $validator->errors()
             ], 400);
         }
-
+        // Buscamos el reto asegurándonos de que pertenece al usuario autenticado
         $reto = Reto::where('IDreto', $request->id)
             ->where('usuario_id', $request->user()->IDusuario)
             ->first();
 
+        // Si no se encuentra el reto, devolvemos un error 404
         if (!$reto) {
             return response()->json([
                 'message' => 'error',
@@ -265,8 +288,10 @@ class RetoController extends Controller
             ], 404);
         }
 
+        // Solo se pueden actualizar retos que no estén cumplidos
         $reto->update($request->only(['titulo', 'cantidad', 'fecha_inicio', 'fecha_final']));
 
+        // Comprobamos el estado del reto después de la actualización (en caso de que la fecha_final ya haya pasado o se haya reducido la cantidad)
         return response()->json([
             'message' => 'success',
             'reto' => $this->comprobarEstado($reto->fresh())
@@ -275,10 +300,12 @@ class RetoController extends Controller
 
     public function borrarReto(Request $request)
     {
+        // Validamos el ID del reto
         $reto = Reto::where('IDreto', $request->id)
             ->where('usuario_id', $request->user()->IDusuario)
             ->first();
 
+        // Si no se encuentra el reto, devolvemos un error 404
         if (!$reto) {
             return response()->json([
                 'message' => 'error',
@@ -286,8 +313,10 @@ class RetoController extends Controller
             ], 404);
         }
 
+        // Solo se pueden borrar retos que no estén cumplidos
         $reto->delete();
 
+        // devolvemos una respuesta de éxito
         return response()->json([
             'message' => 'success',
             'reto' => 'El reto se ha borrado correctamente'
