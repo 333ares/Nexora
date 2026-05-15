@@ -4,6 +4,7 @@ import { PerfilUsuario } from './perfil-usuario/perfil-usuario';
 import { Registro } from './registro/registro';
 import { AuthGuard } from './guards/auth-guard';
 import { AdminGuard } from './guards/admin-guard';
+import { UserGuard } from './guards/user-guard';
 import { Planes } from './planes/planes';
 import { Movimientos } from './movimientos/movimientos';
 import { Contacto } from './contacto/contacto';
@@ -54,12 +55,12 @@ export const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuario,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, UserGuard]
   },
   {
     path: 'usuario-bloqueado',
     component: UsuarioBloqueado,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, UserGuard]
   },
   {
     path: 'registro',
@@ -68,7 +69,7 @@ export const routes: Routes = [
   {
     path: 'foro',
     component: Foro,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, UserGuard],
     children: [
       { path: 'ver', component: VerForo },
       { path: 'mis-foros', component: MisForos },
@@ -80,7 +81,7 @@ export const routes: Routes = [
   {
     path: 'movimientos',
     component: Movimientos,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, UserGuard],
     children: [
       { path: 'resumen', component: Resumen },
       { path: 'lista', component: Lista },

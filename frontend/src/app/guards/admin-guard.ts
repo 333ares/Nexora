@@ -13,7 +13,7 @@ export class AdminGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate(['/login']); // redirige si no es admin
+    this.router.navigate(['/movimientos']);
     return false;
 
   }
