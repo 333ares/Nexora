@@ -13,19 +13,24 @@ import { Auth } from '../services/auth';
 })
 export class LandingLayout {
 
+  // Controla si el usuario está logueado
   isLoggedIn = false;
-  menuOpen   = false;
+  // Controla si el menú hamburguesa del nav móvil está abierto
+  menuOpen = false;
 
   constructor(private authService: Auth, private router: Router) {
+    // Comprobamos si el usuario tiene un token para determinar si está logueado
     this.isLoggedIn = !!this.authService.getToken();
+    // Nos suscribimos a los eventos del router para cerrar el menú al navegar a otra sección
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) this.menuOpen = false;
     });
   }
 
-  toggleMenu(): void { this.menuOpen = !this.menuOpen; }
-  closeMenu():  void { this.menuOpen = false; }
+  toggleMenu(): void { this.menuOpen = !this.menuOpen; } // Abre o cierra el menú hamburguesa del nav móvil
+  closeMenu():  void { this.menuOpen = false; } // Cierra el menú (útil cuando el usuario pulsa fuera de él)
 
+  // HostListener para detectar el scroll y aplicar una sombra al nav cuando se baja la página
   @HostListener('window:scroll')
   onScroll(): void {
     const nav = document.querySelector('nav.landing-nav') as HTMLElement;
