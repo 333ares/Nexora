@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Auth } from '../../services/auth';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface Respuesta {
   id: number;
@@ -34,7 +35,7 @@ export interface Notificacion {
 @Component({
   selector: 'app-detalle-foro',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './detalle-foro.html',
   styleUrl: './detalle-foro.css'
 })

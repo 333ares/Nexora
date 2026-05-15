@@ -2,8 +2,8 @@
 
 <div class="mis-foros-header">
     <div>
-        <h2 class="mf-titulo">Foros a los que pertenezco</h2>
-        <p class="mf-sub">Gestiona los foros a los que te has unido y accede rápidamente a sus debates.</p>
+        <h2 class="mf-titulo">{{ 'FORO.FOROS_PERTENEZCO' | translate }}</h2>
+        <p class="mf-sub">{{ 'FORO.FOROS_PERTENEZCO_SUB' | translate }}</p>
     </div>
     <div class="mf-count">
         <span class="count-num">{{ forosFiltrados.length }}</span>
@@ -12,14 +12,14 @@
 
 <div class="search-wrapper">
     <i class="bi bi-search search-icon"></i>
-    <input type="text" class="search-input" placeholder="Buscar por título o descripción..."
+    <input type="text" class="search-input" [placeholder]="'FORO.BUSCAR_TITULO_DESC_PH' | translate"
         [(ngModel)]="busqueda" (ngModelChange)="onBusqueda()">
 </div>
 
 @if (cargando) {
 <div class="empty-state">
     <i class="bi bi-hourglass-split empty-icon"></i>
-    <p>Cargando tus foros...</p>
+    <p>{{ 'FORO.CARGANDO_TUS_FOROS' | translate }}</p>
 </div>
 } @else if (forosPaginados.length > 0) {
 
@@ -29,7 +29,7 @@
 
         <div class="mf-card-top">
             <button class="btn-mini-salir" [disabled]="saliendoId !== null"
-                (click)="pedirConfirmacionSalir($event, f)" title="Abandonar foro">
+                (click)="pedirConfirmacionSalir($event, f)" [title]="'FORO.SALIR_FORO' | translate">
                 @if (saliendoId === f.IDmembresia) {
                 <i class="bi bi-hourglass-split"></i>
                 } @else {
@@ -48,13 +48,13 @@
             </span>
             <span class="mf-meta-item">
                 <i class="bi bi-calendar-check"></i>
-                Miembro desde {{ f.miembro_desde | date:'dd/MM/yyyy' }}
+                {{ 'FORO.MIEMBRO_DESDE' | translate }} {{ f.miembro_desde | date:'dd/MM/yyyy' }}
             </span>
         </div>
 
         <div class="mf-metricas">
-            <span class="mf-metric"><i class="bi bi-people-fill"></i> {{ f.num_miembros }} miembros</span>
-            <span class="mf-metric"><i class="bi bi-chat-left-text"></i> {{ f.num_respuestas }} resp.</span>
+            <span class="mf-metric"><i class="bi bi-people-fill"></i> {{ f.num_miembros }} {{ 'FORO.MIEMBROS' | translate }}</span>
+            <span class="mf-metric"><i class="bi bi-chat-left-text"></i> {{ f.num_respuestas }} {{ 'FORO.RESP' | translate }}</span>
         </div>
 
     </article>
@@ -80,7 +80,7 @@
 } @else {
 <div class="empty-state">
     <i class="bi bi-inbox empty-icon"></i>
-    <p>{{ busqueda ? 'No se encontraron foros con esa búsqueda.' : 'Todavía no te has unido a ningún foro.' }}</p>
+    <p>{{ busqueda ? ('FORO.SIN_FOROS_BUSQUEDA' | translate) : ('FORO.SIN_FOROS_UNIDOS' | translate) }}</p>
 </div>
 }
 
@@ -91,7 +91,7 @@
         <div class="mf-modal-header">
             <h2 class="mf-modal-title">
                 <i class="bi bi-box-arrow-right" style="color:#e74c3c; margin-right:8px;"></i>
-                Salir del foro
+                {{ 'FORO.SALIR_FORO' | translate }}
             </h2>
             <button class="mf-modal-close" (click)="cerrarPopupSalir()">
                 <i class="bi bi-x-lg"></i>
@@ -100,19 +100,18 @@
 
         <p class="mf-modal-cita">"{{ foroParaSalir.titulo }}"</p>
         <p class="mf-modal-info">
-            ¿Estás seguro de que quieres salir de este foro? Dejarás de aparecer
-            en la lista de miembros y podrás volver a unirte cuando quieras.
+            {{ 'FORO.SALIR_FORO_DESC' | translate }}
         </p>
 
         <div class="mf-modal-footer">
-            <button class="mf-btn-cancelar" (click)="cerrarPopupSalir()">Cancelar</button>
+            <button class="mf-btn-cancelar" (click)="cerrarPopupSalir()">{{ 'FORO.CANCELAR' | translate }}</button>
             <button class="mf-btn-salir-confirmar" (click)="confirmarSalir()" [disabled]="saliendoId !== null">
                 @if (saliendoId !== null) {
                 <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
-                Saliendo...
+                {{ 'FORO.SALIENDO' | translate }}
                 } @else {
                 <i class="bi bi-box-arrow-right" style="margin-right:6px;"></i>
-                Salir del foro
+                {{ 'FORO.SALIR_FORO' | translate }}
                 }
             </button>
         </div>

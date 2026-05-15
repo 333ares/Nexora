@@ -3,6 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../../services/auth';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface ForoUnido {
   id: number;
@@ -18,7 +19,7 @@ export interface ForoUnido {
 @Component({
   selector: 'app-mis-foros',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe],
+  imports: [CommonModule, FormsModule, DatePipe, TranslateModule],
   templateUrl: './mis-foros.html',
   styleUrl: './mis-foros.css'
 })

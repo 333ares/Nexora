@@ -3,6 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../../services/auth';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 export interface Pregunta {
   id: number;
@@ -21,7 +22,7 @@ type ModoVista = 'inicio' | 'popular' | 'respondidas' | 'recientes';
 @Component({
   selector: 'app-ver-foro',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe],
+  imports: [CommonModule, FormsModule, DatePipe, TranslateModule],
   templateUrl: './ver-foro.html',
   styleUrl: './ver-foro.css'
 })
@@ -36,10 +37,10 @@ export class VerForo implements OnInit {
   nuevaDescripcion = '';
 
   opcionesOrden: { key: OrdenKey, label: string, icon: string }[] = [
-    { key: 'nuevo', label: 'Más nuevo', icon: 'bi-arrow-up-circle' },
-    { key: 'viejo', label: 'Más viejo', icon: 'bi-arrow-down-circle' },
-    { key: 'popular', label: 'Más popular', icon: 'bi-fire' },
-    { key: 'miembros', label: 'Más miembros', icon: 'bi-people' }
+    { key: 'nuevo', label: 'FORO.MAS_NUEVO', icon: 'bi-arrow-up-circle' },
+    { key: 'viejo', label: 'FORO.MAS_VIEJO', icon: 'bi-arrow-down-circle' },
+    { key: 'popular', label: 'FORO.MAS_POPULAR', icon: 'bi-fire' },
+    { key: 'miembros', label: 'FORO.MAS_MIEMBROS', icon: 'bi-people' }
   ];
 
   // Lista raw que llega del backend (nunca se toca)
@@ -80,9 +81,9 @@ export class VerForo implements OnInit {
 
   get etiquetaModo(): string {
     switch (this.modoVista) {
-      case 'popular': return 'Foros más populares';
-      case 'respondidas': return 'Foros más respondidos';
-      case 'recientes': return 'Foros recientes';
+      case 'popular': return 'FORO.FOROS_POPULARES';
+      case 'respondidas': return 'FORO.FOROS_RESPONDIDOS';
+      case 'recientes': return 'FORO.FOROS_RECIENTES';
       default: return '';
     }
   }
@@ -134,7 +135,7 @@ export class VerForo implements OnInit {
   }
 
   get labelOrdenActivo(): string {
-    return this.opcionesOrden.find(o => o.key === this.ordenActivo)?.label || 'Ordenar';
+    return this.opcionesOrden.find(o => o.key === this.ordenActivo)?.label || 'FORO.ORDENAR_POR';
   }
 
   toggleFiltro(ev: MouseEvent) {
