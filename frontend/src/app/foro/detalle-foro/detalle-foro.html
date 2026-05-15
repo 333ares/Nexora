@@ -15,7 +15,7 @@
 @if (cargando) {
 <div class="empty-state">
     <i class="bi bi-hourglass-split empty-icon"></i>
-    <p>Cargando foro...</p>
+    <p>{{ 'FORO.CARGANDO_FORO' | translate }}</p>
 </div>
 } @else if (pregunta) {
 
@@ -28,12 +28,12 @@
         @if (pregunta.unido) {
         <button class="btn-salir" (click)="abrirSalir()">
             <i class="bi bi-check-circle-fill"></i>
-            <span>Unido</span>
+            <span>{{ 'FORO.UNIDO' | translate }}</span>
         </button>
         } @else {
         <button class="btn-unirse-detalle" (click)="abrirUnirse()">
             <i class="bi bi-person-plus-fill"></i>
-            <span>Unirme al foro</span>
+            <span>{{ 'FORO.UNIRME_FORO' | translate }}</span>
         </button>
         }
     </div>
@@ -53,7 +53,7 @@
             <span class="stat-inline"><i class="bi bi-chat-left-text"></i> {{ pregunta.respuestas }}</span>
             <span class="stat-inline"><i class="bi bi-eye"></i> {{ pregunta.visitas }}</span>
             <span class="stat-inline stat-miembros">
-                <i class="bi bi-people-fill"></i> {{ pregunta.miembros }} miembros
+                <i class="bi bi-people-fill"></i> {{ pregunta.miembros }} {{ 'FORO.MIEMBROS' | translate }}
             </span>
         </div>
     </div>
@@ -64,19 +64,19 @@
     <div class="card caja-respuesta">
         <h3 class="respuesta-titulo">
             <i class="bi bi-pencil-fill"></i>
-            Tu respuesta
+            {{ 'FORO.TU_RESPUESTA' | translate }}
         </h3>
-        <textarea class="respuesta-input" rows="4" placeholder="Comparte tu experiencia o consejo..."
+        <textarea class="respuesta-input" rows="4" [placeholder]="'FORO.RESPUESTA_PH' | translate"
             [(ngModel)]="nuevaRespuesta"></textarea>
         <div class="respuesta-actions">
             <button class="btn-publicar" [disabled]="!nuevaRespuesta.trim() || publicando"
                 (click)="publicarRespuesta()">
                 @if (publicando) {
                 <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
-                Publicando...
+                {{ 'FORO.PUBLICANDO' | translate }}
                 } @else {
                 <i class="bi bi-send-fill" style="margin-right:6px;"></i>
-                Publicar respuesta
+                {{ 'FORO.PUBLICAR_RESPUESTA' | translate }}
                 }
             </button>
         </div>
@@ -85,24 +85,23 @@
     <div class="card votos-info">
         <h3 class="votos-info-titulo">
             <i class="bi bi-hand-thumbs-up-fill"></i>
-            ¿Qué son los votos?
+            {{ 'FORO.QUE_SON_VOTOS' | translate }}
         </h3>
         <p class="votos-info-desc">
-            Los votos son la forma que tiene la comunidad de reconocer las respuestas más útiles.
-            Si una respuesta te ha ayudado o resuelve bien la duda, pulsa el botón para votar a su favor.
+            {{ 'FORO.VOTOS_DESC' | translate }}
         </p>
         <ul class="votos-info-lista">
-            <li><i class="bi bi-check-circle-fill"></i> Vota si la respuesta te ha sido útil o te ha aportado algo.</li>
-            <li><i class="bi bi-dash-circle-fill"></i> Si no te ha interesado, simplemente no la votes.</li>
+            <li><i class="bi bi-check-circle-fill"></i> {{ 'FORO.VOTOS_UTIL' | translate }}</li>
+            <li><i class="bi bi-dash-circle-fill"></i> {{ 'FORO.VOTOS_NO_UTIL' | translate }}</li>
         </ul>
-        <p class="votos-info-nota">Puedes cambiar tu voto en cualquier momento volviendo a pulsar el botón.</p>
+        <p class="votos-info-nota">{{ 'FORO.VOTOS_NOTA' | translate }}</p>
     </div>
 
 </div>
 
 <div class="respuestas-header">
     <h2 class="respuestas-heading">
-        {{ respuestas.length }} {{ respuestas.length === 1 ? 'respuesta' : 'respuestas' }}
+        {{ respuestas.length }} {{ respuestas.length === 1 ? ('FORO.RESPUESTA' | translate) : ('FORO.RESPUESTAS' | translate) }}
     </h2>
 </div>
 
@@ -139,13 +138,13 @@
         @if (editandoId === r.id) {
         <textarea class="respuesta-input edit-inline" [(ngModel)]="editContenido" rows="4"></textarea>
         <div class="edit-actions">
-            <button class="btn-cancelar-edit" (click)="cancelarEdicion()">Cancelar</button>
+            <button class="btn-cancelar-edit" (click)="cancelarEdicion()">{{ 'FORO.CANCELAR' | translate }}</button>
             <button class="btn-guardar-edit" [disabled]="!editContenido.trim() || guardandoEdit"
                 (click)="guardarEdicion(r)">
                 @if (guardandoEdit) {
-                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>Guardando...
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>{{ 'FORO.GUARDANDO' | translate }}
                 } @else {
-                <i class="bi bi-check-lg" style="margin-right:6px;"></i>Guardar
+                <i class="bi bi-check-lg" style="margin-right:6px;"></i>{{ 'FORO.GUARDAR' | translate }}
                 }
             </button>
         </div>
@@ -157,7 +156,7 @@
     @empty {
     <div class="empty-state">
         <i class="bi bi-chat-left-dots empty-icon"></i>
-        <p>Todavía no hay respuestas. ¡Sé el primero!</p>
+        <p>{{ 'FORO.SIN_RESPUESTAS' | translate }}</p>
     </div>
     }
 </div>
@@ -171,7 +170,7 @@
         <div class="modal-header">
             <h2 class="modal-title">
                 <i class="bi bi-box-arrow-right" style="color:#e74c3c; margin-right:8px;"></i>
-                Salir del foro
+                {{ 'FORO.SALIR_FORO' | translate }}
             </h2>
             <button class="modal-close" (click)="cerrarSalir()">
                 <i class="bi bi-x-lg"></i>
@@ -180,19 +179,18 @@
 
         <p class="modal-cita">"{{ pregunta.titulo }}"</p>
         <p class="modal-info">
-            ¿Estás seguro de que quieres salir de este foro? Dejarás de aparecer
-            en la lista de miembros y podrás volver a unirte cuando quieras.
+            {{ 'FORO.SALIR_FORO_DESC' | translate }}
         </p>
 
         <div class="modal-footer">
-            <button class="btn-cancelar" (click)="cerrarSalir()">Cancelar</button>
+            <button class="btn-cancelar" (click)="cerrarSalir()">{{ 'FORO.CANCELAR' | translate }}</button>
             <button class="btn-salir-confirmar" (click)="confirmarSalir()" [disabled]="saliendo">
                 @if (saliendo) {
                 <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
-                Saliendo...
+                {{ 'FORO.SALIENDO' | translate }}
                 } @else {
                 <i class="bi bi-box-arrow-right" style="margin-right:6px;"></i>
-                Salir del foro
+                {{ 'FORO.SALIR_FORO' | translate }}
                 }
             </button>
         </div>
@@ -208,7 +206,7 @@
         <div class="modal-header">
             <h2 class="modal-title">
                 <i class="bi bi-trash-fill" style="color:#e74c3c; margin-right:8px;"></i>
-                Borrar respuesta
+                {{ 'FORO.BORRAR_RESPUESTA' | translate }}
             </h2>
             <button class="modal-close" (click)="cerrarPopupBorrar()">
                 <i class="bi bi-x-lg"></i>
@@ -219,16 +217,16 @@
             "{{ respuestaParaBorrar.contenido }}"
         </p>
         <p class="modal-info">
-            ¿Estás seguro de que quieres borrar esta respuesta? Esta acción no se puede deshacer.
+            {{ 'FORO.BORRAR_RESPUESTA_DESC' | translate }}
         </p>
 
         <div class="modal-footer">
-            <button class="btn-cancelar" (click)="cerrarPopupBorrar()">Cancelar</button>
+            <button class="btn-cancelar" (click)="cerrarPopupBorrar()">{{ 'FORO.CANCELAR' | translate }}</button>
             <button class="btn-salir-confirmar" (click)="confirmarBorrar()" [disabled]="borrando">
                 @if (borrando) {
-                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>Borrando...
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>{{ 'FORO.BORRANDO' | translate }}
                 } @else {
-                <i class="bi bi-trash-fill" style="margin-right:6px;"></i>Borrar
+                <i class="bi bi-trash-fill" style="margin-right:6px;"></i>{{ 'FORO.BORRAR' | translate }}
                 }
             </button>
         </div>
@@ -244,7 +242,7 @@
         <div class="modal-header">
             <h2 class="modal-title">
                 <i class="bi bi-people-fill" style="color:#4E9C25; margin-right:8px;"></i>
-                Unirme al foro
+                {{ 'FORO.UNIRME_MODAL_TITLE' | translate }}
             </h2>
             <button class="modal-close" (click)="cerrarUnirse()">
                 <i class="bi bi-x-lg"></i>
@@ -253,8 +251,7 @@
 
         <p class="modal-cita">"{{ pregunta.titulo }}"</p>
         <p class="modal-info">
-            Al unirte podrás participar en las respuestas, recibir notificaciones
-            de novedades y aparecer en la lista de miembros.
+            {{ 'FORO.UNIRME_DESC' | translate }}
         </p>
 
         @if (errorUnirse) {
@@ -265,14 +262,14 @@
         }
 
         <div class="modal-footer">
-            <button class="btn-cancelar" (click)="cerrarUnirse()">Cancelar</button>
+            <button class="btn-cancelar" (click)="cerrarUnirse()">{{ 'FORO.CANCELAR' | translate }}</button>
             <button class="btn-guardar" (click)="confirmarUnirse()" [disabled]="uniendose">
                 @if (uniendose) {
                 <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
-                Uniendo...
+                {{ 'FORO.UNIENDO' | translate }}
                 } @else {
                 <i class="bi bi-check-lg" style="margin-right:6px;"></i>
-                Unirme ahora
+                {{ 'FORO.UNIRME_AHORA' | translate }}
                 }
             </button>
         </div>

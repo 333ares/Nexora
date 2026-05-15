@@ -5,9 +5,9 @@
 <div class="foro-header-modo">
     <button class="btn-volver" (click)="volverAlInicio()">
         <i class="bi bi-chevron-left"></i>
-        <span>Volver</span>
+        <span>{{ 'FORO.VOLVER' | translate }}</span>
     </button>
-    <h2 class="foro-titulo-modo">{{ etiquetaModo }}</h2>
+    <h2 class="foro-titulo-modo">{{ etiquetaModo | translate }}</h2>
 </div>
 }
 
@@ -16,7 +16,7 @@
 
     <div class="search-wrapper">
         <i class="bi bi-search search-icon"></i>
-        <input type="text" class="search-input" placeholder="Buscar foros..." [(ngModel)]="busqueda"
+        <input type="text" class="search-input" [placeholder]="'FORO.BUSCAR_PH' | translate" [(ngModel)]="busqueda"
             (ngModelChange)="onBusqueda()">
     </div>
 
@@ -24,18 +24,18 @@
     <div class="filter-wrapper">
         <button class="btn-filter-drop" (click)="toggleFiltro($event)" [class.filter-active]="filtroAbierto">
             <i class="bi bi-funnel"></i>
-            <span>{{ labelOrdenActivo }}</span>
+            <span>{{ labelOrdenActivo | translate }}</span>
             <i class="bi" [class.bi-chevron-up]="filtroAbierto" [class.bi-chevron-down]="!filtroAbierto"></i>
         </button>
 
         @if (filtroAbierto) {
         <div class="filter-dropdown" (click)="$event.stopPropagation()">
-            <p class="filter-heading">Ordenar por</p>
+            <p class="filter-heading">{{ 'FORO.ORDENAR_POR' | translate }}</p>
             @for (op of opcionesOrden; track op.key) {
             <button class="filter-item" [class.filter-item-active]="ordenActivo === op.key"
                 (click)="elegirOrden(op.key)">
                 <i class="bi" [class]="op.icon"></i>
-                <span>{{ op.label }}</span>
+                <span>{{ op.label | translate }}</span>
                 @if (ordenActivo === op.key) {
                 <i class="bi bi-check-lg filter-check"></i>
                 }
@@ -48,7 +48,7 @@
 
     <button class="btn-nueva" (click)="abrirNueva()">
         <i class="bi bi-plus-lg"></i>
-        <span>Nueva pregunta</span>
+        <span>{{ 'FORO.NUEVA_PREGUNTA' | translate }}</span>
     </button>
 
 </div>
@@ -58,7 +58,7 @@
 @if (cargando) {
 <div class="empty-state">
     <i class="bi bi-hourglass-split empty-icon"></i>
-    <p>Cargando foros...</p>
+    <p>{{ 'FORO.CARGANDO' | translate }}</p>
 </div>
 } @else {
 
@@ -69,8 +69,8 @@
     <!-- POPULARES -->
     <section class="contenedor-foros">
         <div class="contenedor-header">
-            <h3 class="contenedor-titulo"><i class="bi bi-fire"></i> Más populares</h3>
-            <button class="btn-ver-mas" (click)="verMas('popular')">Ver más</button>
+            <h3 class="contenedor-titulo"><i class="bi bi-fire"></i> {{ 'FORO.MAS_POPULARES' | translate }}</h3>
+            <button class="btn-ver-mas" (click)="verMas('popular')">{{ 'FORO.VER_MAS' | translate }}</button>
         </div>
         <div class="contenedor-grid">
             @for (p of preguntasPopulares; track p.id) {
@@ -89,8 +89,8 @@
     <!-- RESPONDIDAS -->
     <section class="contenedor-foros">
         <div class="contenedor-header">
-            <h3 class="contenedor-titulo"><i class="bi bi-chat-left-text"></i> Más respondidas</h3>
-            <button class="btn-ver-mas" (click)="verMas('respondidas')">Ver más</button>
+            <h3 class="contenedor-titulo"><i class="bi bi-chat-left-text"></i> {{ 'FORO.MAS_RESPONDIDAS' | translate }}</h3>
+            <button class="btn-ver-mas" (click)="verMas('respondidas')">{{ 'FORO.VER_MAS' | translate }}</button>
         </div>
         <div class="contenedor-grid">
             @for (p of preguntasRespondidas; track p.id) {
@@ -109,8 +109,8 @@
     <!-- RECIENTES -->
     <section class="contenedor-foros">
         <div class="contenedor-header">
-            <h3 class="contenedor-titulo"><i class="bi bi-stars"></i> Recientes</h3>
-            <button class="btn-ver-mas" (click)="verMas('recientes')">Ver más</button>
+            <h3 class="contenedor-titulo"><i class="bi bi-stars"></i> {{ 'FORO.RECIENTES' | translate }}</h3>
+            <button class="btn-ver-mas" (click)="verMas('recientes')">{{ 'FORO.VER_MAS' | translate }}</button>
         </div>
         <div class="contenedor-grid">
             @for (p of preguntasRecientes; track p.id) {
@@ -135,11 +135,11 @@
         <div class="pregunta-stats">
             <div class="stat-item">
                 <span class="stat-num">{{ p.respuestas }}</span>
-                <span class="stat-label">Resp.</span>
+                <span class="stat-label">{{ 'FORO.RESP' | translate }}</span>
             </div>
             <div class="stat-item stat-muted">
                 <span class="stat-num">{{ p.visitas }}</span>
-                <span class="stat-label">Visitas</span>
+                <span class="stat-label">{{ 'FORO.VISITAS' | translate }}</span>
             </div>
         </div>
 
@@ -162,7 +162,7 @@
                 </span>
 
                 <span class="ver-mas">
-                    Ver foro <i class="bi bi-arrow-right"></i>
+                    {{ 'FORO.VER_FORO' | translate }} <i class="bi bi-arrow-right"></i>
                 </span>
             </div>
         </div>
@@ -171,7 +171,7 @@
     @empty {
     <div class="empty-state">
         <i class="bi bi-chat-square-dots empty-icon"></i>
-        <p>No hay preguntas disponibles.</p>
+        <p>{{ 'FORO.SIN_PREGUNTAS' | translate }}</p>
     </div>
     }
 </div>
@@ -187,7 +187,7 @@
         <div class="modal-header">
             <h2 class="modal-title">
                 <i class="bi bi-pencil-square" style="color:#4E9C25; margin-right:8px;"></i>
-                Nueva pregunta
+                {{ 'FORO.MODAL_NUEVA_TITLE' | translate }}
             </h2>
             <button class="modal-close" (click)="cerrarNueva()">
                 <i class="bi bi-x-lg"></i>
@@ -195,14 +195,14 @@
         </div>
 
         <div class="modal-field">
-            <label>Título</label>
-            <input type="text" class="modal-input" placeholder="Resume tu pregunta en una frase"
+            <label>{{ 'FORO.TITULO' | translate }}</label>
+            <input type="text" class="modal-input" [placeholder]="'FORO.TITULO_PH' | translate"
                 [(ngModel)]="nuevaTitulo" maxlength="120">
         </div>
 
         <div class="modal-field">
-            <label>Descripción</label>
-            <textarea class="modal-input" rows="4" placeholder="Explica tu situación con detalle..."
+            <label>{{ 'FORO.DESCRIPCION' | translate }}</label>
+            <textarea class="modal-input" rows="4" [placeholder]="'FORO.DESCRIPCION_PH' | translate"
                 [(ngModel)]="nuevaDescripcion"></textarea>
         </div>
 
@@ -214,14 +214,14 @@
         }
 
         <div class="modal-footer">
-            <button class="btn-cancelar" (click)="cerrarNueva()">Cancelar</button>
+            <button class="btn-cancelar" (click)="cerrarNueva()">{{ 'FORO.CANCELAR' | translate }}</button>
             <button class="btn-guardar" [disabled]="!nuevaTitulo.trim() || !nuevaDescripcion.trim() || publicando"
                 (click)="publicarNueva()">
                 @if (publicando) {
-                Publicando...
+                {{ 'FORO.PUBLICANDO' | translate }}
                 } @else {
                 <i class="bi bi-send-fill" style="margin-right:6px;"></i>
-                Publicar
+                {{ 'FORO.PUBLICAR' | translate }}
                 }
             </button>
         </div>

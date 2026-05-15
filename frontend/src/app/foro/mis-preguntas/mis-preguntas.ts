@@ -3,6 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../../services/auth';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface MiForo {
   id: number;
@@ -17,7 +18,7 @@ export interface MiForo {
 @Component({
   selector: 'app-mis-preguntas',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe],
+  imports: [CommonModule, FormsModule, DatePipe, TranslateModule],
   templateUrl: './mis-preguntas.html',
   styleUrl: './mis-preguntas.css'
 })

@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 <div class="hero">
-  <h1 class="bienvenida">¡Bienvenido/a al foro, {{ usuario?.nombre }}!</h1>
+  <h1 class="bienvenida">{{ 'FORO.BIENVENIDA' | translate:{ nombre: usuario?.nombre } }}</h1>
 
   <nav class="subnav">
-    <a class="subnav-item" routerLink="ver" routerLinkActive="active">Inicio</a>
-    <a class="subnav-item" routerLink="mis-foros" routerLinkActive="active">Mis foros</a>
-    <a class="subnav-item" routerLink="mis-preguntas" routerLinkActive="active">Mis preguntas</a>
+    <a class="subnav-item" routerLink="ver" routerLinkActive="active">{{ 'FORO.INICIO' | translate }}</a>
+    <a class="subnav-item" routerLink="mis-foros" routerLinkActive="active">{{ 'FORO.MIS_FOROS' | translate }}</a>
+    <a class="subnav-item" routerLink="mis-preguntas" routerLinkActive="active">{{ 'FORO.MIS_PREGUNTAS' | translate }}</a>
   </nav>
 
   <div class="subnav-mobile">
@@ -20,10 +20,9 @@
 
 <!-- DROPDOWN Y BACKDROP FUERA DEL HERO, hijos directos del host -->
 <div class="subnav-dropdown" [class.open]="subnavOpen">
-  <a class="subnav-drop-item" routerLink="ver" routerLinkActive="active" (click)="closeSubnav()">Inicio</a>
-  <a class="subnav-drop-item" routerLink="mis-foros" routerLinkActive="active" (click)="closeSubnav()">Mis foros</a>
-  <a class="subnav-drop-item" routerLink="mis-preguntas" routerLinkActive="active" (click)="closeSubnav()">Mis
-    preguntas</a>
+  <a class="subnav-drop-item" routerLink="ver" routerLinkActive="active" (click)="closeSubnav()">{{ 'FORO.INICIO' | translate }}</a>
+  <a class="subnav-drop-item" routerLink="mis-foros" routerLinkActive="active" (click)="closeSubnav()">{{ 'FORO.MIS_FOROS' | translate }}</a>
+  <a class="subnav-drop-item" routerLink="mis-preguntas" routerLinkActive="active" (click)="closeSubnav()">{{ 'FORO.MIS_PREGUNTAS' | translate }}</a>
 </div>
 
 <div class="subnav-backdrop" [class.open]="subnavOpen" (click)="closeSubnav()"></div>
