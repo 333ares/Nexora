@@ -22,10 +22,10 @@ import { PanelAdmin } from './panel-admin/panel-admin';
 import { Foro } from './foro/foro';
 import { UsuarioBloqueado } from './usuario-bloqueado/usuario-bloqueado';
 import { LandingLayout } from './landing-layout/landing-layout';
-import { VerForo } from './foro/ver-foro/ver-foro';
+import { ListarForos } from './foro/listar-foros/listar-foros';
 import { MisForos } from './foro/mis-foros/mis-foros';
 import { MisPreguntas } from './foro/mis-preguntas/mis-preguntas';
-import { DetalleForo } from './foro/detalle-foro/detalle-foro';
+import { VisitarForo } from './foro/visitar-foro/visitar-foro';
 
 export const routes: Routes = [
 
@@ -71,10 +71,10 @@ export const routes: Routes = [
     component: Foro,
     canActivate: [AuthGuard, UserGuard],
     children: [
-      { path: 'ver', component: VerForo },
+      { path: 'ver', component: ListarForos },
       { path: 'mis-foros', component: MisForos },
       { path: 'mis-preguntas', component: MisPreguntas },
-      { path: 'detalle/:id', component: DetalleForo },
+      { path: 'detalle/:id', component: VisitarForo },
       { path: '', redirectTo: 'ver', pathMatch: 'full' }
     ]
   },
