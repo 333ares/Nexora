@@ -62,8 +62,14 @@
 </div>
 } @else {
 
+<<<<<<< Updated upstream:frontend/src/app/foro/ver-foro/ver-foro.html
 @if (modoVista === 'inicio') {
 <!-- VISTA INICIO: 3 CONTENEDORES -->
+=======
+<!-- Una vez cargado, decidimos qué vista mostrar según modoVista -->
+@if (modoVista === 'inicio' && !busqueda.trim()) {
+<!-- VISTA INICIO: tres columnas con los top 3 de cada categoría -->
+>>>>>>> Stashed changes:frontend/src/app/foro/listar-foros/listar-foros.html
 <div class="contenedores-vista">
 
     <!-- POPULARES -->
