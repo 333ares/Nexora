@@ -147,31 +147,35 @@ class RetoController extends Controller
             ], 400);
         }
 
+        // Limitamos la aportación al importe restante para no superar el objetivo
+        $restante = $reto->cantidad - $reto->cantidad_actual;
+        $cantidadReal = min($request->cantidad, $restante);
+
         // Si el usuario no tiene suficiente dinero para aportar, devolvemos un error
-        if ($request->user()->balance_total <= $request->cantidad) {
+        if ($request->user()->balance_total <= $cantidadReal) {
             return response()->json([
                 'message' => 'error',
                 'errors' => 'No tienes dinero suficiente para aportarlo al reto'
             ], 400);
         }
 
-        // Actualizamos el balance del usuario
-        $balanceUsuarioActualizado = $request->user()->balance_total - $request->cantidad;
+        // Actualizamos el balance del usuario (solo se descuenta lo que cabe en el reto)
+        $balanceUsuarioActualizado = $request->user()->balance_total - $cantidadReal;
         $usuario = Usuario::find($request->user()->IDusuario);
         $usuario->update(['balance_total' => $balanceUsuarioActualizado]);
 
-        // Creamos el movimiento de gasto
+        // Creamos el movimiento de gasto por la cantidad real aportada
         Movimientos::create([
             'tipo' => 'gasto',
-            'cantidad' => $request->cantidad,
+            'cantidad' => $cantidadReal,
             'categoria' => 'Reto: ' . $reto->titulo,
             'descripcion' => 'Aportación al reto: ' . $reto->titulo,
             'fecha' => now(),
             'usuario_id' => $request->user()->IDusuario,
         ]);
 
-        // Actualizamos cantidad_actual del reto
-        $nuevaCantidad = $reto->cantidad_actual + $request->cantidad;
+        // Actualizamos cantidad_actual del reto (capeado al objetivo)
+        $nuevaCantidad = $reto->cantidad_actual + $cantidadReal;
         $reto->update(['cantidad_actual' => $nuevaCantidad]);
 
         // Comprobamos si se ha cumplido
