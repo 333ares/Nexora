@@ -16,10 +16,6 @@ function fechaNoAnteriorAHoy(control: AbstractControl): ValidationErrors | null 
   return fechaFin < manana ? { fechaAnterior: true } : null;
 }
 
-function formatearFechaParaLaravel(fechaISO: string): string {
-  const [año, mes, dia] = fechaISO.split('-');
-  return `${dia}/${mes}/${año}`;
-}
 
 @Component({
   selector: 'app-retos',
@@ -137,6 +133,7 @@ export class Retos implements OnInit {
         this.listaDeRetos = res.retos ?? res ?? [];
         this.sliderIndex = 0;
         this.cdr.detectChanges();
+        setTimeout(() => this.scrollToSlide(), 0);
       },
       error: () => {
         this.listaDeRetos = [];

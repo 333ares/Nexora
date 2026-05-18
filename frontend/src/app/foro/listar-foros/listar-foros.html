@@ -27,40 +27,6 @@
             (ngModelChange)="onBusqueda()">
     </div>
 
-    <!-- Dropdown de ordenación: solo visible cuando no estamos en la vista de inicio -->
-    @if (modoVista !== 'inicio') {
-    <div class="filter-wrapper">
-        <!-- [class.filter-active]="filtroAbierto" añade la clase CSS 'filter-active' solo si filtroAbierto es true -->
-        <button class="btn-filter-drop" (click)="toggleFiltro($event)" [class.filter-active]="filtroAbierto">
-            <i class="bi bi-funnel"></i>
-            <span>{{ labelOrdenActivo | translate }}</span>
-            <!-- Cambia el icono de flecha según si el dropdown está abierto o cerrado -->
-            <i class="bi" [class.bi-chevron-up]="filtroAbierto" [class.bi-chevron-down]="!filtroAbierto"></i>
-        </button>
-
-        <!-- El contenido del dropdown solo se renderiza si filtroAbierto es true -->
-        @if (filtroAbierto) {
-        <!-- stopPropagation evita que un clic dentro del dropdown lo cierre (el listener del documento lo cerraría) -->
-        <div class="filter-dropdown" (click)="$event.stopPropagation()">
-            <p class="filter-heading">{{ 'FORO.ORDENAR_POR' | translate }}</p>
-            <!-- @for recorre el array opcionesOrden y renderiza un botón por cada elemento -->
-            <!-- track op.key le dice a Angular cómo identificar cada elemento para actualizaciones eficientes -->
-            @for (op of opcionesOrden; track op.key) {
-            <!-- [class.filter-item-active] marca visualmente el criterio actualmente seleccionado -->
-            <button class="filter-item" [class.filter-item-active]="ordenActivo === op.key"
-                (click)="elegirOrden(op.key)">
-                <i class="bi" [class]="op.icon"></i>
-                <span>{{ op.label | translate }}</span>
-                <!-- Muestra el check solo en la opción seleccionada -->
-                @if (ordenActivo === op.key) {
-                <i class="bi bi-check-lg filter-check"></i>
-                }
-            </button>
-            }
-        </div>
-        }
-    </div>
-    }
 
     <!-- Botón para abrir el popup de crear nueva pregunta -->
     <button class="btn-nueva" (click)="abrirNueva()">
@@ -152,7 +118,7 @@
 } @else {
 <!-- VISTA LISTA: muestra todos los foros filtrados y ordenados (popular, respondidas o recientes) -->
 <div class="preguntas-grid">
-    @for (p of preguntas; track p.id) {
+    @for (p of preguntas; track $index) {
     <article class="card pregunta-card pregunta-clickable" (click)="abrirDetalle(p)">
         <div class="pregunta-stats">
             <div class="stat-item">
