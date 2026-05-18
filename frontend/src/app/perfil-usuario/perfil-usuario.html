@@ -125,28 +125,6 @@
             </button>
           </div>
 
-          <!-- Modal de confirmación -->
-          @if (showDeleteModal) {
-          <div class="modal-overlay" (click)="cancelDelete()">
-            <div class="modal-box" (click)="$event.stopPropagation()">
-              <div class="modal-icon"><i class="bi bi-trash"></i></div>
-              <h3 class="modal-title">{{ 'PERFIL.MODAL_ELIMINAR_TITLE' | translate }}</h3>
-              <p class="modal-desc">
-                {{ 'PERFIL.ELIMINAR_DESC' | translate }}
-              </p>
-              <div class="modal-actions">
-                <button class="btn-modal-cancel" (click)="cancelDelete()">{{ 'PERFIL.CANCELAR' | translate }}</button>
-                <button class="btn-modal-confirm" (click)="confirmDelete()" [disabled]="isDeleting">
-                  @if (isDeleting) {
-                  {{ 'PERFIL.ELIMINANDO' | translate }}
-                  } @else {
-                  {{ 'PERFIL.SI_ELIMINAR' | translate }}
-                  }
-                </button>
-              </div>
-            </div>
-          </div>
-          }
         </div>
 
       </div>
@@ -202,3 +180,26 @@
 
   </div>
 </div>
+
+<!-- Modal de confirmación — fuera del .card para no quedar recortado por overflow:hidden -->
+@if (showDeleteModal) {
+<div class="modal-overlay" (click)="cancelDelete()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-icon"><i class="bi bi-trash-fill" style="color:#e74c3c;font-size:50px;"></i></div>
+    <h3 class="modal-title">{{ 'PERFIL.MODAL_ELIMINAR_TITLE' | translate }}</h3>
+    <p class="modal-desc">
+      {{ 'PERFIL.ELIMINAR_DESC' | translate }}
+    </p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" (click)="cancelDelete()">{{ 'PERFIL.CANCELAR' | translate }}</button>
+      <button class="btn-modal-confirm" (click)="confirmDelete()" [disabled]="isDeleting">
+        @if (isDeleting) {
+        {{ 'PERFIL.ELIMINANDO' | translate }}
+        } @else {
+        {{ 'PERFIL.SI_ELIMINAR' | translate }}
+        }
+      </button>
+    </div>
+  </div>
+</div>
+}

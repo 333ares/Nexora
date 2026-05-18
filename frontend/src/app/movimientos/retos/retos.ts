@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
+// Validador personalizado que rechaza fechas anteriores a mañana (el backend también lo valida, pero esta comprobación da feedback inmediato al usuario)
 function fechaNoAnteriorAHoy(control: AbstractControl): ValidationErrors | null {
   if (!control.value) return null;
   const manana = new Date();
@@ -26,40 +27,48 @@ function fechaNoAnteriorAHoy(control: AbstractControl): ValidationErrors | null 
 })
 export class Retos implements OnInit {
   listaDeRetos: any[] = [];
-  vistaActiva: 'activos' | 'historial' = 'activos';
+  vistaActiva: 'activos' | 'historial' = 'activos'; // Pestaña visible: retos en curso o retos terminados
   retoForm: FormGroup;
   mostrarPopup = false;
   errorModal = '';
   cargando = false;
 
+  // Referencia al contenedor del slider para poder mover el scroll programáticamente
   @ViewChild('retosSlider', { static: false }) retosSlider!: ElementRef<HTMLDivElement>;
-  sliderIndex = 0;
+  sliderIndex = 0; // Índice del slide actualmente visible
 
+  // Retos que aún no han sido cumplidos ni han expirado
   get retosActivos(): any[] {
     return this.listaDeRetos.filter(r => r.activo && !r.cumplido);
   }
 
+  // Retos ya cerrados: cumplidos o expirados
   get retosHistorial(): any[] {
     return this.listaDeRetos.filter(r => !r.activo || r.cumplido);
   }
 
+  // Devuelve la lista que corresponde a la pestaña seleccionada en ese momento
   get retosVisibles(): any[] {
     return this.vistaActiva === 'activos' ? this.retosActivos : this.retosHistorial;
   }
 
+  // Suma del dinero ya aportado en todos los retos
   get totalAhorrado(): number {
     return this.listaDeRetos.reduce((sum, reto) => sum + (parseFloat(reto.cantidad_actual) || 0), 0);
   }
 
+  // Suma del objetivo total de todos los retos
   get totalObjetivo(): number {
     return this.listaDeRetos.reduce((sum, reto) => sum + (parseFloat(reto.cantidad) || 0), 0);
   }
 
+  // Porcentaje global de avance sobre todos los retos combinados
   get progresoGlobal(): number {
     if (this.totalObjetivo <= 0) return 0;
     return Math.min(100, Math.round((this.totalAhorrado / this.totalObjetivo) * 100));
   }
 
+  // Fecha de hace 30 días a medianoche, para filtrar retos recientes
   get fechaHace30Dias(): Date {
     const d = new Date();
     d.setDate(d.getDate() - 30);
@@ -67,6 +76,7 @@ export class Retos implements OnInit {
     return d;
   }
 
+  // Retos creados en los últimos 30 días
   get retosUltimos30Dias(): any[] {
     return this.listaDeRetos.filter(r => {
       const inicio = new Date(r.fecha_inicio);
@@ -74,11 +84,13 @@ export class Retos implements OnInit {
     });
   }
 
+  // Dinero aportado en retos de los últimos 30 días
   get ahorradoUltimos30Dias(): number {
     return this.retosUltimos30Dias
       .reduce((sum, r) => sum + (parseFloat(r.cantidad_actual) || 0), 0);
   }
 
+  // Porcentaje de avance solo de los retos de los últimos 30 días
   get progresoGlobal30Dias(): number {
     const objetivo = this.retosUltimos30Dias
       .reduce((sum, r) => sum + (parseFloat(r.cantidad) || 0), 0);
@@ -86,6 +98,7 @@ export class Retos implements OnInit {
     return Math.min(100, Math.round((this.ahorradoUltimos30Dias / objetivo) * 100));
   }
 
+  // Reto activo con la fecha de vencimiento más próxima, para mostrar la cuenta atrás
   get retoMasCercano(): any | null {
     const activos = this.listaDeRetos.filter(r => r.activo && !r.cumplido);
     if (!activos.length) return null;
@@ -94,6 +107,7 @@ export class Retos implements OnInit {
     );
   }
 
+  // Días que quedan hasta que venza el reto más próximo
   get diasRestantesMasCercano(): number | null {
     if (!this.retoMasCercano) return null;
     const hoy = new Date();
@@ -103,13 +117,15 @@ export class Retos implements OnInit {
     return Math.max(0, Math.round((fin.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24)));
   }
 
+  // Genera un array [0, 1, 2, ...] para iterar los puntos de navegación del slider
   get sliderIndices(): number[] {
     return Array.from({ length: this.retosVisibles.length }, (_, i) => i);
   }
 
-  cantidadDisplay: string = '';
-  cantidadValor: number | null = null;
+  cantidadDisplay: string = '';   // Texto visible en el input de cantidad (con comas o puntos)
+  cantidadValor: number | null = null; // Valor numérico parseado listo para enviar al backend
 
+  // Calcula el mínimo seleccionable en el input de fecha: siempre mañana o posterior
   fechaMinima: string = (() => {
     const manana = new Date();
     manana.setDate(manana.getDate() + 1);
@@ -133,6 +149,7 @@ export class Retos implements OnInit {
         this.listaDeRetos = res.retos ?? res ?? [];
         this.sliderIndex = 0;
         this.cdr.detectChanges();
+        // setTimeout(0) espera a que Angular actualice el DOM con los nuevos retos antes de mover el scroll
         setTimeout(() => this.scrollToSlide(), 0);
       },
       error: () => {
@@ -143,11 +160,13 @@ export class Retos implements OnInit {
     });
   }
 
+  // Calcula el porcentaje de avance de un reto individual, capeado a 100
   progreso(reto: any): number {
     if (!reto.cantidad || reto.cantidad <= 0) return 0;
     return Math.min(100, Math.round((reto.cantidad_actual / reto.cantidad) * 100));
   }
 
+  // Cambia entre las pestañas "activos" e "historial" y reinicia el slider al primer slide
   cambiarVista(vista: 'activos' | 'historial') {
     this.vistaActiva = vista;
     this.sliderIndex = 0;
@@ -155,6 +174,7 @@ export class Retos implements OnInit {
     setTimeout(() => this.scrollToSlide(), 0);
   }
 
+  // Avanza al slide anterior de forma circular (al llegar al principio salta al último)
   sliderAnterior() {
     if (this.retosVisibles.length > 0) {
       this.sliderIndex = (this.sliderIndex - 1 + this.retosVisibles.length) % this.retosVisibles.length;
@@ -162,6 +182,7 @@ export class Retos implements OnInit {
     }
   }
 
+  // Avanza al siguiente slide de forma circular (al llegar al final salta al primero)
   sliderSiguiente() {
     if (this.retosVisibles.length > 0) {
       this.sliderIndex = (this.sliderIndex + 1) % this.retosVisibles.length;
@@ -169,11 +190,13 @@ export class Retos implements OnInit {
     }
   }
 
+  // Salta directamente a un slide concreto al hacer clic en un punto de navegación
   sliderIr(index: number) {
     this.sliderIndex = index;
     this.scrollToSlide();
   }
 
+  // Desplaza el contenedor del slider horizontalmente para mostrar el slide del índice actual
   private scrollToSlide() {
     if (!this.retosSlider) return;
     const scrollLeft = this.sliderIndex * this.retosSlider.nativeElement.offsetWidth;
@@ -183,6 +206,7 @@ export class Retos implements OnInit {
     });
   }
 
+  // Normaliza la cantidad: acepta comas como separador decimal y formatea a 2 decimales
   formatearCantidad(input: HTMLInputElement) {
     const valor = parseFloat(this.cantidadDisplay.replace(',', '.'));
     if (!isNaN(valor) && valor > 0) {
@@ -226,6 +250,7 @@ export class Retos implements OnInit {
       return;
     }
 
+    // La fecha de inicio siempre es hoy; el usuario solo elige la fecha final
     const hoyISO = new Date().toISOString().split('T')[0];
 
     const payload = {
@@ -242,6 +267,7 @@ export class Retos implements OnInit {
       next: () => {
         this.cargando = false;
         this.cerrarModal();
+        // Recargamos la lista completa para que el nuevo reto aparezca en el slider
         this.cargarRetos();
       },
       error: (err) => {
@@ -257,7 +283,6 @@ export class Retos implements OnInit {
     });
   }
 
-  // --- BORRAR RETO ---
   modalBorrarAbierto = false;
   retoBorrandoId: number | null = null;
   cargandoBorrar = false;
@@ -289,7 +314,6 @@ export class Retos implements OnInit {
     });
   }
 
-  // --- APORTAR DINERO ---
   modalAportarAbierto = false;
   retoAportandoId: number | null = null;
   retoAportandoTitulo: string = '';
@@ -317,6 +341,7 @@ export class Retos implements OnInit {
     this.cargandoAportar = false;
   }
 
+  // Mismo patrón que formatearCantidad: acepta comas y formatea a 2 decimales
   formatearAportar(input: HTMLInputElement) {
     const valor = parseFloat(this.aportarDisplay.replace(',', '.'));
     if (!isNaN(valor) && valor > 0) {
@@ -357,11 +382,10 @@ export class Retos implements OnInit {
     });
   }
 
-  // --- RETIRAR DINERO ---
   modalRetirarAbierto = false;
   retoRetirandoId: number | null = null;
   retoRetirandoTitulo: string = '';
-  retoRetirandoMax: number = 0;
+  retoRetirandoMax: number = 0; // Máximo que se puede retirar: lo que hay en la hucha en ese momento
   retirarDisplay: string = '';
   retirarValor: number | null = null;
   errorRetirar: string = '';
@@ -407,6 +431,7 @@ export class Retos implements OnInit {
       this.cdr.detectChanges()
       return;
     }
+    // Validación frontend: no se puede retirar más de lo que hay en la hucha
     if (this.retirarValor > this.retoRetirandoMax) {
       this.errorRetirar = `No puedes retirar más de ${this.retoRetirandoMax.toFixed(2)} €.`;
       this.cdr.detectChanges()
@@ -433,7 +458,6 @@ export class Retos implements OnInit {
     });
   }
 
-  // --- EDITAR RETO ---
   modalEditarAbierto = false;
   retoEditandoId: number | null = null;
   editarForm: FormGroup = new FormGroup({
@@ -448,7 +472,7 @@ export class Retos implements OnInit {
     this.retoEditandoId = reto.IDreto;
     this.errorEditar = '';
 
-    // Convertir fecha del backend (YYYY-MM-DD o con tiempo) a YYYY-MM-DD para el input
+    // El backend puede devolver la fecha con hora (YYYY-MM-DDTHH:mm:ss) o con espacio; tomamos solo la parte de fecha
     const fechaFinal = reto.fecha_final
       ? reto.fecha_final.split('T')[0].split(' ')[0]
       : '';
@@ -488,7 +512,6 @@ export class Retos implements OnInit {
       cantidad: parseFloat(this.editarForm.value.cantidad),
       fecha_final: this.editarForm.value.fecha_final,
     };
-
 
     this.Auth.actualizarReto(payload).subscribe({
       next: () => {

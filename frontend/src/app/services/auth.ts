@@ -8,22 +8,22 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class Auth {
 
   private apiUrl = 'http://localhost:8000/api';
+  // BehaviorSubject emite el estado actual inmediatamente a cualquier suscriptor nuevo,
+  // lo que permite que la barra de navegación sepa si el usuario está logueado al arrancar
   private loggedIn = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
-  isLoggedIn$ = this.loggedIn.asObservable(); // Observable público
+  isLoggedIn$ = this.loggedIn.asObservable(); // Observable público que otros componentes pueden suscribir
 
   constructor(private http: HttpClient) { }
 
-  // --- HEADERS ---
+  // Construye los headers HTTP incluyendo el token Bearer solo si existe en localStorage
   private getHeaders() {
     const token = this.getToken();
-
-    // Construimos los headers y agregamos Authorization solo si hay token
     const headers: any = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
     return headers;
   }
 
-  // --- AUTENTICACIÓN ---
+  // Autenticación
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password }, {
       headers: { 'Content-Type': 'application/json' }
@@ -40,7 +40,7 @@ export class Auth {
     return this.http.post(`${this.apiUrl}/logout`, {}, { headers: this.getHeaders() });
   }
 
-  // --- USUARIO ---
+  // Usuario
   actualizarUsuario(datos: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/usuario`, datos, { headers: this.getHeaders() });
   }
@@ -49,7 +49,7 @@ export class Auth {
     return this.http.delete(`${this.apiUrl}/usuario`, { headers: this.getHeaders() });
   }
 
-  // --- ESTADÍSTICAS ---
+  // Estadísticas financieras del usuario
   getBalanceTotal(): Observable<any> {
     return this.http.get(`${this.apiUrl}/balanceTotal`, { headers: this.getHeaders() });
   }
@@ -74,7 +74,7 @@ export class Auth {
     return this.http.get(`${this.apiUrl}/gastoMensualCat`, { headers: this.getHeaders() });
   }
 
-  // --- MOVIMIENTOS ---
+  // Movimientos: crear, editar y borrar
   apuntarMovimiento(datos: { tipo: string, cantidad: number, categoria: string, descripcion?: string, fecha?: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/movimiento`, datos, {
       headers: this.getHeaders()
@@ -85,6 +85,7 @@ export class Auth {
     return this.http.put(`${this.apiUrl}/movimiento`, datos, { headers: this.getHeaders() });
   }
 
+  // El body del DELETE lleva el id porque la API REST de Laravel lo espera en el cuerpo, no en la URL
   borrarMovimimento(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/movimiento`, {
       headers: this.getHeaders(),
@@ -92,7 +93,7 @@ export class Auth {
     });
   }
 
-  // --- RETOS ---
+  // Retos de ahorro
   getRetos(): Observable<any> {
     return this.http.get(`${this.apiUrl}/retos`, { headers: this.getHeaders() });
   }
@@ -120,7 +121,7 @@ export class Auth {
     return this.http.post(`${this.apiUrl}/reto/retirar`, { id, cantidad }, { headers: this.getHeaders() });
   }
 
-  // --- ADMIN ---
+  // Administración (solo accesible con id=1)
   listarUsuarios(): Observable<any> {
     return this.http.get(`${this.apiUrl}/admin/usuarios`, { headers: this.getHeaders() });
   }
@@ -140,7 +141,7 @@ export class Auth {
     });
   }
 
-  // --- FORO ---
+  // Foro
   listarForos(): Observable<any> {
     return this.http.get(`${this.apiUrl}/foros`, { headers: this.getHeaders() });
   }
@@ -149,6 +150,7 @@ export class Auth {
     return this.http.get(`${this.apiUrl}/foros/usuario`, { headers: this.getHeaders() });
   }
 
+  // Visitar incrementa el contador de visitas en el backend
   visitarForo(IDforo: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/foros/ver`, { IDforo }, { headers: this.getHeaders() });
   }
@@ -168,7 +170,7 @@ export class Auth {
     });
   }
 
-  // --- RESPUESTAS ---
+  // Respuestas del foro
   responderForo(datos: { IDforo: number, respuesta: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/respuesta`, datos, { headers: this.getHeaders() });
   }
@@ -184,11 +186,12 @@ export class Auth {
     });
   }
 
+  // Un voto por usuario por respuesta; si ya votó, lo elimina (toggle)
   toggleVotoRespuesta(IDrespuesta: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/respuesta/votar`, { IDrespuesta }, { headers: this.getHeaders() });
   }
 
-  // --- MEMBRESIA DEL FORO ---
+  // Membresía del foro
   getMisForos(): Observable<any> {
     return this.http.get(`${this.apiUrl}/miembros/mis-foros`, { headers: this.getHeaders() });
   }
@@ -197,6 +200,7 @@ export class Auth {
     return this.http.post(`${this.apiUrl}/miembro`, { IDforo }, { headers: this.getHeaders() });
   }
 
+  // El DELETE necesita el IDmembresia (no el IDforo) porque la tabla miembros tiene su propia PK
   salirDeForo(IDmembresia: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/miembro`, {
       headers: this.getHeaders(),
@@ -204,10 +208,10 @@ export class Auth {
     });
   }
 
-  // --- LOCAL STORAGE ---
+  // Gestión del token y datos del usuario en localStorage
   saveToken(token: string) {
     localStorage.setItem('token', token);
-    this.loggedIn.next(true); // avisar que está logueado
+    this.loggedIn.next(true); // Notifica a todos los suscriptores de isLoggedIn$ que hay sesión activa
   }
 
   getToken(): string | null {
@@ -216,7 +220,7 @@ export class Auth {
 
   removeToken() {
     localStorage.removeItem('token');
-    this.loggedIn.next(false); // avisar que ha cerrado sesión
+    this.loggedIn.next(false); // Notifica a los suscriptores que la sesión ha terminado
   }
 
   saveUsuario(usuario: any) {
