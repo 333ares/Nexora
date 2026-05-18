@@ -7,17 +7,20 @@ export class UserGuard implements CanActivate {
   constructor(private auth: Auth, private router: Router) { }
 
   canActivate(): boolean {
-    // Miramos si el usuario esta logueado
     const usuario = this.auth.getUsuario();
 
-    // Si el usuario no es admin (id=1), puede acceder a la ruta
-    if (Number(usuario?.id) !== 1) {
-      return true;
+    // Si el usuario está bloqueado, redirigimos a la pantalla de bloqueo
+    if (usuario?.estado?.toLowerCase() === 'bloqueado') {
+      this.router.navigate(['/usuario-bloqueado']);
+      return false;
     }
 
-    // Si el usuario es admin, lo redirigimos al panel de administración
-    this.router.navigate(['/panel-admin']);
-    return false;
+    // Si el usuario es admin (id=1), lo redirigimos al panel de administración
+    if (Number(usuario?.id) === 1) {
+      this.router.navigate(['/panel-admin']);
+      return false;
+    }
 
+    return true;
   }
 }
