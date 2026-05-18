@@ -11,10 +11,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 
 export class Inicio {
-  isLoggedIn = false;
+  isLoggedIn = false; // Variable para controlar si el usuario está logueado o no
 
+  // Variable para almacenar el email del formulario de newsletter
   emailNewsletter: string = '';
 
+  // Método para manejar el envío del formulario de newsletter
   suscribirse(): void {
     if (this.emailNewsletter) {
       console.log('Newsletter:', this.emailNewsletter);

@@ -81,7 +81,7 @@
 } @else {
 
 <!-- Una vez cargado, decidimos qué vista mostrar según modoVista -->
-@if (modoVista === 'inicio') {
+@if (modoVista === 'inicio' && !busqueda.trim()) {
 <!-- VISTA INICIO: tres columnas con los top 3 de cada categoría -->
 <div class="contenedores-vista">
 
