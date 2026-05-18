@@ -16,11 +16,12 @@ import { TranslateCategoryPipe } from '../pipes/translate-category';
 })
 export class PerfilUsuario implements OnInit {
 
-  showPassword = false;
+  showPassword = false;    // Alterna entre mostrar el password en texto plano o como puntos
   successMessage = '';
   errorMessage = '';
-  movimientos: any[] = [];
+  movimientos: any[] = []; // Últimos movimientos del usuario para mostrar en la card de la derecha
 
+  // Campos del formulario de perfil, inicializados vacíos hasta que carga ngOnInit
   nombre = '';
   apellidos = '';
   usuario = '';
@@ -30,6 +31,7 @@ export class PerfilUsuario implements OnInit {
   constructor(private authService: Auth, private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
+    // Cargamos los datos actuales del usuario desde localStorage para pre-rellenar el formulario
     const usuario = this.authService.getUsuario();
     if (usuario) {
       this.nombre = usuario.nombre ?? '';
@@ -50,12 +52,13 @@ export class PerfilUsuario implements OnInit {
     const usuarioActual = this.authService.getUsuario();
     if (!usuarioActual) return;
 
+    // Solo enviamos los campos que realmente cambiaron para evitar sobrescribir datos sin querer
     const datos: any = {};
     if (this.nombre !== usuarioActual.nombre) datos.nombre = this.nombre;
     if (this.apellidos !== usuarioActual.apellidos) datos.apellidos = this.apellidos;
     if (this.usuario !== usuarioActual.usuario) datos.usuario = this.usuario;
     if (this.email !== usuarioActual.email) datos.email = this.email;
-    if (this.password) datos.password = this.password;
+    if (this.password) datos.password = this.password; // Solo se incluye si el usuario escribió algo en el campo
 
     if (Object.keys(datos).length === 0) {
       this.successMessage = 'No has realizado ningún cambio';
@@ -66,10 +69,11 @@ export class PerfilUsuario implements OnInit {
 
     this.authService.actualizarUsuario(datos).subscribe({
       next: (response: any) => {
+        // Actualizamos localStorage con los datos nuevos para que el resto de la app los vea
         this.authService.saveUsuario(response.usuario);
         this.successMessage = 'Cambios guardados correctamente';
         this.errorMessage = '';
-        this.password = '';
+        this.password = '';  // Limpiamos el campo de contraseña tras guardar
         this.isSaving = false;
         this.cdr.detectChanges();
       },
@@ -96,11 +100,13 @@ export class PerfilUsuario implements OnInit {
 
     this.authService.logout().subscribe({
       next: () => {
+        // Eliminamos el token y datos del usuario de localStorage antes de redirigir
         this.authService.removeToken();
         this.authService.removeUsuario();
         this.router.navigate(['/inicio']);
       },
       error: () => {
+        // Incluso si el servidor falla (token ya expirado), limpiamos localStorage y redirigimos
         this.authService.removeToken();
         this.authService.removeUsuario();
         this.router.navigate(['/inicio']);
@@ -111,6 +117,7 @@ export class PerfilUsuario implements OnInit {
   showDeleteModal = false;
   isDeleting = false;
 
+  // Abre el modal de confirmación antes de borrar; no borra directamente al hacer clic
   onDelete() {
     this.showDeleteModal = true;
   }
@@ -123,6 +130,7 @@ export class PerfilUsuario implements OnInit {
 
     this.authService.eliminarCuenta().subscribe({
       next: () => {
+        // Limpiamos sesión y redirigimos aunque el borrado haya ido bien o haya fallado
         this.authService.removeToken();
         this.authService.removeUsuario();
         this.router.navigate(['/inicio']);
@@ -152,7 +160,7 @@ export class PerfilUsuario implements OnInit {
       },
       error: (err) => {
         if (err.status === 400) {
-          this.movimientos = [];
+          this.movimientos = []; // 400 significa que no hay movimientos, no es un error real
         } else {
           console.error('Error al obtener el historial:', err);
         }
@@ -160,11 +168,10 @@ export class PerfilUsuario implements OnInit {
     });
   }
 
+  // Genera la URL del avatar usando las iniciales del nombre a través del servicio gratuito ui-avatars.com
   getAvatarUrl(): string {
     if (!this.nombre) return '';
-
     const nombreLimpio = encodeURIComponent(this.nombre.trim());
-
     return `https://ui-avatars.com/api/?name=${nombreLimpio}&background=random`;
   }
 

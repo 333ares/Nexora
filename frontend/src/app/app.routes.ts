@@ -29,6 +29,7 @@ import { VisitarForo } from './foro/visitar-foro/visitar-foro';
 
 export const routes: Routes = [
 
+  // Rutas públicas agrupadas bajo LandingLayout (cabecera y footer de la landing)
   {
     path: '',
     component: LandingLayout,
@@ -43,20 +44,24 @@ export const routes: Routes = [
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
     ]
   },
+  // Solo el admin (id=1) puede acceder; AuthGuard comprueba token y AdminGuard comprueba el id
   {
     path: 'panel-admin',
     component: PanelAdmin,
     canActivate: [AuthGuard, AdminGuard]
   },
+  // Rutas sin guard: cualquiera puede acceder aunque no esté logueado
   {
-    path: 'login', //es lo que aparece en la URL.
-    component: Login, // Login es el componente que se mostrará
+    path: 'login',
+    component: Login,
   },
+  // AuthGuard exige token; UserGuard redirige al admin a su panel y a usuarios bloqueados a /usuario-bloqueado
   {
     path: 'perfil',
     component: PerfilUsuario,
     canActivate: [AuthGuard, UserGuard]
   },
+  // Solo AuthGuard (sin UserGuard) para que un usuario bloqueado pueda ver esta pantalla sin bucle infinito
   {
     path: 'usuario-bloqueado',
     component: UsuarioBloqueado,
@@ -66,6 +71,7 @@ export const routes: Routes = [
     path: 'registro',
     component: Registro,
   },
+  // Sección del foro con subrutas anidadas; todas protegidas por AuthGuard + UserGuard
   {
     path: 'foro',
     component: Foro,
@@ -74,10 +80,11 @@ export const routes: Routes = [
       { path: 'ver', component: ListarForos },
       { path: 'mis-foros', component: MisForos },
       { path: 'mis-preguntas', component: MisPreguntas },
-      { path: 'detalle/:id', component: VisitarForo },
+      { path: 'detalle/:id', component: VisitarForo }, // :id es el IDforo que pasa el componente padre
       { path: '', redirectTo: 'ver', pathMatch: 'full' }
     ]
   },
+  // Sección de movimientos con subrutas anidadas; todas protegidas por AuthGuard + UserGuard
   {
     path: 'movimientos',
     component: Movimientos,
