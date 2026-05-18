@@ -875,15 +875,16 @@
   .right-col {
     flex-direction: row;
     align-items: flex-start;
+    align-items: stretch;
   }
 
   .plan-box {
     flex: 0 0 220px;
+    width: 100%;
   }
 
   .transactions-box {
-    flex: 1;
-    height: auto;
+    align-items: stretch;
   }
 }
 
