@@ -71,8 +71,10 @@ export class Estadisticas implements OnInit, OnDestroy {
 
   // Getter para calcular la tasa de ahorro (%)
   get tasaAhorro(): number {
+    // Evita división por cero y muestra 0% si no hay ingresos
     return this.ingresoMensual <= 0
       ? 0
+      // En la operacion se multiplica por 100 para convertir a porcentaje y se redondea al entero más cercano
       : Math.round(((this.ingresoMensual - this.gastoMensual) / this.ingresoMensual) * 100);
   }
 
@@ -249,6 +251,7 @@ export class Estadisticas implements OnInit, OnDestroy {
   }
 
   // Calcula porcentaje de un valor respecto a un total
+  // Para la parte de progreso del reto en el resumen, aunque aquí no se usa, se deja como referencia para futuros usos
   getPct(valor: number, total: number): number {
     return total > 0 ? Math.round((valor / total) * 100) : 0;
   }
