@@ -234,8 +234,8 @@ export class Estadisticas implements OnInit, OnDestroy {
             callbacks: {
               // Formato del tooltip
               label: ctx => {
-                const val = typeof ctx.raw === 'number' ? ctx.raw : parseFloat(String(ctx.raw));
-                return ` ${ctx.label}: ${isNaN(val) ? 0 : val.toFixed(2)} €`;
+                const val = typeof ctx.raw === 'number' ? ctx.raw : parseFloat(String(ctx.raw)); // Asegura que el valor es un número
+                return ` ${ctx.label}: ${isNaN(val) ? 0 : val.toFixed(2)} €`; // Muestra el valor con 2 decimales y símbolo de euro
               }
             }
           }
