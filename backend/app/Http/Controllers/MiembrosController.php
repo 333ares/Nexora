@@ -102,8 +102,13 @@ class MiembrosController extends Controller
         // Obtener el ID del usuario autenticado
         $IDusuario = $request->user()->IDusuario;
 
+        // IDs de foros que el usuario creó (no se pueden mostrar en "mis foros")
+        $forosCreados = Foro::where('IDusuario', $IDusuario)->pluck('IDforo');
+
         // Obtener las membresías del usuario ordenadas por fecha de creación (más recientes primero)
+        // Excluir foros donde el usuario es el creador (el seeder los inserta pero no se pueden abandonar)
         $membresias = Miembro::where('IDusuario', $IDusuario)
+            ->whereNotIn('IDforo', $forosCreados)
             ->orderBy('created_at', 'desc')
             ->get();
 
