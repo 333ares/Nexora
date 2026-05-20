@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../services/auth';
 import {
@@ -33,8 +33,6 @@ export class Retos implements OnInit {
   errorModal = '';
   cargando = false;
 
-  // Referencia al contenedor del slider para poder mover el scroll programáticamente
-  @ViewChild('retosSlider', { static: false }) retosSlider!: ElementRef<HTMLDivElement>;
   sliderIndex = 0; // Índice del slide actualmente visible
 
   // Retos que aún no han sido cumplidos ni han expirado
@@ -149,8 +147,6 @@ export class Retos implements OnInit {
         this.listaDeRetos = res.retos ?? res ?? [];
         this.sliderIndex = 0;
         this.cdr.detectChanges();
-        // setTimeout(0) espera a que Angular actualice el DOM con los nuevos retos antes de mover el scroll
-        setTimeout(() => this.scrollToSlide(), 0);
       },
       error: () => {
         this.listaDeRetos = [];
@@ -171,40 +167,23 @@ export class Retos implements OnInit {
     this.vistaActiva = vista;
     this.sliderIndex = 0;
     this.cdr.detectChanges();
-    setTimeout(() => this.scrollToSlide(), 0);
   }
 
   // Avanza al slide anterior de forma circular (al llegar al principio salta al último)
   sliderAnterior() {
-    if (this.retosVisibles.length > 0) {
+    if (this.retosVisibles.length > 0)
       this.sliderIndex = (this.sliderIndex - 1 + this.retosVisibles.length) % this.retosVisibles.length;
-      this.scrollToSlide();
-    }
   }
 
-  // Avanza al siguiente slide de forma circular (al llegar al final salta al primero)
   sliderSiguiente() {
-    if (this.retosVisibles.length > 0) {
+    if (this.retosVisibles.length > 0)
       this.sliderIndex = (this.sliderIndex + 1) % this.retosVisibles.length;
-      this.scrollToSlide();
-    }
   }
 
-  // Salta directamente a un slide concreto al hacer clic en un punto de navegación
   sliderIr(index: number) {
     this.sliderIndex = index;
-    this.scrollToSlide();
   }
 
-  // Desplaza el contenedor del slider horizontalmente para mostrar el slide del índice actual
-  private scrollToSlide() {
-    if (!this.retosSlider) return;
-    const scrollLeft = this.sliderIndex * this.retosSlider.nativeElement.offsetWidth;
-    this.retosSlider.nativeElement.scrollTo({
-      left: scrollLeft,
-      behavior: 'smooth'
-    });
-  }
 
   // Normaliza la cantidad: acepta comas como separador decimal y formatea a 2 decimales
   formatearCantidad(input: HTMLInputElement) {

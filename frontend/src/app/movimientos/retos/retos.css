@@ -192,25 +192,18 @@
 
 .retos-slider {
   flex: 1;
-  display: flex;
-  gap: 16px;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  scroll-snap-type: x mandatory;
-  -ms-overflow-style: none;
-  overflow: hidden;
-  width: 0;
   min-width: 0;
+  overflow: hidden;
 }
 
-.retos-slider::-webkit-scrollbar {
-  display: none;
+.retos-slides-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  will-change: transform;
 }
 
 .reto-card-slider {
   flex: 0 0 100%;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   min-width: 100%;
 }
 
