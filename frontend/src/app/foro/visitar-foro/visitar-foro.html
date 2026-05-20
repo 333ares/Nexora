@@ -68,6 +68,12 @@
         </h3>
         <textarea class="respuesta-input" rows="4" [placeholder]="'FORO.RESPUESTA_PH' | translate"
             [(ngModel)]="nuevaRespuesta"></textarea>
+        @if (errorRespuesta) {
+        <div class="respuesta-error">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            {{ errorRespuesta }}
+        </div>
+        }
         <div class="respuesta-actions">
             <button class="btn-publicar" [disabled]="!nuevaRespuesta.trim() || publicando"
                 (click)="publicarRespuesta()">
