@@ -8,30 +8,149 @@ use App\Models\Respuesta;
 use App\Models\Usuario;
 use App\Models\Votos_Respuesta;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class ForoController extends Controller
 {
     private function moderarContenido(string ...$textos): void
     {
-        $input = implode("\n", array_filter($textos));
+        $palabrasProhibidas = [
+            // Insultos generales
+            'puta',
+            'puto',
+            'putos',
+            'putas',
+            'putada',
+            'mierda',
+            'mierdas',
+            'mierdon',
+            'idiota',
+            'idiotas',
+            'imbecil',
+            'imbécil',
+            'imbeciles',
+            'gilipollas',
+            'gilipolla',
+            'gilipollez',
+            'cabrón',
+            'cabron',
+            'cabrona',
+            'cabrones',
+            'hijo de puta',
+            'hija de puta',
+            'hdp',
+            'h.d.p',
+            'joder',
+            'joder',
+            'coño',
+            'cono',
+            'coños',
+            'maricón',
+            'maricon',
+            'maricones',
+            'marica',
+            'capullo',
+            'capullos',
+            'capulla',
+            'zorra',
+            'zorras',
+            'zorro',
+            'pendejo',
+            'pendejos',
+            'pendeja',
+            'cojones',
+            'cojón',
+            'cojon',
+            'hostia',
+            'hostias',
+            'ostia',
+            'ostias',
+            'me cago',
+            'mecago',
+            'subnormal',
+            'subnormales',
+            'retrasado',
+            'retrasada',
+            'retrasados',
+            'mongolo',
+            'mongola',
+            'mongol',
+            'inutil',
+            'inútil',
+            'inutiles',
+            'estupido',
+            'estúpido',
+            'estupida',
+            'estupidos',
+            'bestia',
+            'paleto',
+            'paletos',
+            'paleta',
+            'cerdo',
+            'cerda',
+            'cerdos',
+            'burro',
+            'burra',
+            'burros',
+            'asco',
+            'asqueroso',
+            'asquerosa',
+            'maldito',
+            'maldita',
+            'malditos',
+            'desgraciado',
+            'desgraciada',
+            'desgraciados',
+            'polla',
+            'pollas',
+            'hijueputa',
+            'malparido',
+            'malparida',
 
-        $response = Http::withToken(config('services.openai.key'))
-            ->post('https://api.openai.com/v1/moderations', ['input' => $input]);
+            // Odio e insultos graves
+            'nazi',
+            'nazis',
+            'fascista',
+            'fascistas',
+            'racista',
+            'racistas',
+            'terrorista',
+            'terroristas',
+            'matar',
+            'muerte a',
+            'te voy a matar',
+            'te mato',
+            'violador',
+            'violadora',
+            'violadores',
+            'pedofilo',
+            'pedófilo',
+            'pedofilia',
 
-        $flagged = $response->json('results.0.flagged', false);
+            // Variaciones con caracteres especiales o leetspeak
+            'put4',
+            'mrd',
+            'gilipl',
+            'hjdp',
+            'c0ño',
+            'c0no',
+            'c4brón',
+        ];
 
-        if ($flagged) {
-            abort(422, 'El contenido infringe las normas de la comunidad.');
+        $input = strtolower(implode(" ", array_filter($textos)));
+
+        foreach ($palabrasProhibidas as $palabra) {
+            if (str_contains($input, $palabra)) {
+                abort(422, 'El contenido infringe las normas de la comunidad.');
+            }
         }
     }
 
     public function crearForo(Request $request)
     {
-       // MOderar lenguaje
+        // MOderar lenguaje
         $this->moderarContenido($request->titulo, $request->contenido);
-      
+
         // Validamos los datos de entrada
         $validator = Validator::make($request->all(), [
             'titulo' => 'required|string',

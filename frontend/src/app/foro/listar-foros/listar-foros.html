@@ -1,41 +1,57 @@
+<!-- Cargamos los iconos de Bootstrap Icons desde un CDN externo -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-<!-- HEADER CON TITULO O TOOLBAR -->
+<!-- HEADER CON BOTÓN VOLVER: solo se muestra cuando no estamos en la vista de inicio -->
+<!-- @if es la sintaxis moderna de Angular para condicionales en el HTML -->
 @if (modoVista !== 'inicio') {
 <div class="foro-header-modo">
+    <!-- (click)="..." llama al método del componente cuando el usuario pulsa el botón -->
     <button class="btn-volver" (click)="volverAlInicio()">
         <i class="bi bi-chevron-left"></i>
-        <span>Volver</span>
+        <!-- | translate convierte la clave ('FORO.VOLVER') al texto del idioma activo -->
+        <span>{{ 'FORO.VOLVER' | translate }}</span>
     </button>
-    <h2 class="foro-titulo-modo">{{ etiquetaModo }}</h2>
+    <!-- etiquetaModo es un getter del componente que devuelve la clave de traducción del título activo -->
+    <h2 class="foro-titulo-modo">{{ etiquetaModo | translate }}</h2>
 </div>
 }
 
-<!-- TOOLBAR -->
+<!-- TOOLBAR: buscador, filtro de orden y botón de nueva pregunta -->
 <div class="foro-toolbar">
 
+    <!-- Buscador: [(ngModel)] hace two-way binding, es decir, el input y la variable busqueda se sincronizan -->
+    <!-- (ngModelChange) llama a onBusqueda() cada vez que el usuario escribe algo -->
     <div class="search-wrapper">
         <i class="bi bi-search search-icon"></i>
-        <input type="text" class="search-input" placeholder="Buscar foros..." [(ngModel)]="busqueda"
+        <input type="text" class="search-input" [placeholder]="'FORO.BUSCAR_PH' | translate" [(ngModel)]="busqueda"
             (ngModelChange)="onBusqueda()">
     </div>
 
+    <!-- Dropdown de ordenación: solo visible cuando no estamos en la vista de inicio -->
     @if (modoVista !== 'inicio') {
     <div class="filter-wrapper">
+        <!-- [class.filter-active]="filtroAbierto" añade la clase CSS 'filter-active' solo si filtroAbierto es true -->
         <button class="btn-filter-drop" (click)="toggleFiltro($event)" [class.filter-active]="filtroAbierto">
             <i class="bi bi-funnel"></i>
-            <span>{{ labelOrdenActivo }}</span>
+            <span>{{ labelOrdenActivo | translate }}</span>
+            <!-- Cambia el icono de flecha según si el dropdown está abierto o cerrado -->
             <i class="bi" [class.bi-chevron-up]="filtroAbierto" [class.bi-chevron-down]="!filtroAbierto"></i>
         </button>
 
+        <!-- El contenido del dropdown solo se renderiza si filtroAbierto es true -->
         @if (filtroAbierto) {
+        <!-- stopPropagation evita que un clic dentro del dropdown lo cierre (el listener del documento lo cerraría) -->
         <div class="filter-dropdown" (click)="$event.stopPropagation()">
-            <p class="filter-heading">Ordenar por</p>
+            <p class="filter-heading">{{ 'FORO.ORDENAR_POR' | translate }}</p>
+            <!-- @for recorre el array opcionesOrden y renderiza un botón por cada elemento -->
+            <!-- track op.key le dice a Angular cómo identificar cada elemento para actualizaciones eficientes -->
             @for (op of opcionesOrden; track op.key) {
+            <!-- [class.filter-item-active] marca visualmente el criterio actualmente seleccionado -->
             <button class="filter-item" [class.filter-item-active]="ordenActivo === op.key"
                 (click)="elegirOrden(op.key)">
                 <i class="bi" [class]="op.icon"></i>
-                <span>{{ op.label }}</span>
+                <span>{{ op.label | translate }}</span>
+                <!-- Muestra el check solo en la opción seleccionada -->
                 @if (ordenActivo === op.key) {
                 <i class="bi bi-check-lg filter-check"></i>
                 }
@@ -46,40 +62,38 @@
     </div>
     }
 
+    <!-- Botón para abrir el popup de crear nueva pregunta -->
     <button class="btn-nueva" (click)="abrirNueva()">
         <i class="bi bi-plus-lg"></i>
-        <span>Nueva pregunta</span>
+        <span>{{ 'FORO.NUEVA_PREGUNTA' | translate }}</span>
     </button>
 
 </div>
 
 
-<!-- FEED -->
+<!-- FEED: muestra un loader mientras carga, luego el contenido -->
 @if (cargando) {
+<!-- Estado de carga: se muestra mientras esperamos la respuesta del servidor -->
 <div class="empty-state">
     <i class="bi bi-hourglass-split empty-icon"></i>
-    <p>Cargando foros...</p>
+    <p>{{ 'FORO.CARGANDO' | translate }}</p>
 </div>
 } @else {
-
-<<<<<<< Updated upstream:frontend/src/app/foro/ver-foro/ver-foro.html
 @if (modoVista === 'inicio') {
 <!-- VISTA INICIO: 3 CONTENEDORES -->
-=======
-<!-- Una vez cargado, decidimos qué vista mostrar según modoVista -->
-@if (modoVista === 'inicio' && !busqueda.trim()) {
-<!-- VISTA INICIO: tres columnas con los top 3 de cada categoría -->
->>>>>>> Stashed changes:frontend/src/app/foro/listar-foros/listar-foros.html
 <div class="contenedores-vista">
 
-    <!-- POPULARES -->
+    <!-- POPULARES: top 3 foros con más visitas -->
     <section class="contenedor-foros">
         <div class="contenedor-header">
-            <h3 class="contenedor-titulo"><i class="bi bi-fire"></i> Más populares</h3>
-            <button class="btn-ver-mas" (click)="verMas('popular')">Ver más</button>
+            <h3 class="contenedor-titulo"><i class="bi bi-fire"></i> {{ 'FORO.MAS_POPULARES' | translate }}</h3>
+            <!-- verMas('popular') cambia modoVista a 'popular' para ver la lista completa -->
+            <button class="btn-ver-mas" (click)="verMas('popular')">{{ 'FORO.VER_MAS' | translate }}</button>
         </div>
         <div class="contenedor-grid">
+            <!-- preguntasPopulares es un getter del componente que devuelve los 3 más visitados -->
             @for (p of preguntasPopulares; track p.id) {
+            <!-- (click)="abrirDetalle(p)" navega a la página de detalle del foro pulsado -->
             <article class="card pregunta-card-mini pregunta-clickable" (click)="abrirDetalle(p)">
                 <h4 class="pregunta-titulo-mini">{{ p.titulo }}</h4>
                 <p class="pregunta-desc-mini">{{ p.descripcion }}</p>
@@ -92,11 +106,11 @@
         </div>
     </section>
 
-    <!-- RESPONDIDAS -->
+    <!-- RESPONDIDAS: top 3 foros con más respuestas -->
     <section class="contenedor-foros">
         <div class="contenedor-header">
-            <h3 class="contenedor-titulo"><i class="bi bi-chat-left-text"></i> Más respondidas</h3>
-            <button class="btn-ver-mas" (click)="verMas('respondidas')">Ver más</button>
+            <h3 class="contenedor-titulo"><i class="bi bi-chat-left-text"></i> {{ 'FORO.MAS_RESPONDIDAS' | translate }}</h3>
+            <button class="btn-ver-mas" (click)="verMas('respondidas')">{{ 'FORO.VER_MAS' | translate }}</button>
         </div>
         <div class="contenedor-grid">
             @for (p of preguntasRespondidas; track p.id) {
@@ -112,11 +126,11 @@
         </div>
     </section>
 
-    <!-- RECIENTES -->
+    <!-- RECIENTES: top 3 foros más nuevos -->
     <section class="contenedor-foros">
         <div class="contenedor-header">
-            <h3 class="contenedor-titulo"><i class="bi bi-stars"></i> Recientes</h3>
-            <button class="btn-ver-mas" (click)="verMas('recientes')">Ver más</button>
+            <h3 class="contenedor-titulo"><i class="bi bi-stars"></i> {{ 'FORO.RECIENTES' | translate }}</h3>
+            <button class="btn-ver-mas" (click)="verMas('recientes')">{{ 'FORO.VER_MAS' | translate }}</button>
         </div>
         <div class="contenedor-grid">
             @for (p of preguntasRecientes; track p.id) {
@@ -134,18 +148,18 @@
 
 </div>
 } @else {
-<!-- VISTA LISTA: TODOS LOS FOROS FILTRADOS -->
+<!-- VISTA LISTA: muestra todos los foros filtrados y ordenados (popular, respondidas o recientes) -->
 <div class="preguntas-grid">
     @for (p of preguntas; track p.id) {
     <article class="card pregunta-card pregunta-clickable" (click)="abrirDetalle(p)">
         <div class="pregunta-stats">
             <div class="stat-item">
                 <span class="stat-num">{{ p.respuestas }}</span>
-                <span class="stat-label">Resp.</span>
+                <span class="stat-label">{{ 'FORO.RESP' | translate }}</span>
             </div>
             <div class="stat-item stat-muted">
                 <span class="stat-num">{{ p.visitas }}</span>
-                <span class="stat-label">Visitas</span>
+                <span class="stat-label">{{ 'FORO.VISITAS' | translate }}</span>
             </div>
         </div>
 
@@ -156,28 +170,31 @@
             <div class="pregunta-footer">
                 <div class="pregunta-autor">
                     <div class="autor-avatar">
+                        <!-- getAvatarUrl genera la URL del avatar con las iniciales del autor -->
                         <img [src]="getAvatarUrl(p.autor)" alt="Avatar"
                             style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
                     </div>
                     <span class="autor-nombre">{{ p.autor }}</span>
                 </div>
 
+                <!-- | date formatea la fecha: 'dd/MM/yyyy' muestra día/mes/año y 'HH:mm' la hora -->
                 <span class="pregunta-fecha">
                     <i class="bi bi-clock"></i>
                     {{ p.fecha | date:'dd/MM/yyyy' }} - {{ p.fecha | date:'HH:mm' }}
                 </span>
 
                 <span class="ver-mas">
-                    Ver foro <i class="bi bi-arrow-right"></i>
+                    {{ 'FORO.VER_FORO' | translate }} <i class="bi bi-arrow-right"></i>
                 </span>
             </div>
         </div>
     </article>
     }
+    <!-- @empty se renderiza automáticamente cuando el @for no tiene elementos que mostrar -->
     @empty {
     <div class="empty-state">
         <i class="bi bi-chat-square-dots empty-icon"></i>
-        <p>No hay preguntas disponibles.</p>
+        <p>{{ 'FORO.SIN_PREGUNTAS' | translate }}</p>
     </div>
     }
 </div>
@@ -185,33 +202,38 @@
 
 }
 
-<!-- MODAL NUEVA PREGUNTA -->
+<!-- MODAL NUEVA PREGUNTA: solo visible cuando popupNuevaAbierto es true -->
 @if (popupNuevaAbierto) {
+<!-- Clic en el overlay (fondo oscuro) cierra el modal -->
 <div class="modal-overlay" (click)="cerrarNueva()">
+    <!-- stopPropagation evita que el clic dentro del modal llegue al overlay y lo cierre -->
     <div class="modal-box" (click)="$event.stopPropagation()">
 
         <div class="modal-header">
             <h2 class="modal-title">
                 <i class="bi bi-pencil-square" style="color:#4E9C25; margin-right:8px;"></i>
-                Nueva pregunta
+                {{ 'FORO.MODAL_NUEVA_TITLE' | translate }}
             </h2>
             <button class="modal-close" (click)="cerrarNueva()">
                 <i class="bi bi-x-lg"></i>
             </button>
         </div>
 
+        <!-- Campo título: [(ngModel)] sincroniza el input con la variable nuevaTitulo del componente -->
         <div class="modal-field">
-            <label>Título</label>
-            <input type="text" class="modal-input" placeholder="Resume tu pregunta en una frase"
+            <label>{{ 'FORO.TITULO' | translate }}</label>
+            <input type="text" class="modal-input" [placeholder]="'FORO.TITULO_PH' | translate"
                 [(ngModel)]="nuevaTitulo" maxlength="120">
         </div>
 
+        <!-- Campo descripción: igual que el título pero con un textarea (campo de texto largo) -->
         <div class="modal-field">
-            <label>Descripción</label>
-            <textarea class="modal-input" rows="4" placeholder="Explica tu situación con detalle..."
+            <label>{{ 'FORO.DESCRIPCION' | translate }}</label>
+            <textarea class="modal-input" rows="4" [placeholder]="'FORO.DESCRIPCION_PH' | translate"
                 [(ngModel)]="nuevaDescripcion"></textarea>
         </div>
 
+        <!-- Mensaje de error: solo se muestra si la variable error tiene contenido -->
         @if (error) {
         <div class="modal-error">
             <i class="bi bi-exclamation-circle-fill"></i>
@@ -220,14 +242,16 @@
         }
 
         <div class="modal-footer">
-            <button class="btn-cancelar" (click)="cerrarNueva()">Cancelar</button>
+            <button class="btn-cancelar" (click)="cerrarNueva()">{{ 'FORO.CANCELAR' | translate }}</button>
+            <!-- [disabled] deshabilita el botón si el título o descripción están vacíos, o si ya se está publicando -->
             <button class="btn-guardar" [disabled]="!nuevaTitulo.trim() || !nuevaDescripcion.trim() || publicando"
                 (click)="publicarNueva()">
+                <!-- Muestra texto diferente mientras se está enviando para dar feedback al usuario -->
                 @if (publicando) {
-                Publicando...
+                {{ 'FORO.PUBLICANDO' | translate }}
                 } @else {
                 <i class="bi bi-send-fill" style="margin-right:6px;"></i>
-                Publicar
+                {{ 'FORO.PUBLICAR' | translate }}
                 }
             </button>
         </div>

@@ -4,6 +4,7 @@ import { PerfilUsuario } from './perfil-usuario/perfil-usuario';
 import { Registro } from './registro/registro';
 import { AuthGuard } from './guards/auth-guard';
 import { AdminGuard } from './guards/admin-guard';
+import { UserGuard } from './guards/user-guard';
 import { Planes } from './planes/planes';
 import { Movimientos } from './movimientos/movimientos';
 import { Contacto } from './contacto/contacto';
@@ -21,10 +22,10 @@ import { PanelAdmin } from './panel-admin/panel-admin';
 import { Foro } from './foro/foro';
 import { UsuarioBloqueado } from './usuario-bloqueado/usuario-bloqueado';
 import { LandingLayout } from './landing-layout/landing-layout';
-import { VerForo } from './foro/ver-foro/ver-foro';
+import { ListarForos } from './foro/listar-foros/listar-foros';
 import { MisForos } from './foro/mis-foros/mis-foros';
 import { MisPreguntas } from './foro/mis-preguntas/mis-preguntas';
-import { DetalleForo } from './foro/detalle-foro/detalle-foro';
+import { VisitarForo } from './foro/visitar-foro/visitar-foro';
 
 export const routes: Routes = [
 
@@ -54,12 +55,12 @@ export const routes: Routes = [
   {
     path: 'perfil',
     component: PerfilUsuario,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, UserGuard]
   },
   {
     path: 'usuario-bloqueado',
     component: UsuarioBloqueado,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, UserGuard]
   },
   {
     path: 'registro',
@@ -68,19 +69,19 @@ export const routes: Routes = [
   {
     path: 'foro',
     component: Foro,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, UserGuard],
     children: [
-      { path: 'ver', component: VerForo },
+      { path: 'ver', component: ListarForos },
       { path: 'mis-foros', component: MisForos },
       { path: 'mis-preguntas', component: MisPreguntas },
-      { path: 'detalle/:id', component: DetalleForo },
+      { path: 'detalle/:id', component: VisitarForo },
       { path: '', redirectTo: 'ver', pathMatch: 'full' }
     ]
   },
   {
     path: 'movimientos',
     component: Movimientos,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, UserGuard],
     children: [
       { path: 'resumen', component: Resumen },
       { path: 'lista', component: Lista },

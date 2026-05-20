@@ -2,25 +2,25 @@
 
 <div class="mp-header">
     <div>
-        <h2 class="mp-titulo">Mis foros creados</h2>
-        <p class="mp-sub">Gestiona los foros que has creado y accede a sus debates.</p>
+        <h2 class="mp-titulo">{{ 'FORO.MIS_FOROS_CREADOS' | translate }}</h2>
+        <p class="mp-sub">{{ 'FORO.MIS_FOROS_CREADOS_SUB' | translate }}</p>
     </div>
     <div class="mp-count">
         <span class="count-num">{{ forosFiltrados.length }}</span>
-        <span class="count-label">foros</span>
+        <span class="count-label">{{ 'FORO.FOROS_LABEL' | translate }}</span>
     </div>
 </div>
 
 <div class="search-wrapper">
     <i class="bi bi-search search-icon"></i>
-    <input type="text" class="search-input" placeholder="Buscar por título o descripción..."
+    <input type="text" class="search-input" [placeholder]="'FORO.BUSCAR_TITULO_DESC_PH' | translate"
         [(ngModel)]="busqueda" (ngModelChange)="onBusqueda()">
 </div>
 
 @if (cargando) {
 <div class="empty-state">
     <i class="bi bi-hourglass-split empty-icon"></i>
-    <p>Cargando tus foros...</p>
+    <p>{{ 'FORO.CARGANDO_TUS_FOROS' | translate }}</p>
 </div>
 } @else if (forosPaginados.length > 0) {
 
@@ -30,10 +30,10 @@
 
         <div class="mp-card-top">
             <div class="mp-actions">
-                <button class="btn-mini-editar" (click)="abrirEditar($event, f)" title="Editar foro">
+                <button class="btn-mini-editar" (click)="abrirEditar($event, f)" [title]="'FORO.EDITAR_FORO' | translate">
                     <i class="bi bi-pencil"></i>
                 </button>
-                <button class="btn-mini-borrar" (click)="pedirConfirmacionBorrar($event, f)" title="Borrar foro">
+                <button class="btn-mini-borrar" (click)="pedirConfirmacionBorrar($event, f)" [title]="'FORO.BORRAR_FORO' | translate">
                     <i class="bi bi-trash"></i>
                 </button>
             </div>
@@ -50,8 +50,8 @@
         </div>
 
         <div class="mp-metricas">
-            <span class="mp-metric"><i class="bi bi-people-fill"></i> {{ f.miembros }} miembros</span>
-            <span class="mp-metric"><i class="bi bi-chat-left-text"></i> {{ f.respuestas }} resp.</span>
+            <span class="mp-metric"><i class="bi bi-people-fill"></i> {{ f.miembros }} {{ 'FORO.MIEMBROS' | translate }}</span>
+            <span class="mp-metric"><i class="bi bi-chat-left-text"></i> {{ f.respuestas }} {{ 'FORO.RESP' | translate }}</span>
             <span class="mp-metric"><i class="bi bi-eye"></i> {{ f.visitas }}</span>
         </div>
 
@@ -78,7 +78,7 @@
 } @else {
 <div class="empty-state">
     <i class="bi bi-inbox empty-icon"></i>
-    <p>{{ busqueda ? 'No se encontraron foros con esa búsqueda.' : 'Todavía no has creado ningún foro.' }}</p>
+    <p>{{ busqueda ? ('FORO.SIN_FOROS_BUSQUEDA' | translate) : ('FORO.SIN_FOROS_CREADOS' | translate) }}</p>
 </div>
 }
 
@@ -89,7 +89,7 @@
         <div class="mp-modal-header">
             <h2 class="mp-modal-title">
                 <i class="bi bi-pencil-fill" style="color:#4E9C25; margin-right:8px;"></i>
-                Editar foro
+                {{ 'FORO.EDITAR_FORO' | translate }}
             </h2>
             <button class="mp-modal-close" (click)="cerrarEditar()">
                 <i class="bi bi-x-lg"></i>
@@ -97,14 +97,14 @@
         </div>
 
         <div class="mp-form-group">
-            <label class="mp-label">Título</label>
-            <input type="text" class="mp-input" [(ngModel)]="editTitulo" placeholder="Título del foro" maxlength="100">
+            <label class="mp-label">{{ 'FORO.TITULO' | translate }}</label>
+            <input type="text" class="mp-input" [(ngModel)]="editTitulo" [placeholder]="'FORO.TITULO_FORO_PH' | translate" maxlength="100">
         </div>
 
         <div class="mp-form-group">
-            <label class="mp-label">Descripción</label>
+            <label class="mp-label">{{ 'FORO.DESCRIPCION' | translate }}</label>
             <textarea class="mp-textarea" [(ngModel)]="editDescripcion" rows="4"
-                placeholder="Descripción del foro"></textarea>
+                [placeholder]="'FORO.DESCRIPCION_FORO_PH' | translate"></textarea>
         </div>
 
         @if (errorEdit) {
@@ -115,15 +115,15 @@
         }
 
         <div class="mp-modal-footer">
-            <button class="mp-btn-cancelar" (click)="cerrarEditar()">Cancelar</button>
+            <button class="mp-btn-cancelar" (click)="cerrarEditar()">{{ 'FORO.CANCELAR' | translate }}</button>
             <button class="mp-btn-guardar" (click)="guardarEdicion()"
                 [disabled]="!editTitulo.trim() || guardandoEdit">
                 @if (guardandoEdit) {
                 <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
-                Guardando...
+                {{ 'FORO.GUARDANDO' | translate }}
                 } @else {
                 <i class="bi bi-check-lg" style="margin-right:6px;"></i>
-                Guardar cambios
+                {{ 'FORO.GUARDAR_CAMBIOS' | translate }}
                 }
             </button>
         </div>
@@ -139,7 +139,7 @@
         <div class="mp-modal-header">
             <h2 class="mp-modal-title">
                 <i class="bi bi-trash-fill" style="color:#e74c3c; margin-right:8px;"></i>
-                Borrar foro
+                {{ 'FORO.BORRAR_FORO' | translate }}
             </h2>
             <button class="mp-modal-close" (click)="cerrarPopupBorrar()">
                 <i class="bi bi-x-lg"></i>
@@ -148,17 +148,16 @@
 
         <p class="mp-modal-cita">"{{ foroParaBorrar.titulo }}"</p>
         <p class="mp-modal-info">
-            ¿Estás seguro de que quieres borrar este foro? Esta acción no se puede deshacer y
-            se eliminarán todas las respuestas y membresías asociadas.
+            {{ 'FORO.BORRAR_FORO_DESC' | translate }}
         </p>
 
         <div class="mp-modal-footer">
-            <button class="mp-btn-cancelar" (click)="cerrarPopupBorrar()">Cancelar</button>
+            <button class="mp-btn-cancelar" (click)="cerrarPopupBorrar()">{{ 'FORO.CANCELAR' | translate }}</button>
             <button class="mp-btn-salir-confirmar" (click)="confirmarBorrar()" [disabled]="borrando">
                 @if (borrando) {
-                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>Borrando...
+                <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>{{ 'FORO.BORRANDO' | translate }}
                 } @else {
-                <i class="bi bi-trash-fill" style="margin-right:6px;"></i>Borrar foro
+                <i class="bi bi-trash-fill" style="margin-right:6px;"></i>{{ 'FORO.BORRAR_FORO' | translate }}
                 }
             </button>
         </div>
