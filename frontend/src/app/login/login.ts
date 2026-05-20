@@ -84,11 +84,11 @@ export class Login implements OnInit, OnDestroy {
     this.isLoading = true;
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
-        // Guardamos el token del usuario y a este en localstorage
+        // Guardamos token y datos del usuario en localStorage para que el resto de la app los use
         this.authService.saveToken(response.token);
         this.authService.saveUsuario(response.usuario);
 
-        // Se redirige en base a si eres admin o usuario normal
+        // El admin (id=1) va al panel de administración; el resto va a movimientos
         if (Number(response.usuario?.id) === 1) {
           this.router.navigate(['/panel-admin']);
         } else {
@@ -98,6 +98,7 @@ export class Login implements OnInit, OnDestroy {
       error: (error) => {
         this.cdr.detectChanges();
         this.isLoading = false;
+        // El backend puede devolver un objeto de errores por campo o un string; manejamos ambos casos
         if (typeof error.error?.errors === 'object') {
           const firstErrorKey = Object.keys(error.error.errors)[0];
           this.errorMessage = error.error.errors[firstErrorKey][0];
