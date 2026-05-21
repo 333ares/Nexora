@@ -304,6 +304,19 @@
     color: #bbb;
 }
 
+.respuesta-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff3f3;
+    border: 1px solid #f5c6c6;
+    color: #c0392b;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
 .respuesta-actions {
     display: flex;
     justify-content: flex-end;

@@ -131,6 +131,8 @@
           <span class="ranking-valor ingreso-color">{{ item.total | number:'1.2-2' }} €</span>
         </div>
         <div class="barra-track">
+          <!-- Se calcula el ancho de la barra según el porcentaje -->
+           <!-- Llama a la función getPct -->
           <div class="barra-fill" [style.width]="getPct(item.total, ingresosPorCategoria[0]?.total ?? 0) + '%'"
             [style.background]="ingresoColores[i]">
           </div>

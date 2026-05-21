@@ -71,8 +71,10 @@ export class Estadisticas implements OnInit, OnDestroy {
 
   // Getter para calcular la tasa de ahorro (%)
   get tasaAhorro(): number {
+    // Evita división por cero y muestra 0% si no hay ingresos
     return this.ingresoMensual <= 0
       ? 0
+      // En la operacion se multiplica por 100 para convertir a porcentaje y se redondea al entero más cercano
       : Math.round(((this.ingresoMensual - this.gastoMensual) / this.ingresoMensual) * 100);
   }
 
@@ -155,10 +157,10 @@ export class Estadisticas implements OnInit, OnDestroy {
   private renderBarChart(): void {
     if (!this.barChartRef?.nativeElement) return;
 
-    // Destruye gráfico anterior si existe
+    // Destruye gráfico anterior si existe para evitar duplicados
     this.charts[2]?.destroy();
 
-    // Genera etiquetas (mes + año)
+    // Genera etiquetas localizadas (mes + año) según idioma actual
     const lang = this.translate.currentLang || 'es';
     const formatter = new Intl.DateTimeFormat(lang, { month: 'short' });
     const labels = this.ingresosMensuales.map(i => {
@@ -166,10 +168,11 @@ export class Estadisticas implements OnInit, OnDestroy {
       return `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${i.año}`;
     });
 
-    // Datos de ingresos
+    // Extrae totales de ingresos por mes
     const dataIngresos = this.ingresosMensuales.map(i => i.total);
 
-    // Datos de gastos (buscando coincidencia mes/año)
+    // Sincroniza gastos con ingresos: busca cada mes/año en el array de gastos
+    // Usa 0 como default si no existe gasto en ese mes
     const dataGastos = this.ingresosMensuales.map(i =>
       this.gastosMensuales.find(g => g.año === i.año && g.mes === i.mes)?.total ?? 0
     );
@@ -199,20 +202,22 @@ export class Estadisticas implements OnInit, OnDestroy {
     });
   }
 
-  // Renderiza gráfico tipo donut (para categorías)
+  // Renderiza gráfico tipo donut (para categorías de gastos o ingresos)
   private renderDonut(ref: ElementRef<HTMLCanvasElement>, stats: CategoriaStat[], colores: string[], idx: 0 | 1): void {
     if (!ref?.nativeElement || stats.length === 0) return;
 
-    // Destruye gráfico anterior
+    // Destruye gráfico anterior para evitar fugas de memoria
     this.charts[idx]?.destroy();
 
-    // Creación del gráfico donut
+    // Traduce los nombres de categorías usando i18n
+    // Si la clave no existe en traducciones, usa el nombre original
     const labels = stats.map(s => {
       const key = `CATEGORIAS.${s.categoria}`;
       const trans = this.translate.instant(key);
       return trans === key ? s.categoria : trans;
     });
 
+    // Crea el gráfico de tipo donut con los datos y colores proporcionados
     this.charts[idx] = new Chart(ref.nativeElement, {
       type: 'doughnut',
       data: {
@@ -225,6 +230,7 @@ export class Estadisticas implements OnInit, OnDestroy {
           hoverOffset: 6
         }]
       },
+      // Opciones para el gráfico de tipo donut
       options: {
         responsive: false,
         cutout: '68%', // Tamaño del agujero central
@@ -234,8 +240,8 @@ export class Estadisticas implements OnInit, OnDestroy {
             callbacks: {
               // Formato del tooltip
               label: ctx => {
-                const val = typeof ctx.raw === 'number' ? ctx.raw : parseFloat(String(ctx.raw));
-                return ` ${ctx.label}: ${isNaN(val) ? 0 : val.toFixed(2)} €`;
+                const val = typeof ctx.raw === 'number' ? ctx.raw : parseFloat(String(ctx.raw)); // Asegura que el valor es un número
+                return ` ${ctx.label}: ${isNaN(val) ? 0 : val.toFixed(2)} €`; // Muestra el valor con 2 decimales y símbolo de euro
               }
             }
           }
@@ -245,6 +251,7 @@ export class Estadisticas implements OnInit, OnDestroy {
   }
 
   // Calcula porcentaje de un valor respecto a un total
+  // Para la parte de progreso del reto en el resumen, aunque aquí no se usa, se deja como referencia para futuros usos
   getPct(valor: number, total: number): number {
     return total > 0 ? Math.round((valor / total) * 100) : 0;
   }

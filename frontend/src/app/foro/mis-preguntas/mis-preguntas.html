@@ -117,7 +117,7 @@
         <div class="mp-modal-footer">
             <button class="mp-btn-cancelar" (click)="cerrarEditar()">{{ 'FORO.CANCELAR' | translate }}</button>
             <button class="mp-btn-guardar" (click)="guardarEdicion()"
-                [disabled]="!editTitulo.trim() || guardandoEdit">
+                [disabled]="!editTitulo.trim() || !editDescripcion.trim() || guardandoEdit">
                 @if (guardandoEdit) {
                 <i class="bi bi-hourglass-split" style="margin-right:6px;"></i>
                 {{ 'FORO.GUARDANDO' | translate }}

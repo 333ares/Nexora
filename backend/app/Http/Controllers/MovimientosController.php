@@ -81,6 +81,7 @@ class MovimientosController extends Controller
         // Cogemos todos los movimientos del usuario que ha hecho la petición
         $movimientos = Movimientos::where('usuario_id', $request->user()->IDusuario)
             ->orderBy('fecha', 'desc')
+            ->orderBy('created_at', 'desc') // Si hay varios movimientos el mismo día, los ordenamos por fecha de creación
             ->get();
 
         // Si no hay movimientos, mostramos error

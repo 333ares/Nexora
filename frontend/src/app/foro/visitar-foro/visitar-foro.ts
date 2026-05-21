@@ -58,6 +58,7 @@ export class VisitarForo implements OnInit {
   errorUnirse: string | null = null;  // Error específico del popup de unirse
 
   publicando = false; // true mientras se envía una nueva respuesta al servidor
+  errorRespuesta: string | null = null; // Error inline bajo el textarea de nueva respuesta
 
   // Variables de la edición inline de respuestas
   editandoId: number | null = null;  // ID de la respuesta que se está editando (null = ninguna)
@@ -199,6 +200,7 @@ export class VisitarForo implements OnInit {
   publicarRespuesta() {
     if (!this.pregunta || !this.nuevaRespuesta.trim()) return; // Validación mínima
     this.publicando = true;
+    this.errorRespuesta = null;
     this.auth.responderForo({ IDforo: this.pregunta.id, respuesta: this.nuevaRespuesta }).subscribe({
       next: (res) => {
         const r = res.respuesta;
@@ -212,12 +214,13 @@ export class VisitarForo implements OnInit {
         });
         this.pregunta!.respuestas++; // Incrementamos el contador del foro
         this.nuevaRespuesta = '';    // Limpiamos el campo de texto
+        this.errorRespuesta = null;
         this.publicando = false;
         this.cdr.detectChanges();
       },
       error: (err) => {
         this.publicando = false;
-        this.mostrarError(err, 'No se pudo publicar la respuesta');
+        this.errorRespuesta = err?.error?.message ?? err?.error?.error ?? err?.message ?? 'No se pudo publicar la respuesta';
         this.cdr.detectChanges();
       }
     });
