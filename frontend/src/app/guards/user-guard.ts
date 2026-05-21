@@ -9,18 +9,12 @@ export class UserGuard implements CanActivate {
   canActivate(): boolean {
     const usuario = this.auth.getUsuario();
 
-    // Si el usuario está bloqueado, redirigimos a la pantalla de bloqueo
-    if (usuario?.estado?.toLowerCase() === 'bloqueado') {
-      this.router.navigate(['/usuario-bloqueado']);
-      return false;
+    if (Number(usuario?.id) !== 1) {
+      return true;
     }
 
-    // Si el usuario es admin (id=1), lo redirigimos al panel de administración
-    if (Number(usuario?.id) === 1) {
-      this.router.navigate(['/panel-admin']);
-      return false;
-    }
+    this.router.navigate(['/panel-admin']);
+    return false;
 
-    return true;
   }
 }

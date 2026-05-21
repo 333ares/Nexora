@@ -21,10 +21,8 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 })
 export class Login implements OnInit, OnDestroy {
 
-  // Para mostrar el password en texto plano o no
   showPassword = false;
 
-  // Frases motivadoras para mostrar en el login
   quotes = [
     { text: 'QUOTES.Q1.text', author: 'QUOTES.Q1.author' },
     { text: 'QUOTES.Q2.text', author: 'QUOTES.Q2.author' },
@@ -33,12 +31,9 @@ export class Login implements OnInit, OnDestroy {
     { text: 'QUOTES.Q5.text', author: 'QUOTES.Q5.author' },
   ];
 
-  // Índice para mostrar la frase actual
   currentIndex = 0;
-  // Intervalo para cambiar la frase cada 3 segundos
   private intervalId?: ReturnType<typeof setInterval>;
 
-  // Constructor con inyección de dependencias
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private authService: Auth,
@@ -46,19 +41,15 @@ export class Login implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private cdr: ChangeDetectorRef
   ) {
-    // Comprobamos si venimos de la página de registro para mostrar un mensaje de éxito
     const nav = this.router.getCurrentNavigation();
     if (nav?.extras?.state?.['registrado']) {
-      this.successMessage = this.translateService.instant('LOGIN.SUCCESS_REGISTERED'); // Mensaje de éxito traducido
+      this.successMessage = this.translateService.instant('LOGIN.SUCCESS_REGISTERED');
     }
   }
 
-  // Mensaje de éxito para mostrar si venimos de la página de registro
   successMessage: string = '';
 
-  // Método para iniciar el cambio de frases motivadoras al cargar el componente
   ngOnInit(): void {
-    // Si estamos en el navegador, iniciamos el intervalo para cambiar las frases cada 3 segundos
     if (isPlatformBrowser(this.platformId)) {
       this.intervalId = setInterval(() => {
         this.currentIndex =
@@ -70,24 +61,20 @@ export class Login implements OnInit, OnDestroy {
     }
   }
 
-  // Método para limpiar el intervalo al salir del componente 
   ngOnDestroy(): void {
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
   }
 
-  // Método para cambiar manualmente a una frase específica al hacer clic en los puntos de navegación
   goTo(index: number): void {
     this.currentIndex = index;
   }
 
-  // Método para alternar la visibilidad del password
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
-  // Variables para almacenar el email, etc
   email: string = '';
   password: string = '';
   errorMessage: string = '';

@@ -65,7 +65,7 @@ export const routes: Routes = [
   {
     path: 'usuario-bloqueado',
     component: UsuarioBloqueado,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, UserGuard]
   },
   {
     path: 'registro',

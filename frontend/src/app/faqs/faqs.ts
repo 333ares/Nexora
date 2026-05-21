@@ -19,7 +19,6 @@ interface FaqItem {
   styleUrl: './faqs.css',
 })
 export class Faqs {
-  // Lista de preguntas frecuentes con sus claves de traducción
   faqKeys = [
     { id: 0, categoria: 'general', qKey: 'FAQS_PAGE.Q0', aKey: 'FAQS_PAGE.A0' },
     { id: 1, categoria: 'planes', qKey: 'FAQS_PAGE.Q1', aKey: 'FAQS_PAGE.A1' },
